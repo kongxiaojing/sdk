@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Utils;
 using LeagueSharp.SDK.Enumerations;
@@ -25,8 +26,21 @@ namespace ExorAIO.Champions.Jhin
             Variables.Orbwalker.SetAttackState(!Vars.R.Instance.Name.Equals("JhinRShot"));
             Variables.Orbwalker.SetMovementState(!Vars.R.Instance.Name.Equals("JhinRShot"));
 
-            if (GameObjects.Player.IsRecalling() ||
+            if (GameObjects.Player.IsRecalling())
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     The Automatic R Logic.
+            /// </summary>
+            if (!Targets.Target.IsValidTarget() &&
                 Vars.R.Instance.Name.Equals("JhinRShot"))
+            {
+                GameObjects.Player.IssueOrder(GameObjectOrder.MoveTo, GameObjects.Player.ServerPosition);
+            }
+
+            if (Vars.R.Instance.Name.Equals("JhinRShot"))
             {
                 return;
             }
@@ -57,7 +71,7 @@ namespace ExorAIO.Champions.Jhin
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        Invulnerable.Check(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
                         t.HasBuff("jhinespotteddebuff") &&
                         Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
@@ -75,7 +89,7 @@ namespace ExorAIO.Champions.Jhin
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         Bools.IsImmobile(t) &&
-                        Invulnerable.Check(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range)))
                 {
                     Vars.E.Cast(Vars.E.GetPrediction(target).CastPosition);

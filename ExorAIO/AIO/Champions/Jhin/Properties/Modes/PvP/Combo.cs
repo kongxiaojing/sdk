@@ -37,6 +37,7 @@ namespace ExorAIO.Champions.Jhin
                         t.IsValidTarget(Vars.R.Range)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                    return;
                 }
             }
 

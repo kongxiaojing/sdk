@@ -53,7 +53,7 @@ namespace ExorAIO.Champions.Jhin
                         /// <summary>
                         ///     Sets the menu for the W Whitelist.
                         /// </summary>
-                        Vars.WhiteListMenu = new Menu("whitelistmenu", "W: Whitelist Menu", true);
+                        Vars.WhiteListMenu = new Menu("whitelist", "W: Whitelist Menu", true);
                         {
                             foreach (var target in GameObjects.EnemyHeroes)
                             {
