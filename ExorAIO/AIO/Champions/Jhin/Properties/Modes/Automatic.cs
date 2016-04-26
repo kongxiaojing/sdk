@@ -51,6 +51,7 @@ namespace ExorAIO.Champions.Jhin
             if (Vars.Q.IsReady() &&
                 GameObjects.Player.HasBuff("JhinPassiveReload") &&
                 Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
                 Vars.Menu["spells"]["q"]["lasthit"].GetValue<MenuBool>().Value)
             {
                 foreach (var minion in Targets.Minions.Where(
