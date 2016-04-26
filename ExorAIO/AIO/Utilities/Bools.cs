@@ -31,23 +31,33 @@ namespace ExorAIO.Utilities
         ///     Gets a value indicating whether a determined champion can move or not.
         /// </summary>
         public static bool IsImmobile(Obj_AI_Base target)
-            =>
-                // To Do: Aatrox's Stasis.
-                target.HasBuff("rebirth") ||
-                target.HasBuff("teleport_target") ||
-                target.HasBuff("zhonyasringshield") ||
-                target.HasBuff("pantheon_grandskyfall_jump") ||
-                (target as Obj_AI_Hero).MoveSpeed < 50 ||
-                (target as Obj_AI_Hero).IsRecalling() ||
-                (target as Obj_AI_Hero).IsCastingInterruptableSpell() ||
-                (target as Obj_AI_Hero).HasBuffOfType(BuffType.Stun) ||
-                (target as Obj_AI_Hero).HasBuffOfType(BuffType.Flee) ||
-                (target as Obj_AI_Hero).HasBuffOfType(BuffType.Sleep) ||
-                (target as Obj_AI_Hero).HasBuffOfType(BuffType.Snare) ||
-                (target as Obj_AI_Hero).HasBuffOfType(BuffType.Taunt) ||
-                (target as Obj_AI_Hero).HasBuffOfType(BuffType.Charm) ||
-                (target as Obj_AI_Hero).HasBuffOfType(BuffType.Knockup) ||
-                (target as Obj_AI_Hero).HasBuffOfType(BuffType.Suppression);
+        {
+            if (target is Obj_AI_Minion ||
+                target is Obj_AI_Turret)
+            {
+                return target.HasBuff("teleport_target");
+            }
+            else if (target is Obj_AI_Hero)
+            {
+                return 
+                    target.HasBuff("pantheon_grandskyfall_jump") ||
+                    target.HasBuff("rebirth") ||
+                    target.HasBuff("zhonyasringshield") ||
+                    target.MoveSpeed < 50 ||
+                    (target as Obj_AI_Hero).IsRecalling() ||
+                    (target as Obj_AI_Hero).IsCastingInterruptableSpell() ||
+                    target.HasBuffOfType(BuffType.Stun) ||
+                    target.HasBuffOfType(BuffType.Flee) ||
+                    target.HasBuffOfType(BuffType.Sleep) ||
+                    target.HasBuffOfType(BuffType.Snare) ||
+                    target.HasBuffOfType(BuffType.Taunt) ||
+                    target.HasBuffOfType(BuffType.Charm) ||
+                    target.HasBuffOfType(BuffType.Knockup) ||
+                    target.HasBuffOfType(BuffType.Suppression);
+            }
+            
+            return false;
+        }
 
         /// <summary>
         ///     Gets a value indicating whether a determined champion has a stackable item.
@@ -88,7 +98,7 @@ namespace ExorAIO.Utilities
         /// </summary>
         public static bool ShouldCleanse(Obj_AI_Hero target)
             =>
-                !HasAnyImmunity(GameObjects.Player) &&
+                !HasAnyImmunity(GameObjects.Player, true) &&
                 GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(1500f)) &&
                 (
                     target.HasBuffOfType(BuffType.Flee) ||

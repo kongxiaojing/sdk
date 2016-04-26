@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
+using LeagueSharp.SDK.Utils;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
 
@@ -24,7 +25,8 @@ namespace ExorAIO.Champions.Jhin
             Variables.Orbwalker.SetAttackState(!Vars.R.Instance.Name.Equals("JhinRShot"));
             Variables.Orbwalker.SetMovementState(!Vars.R.Instance.Name.Equals("JhinRShot"));
 
-            if (GameObjects.Player.IsRecalling() || Vars.R.Instance.Name.Equals("JhinRShot"))
+            if (GameObjects.Player.IsRecalling() ||
+                Vars.R.Instance.Name.Equals("JhinRShot"))
             {
                 return;
             }
@@ -32,12 +34,15 @@ namespace ExorAIO.Champions.Jhin
             /// <summary>
             ///     The Automatic Q LastHit Logic.
             /// </summary>
-            if (Vars.Q.IsReady() && Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
+            if (Vars.Q.IsReady() &&
                 GameObjects.Player.HasBuff("JhinPassiveReload") &&
+                Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
                 Vars.Menu["spells"]["q"]["lasthit"].GetValue<MenuBool>().Value)
             {
-                foreach (var minion in
-                    Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range) && m.Health < Vars.Q.GetDamage(m)))
+                foreach (var minion in Targets.Minions.Where(
+                    m =>
+                        m.IsValidTarget(Vars.Q.Range) &&
+                        m.Health < Vars.Q.GetDamage(m)))
                 {
                     Vars.Q.CastOnUnit(minion);
                 }
@@ -46,29 +51,32 @@ namespace ExorAIO.Champions.Jhin
             /// <summary>
             ///     The Automatic W Logic.
             /// </summary>
-            if (Vars.W.IsReady() && !GameObjects.Player.IsUnderEnemyTurret() &&
-                Vars.Menu["spells"]["w"]["auto"].GetValue<MenuBool>().Value)
+            if (Vars.W.IsReady() &&
+                !GameObjects.Player.IsUnderEnemyTurret() &&
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) && t.HasBuff("jhinespotteddebuff") &&
-                            t.IsValidTarget(Vars.W.Range) &&
-                            Vars.Menu["whitelist.{t.ChampionName.ToLower()}"]
-                                .GetValue<MenuBool>().Value))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.W.Range) &&
+                        t.HasBuff("jhinespotteddebuff") &&
+                        Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
-                    Vars.W.Cast(Vars.W.GetPrediction(target).CastPosition);
+                    Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                 }
             }
 
             /// <summary>
             ///     The Automatic E Logic.
             /// </summary>
-            if (Vars.E.IsReady() && Vars.Menu["spells"]["e"]["auto"].GetValue<MenuBool>().Value)
+            if (Vars.E.IsReady() &&
+                Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t => Bools.IsImmobile(t) && !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.E.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.E.Range)))
                 {
                     Vars.E.Cast(Vars.E.GetPrediction(target).CastPosition);
                 }

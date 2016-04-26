@@ -3,6 +3,7 @@ using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Jhin
 {
@@ -18,15 +19,39 @@ namespace ExorAIO.Champions.Jhin
         public static void Killsteal(EventArgs args)
         {
             /// <summary>
+            ///     The KillSteal R Logic.
+            /// </summary>
+            if (Vars.R.IsReady() &&
+                Vars.R.Instance.Name.Equals("JhinRShot") &&
+                Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
+            {
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.R.Range) &&
+                        t.Health < Vars.R.GetDamage(t) * 2))
+                {
+                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                    return;
+                }
+            }
+
+            if (Vars.R.Instance.Name.Equals("JhinRShot"))
+            {
+                return;
+            }
+
+            /// <summary>
             ///     The KillSteal Q Logic.
             /// </summary>
-            if (Vars.Q.IsReady() && Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
+            if (Vars.Q.IsReady() &&
+                Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.Q.Range) && !t.IsValidTarget(Vars.AARange) &&
-                            t.Health < Vars.Q.GetDamage(t) && !Vars.R.Instance.Name.Equals("JhinRShot")))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.Q.Range) &&
+                        t.Health < Vars.Q.GetDamage(t)))
                 {
                     Vars.Q.CastOnUnit(target);
                     return;
@@ -36,33 +61,17 @@ namespace ExorAIO.Champions.Jhin
             /// <summary>
             ///     The KillSteal W Logic.
             /// </summary>
-            if (Vars.W.IsReady() && Vars.Menu["spells"]["w"]["killsteal"].GetValue<MenuBool>().Value)
+            if (Vars.W.IsReady() &&
+                Vars.Menu["spells"]["w"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.W.Range) && !t.IsValidTarget(Vars.AARange) &&
-                            t.Health < Vars.W.GetDamage(t) && !Vars.R.Instance.Name.Equals("JhinRShot")))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.W.Range) &&
+                        !t.IsValidTarget(Vars.AARange) &&
+                        t.Health < Vars.W.GetDamage(t)))
                 {
-                    Vars.W.Cast(Vars.W.GetPrediction(target).CastPosition);
-                    return;
-                }
-            }
-
-            /// <summary>
-            ///     The KillSteal R Logic.
-            /// </summary>
-            if (Vars.R.IsReady() &&
-                Vars.R.Instance.Name.Equals("JhinRShot", StringComparison.InvariantCultureIgnoreCase) &&
-                Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
-            {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.R.Range) && !t.IsValidTarget(Vars.AARange) &&
-                            t.Health < Vars.R.GetDamage(t) * 2))
-                {
-                    Vars.R.Cast(Vars.R.GetPrediction(target).CastPosition);
+                    Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                 }
             }
         }

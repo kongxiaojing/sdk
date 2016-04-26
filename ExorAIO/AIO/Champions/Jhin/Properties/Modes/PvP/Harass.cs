@@ -2,6 +2,7 @@ using System;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Jhin
 {
@@ -24,7 +25,8 @@ namespace ExorAIO.Champions.Jhin
             /// <summary>
             ///     The Q Harass Logic.
             /// </summary>
-            if (Vars.Q.IsReady() && GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
+            if (Vars.Q.IsReady() &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
                 Vars.Menu["spells"]["q"]["harass"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.CastOnUnit(Targets.Target);

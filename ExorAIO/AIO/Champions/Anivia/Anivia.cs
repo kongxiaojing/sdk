@@ -159,7 +159,6 @@ namespace ExorAIO.Champions.Anivia
         {
             if (Vars.W.IsReady() &&
                 args.IsDirectedToPlayer &&
-                !Bools.HasAnyImmunity(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
             {

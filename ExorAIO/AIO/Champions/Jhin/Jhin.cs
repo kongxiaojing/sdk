@@ -98,10 +98,21 @@ namespace ExorAIO.Champions.Jhin
         /// <param name="args">The args.</param>
         public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender.IsMe && AutoAttack.IsAutoAttack(args.SData.Name) &&
-                Variables.Orbwalker.ActiveMode == OrbwalkingMode.Combo)
+            if (sender.IsMe &&
+                AutoAttack.IsAutoAttack(args.SData.Name))
             {
-                Logics.Weaving(sender, args);
+                /// <summary>
+                ///     Initializes the orbwalkingmodes.
+                /// </summary>
+                switch (Variables.Orbwalker.ActiveMode)
+                {
+                    case OrbwalkingMode.Combo:
+                        Logics.Weaving(sender, args);
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
 
@@ -112,8 +123,10 @@ namespace ExorAIO.Champions.Jhin
         /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
-            if (Vars.E.IsReady() && !Bools.HasAnyImmunity(args.Sender) && args.Sender.IsValidTarget(Vars.E.Range) &&
-                Vars.Menu["gp"].GetValue<MenuBool>().Value)
+            if (Vars.E.IsReady() &&
+                args.Sender.IsValidTarget(Vars.E.Range) &&
+                !Bools.HasAnyImmunity(args.Sender, true) &&
+                Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(args.End);
             }
