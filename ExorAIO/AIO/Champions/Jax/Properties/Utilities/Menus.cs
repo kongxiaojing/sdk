@@ -14,58 +14,66 @@ namespace ExorAIO.Champions.Jax
         public static void Initialize()
         {
             /// <summary>
-            /// Sets the spells menu.
+            ///     Sets the spells menu.
             /// </summary>
             Vars.SpellsMenu = new Menu("spells", "Spells");
             {
+                /// <summary>
+                ///     Sets the menu for the Q.
+                /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
-                //.SetFontStyle(FontStyle.Regular, Color.Green);
                 {
                     Vars.QMenu.Add(new MenuBool("combo",       "Combo",       true));
                     Vars.QMenu.Add(new MenuBool("killsteal",   "KillSteal",   true));
+                    Vars.QMenu.Add(new MenuBool("junglegrab",  "JungleGrab",  true));
+                    Vars.QMenu.Add(
+                        new MenuSlider("manamanager", "JungleClear: Mana >= x", 50, 10, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
+                /// <summary>
+                ///     Sets the menu for the W.
+                /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
-                //.SetFontStyle(FontStyle.Regular, Color.Purple);
                 {
                     Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
                     Vars.WMenu.Add(new MenuBool("clear", "Clear", true));
-                    Vars.WMenu.Add(new MenuSlider("mana", "Clear: Mana >= x", 50, 10, 99));
+                    Vars.WMenu.Add(
+                        new MenuSlider("manamanager", "Clear: Mana >= x", 50, 10, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
+                /// <summary>
+                ///     Sets the menu for the E.
+                /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
-                ;
-                //.SetFontStyle(FontStyle.Regular, Color.Cyan);
                 {
-                    Vars.EMenu.Add(new MenuBool("logical", "Logical", true));
-                    //.SetTooltip("If the Target is in Range and the player is not winding-up.", true);
+                    Vars.EMenu.Add(new MenuBool("logical",   "Logical",        true));
                     Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
-                    Vars.EMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.EMenu.Add(new MenuSlider("mana", "Clear: Mana >= x", 50, 10, 99));
+                    Vars.EMenu.Add(new MenuBool("clear",     "Clear",          true));
+                    Vars.EMenu.Add(
+                        new MenuSlider("manamanager", "Clear: Mana >= x", 50, 10, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
+                /// <summary>
+                ///     Sets the menu for the R.
+                /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
-                //.SetFontStyle(FontStyle.Regular, Color.Red);
                 {
-                    Vars.RMenu.Add(new MenuBool("lifesaver", "Lifesaver", true));
+                    Vars.RMenu.Add(new MenuBool("logical", "Logical", true));
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
             }
             Vars.Menu.Add(Vars.SpellsMenu);
 
             /// <summary>
-            /// Sets the drawings menu.
+            ///     Sets the drawings menu.
             /// </summary>
             Vars.DrawingsMenu = new Menu("drawings", "Drawings");
             {
                 Vars.DrawingsMenu.Add(new MenuBool("q", "Q Range"));
-                //.SetFontStyle(FontStyle.Regular, Color.Green);
-
                 Vars.DrawingsMenu.Add(new MenuBool("e", "E Range"));
-                //.SetFontStyle(FontStyle.Regular, Color.Cyan);
             }
             Vars.Menu.Add(Vars.DrawingsMenu);
         }

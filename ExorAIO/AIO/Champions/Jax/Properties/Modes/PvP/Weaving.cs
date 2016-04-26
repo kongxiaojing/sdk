@@ -17,26 +17,19 @@ namespace ExorAIO.Champions.Jax
         /// <param name="args">The args.</param>
         public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (args.Target is Obj_AI_Minion)
+            if (!(args.Target is Obj_AI_Hero) ||
+                Bools.HasAnyImmunity(args.Target as Obj_AI_Hero))
             {
-                /// <summary>
-                ///     The Clear W Logics.
-                /// </summary>
-                if (Vars.W.IsReady() && GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                    Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
-                {
-                    Vars.W.Cast();
-                }
+                return;
             }
-            else if (args.Target is Obj_AI_Hero && Bools.HasAnyImmunity(args.Target as Obj_AI_Hero))
+
+            /// <summary>
+            ///     The W Combo Weaving Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
-                /// <summary>
-                ///     The W Weaving Logic.
-                /// </summary>
-                if (Vars.W.IsReady() && Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
-                {
-                    Vars.W.Cast();
-                }
+                Vars.W.Cast();
             }
         }
     }

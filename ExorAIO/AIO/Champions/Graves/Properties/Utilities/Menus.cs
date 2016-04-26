@@ -14,10 +14,13 @@ namespace ExorAIO.Champions.Graves
         public static void Initialize()
         {
             /// <summary>
-            /// Sets the spells menu.
+            ///     Sets the spells menu.
             /// </summary>
             Vars.SpellsMenu = new Menu("spells", "Spells");
             {
+                /// <summary>
+                ///     Sets the menu for the Q.
+                /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
@@ -30,6 +33,9 @@ namespace ExorAIO.Champions.Graves
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
+                /// <summary>
+                ///     Sets the menu for the W.
+                /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo",     "Combo",          true));
@@ -39,6 +45,9 @@ namespace ExorAIO.Champions.Graves
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
+                /// <summary>
+                ///     Sets the menu for the E.
+                /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
@@ -48,6 +57,9 @@ namespace ExorAIO.Champions.Graves
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
+                /// <summary>
+                ///     Sets the menu for the R.
+                /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
                     Vars.RMenu.Add(new MenuBool("combo",     "Combo",     true));
@@ -58,7 +70,7 @@ namespace ExorAIO.Champions.Graves
             Vars.Menu.Add(Vars.SpellsMenu);
 
             /// <summary>
-            /// Sets the drawings menu.
+            ///     Sets the drawings menu.
             /// </summary>
             Vars.DrawingsMenu = new Menu("drawings", "Drawings");
             {

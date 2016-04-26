@@ -20,12 +20,15 @@ namespace ExorAIO.Champions.Jax
             /// <summary>
             ///     The KillSteal Q Logic.
             /// </summary>
-            if (Vars.Q.IsReady() && Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
+            if (Vars.Q.IsReady() &&
+                Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in
                     GameObjects.EnemyHeroes.Where(
                         t =>
-                            !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.Q.Range) && !t.IsValidTarget(Vars.AARange) &&
+                            !Bools.HasAnyImmunity(t) &&
+                            t.IsValidTarget(Vars.Q.Range) &&
+                            !t.IsValidTarget(Vars.AARange) &&
                             t.Health < Vars.Q.GetDamage(t)))
                 {
                     Vars.Q.CastOnUnit(target);

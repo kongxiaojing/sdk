@@ -26,7 +26,7 @@ namespace ExorAIO.Champions.Amumu
             ///     The Q JungleGrab Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Targets.JungleMinions.Any(x => !x.IsValidTarget(Vars.E.Range)) &&
+                !Targets.JungleMinions.Any(x => x.IsValidTarget(Vars.E.Range)) &&
                 Vars.Menu["spells"]["q"]["junglegrab"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.Cast(Targets.JungleMinions[0].ServerPosition);
