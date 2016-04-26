@@ -1,0 +1,21 @@
+using LeagueSharp;
+using LeagueSharp.SDK;
+
+namespace ExorAIO.Champions.Graves
+{
+    /// <summary>
+    ///     The methods class.
+    /// </summary>
+    internal class Methods
+    {
+        /// <summary>
+        ///     Sets the methods.
+        /// </summary>
+        public static void Initialize()
+        {
+            Game.OnUpdate += Graves.OnUpdate;
+            Obj_AI_Base.OnDoCast += Graves.OnDoCast;
+            Events.OnGapCloser += Graves.OnGapCloser;
+        }
+    }
+}
