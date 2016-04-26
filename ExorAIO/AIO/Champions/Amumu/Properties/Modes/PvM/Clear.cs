@@ -26,21 +26,34 @@ namespace ExorAIO.Champions.Amumu
             ///     The Q JungleGrab Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                !Targets.JungleMinions.Any(x => x.IsValidTarget(Vars.E.Range)) &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
+                Targets.JungleMinions.Any(m => !m.IsValidTarget(Vars.E.Range)) &&
                 Vars.Menu["spells"]["q"]["junglegrab"].GetValue<MenuBool>().Value)
             {
-                Vars.Q.Cast(Targets.JungleMinions[0].ServerPosition);
+                Vars.Q.CastOnUnit(Targets.JungleMinions.FirstOrDefault(m => !m.IsValidTarget(Vars.E.Range)));
             }
 
             /// <summary>
-            ///     The E LaneClear Logic,
-            ///     The E JungleClear Logic.
+            ///     The E Clear Logics.
             /// </summary>
             if (Vars.E.IsReady() &&
-                (Targets.Minions.Count() >= 3 || Targets.JungleMinions.Any()) &&
                 Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
             {
-                Vars.E.Cast();
+                /// <summary>
+                ///     The E LaneClear Logic.
+                /// </summary>
+                if (Targets.Minions.Count() >= 3)
+                {
+                    Vars.E.Cast();
+                }
+
+                /// <summary>
+                ///     The E JungleClear Logic.
+                /// </summary>
+                else if (Targets.JungleMinions.Any())
+                {
+                    Vars.E.Cast();
+                }
             }
         }
     }

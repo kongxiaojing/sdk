@@ -29,7 +29,7 @@ namespace ExorAIO.Champions.Jax
                             !Bools.HasAnyImmunity(t) &&
                             t.IsValidTarget(Vars.Q.Range) &&
                             !t.IsValidTarget(Vars.AARange) &&
-                            t.Health < Vars.Q.GetDamage(t)))
+                            t.Health < Vars.Q.GetDamage(t) + GameObjects.Player.GetAutoAttackDamage(t)))
                 {
                     Vars.Q.CastOnUnit(target);
                 }

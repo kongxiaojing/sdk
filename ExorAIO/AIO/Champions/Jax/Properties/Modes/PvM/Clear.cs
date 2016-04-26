@@ -19,13 +19,39 @@ namespace ExorAIO.Champions.Jax
         public static void Clear(EventArgs args) 
         {
             /// <summary>
+            ///     The Clear E Logics.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
+            {
+                /// <summary>
+                ///     The LaneClear E Logic.
+                /// </summary>
+                if (Targets.Minions.Count() >= 3 &&
+                    GameObjects.Player.CountEnemyHeroesInRange(2000f) == 0)
+                {
+                    Vars.E.Cast();
+                }
+
+                /// <summary>
+                ///     The JungleClear E Logic.
+                /// </summary>
+                else if (Targets.JungleMinions.Any(m => m.IsValidTarget(Vars.E.Range)))
+                {
+                    Vars.E.Cast();
+                }
+            }
+
+            /// <summary>
             ///     The Q JungleGrab Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                !Targets.JungleMinions.Any(x => x.IsValidTarget(Vars.E.Range)) &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
+                Targets.JungleMinions.Any(m => !m.IsValidTarget(Vars.E.Range)) &&
                 Vars.Menu["spells"]["q"]["junglegrab"].GetValue<MenuBool>().Value)
             {
-                Vars.Q.CastOnUnit(Targets.JungleMinions[0]);
+                Vars.Q.CastOnUnit(Targets.JungleMinions.FirstOrDefault(m => !m.IsValidTarget(Vars.E.Range)));
             }
         }
 
@@ -48,12 +74,17 @@ namespace ExorAIO.Champions.Jax
                 GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
                 Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
             {
-                if ((Variables.Orbwalker.GetTarget() as Obj_AI_Minion).Health <
-                    Vars.W.GetDamage(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) +
-                    GameObjects.Player.GetAutoAttackDamage(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) * 2)
+                if (Targets.Minions.Contains((Variables.Orbwalker.GetTarget() as Obj_AI_Minion)))
                 {
-                    Vars.W.Cast();
+                    if ((Variables.Orbwalker.GetTarget() as Obj_AI_Minion).Health <
+                        Vars.W.GetDamage(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) +
+                        GameObjects.Player.GetAutoAttackDamage(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
+                    {
+                        Vars.W.Cast();
+                    }
                 }
+                
+                Vars.W.Cast();
             }
         }
     }

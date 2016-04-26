@@ -25,22 +25,31 @@ namespace ExorAIO.Champions.Jax
             /// <summary>
             ///     The Automatic R Logic.
             /// </summary>
-            /*if (Vars.R.IsReady() &&
-                HealthPrediction.GetHealthPrediction(LeagueSharp.SDK.GameObjects.Player, (int) (250f + Game.Ping/2f)) <=
-                GameObjects.Player.MaxHealth/2 &&
-                Vars.Menu["lifesaver"].GetValue<MenuBool>().Value)
+            if (Vars.R.IsReady() &&
+                Vars.Menu["spells"]["r"]["logical"].GetValue<MenuBool>().Value)
             {
-                Vars.R.Cast();
-            }*/
+                if (GameObjects.Player.HealthPercent < 20 && 
+                    GameObjects.Player.CountEnemyHeroesInRange(750f) > 0)
+                {
+                    Vars.R.Cast();
+                }
+                else if (GameObjects.Player.CountEnemyHeroesInRange(750f) >= 2)
+                {
+                    Vars.R.Cast();
+                }
+            }
 
             /// <summary>
             ///     The Automatic E Logic.
             /// </summary>
-            if (Vars.E.IsReady() && !GameObjects.Player.IsUnderEnemyTurret() &&
-                Vars.Menu["spells"]["e"]["auto"].GetValue<MenuBool>().Value)
+            if (Vars.E.IsReady() &&
+                !GameObjects.Player.IsUnderEnemyTurret() &&
+                Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(t => !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.E.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Bools.HasAnyImmunity(t) &&
+                        t.IsValidTarget(Vars.E.Range)))
                 {
                     Vars.E.Cast();
                 }

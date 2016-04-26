@@ -27,7 +27,7 @@ namespace ExorAIO.Champions.Jax
                     Vars.QMenu.Add(new MenuBool("killsteal",   "KillSteal",   true));
                     Vars.QMenu.Add(new MenuBool("junglegrab",  "JungleGrab",  true));
                     Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "JungleClear: Mana >= x", 50, 10, 99));
+                        new MenuSlider("manamanager", "JungleGrab: Mana >= x", 50, 10, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
