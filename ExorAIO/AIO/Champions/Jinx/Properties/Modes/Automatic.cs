@@ -103,7 +103,7 @@ namespace ExorAIO.Champions.Jinx
                                     m =>
                                         m.IsValidTarget(Vars.Q.Range) &&
                                         Targets.Minions
-                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >= 4))
+                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >= 2))
                                 {
                                     Vars.Q.Cast();
                                 }
@@ -117,7 +117,7 @@ namespace ExorAIO.Champions.Jinx
                                     m =>
                                         m.IsValidTarget(Vars.Q.Range) &&
                                         Targets.JungleMinions
-                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >= 2))
+                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >= 1))
                                 {
                                     Vars.Q.Cast();
                                 }
@@ -168,7 +168,7 @@ namespace ExorAIO.Champions.Jinx
                                     m =>
                                         m.IsValidTarget(Vars.PowPow.Range) &&
                                         Targets.Minions
-                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) < 4))
+                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) < 2))
                                 {
                                     Vars.Q.Cast();
                                 }
@@ -182,7 +182,7 @@ namespace ExorAIO.Champions.Jinx
                                     m =>
                                         m.IsValidTarget(Vars.PowPow.Range) &&
                                         Targets.JungleMinions
-                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) < 2))
+                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) < 1))
                                 {
                                     Vars.Q.Cast();
                                 }
@@ -254,7 +254,7 @@ namespace ExorAIO.Champions.Jinx
             ///     The Automatic E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Vars.Menu["spells"]["e"]["auto"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>

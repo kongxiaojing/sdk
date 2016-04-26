@@ -15,16 +15,15 @@ namespace ExorAIO.Champions.Jinx
         /// </summary>
         public static void Initialize()
         {
-            Vars.PowPow = new Spell(SpellSlot.Q, GameObjects.Player.BoundingRadius * 2 + 525f);
-            Vars.Q = new Spell(
-                SpellSlot.Q, Vars.PowPow.Range + (50f + 25f * GameObjects.Player.Spellbook.GetSpell(SpellSlot.Q).Level));
+            Vars.PowPow = new Spell(SpellSlot.Q, GameObjects.Player.BoundingRadius + 525f);
+            Vars.Q = new Spell(SpellSlot.Q, Vars.PowPow.Range + (50f + 25f * GameObjects.Player.Spellbook.GetSpell(SpellSlot.Q).Level));
             Vars.W = new Spell(SpellSlot.W, 1450f);
             Vars.E = new Spell(SpellSlot.E, 900f);
             Vars.R = new Spell(SpellSlot.R, 1500f);
 
             Vars.W.SetSkillshot(0.6f, 75f, 3300f, true, SkillshotType.SkillshotLine); // Test - Original Width: 65f.
-            Vars.E.SetSkillshot(1.2f, 100f, 1750f, false, SkillshotType.SkillshotCircle);
-            Vars.R.SetSkillshot(0.7f, 140f, 1500f, false, SkillshotType.SkillshotLine);
+            Vars.E.SetSkillshot(1.5f, 100f, 1000f, false, SkillshotType.SkillshotCircle);
+            Vars.R.SetSkillshot(0.6f, 140f, 1700f, false, SkillshotType.SkillshotLine);
         }
     }
 }
