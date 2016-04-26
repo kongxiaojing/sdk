@@ -2,6 +2,7 @@ using System;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
+using LeagueSharp.SDK.Utils;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
 
@@ -89,7 +90,9 @@ namespace ExorAIO.Champions.Jinx
         /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
-            if (Vars.E.IsReady() && !Bools.HasAnyImmunity(args.Sender) && args.Sender.IsValidTarget(Vars.E.Range) &&
+            if (Vars.E.IsReady() &&
+                !Invulnerable.Check(args.Sender) &&
+                args.Sender.IsValidTarget(Vars.E.Range) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(args.End);
@@ -103,7 +106,8 @@ namespace ExorAIO.Champions.Jinx
         /// <param name="args">The <see cref="SpellbookCastSpellEventArgs" /> instance containing the event data.</param>
         public static void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
-            if (sender.Owner.IsMe && args.Slot == SpellSlot.Q)
+            if (sender.Owner.IsMe &&
+                args.Slot == SpellSlot.Q)
             {
                 /// <summary>
                 ///     Initializes the action blocking process.

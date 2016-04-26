@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Jinx
 {
@@ -49,7 +50,7 @@ namespace ExorAIO.Champions.Jinx
                             ///     The Auto Option is enabled. (Option check).
                             /// </summary>
                             if (!Targets.Target.IsValidTarget() ||
-                                !Vars.Menu["auto"].GetValue<MenuBool>().Value)
+                                !Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
                             {
                                 return;
                             }
@@ -59,9 +60,11 @@ namespace ExorAIO.Champions.Jinx
                             ///     2 Or more enemies in explosion range from the target. (AOE Logic),
                             ///     No hero in PowPow Range but 1 or more heroes in FishBones range. (Range Logic).
                             /// </summary>
-                            if (Targets.Target.CountEnemyHeroesInRange(200f) >= 3 ||
-                                Targets.Target.IsValidTarget(Vars.W.Range) &&
-                                // Prepare for it, so the fishbones will always be ready if target out of range.
+                            if (Targets.Target.CountEnemyHeroesInRange(200f) >= 3)
+                            {
+                                Vars.Q.Cast();
+                            }
+                            else if (Targets.Target.IsValidTarget(Vars.W.Range) &&
                                 !Targets.Target.IsValidTarget(Vars.PowPow.Range))
                             {
                                 Vars.Q.Cast();
@@ -79,7 +82,7 @@ namespace ExorAIO.Champions.Jinx
                             ///     The Clear Option is enabled. (Option check).
                             /// </summary>
                             if (GameObjects.Player.ManaPercent < ManaManager.NeededWMana ||
-                                !Vars.Menu["clear"].GetValue<MenuBool>().Value)
+                                !Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
                             {
                                 return;
                             }
@@ -96,13 +99,11 @@ namespace ExorAIO.Champions.Jinx
                                 ///     No minion in PowPow Range but 1 or more minions in FishBones range. (Lane Range Logic).
                                 ///     Or 4 or more minions in explosion range from the minion target. (Lane AoE Logic).
                                 /// </summary>
-                                if (
-                                    Targets.Minions.Any(
-                                        m =>
-                                            m.IsValidTarget(Vars.Q.Range) &&
-                                            Targets.Minions.Count(
-                                                m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >=
-                                            4))
+                                if (Targets.Minions.Any(
+                                    m =>
+                                        m.IsValidTarget(Vars.Q.Range) &&
+                                        Targets.Minions
+                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >= 4))
                                 {
                                     Vars.Q.Cast();
                                 }
@@ -112,13 +113,11 @@ namespace ExorAIO.Champions.Jinx
                                 ///     No jungle minion in PowPow Range but 1 or more jungle minions in FishBones range. (Jungle Range Logic).
                                 ///     Or 1 or more jungle minions in explosion range from the jungle minion target. (Jungle AOE Logic).
                                 /// </summary>
-                                if (
-                                    Targets.JungleMinions.Any(
-                                        m =>
-                                            m.IsValidTarget(Vars.Q.Range) &&
-                                            Targets.JungleMinions.Count(
-                                                m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >=
-                                            2))
+                                if (Targets.JungleMinions.Any(
+                                    m =>
+                                        m.IsValidTarget(Vars.Q.Range) &&
+                                        Targets.JungleMinions
+                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >= 2))
                                 {
                                     Vars.Q.Cast();
                                 }
@@ -148,7 +147,7 @@ namespace ExorAIO.Champions.Jinx
                             ///     The Clear Option is disabled. (Option check).
                             /// </summary>
                             if (GameObjects.Player.ManaPercent < ManaManager.NeededWMana ||
-                                !Vars.Menu["clear"].GetValue<MenuBool>().Value)
+                                !Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
                             {
                                 Vars.Q.Cast();
                             }
@@ -165,13 +164,11 @@ namespace ExorAIO.Champions.Jinx
                                 ///     Any minion in PowPow Range. (Lane Range Logic).
                                 ///     And less than 4 minions in explosion range from the minion target (Lane AoE Logic).
                                 /// </summary>
-                                if (
-                                    Targets.Minions.Any(
-                                        m =>
-                                            m.IsValidTarget(Vars.PowPow.Range) &&
-                                            Targets.Minions.Count(
-                                                m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) <
-                                            4))
+                                if (Targets.Minions.Any(
+                                    m =>
+                                        m.IsValidTarget(Vars.PowPow.Range) &&
+                                        Targets.Minions
+                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) < 4))
                                 {
                                     Vars.Q.Cast();
                                 }
@@ -181,13 +178,11 @@ namespace ExorAIO.Champions.Jinx
                                 ///     Any minion in PowPow range. (Jungle Range Logic).
                                 ///     And less than 1 minions in explosion range from the minion target (Jungle AoE Logic).
                                 /// </summary>
-                                if (
-                                    Targets.JungleMinions.Any(
-                                        m =>
-                                            m.IsValidTarget(Vars.PowPow.Range) &&
-                                            Targets.JungleMinions.Count(
-                                                m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) <
-                                            2))
+                                if (Targets.JungleMinions.Any(
+                                    m =>
+                                        m.IsValidTarget(Vars.PowPow.Range) &&
+                                        Targets.JungleMinions
+                                            .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) < 2))
                                 {
                                     Vars.Q.Cast();
                                 }
@@ -207,7 +202,7 @@ namespace ExorAIO.Champions.Jinx
                             ///     Disable if:
                             ///     The Auto Option is disabled. (Option check).
                             /// </summary>
-                            if (!Vars.Menu["auto"].GetValue<MenuBool>().Value)
+                            if (!Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
                             {
                                 Vars.Q.Cast();
                             }
@@ -238,15 +233,18 @@ namespace ExorAIO.Champions.Jinx
             /// <summary>
             ///     The Automatic W Logic.
             /// </summary>
-            if (Vars.W.IsReady() && Vars.Menu["auto"].GetValue<MenuBool>().Value)
+            if (Vars.W.IsReady() &&
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t => Bools.IsImmobile(t) && !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.W.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.W.Range)))
                 {
-                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any())
+                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
                     {
-                        Vars.W.Cast(Vars.W.GetPrediction(target).CastPosition);
+                        Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                         return;
                     }
                 }
@@ -255,11 +253,14 @@ namespace ExorAIO.Champions.Jinx
             /// <summary>
             ///     The Automatic E Logic.
             /// </summary>
-            if (Vars.E.IsReady() && Vars.Menu["auto"].GetValue<MenuBool>().Value)
+            if (Vars.E.IsReady() &&
+                Vars.Menu["spells"]["e"]["auto"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t => Bools.IsImmobile(t) && !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.E.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.E.Range)))
                 {
                     Vars.E.Cast(target.ServerPosition);
                 }
@@ -276,7 +277,8 @@ namespace ExorAIO.Champions.Jinx
             /// <summary>
             ///     The Q Switching Logics.
             /// </summary>
-            if (Vars.Q.IsReady() && Vars.Menu["blockq"].GetValue<MenuBool>().Value)
+            if (Vars.Q.IsReady() &&
+                Vars.Menu["miscellaneous"]["blockq"].GetValue<MenuBool>().Value)
             {
                 if (GameObjects.Player.HasBuff("JinxQ"))
                 {

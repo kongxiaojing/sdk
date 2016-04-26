@@ -15,11 +15,6 @@ namespace ExorAIO.Champions.Jhin
         public static void Initialize()
         {
             /// <summary>
-            ///     Sets the prediction menu.
-            /// </summary>
-
-
-            /// <summary>
             ///     Sets the spells menu.
             /// </summary>
             Vars.SpellsMenu = new Menu("spells", "Spells");
