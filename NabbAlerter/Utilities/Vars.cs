@@ -37,12 +37,12 @@ namespace NabbAlerter
         /// <summary>
         ///     The Menu.
         /// </summary>
-        public static Menu Menu { get; internal set; }
+        public static Menu Menu { internal get; set; }
 
         /// <summary>
         ///     The Hero Menu.
         /// </summary>
-        public static Menu HeroMenu { get; internal set; }
+        public static Menu HeroMenu { internal get; set; }
 
         /// <summary>
         ///     Initializes the enemy names.

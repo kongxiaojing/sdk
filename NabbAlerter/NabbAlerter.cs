@@ -61,7 +61,7 @@ namespace NabbAlerter
             ///     The Ultimate (R).
             /// </summary>
             if (args.Slot == SpellSlot.R &&
-                Vars.Menu["alerter"][(sender as Obj_AI_Hero).ChampionName.ToLower()]["ultimate"].GetValue<MenuBool>().Value)
+                Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["ultimate"].GetValue<MenuBool>().Value)
             {
                 /// <summary>
                 ///     Annie can cast R multiple times to move tibbers, let's just not spam it once she already casted R.
@@ -101,19 +101,19 @@ namespace NabbAlerter
                     switch (WeightedRandom.Next(1, 4))
                     {
                         case 1:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)} no ulti");
+                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no ulti");
                             break;
 
                         case 2:
-                            Game.Say($"no ult {Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)}");
+                            Game.Say($"no ult {Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
                             break;
 
                         case 3:
-                            Game.Say($"ult {Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)}");
+                            Game.Say($"ult {Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
                             break;
 
                         default:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)} ult");
+                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} ult");
                             break;
                     }
                 });
@@ -124,7 +124,7 @@ namespace NabbAlerter
             /// </summary>
             if (args.Slot == SpellSlot.Summoner1 &&
                 Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower()) != null &&
-                Vars.Menu["alerter"][(sender as Obj_AI_Hero).ChampionName.ToLower()]["sum1"].GetValue<MenuBool>().Value)
+                Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["sum1"].GetValue<MenuBool>().Value)
             {
                 /// <summary>
                 ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
@@ -138,21 +138,21 @@ namespace NabbAlerter
                     {
                         case 1:
                             Game.Say($"no {Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())} " +
-                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)}");
+                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
                             break;
 
                         case 2:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)} no " +
+                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no " +
                                      $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())}");
                             break;
 
                         case 3:
                             Game.Say($"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())} " +
-                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)}");
+                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
                             break;
 
                         default:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)} " +
+                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} " +
                                      $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())}");
                             break;
                     }
@@ -164,7 +164,7 @@ namespace NabbAlerter
             /// </summary>
             if (args.Slot == SpellSlot.Summoner2 &&
                 Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower()) != null &&
-                Vars.Menu["alerter"][(sender as Obj_AI_Hero).ChampionName.ToLower()]["sum2"].GetValue<MenuBool>().Value)
+                Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["sum2"].GetValue<MenuBool>().Value)
             {
                 /// <summary>
                 ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
@@ -178,21 +178,21 @@ namespace NabbAlerter
                     {
                         case 1:
                             Game.Say($"no {Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())} " +
-                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)}");
+                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
                             break;
 
                         case 2:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)} no " +
+                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no " +
                                      $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())}");
                             break;
 
                         case 3:
                             Game.Say($"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())} " +
-                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)}");
+                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
                             break;
 
                         default:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName)} " +
+                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} " +
                                      $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())}");
                             break;
                     }
