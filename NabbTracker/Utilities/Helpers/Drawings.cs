@@ -20,9 +20,10 @@ namespace NabbTracker
             {
                 foreach (var pg in GameObjects.Heroes.Where(
                     e =>
-                        !e.IsMe && e.IsHPBarRendered &&
-                        (e.IsAlly && Vars.Menu["settings"]["allies"].GetValue<MenuBool>().Value ||
-                         e.IsEnemy && Vars.Menu["settings"]["enemies"].GetValue<MenuBool>().Value)))
+                        !e.IsMe &&
+                        e.IsHPBarRendered &&
+                        (e.IsAlly && Vars.Menu["allies"].GetValue<MenuBool>().Value ||
+                         e.IsEnemy && Vars.Menu["enemies"].GetValue<MenuBool>().Value)))
                 {
                     for (var Spell = 0; Spell < Vars.SpellSlots.Count(); Spell++)
                     {

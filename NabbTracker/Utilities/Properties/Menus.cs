@@ -13,13 +13,14 @@ namespace NabbTracker
         public static void Initialize()
         {
             /// <summary>
-            /// The general Menu.
+            ///     The general Menu.
             /// </summary>
-            Vars.Menu = new Menu("settings", "Settings", true);
+            Vars.Menu = new Menu("nabbtracker", "NabbTracker", true);
             {
                 Vars.Menu.Add(new MenuBool("allies", "Allies", true));
                 Vars.Menu.Add(new MenuBool("enemies", "Enemies", true));
             }
+            Vars.Menu.Attach();
         }
     }
 }
