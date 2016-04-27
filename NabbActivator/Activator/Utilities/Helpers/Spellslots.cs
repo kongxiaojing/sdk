@@ -42,11 +42,6 @@ namespace NabbActivator
         /// <summary>
         ///     Gets the Barrier SpellSlot.
         /// </summary>
-        public static SpellSlot Flash => ObjectManager.Player.GetSpellSlot("SummonerFlash");
-
-        /// <summary>
-        ///     Gets the Barrier SpellSlot.
-        /// </summary>
         public static SpellSlot GetSmiteSlot()
         {
             foreach (var spell in ObjectManager.Player.Spellbook.Spells.Where(s => s.Name.ToLower().Contains("smite")))
