@@ -40,6 +40,6 @@ namespace ExorAIO.Champions.Kalista
         /// <summary>
         ///     The valid harassable heroes.
         /// </summary>
-        public static List<Obj_AI_Hero> Harass => GameObjects.EnemyHeroes.Where(t => Bools.IsPerfectRendTarget(t)).ToList();
+        public static List<Obj_AI_Hero> Harass => GameObjects.EnemyHeroes.ToList().FindAll(t => Bools.IsPerfectRendTarget(t));
     }
 }

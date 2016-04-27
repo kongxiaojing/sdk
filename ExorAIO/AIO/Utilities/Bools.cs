@@ -1,6 +1,7 @@
 using System.Linq;
 using LeagueSharp;
 using LeagueSharp.SDK;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Utilities
 {
@@ -126,9 +127,26 @@ namespace ExorAIO.Utilities
         ///     Returns true if the target is a perfectly valid rend target.
         /// </summary>
         public static bool IsPerfectRendTarget(Obj_AI_Base target)
-            =>
-                target.IsValidTarget(Vars.E.Range) &&
-                target.HasBuff("KalistaExpungeMarker") &&
-                !HasAnyImmunity(target as Obj_AI_Hero);
+        {
+            if (target is Obj_AI_Minion)
+            {
+                if (target.IsValidTarget(Vars.E.Range) &&
+                    target.HasBuff("kalistaexpungemarker"))
+                {
+                    return true;
+                }
+            }
+            else if (target is Obj_AI_Hero)
+            {
+                if (target.IsValidTarget(Vars.E.Range) &&
+                    target.HasBuff("kalistaexpungemarker") &&
+                    !Invulnerable.Check(target as Obj_AI_Hero))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
     }
 }

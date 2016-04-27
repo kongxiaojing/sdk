@@ -52,7 +52,7 @@ namespace ExorAIO.Champions.Kalista
             /// </summary>
             if (Vars.E.IsReady() &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuBool>().Value)
             {
                 if (Targets.Minions.Count(
                     m =>

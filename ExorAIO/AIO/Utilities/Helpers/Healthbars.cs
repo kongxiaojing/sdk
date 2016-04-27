@@ -18,45 +18,42 @@ namespace ExorAIO.Utilities
         {
             Drawing.OnDraw += delegate
             {
-                GameObjects.Jungle
-                    .Where(
-                        h =>
-                            !h.IsMe &&
-                            h.IsValid() &&
-                            Bools.IsPerfectRendTarget(h) &&
-                            !h.CharData.BaseSkinName.Contains("Mini") &&
-                            !h.CharData.BaseSkinName.Contains("Minion"))
-                    .ForEach(
-                        unit =>
-                        {
-                            /// <summary>
-                            ///     Defines what HPBar Offsets it should display.
-                            /// </summary>
-                            var mobOffset =
-                                Vars.JungleHpBarOffsetList.FirstOrDefault(
-                                    x => x.BaseSkinName.Equals(unit.CharData.BaseSkinName));
+                ObjectManager.Get<Obj_AI_Base>()
+                    .Where(h =>
+                        !h.IsMe &&
+                        h.IsValid() &&
+                        Bools.IsPerfectRendTarget(h) &&
+                        !h.CharData.BaseSkinName.Contains("Mini") &&
+                        !h.CharData.BaseSkinName.Contains("Minion"))
+                    .ForEach(unit =>
+                    {
+                        /// <summary>
+                        ///     Defines what HPBar Offsets it should display.
+                        /// </summary>
+                        var mobOffset = Vars.JungleHpBarOffsetList.FirstOrDefault(x => x.BaseSkinName.Equals(unit.CharData.BaseSkinName));
 
-                            var width = unit is Obj_AI_Minion ? mobOffset.Width : Vars.Width;
-                            var height = unit is Obj_AI_Minion ? mobOffset.Height : Vars.Height;
-                            var xOffset = unit is Obj_AI_Minion ? mobOffset.XOffset: Vars.XOffset;
-                            var yOffset = unit is Obj_AI_Minion ? mobOffset.YOffset : Vars.YOffset;
+                        var width = (int)(unit is Obj_AI_Minion ? mobOffset.Width : Vars.Width);
+                        var height = (int)(unit is Obj_AI_Minion ? mobOffset.Height : Vars.Height);
+                        var xOffset = (int)(unit is Obj_AI_Minion ? mobOffset.XOffset: Vars.XOffset);
+                        var yOffset = (int)(unit is Obj_AI_Minion ? mobOffset.YOffset : Vars.YOffset);
 
-                            var barPos = unit.HPBarPosition;
+                        var barPos = unit.HPBarPosition;
 
-                            barPos.X += xOffset;
-                            barPos.Y += yOffset;
+                        barPos.X += xOffset;
+                        barPos.Y += yOffset;
 
-                            var drawEndXPos = barPos.X + width * (unit.HealthPercent / 100);
-                            var drawStartXPos = barPos.X +
-                                                (unit.Health > KillSteal.GetPerfectRendDamage(unit)
-                                                    ? width *
-                                                      ((unit.Health - KillSteal.GetPerfectRendDamage(unit)) /
-                                                       unit.MaxHealth * 100 / 100)
-                                                    : 0);
+                        var drawEndXPos = barPos.X + width * (unit.HealthPercent / 100);
+                        var drawStartXPos = barPos.X + (unit.Health > KillSteal.GetPerfectRendDamage(unit)
+                            ? width * (((unit.Health - KillSteal.GetPerfectRendDamage(unit)) / unit.MaxHealth * 100) / 100)
+                            : 0);
 
-                            Drawing.DrawLine(drawStartXPos, barPos.Y, drawEndXPos, barPos.Y, height, unit.Health < KillSteal.GetPerfectRendDamage(unit) ? Color.Blue : Color.Orange);
-                            Drawing.DrawLine(drawStartXPos, barPos.Y, drawStartXPos, barPos.Y + height + 1, 1, Color.Lime);
-                        });
+                        Drawing.DrawLine(drawStartXPos, barPos.Y, drawEndXPos, barPos.Y, height, unit.Health < KillSteal.GetPerfectRendDamage(unit)
+                            ? Color.Blue 
+                            : Color.Orange);
+
+                        Drawing.DrawLine(drawStartXPos, barPos.Y, drawStartXPos, barPos.Y + height + 1, 1, Color.Lime);
+                    }
+                );
             };
         }
     }

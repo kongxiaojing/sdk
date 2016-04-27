@@ -120,11 +120,6 @@ namespace ExorAIO.Champions.Kalista
         /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
         public static void OnOrbwalkerAction(object sender, OrbwalkingActionArgs args)
         {
-            if (!args.Target.IsValidTarget())
-            {
-                return;
-            }
-
             switch (args.Type)
             {
                 case OrbwalkingType.NonKillableMinion:

@@ -21,6 +21,17 @@ namespace ExorAIO.Champions.Kalista
         public static void Automatic(EventArgs args)
         {
             /// <summary>
+            ///     The Focus Logic (Passive Mark).
+            /// </summary>
+            foreach (var target in GameObjects.EnemyHeroes.Where(
+                t =>
+                    t.IsValidTarget(Vars.AARange) &&
+                    t.HasBuff("kalistacoopstrikemarkally")))
+            {
+                Variables.Orbwalker.ForceTarget = target;
+            }
+
+            /// <summary>
             ///     The Soulbound declaration.
             /// </summary>
             if (Vars.SoulBound == null)
@@ -40,17 +51,6 @@ namespace ExorAIO.Champions.Kalista
                 {
                     Vars.R.Cast();
                 }
-            }
-
-            /// <summary>
-            ///     The Focus Logic (Passive Mark).
-            /// </summary>
-            foreach (var target in GameObjects.EnemyHeroes.Where(
-                t =>
-                    t.IsValidTarget(Vars.AARange) &&
-                    t.HasBuff("kalistacoopstrikemarkally")))
-            {
-                Variables.Orbwalker.ForceTarget = target;
             }
 
             /// <summary>
@@ -92,25 +92,50 @@ namespace ExorAIO.Champions.Kalista
                 /// <summary>
                 ///     The E Minion Harass Logic.
                 /// </summary>
-                if (GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
+                if (Targets.Minions.Any(
+                    m =>
+                        Bools.IsPerfectRendTarget(m) &&
+                        m.Health < KillSteal.GetPerfectRendDamage(m)) &&
+                    GameObjects.EnemyHeroes.Any(t => Bools.IsPerfectRendTarget(t)) &&
                     Vars.Menu["spells"]["e"]["harass"].GetValue<MenuBool>().Value)
                 {
-                    if (Targets.Minions.Any(
-                            m =>
-                                Bools.IsPerfectRendTarget(m) &&
-                                m.Health < KillSteal.GetPerfectRendDamage(m)))
+                    /// <summary>
+                    ///     Check for Mana Manager if the killable minion is only one, else do not use it.)
+                    /// </summary>
+                    if (Targets.Minions.Count(
+                        m =>
+                            Bools.IsPerfectRendTarget(m) &&
+                            m.Health < KillSteal.GetPerfectRendDamage(m)) == 1)
                     {
-                        if (Targets.Harass.Count() > (Items.HasItem(3085) ? 1 : 0) &&
-                            !Invulnerable.Check(Targets.Harass.FirstOrDefault(), DamageType.Physical, false) &&
-                            Vars.Menu["spells"]["e"]["whitelist"][Targets.Harass.FirstOrDefault().ChampionName.ToLower()].GetValue<MenuBool>().Value)
+                        if (GameObjects.Player.ManaPercent < ManaManager.NeededEMana)
                         {
-                            Vars.E.Cast();
-                        }
-                        else if (Targets.Harass.Count() >= 2)
-                        {
-                            Vars.E.Cast();
+                            return;
                         }
                     }
+
+                    /// <summary>
+                    ///     Check for E Whitelist if the harassable target is only one, else do not use it.)
+                    /// </summary>
+                    if (GameObjects.EnemyHeroes.Count(t => Bools.IsPerfectRendTarget(t)) == 1)
+                    {
+                        if (!Vars.Menu["spells"]["e"]["whitelist"][GameObjects.EnemyHeroes.FirstOrDefault(t => Bools.IsPerfectRendTarget(t)).ChampionName.ToLower()].GetValue<MenuBool>().Value)
+                        {
+                            return;
+                        }
+                    }
+
+                    /// <summary>
+                    ///     Check for invulnerability through all the harassable targets.
+                    /// </summary>
+                    foreach (var target in GameObjects.EnemyHeroes.Where(t => Bools.IsPerfectRendTarget(t)))
+                    {
+                        if (Invulnerable.Check(target, DamageType.Physical, false))
+                        {
+                            return;
+                        }
+                    }
+
+                    Vars.E.Cast();
                 }
 
                 /// <summary>
@@ -118,12 +143,13 @@ namespace ExorAIO.Champions.Kalista
                 /// </summary>
                 if (Vars.Menu["spells"]["e"]["junglesteal"].GetValue<MenuBool>().Value)
                 {
-                    if (Targets.JungleMinions.Count(
+                    foreach (var minion in Targets.JungleMinions.Where(
                         m =>
                             Bools.IsPerfectRendTarget(m) &&
-                            m.CharData.BaseSkinName.Contains("Mini") &&
-                            m.Health < KillSteal.GetPerfectRendDamage(m)) != 1)
+                            !m.CharData.BaseSkinName.Contains("Mini") &&
+                            m.Health < KillSteal.GetPerfectRendDamage(m)))
                     {
+
                         Vars.E.Cast();
                     }
                 }
