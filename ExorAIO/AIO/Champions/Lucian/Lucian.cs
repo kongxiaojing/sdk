@@ -103,6 +103,8 @@ namespace ExorAIO.Champions.Lucian
 
                     case OrbwalkingMode.LaneClear:
                         Logics.Clear(sender, args);
+                        Logics.JungleClear(sender, args);
+                        Logics.BuildingClear(sender, args);
                         break;
 
                     default:

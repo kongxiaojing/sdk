@@ -109,6 +109,7 @@ namespace ExorAIO.Champions.Vayne
                     case OrbwalkingMode.LaneClear:
                         Logics.Clear(sender, args);
                         Logics.JungleClear(sender, args);
+                        Logics.BuildingClear(sender, args);
                         break;
 
                     default:

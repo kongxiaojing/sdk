@@ -50,10 +50,11 @@ namespace ExorAIO.Champions.Graves
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.EMenu.Add(new MenuBool("clear", "JungleClear", true));
+                    Vars.EMenu.Add(new MenuBool("combo",       "Combo",       true));
+                    Vars.EMenu.Add(new MenuBool("buildings",   "Buildings",   true));
+                    Vars.EMenu.Add(new MenuBool("jungleclear", "JungleClear", true));
                     Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "JungleClear: Mana >= x%", 50, 0, 99));
+                        new MenuSlider("manamanager", "Buildings/JungleClear: Mana >= x%", 50, 0, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

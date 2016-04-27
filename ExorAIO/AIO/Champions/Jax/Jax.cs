@@ -108,6 +108,7 @@ namespace ExorAIO.Champions.Jax
 
                     case OrbwalkingMode.LaneClear:
                         Logics.Clear(sender, args);
+                        Logics.BuildingClear(sender, args);
                         break;
 
                     default:

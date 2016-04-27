@@ -107,6 +107,7 @@ namespace ExorAIO.Champions.Nautilus
 
                     case OrbwalkingMode.LaneClear:
                         Logics.JungleClear(sender, args);
+                        Logics.BuildingClear(sender, args);
                         break;
 
                     default:

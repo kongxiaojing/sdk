@@ -37,9 +37,10 @@ namespace ExorAIO.Champions.Darius
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo",       "Combo",       true));
+                    Vars.WMenu.Add(new MenuBool("buildings",   "Buildings",   true));
                     Vars.WMenu.Add(new MenuBool("jungleclear", "JungleClear", true));
                     Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "JungleClear: Mana >= x%", 50, 0, 99));
+                        new MenuSlider("manamanager", "Buildings/JungleClear: Mana >= x%", 50, 0, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 

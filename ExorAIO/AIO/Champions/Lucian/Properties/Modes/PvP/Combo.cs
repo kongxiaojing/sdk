@@ -20,6 +20,21 @@ namespace ExorAIO.Champions.Lucian
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
+            /// <summary>
+            ///     The W Combo Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.W.Range) &&
+                !Targets.Target.IsValidTarget(Vars.AARange) &&
+                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
+            {
+                if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c.IsMinion))
+                {
+                    Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
+                    return;
+                }
+            }
+
             if (!GameObjects.EnemyHeroes.Any(
                 t =>
                     !Invulnerable.Check(t) &&

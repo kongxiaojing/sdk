@@ -108,6 +108,7 @@ namespace ExorAIO.Champions.DrMundo
 
                     case OrbwalkingMode.LaneClear:
                         Logics.JungleClear(sender, args);
+                        Logics.BuildingClear(sender, args);
                         break;
 
                     default:

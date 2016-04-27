@@ -108,6 +108,7 @@ namespace ExorAIO.Champions.Graves
 
                     case OrbwalkingMode.LaneClear:
                         Logics.JungleClear(sender, args);
+                        Logics.BuildingClear(sender, args);
                         break;
 
                     default:

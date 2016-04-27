@@ -74,6 +74,19 @@ namespace ExorAIO.Champions.Lucian
                 }
                 return;
             }
+        }
+
+        /// <summary>
+        ///     Called on do-cast.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The args.</param>
+        public static void JungleClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null)
+            {
+                return;
+            }
 
             /// <summary>
             ///     The E JungleClear Logic.
@@ -84,6 +97,31 @@ namespace ExorAIO.Champions.Lucian
                 Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(Game.CursorPos);
+            }
+        }
+
+        /// <summary>
+        ///     Called on do-cast.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The args.</param>
+        public static void BuildingClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
+                Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
+                Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     The E BuildingClear Logic.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
+                Vars.Menu["spells"]["e"]["building"].GetValue<MenuBool>().Value)
+            {
+                Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 5));
             }
         }
     }

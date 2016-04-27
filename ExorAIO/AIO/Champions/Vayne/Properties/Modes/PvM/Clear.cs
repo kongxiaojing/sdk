@@ -63,5 +63,30 @@ namespace ExorAIO.Champions.Vayne
                 Vars.Q.Cast(Game.CursorPos);
             }
         }
+
+        /// <summary>
+        ///     Called on do-cast.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The args.</param>
+        public static void BuildingClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
+                Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
+                Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     The Q BuildingClear Logic.
+            /// </summary>
+            if (Vars.Q.IsReady() &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
+                Vars.Menu["spells"]["q"]["building"].GetValue<MenuBool>().Value)
+            {
+                Vars.Q.Cast(Game.CursorPos);
+            }
+        }
     }
 }
