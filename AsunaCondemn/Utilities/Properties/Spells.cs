@@ -15,7 +15,7 @@ namespace AsunaCondemn
         public static void Initialize()
         {
             Vars.E = new Spell(SpellSlot.E, Vars.AARange);
-            Vars.Flash = new Spell(SpellSlots.Flash, 425f);
+            Vars.Flash = new Spell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), 425f);
 
             Vars.E.SetSkillshot(0.42f, 60f, 1200f, false, SkillshotType.SkillshotLine);
         }
