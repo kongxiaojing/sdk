@@ -76,6 +76,7 @@ namespace ExorAIO.Champions.Jhin
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
+                        !t.IsValidTarget(Vars.Q.Range) &&
                         t.HasBuff("jhinespotteddebuff") &&
                         Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
