@@ -37,31 +37,31 @@ namespace NabbTracker
         /// <summary>
         ///     The Spells Healthbars X coordinate.
         /// </summary>
-        public static int SpellX { get; set; }
+        public static int SpellX { get; internal set; }
 
         /// <summary>
         ///     The Spells Healthbars Y coordinate.
         /// </summary>
-        public static int SpellY { get; set; }
+        public static int SpellY { get; internal set; }
 
         /// <summary>
         ///     The SummonerSpells Healthbar X coordinate.
         /// </summary>
-        public static int SummonerSpellX { get; set; }
+        public static int SummonerSpellX { get; internal set; }
 
         /// <summary>
         ///     The SummonerSpells Healthbar Y coordinate.
         /// </summary>
-        public static int SummonerSpellY { get; set; }
+        public static int SummonerSpellY { get; internal set; }
 
         /// <summary>
         ///     The SpellLevel X coordinate.
         /// </summary>
-        public static int SpellLevelX { get; set; }
+        public static int SpellLevelX { get; internal set; }
 
         /// <summary>
         ///     The Healthbars Y coordinate.
         /// </summary>
-        public static int SpellLevelY { get; set; }
+        public static int SpellLevelY { get; internal set; }
     }
 }
