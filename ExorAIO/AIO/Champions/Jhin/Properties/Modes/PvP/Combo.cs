@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -34,11 +35,14 @@ namespace ExorAIO.Champions.Jhin
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.R.Range)))
+                        t.IsValidTarget(Vars.R.Range) &&
+                        GameObjects.Player.IsFacing(t)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     return;
                 }
+                
+                Vars.R.Cast(Game.CursorPos);
             }
 
             if (Invulnerable.Check(Targets.Target))
