@@ -27,41 +27,41 @@ namespace NabbTracker
         /// <summary>
         ///     The Menu.
         /// </summary>
-        public static Menu Menu { get; set; }
+        public static Menu Menu { internal get; set; }
 
         /// <summary>
         ///     The Text fcnt.
         /// </summary>
-        public static Font DisplayTextFont { get; set; } = new Font(Drawing.Direct3DDevice, new System.Drawing.Font("Tahoma", 8));
+        public static Font DisplayTextFont { internal get; set; } = new Font(Drawing.Direct3DDevice, new System.Drawing.Font("Tahoma", 8));
 
         /// <summary>
         ///     The Spells Healthbars X coordinate.
         /// </summary>
-        public static int SpellX { get; internal set; }
+        public static int SpellX { internal get; set; }
 
         /// <summary>
         ///     The Spells Healthbars Y coordinate.
         /// </summary>
-        public static int SpellY { get; internal set; }
+        public static int SpellY { internal get; set; }
 
         /// <summary>
         ///     The SummonerSpells Healthbar X coordinate.
         /// </summary>
-        public static int SummonerSpellX { get; internal set; }
+        public static int SummonerSpellX { internal get; set; }
 
         /// <summary>
         ///     The SummonerSpells Healthbar Y coordinate.
         /// </summary>
-        public static int SummonerSpellY { get; internal set; }
+        public static int SummonerSpellY { internal get; set; }
 
         /// <summary>
         ///     The SpellLevel X coordinate.
         /// </summary>
-        public static int SpellLevelX { get; internal set; }
+        public static int SpellLevelX { internal get; set; }
 
         /// <summary>
         ///     The Healthbars Y coordinate.
         /// </summary>
-        public static int SpellLevelY { get; internal set; }
+        public static int SpellLevelY { internal get; set; }
     }
 }
