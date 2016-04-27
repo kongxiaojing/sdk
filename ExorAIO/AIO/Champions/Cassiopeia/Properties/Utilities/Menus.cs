@@ -57,7 +57,8 @@ namespace ExorAIO.Champions.Cassiopeia
                     Vars.EMenu.Add(new MenuBool("clear",     "Clear",     true));
                     Vars.EMenu.Add(
                         new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
-                    Vars.EMenu.Add(new MenuSlider("delay", "E Delay (ms)", 0, 0, 250));
+                    Vars.EMenu.Add(
+                        new MenuSlider("delay", "E Delay (ms)", 0, 0, 250));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
