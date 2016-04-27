@@ -34,7 +34,7 @@ namespace ExorAIO.Champions.Graves
                         !Bools.HasAnyImmunity(t) &&
                         t.IsValidTarget(Vars.Q.Range)))
                 {
-                    Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
+                    Vars.Q.Cast(target.ServerPosition);
                     return;
                 }
             }
@@ -51,7 +51,7 @@ namespace ExorAIO.Champions.Graves
                         !Bools.HasAnyImmunity(t) &&
                         t.IsValidTarget(Vars.W.Range)))
                 {
-                    Vars.W.Cast(Vars.W.GetPrediction(target).CastPosition);
+                    Vars.W.Cast(target.ServerPosition);
                 }
             }
         }

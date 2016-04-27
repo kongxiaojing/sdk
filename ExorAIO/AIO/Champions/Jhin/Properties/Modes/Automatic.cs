@@ -76,11 +76,15 @@ namespace ExorAIO.Champions.Jhin
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
-                        !t.IsValidTarget(Vars.Q.Range) &&
                         t.HasBuff("jhinespotteddebuff") &&
                         Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
-                    if (GameObjects.Player.Distance(Vars.W.GetPrediction(target).UnitPosition) > Vars.Q.Range)
+                    if (Bools.IsImmobile(target))
+                    {
+                        Vars.W.Cast(target.ServerPosition);
+                    }
+                    else if (!target.IsValidTarget(Vars.Q.Range) &&
+                        GameObjects.Player.Distance(Vars.W.GetPrediction(target).UnitPosition) > Vars.Q.Range)
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                     }
@@ -99,7 +103,7 @@ namespace ExorAIO.Champions.Jhin
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range)))
                 {
-                    Vars.E.Cast(Vars.E.GetPrediction(target).CastPosition);
+                    Vars.E.Cast(target.ServerPosition);
                 }
             }
         }

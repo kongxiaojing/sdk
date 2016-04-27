@@ -35,8 +35,11 @@ namespace ExorAIO.Champions.Caitlyn
                             !Bools.HasAnyImmunity(t) &&
                             t.IsValidTarget(Vars.Q.Range)))
                 {
-                    if (Bools.IsImmobile(target) ||
-                        target.HasBuff("caitlynyordletrapdebuff") ||
+                    if (Bools.IsImmobile(target))
+                    {
+                        Vars.Q.Cast(target.ServerPosition);
+                    }
+                    else if (target.HasBuff("caitlynyordletrapdebuff") ||
                         target.HasBuff("caitlynyordletrapinternal"))
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);

@@ -244,7 +244,7 @@ namespace ExorAIO.Champions.Jinx
                 {
                     if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
                     {
-                        Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                        Vars.W.Cast(target.ServerPosition);
                         return;
                     }
                 }

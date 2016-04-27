@@ -38,7 +38,7 @@ namespace ExorAIO.Champions.KogMaw
                 {
                     if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
                     {
-                        Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
+                        Vars.Q.Cast(target.ServerPosition);
                     }
                 }
             }
@@ -56,7 +56,7 @@ namespace ExorAIO.Champions.KogMaw
                             !Invulnerable.Check(t) &&
                             t.IsValidTarget(Vars.E.Range)))
                 {
-                    Vars.E.Cast(Vars.E.GetPrediction(target).UnitPosition);
+                    Vars.E.Cast(target.ServerPosition);
                 }
             }
 
@@ -64,6 +64,7 @@ namespace ExorAIO.Champions.KogMaw
             ///     The Automatic R Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
+                
                 GameObjects.Player.ManaPercent > ManaManager.NeededRMana &&
                 Vars.Menu["spells"]["r"]["logical"].GetValue<MenuBool>().Value &&
                 Vars.Menu["spells"]["r"]["stacks"].GetValue<MenuSlider>().Value >
@@ -72,10 +73,11 @@ namespace ExorAIO.Champions.KogMaw
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         Bools.IsImmobile(t) &&
+                        t.HealthPercent < 50 &&
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range)))
                 {
-                    Vars.R.Cast(Vars.R.GetPrediction(target).CastPosition);
+                    Vars.R.Cast(target.ServerPosition);
                 }
             }
         }

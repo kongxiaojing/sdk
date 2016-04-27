@@ -61,7 +61,7 @@ namespace ExorAIO.Champions.Cassiopeia
                         !Bools.HasAnyImmunity(t, true) &&
                         t.IsValidTarget(Vars.Q.Range)))
                 {
-                    Vars.Q.Cast(Vars.Q.GetPrediction(target).CastPosition);
+                    Vars.Q.Cast(target.ServerPosition);
                     return;
                 }
             }
@@ -79,7 +79,7 @@ namespace ExorAIO.Champions.Cassiopeia
                         !Bools.HasAnyImmunity(t, true) &&
                         t.IsValidTarget(Vars.W.Range)))
                 {
-                    Vars.W.Cast(Vars.W.GetPrediction(target).CastPosition);
+                    Vars.W.Cast(target.ServerPosition);
                 }
             }
         }

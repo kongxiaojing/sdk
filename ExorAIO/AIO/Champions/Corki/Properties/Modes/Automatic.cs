@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Corki
                         !Bools.HasAnyImmunity(t) &&
                         t.IsValidTarget(Vars.Q.Range)))
                 {
-                    Vars.Q.Cast(Vars.Q.GetPrediction(target).CastPosition);
+                    Vars.Q.Cast(target.ServerPosition);
                 }
             }
 

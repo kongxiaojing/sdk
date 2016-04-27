@@ -123,11 +123,6 @@ namespace ExorAIO.Champions.DrMundo
             {
                 Vars.R.Cast();
             }
-
-            if (GameObjects.Player.IsRecalling())
-            {
-                return;
-            }
         }
     }
 }
