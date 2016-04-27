@@ -31,6 +31,7 @@ namespace ExorAIO.Champions.Jhin
                 return;
             }
 
+            /*
             /// <summary>
             ///     The Automatic R Logic.
             /// </summary>
@@ -39,6 +40,7 @@ namespace ExorAIO.Champions.Jhin
             {
                 GameObjects.Player.IssueOrder(GameObjectOrder.MoveTo, GameObjects.Player.ServerPosition);
             }
+            */
 
             if (Vars.R.Instance.Name.Equals("JhinRShot"))
             {
