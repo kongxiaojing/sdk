@@ -1,0 +1,120 @@
+using System.Linq;
+using LeagueSharp;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
+using SharpDX;
+
+namespace NabbTracker
+{
+    /// <summary>
+    ///     The drawings class.
+    /// </summary>
+    internal class Drawings
+    {
+        /// <summary>
+        ///     Loads the range drawings.
+        /// </summary>
+        public static void Initialize()
+        {
+            Drawing.OnDraw += delegate
+            {
+                foreach (var pg in GameObjects.Heroes.Where(
+                    e =>
+                        !e.IsMe && e.IsHPBarRendered &&
+                        (e.IsAlly && Vars.Menu["settings"]["allies"].GetValue<MenuBool>().Value ||
+                         e.IsEnemy && Vars.Menu["settings"]["enemies"].GetValue<MenuBool>().Value)))
+                {
+                    for (var Spell = 0; Spell < Vars.SpellSlots.Count(); Spell++)
+                    {
+                        Vars.SpellX = (int) pg.HPBarPosition.X + (pg.ChampionName.Equals("Jhin") ? 17 : 10) + Spell*25;
+                        Vars.SpellY = (int) pg.HPBarPosition.Y + (pg.ChampionName.Equals("Jhin") ? 25 : 35);
+
+                        Vars.DisplayTextFont.DrawText(
+                            null,
+                            pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 0
+                                ? string.Format("{0:0}", pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time)
+                                : Vars.SpellSlots[Spell].ToString(), Vars.SpellX, Vars.SpellY,
+
+                            pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).Level < 1
+                                ? Color.Gray
+                                : pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).SData.ManaCostArray.MaxOrDefault(value => value) > pg.Mana
+                                    ? Color.Cyan
+                                    : pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 0 &&
+                                      pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time <= 4
+                                        ? Color.Red
+                                        : pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 4
+                                            ? Color.Yellow 
+                                            : Color.LightGreen);
+
+                        for (var DrawSpellLevel = 0; DrawSpellLevel <= pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).Level - 1; DrawSpellLevel++)
+                        {
+                            Vars.SpellLevelX = Vars.SpellX + DrawSpellLevel*3 - 4;
+                            Vars.SpellLevelY = Vars.SpellY + 4;
+
+                            Vars.DisplayTextFont.DrawText(null, ".", Vars.SpellLevelX, Vars.SpellLevelY, Color.White);
+                        }
+                    }
+
+                    for (var SummonerSpell = 0; SummonerSpell < Vars.SummonerSpellSlots.Count(); SummonerSpell++)
+                    {
+                        Vars.SummonerSpellX = (int) pg.HPBarPosition.X + 10 + SummonerSpell*88;
+                        Vars.SummonerSpellY = (int) pg.HPBarPosition.Y + (pg.ChampionName.Equals("Jhin") ? -10 : 4);
+
+                        switch (pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).Name.ToLower())
+                        {
+                            case "summonerflash":
+                                Vars.GetSummonerSpellName = "Flash";
+                                break;
+                            case "summonerdot":
+                                Vars.GetSummonerSpellName = "Ignite";
+                                break;
+                            case "summonerheal":
+                                Vars.GetSummonerSpellName = "Heal";
+                                break;
+                            case "summonerteleport":
+                                Vars.GetSummonerSpellName = "Teleport";
+                                break;
+                            case "summonerexhaust":
+                                Vars.GetSummonerSpellName = "Exhaust";
+                                break;
+                            case "summonerhaste":
+                                Vars.GetSummonerSpellName = "Ghost";
+                                break;
+                            case "summonerbarrier":
+                                Vars.GetSummonerSpellName = "Barrier";
+                                break;
+                            case "summonerboost":
+                                Vars.GetSummonerSpellName = "Cleanse";
+                                break;
+                            case "summonermana":
+                                Vars.GetSummonerSpellName = "Clarity";
+                                break;
+                            case "summonerclairvoyance":
+                                Vars.GetSummonerSpellName = "Clairvoyance";
+                                break;
+                            case "summonerodingarrison":
+                                Vars.GetSummonerSpellName = "Garrison";
+                                break;
+                            case "summonersnowball":
+                                Vars.GetSummonerSpellName = "Mark";
+                                break;
+                            default:
+                                Vars.GetSummonerSpellName = "Smite";
+                                break;
+                        }
+
+                        Vars.DisplayTextFont.DrawText(
+                            null,
+                            pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time > 0
+                                ? Vars.GetSummonerSpellName + ":" + string.Format("{0:0}", pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time)
+                                : Vars.GetSummonerSpellName + ": UP ", Vars.SummonerSpellX, Vars.SummonerSpellY,
+ 
+                            pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time > 0
+                                ? Color.Red 
+                                : Color.Yellow);
+                    }
+                }
+            };
+        }
+    }
+}
