@@ -22,12 +22,21 @@ namespace NabbActivator
         /// <summary>
         ///     The minions target.
         /// </summary>
-        public static List<Obj_AI_Minion> Minions => GameObjects.AllyMinions.Where(m => m.IsMinion() && m.IsValidTarget(750f, false)).ToList();
+        public static List<Obj_AI_Minion> Minions
+            =>
+                GameObjects.AllyMinions.Where(
+                    m =>
+                        m.IsMinion() &&
+                        m.IsValidTarget(750f, false)).ToList();
 
         /// <summary>
         ///     The jungle minion targets.
         /// </summary>
-        public static List<Obj_AI_Minion> JungleMinions => GameObjects.Jungle.Where(m => m.IsValidTarget(500f) && !GameObjects.JungleSmall.Contains(m)).ToList()
-            ;
+        public static List<Obj_AI_Minion> JungleMinions
+            =>
+                GameObjects.Jungle.Where(
+                    m =>
+                        m.IsValidTarget(500f) &&
+                        !GameObjects.JungleSmall.Contains(m)).ToList();
     }
 }

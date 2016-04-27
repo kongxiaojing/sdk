@@ -10,11 +10,11 @@ namespace NabbActivator
         /// <summary>
         ///     Sets the minimum necessary health percent to use a health potion.
         /// </summary>
-        public static int MinHealthPercent => Vars.Menu["activator"]["health"]["options"].GetValue<MenuSlider>().Value;
+        public static int MinHealthPercent => Vars.Menu["activator"]["consumables"]["health"].GetValue<MenuSlider>().Value;
 
         /// <summary>
         ///     Sets the minimum necessary mana percent to use a mana potion.
         /// </summary>
-        public static int MinManaPercent => Vars.Menu["activator"]["mana"]["options"].GetValue<MenuSlider>().Value;
+        public static int MinManaPercent => Vars.Menu["activator"]["consumables"]["mana"].GetValue<MenuSlider>().Value;
     }
 }

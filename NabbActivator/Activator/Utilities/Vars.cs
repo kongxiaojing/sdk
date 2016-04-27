@@ -58,7 +58,7 @@ namespace NabbActivator
         /// <summary>
         ///     Gets or sets the assembly menu.
         /// </summary>
-        public static Menu Menu { get; set; }
+        public static Menu Menu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the slider menu.

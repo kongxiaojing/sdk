@@ -33,7 +33,7 @@ namespace NabbActivator
                             if (gitVersion != typeof(Updater).Assembly.GetName().Version)
                             {
                                 Game.PrintChat(
-                                    $"<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
+                                    $"[SDK]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
                             }
                             else
                             {
@@ -45,7 +45,7 @@ namespace NabbActivator
                                 /// <summary>
                                 ///     Tells the player the assembly has been loaded.
                                 /// </summary>
-                                Game.PrintChat("<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Loaded!");
+                                Game.PrintChat("[SDK]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Loaded!");
                             }
                         }
                     }
@@ -54,7 +54,7 @@ namespace NabbActivator
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    Game.PrintChat("<font color=\"#FFF280\">Exception thrown at NabbActivator.Updater, make a screenshot of the console and send it to Exory.");
+                    Game.PrintChat("<font color=\"#FFF280\">Exception thrown at [SDK]NabbActivator.Updater, make a screenshot of the console and send it to Exory.");
                 }
             });
         }
