@@ -45,8 +45,8 @@ namespace ExorAIO.Champions.KogMaw
                 {
                     Vars.W.Cast();
                 }
-                else if (!Targets.Minions.Any(x => x.IsValidTarget(Vars.W.Range)) &&
-                    Targets.JungleMinions.Any(x => x.IsValidTarget(Vars.W.Range)))
+                else if (!Targets.Minions.Any() &&
+                    Targets.JungleMinions.Any())
                 {
                     Vars.W.Cast();
                 }
