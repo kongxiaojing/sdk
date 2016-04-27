@@ -89,31 +89,6 @@ namespace ExorAIO.Champions.Kalista
         }
 
         /// <summary>
-        ///     Called on do-cast.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">The args.</param>
-        public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
-        {
-            if (sender.IsMe &&
-                AutoAttack.IsAutoAttack(args.SData.Name))
-            {
-                /// <summary>
-                ///     Initializes the orbwalkingmodes.
-                /// </summary>
-                switch (Variables.Orbwalker.ActiveMode)
-                {
-                    case OrbwalkingMode.Combo:
-                        Logics.Weaving(sender, args);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         ///     Triggers when there is a valid unkillable minion around.
         /// </summary>
         /// <param name="sender">The object.</param>

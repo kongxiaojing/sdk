@@ -1,4 +1,3 @@
-using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 
@@ -15,7 +14,6 @@ namespace ExorAIO.Champions.Kalista
         public static void Initialize()
         {
             Game.OnUpdate += Kalista.OnUpdate;
-            Obj_AI_Base.OnDoCast += Kalista.OnDoCast;
             Variables.Orbwalker.OnAction += Kalista.OnOrbwalkerAction;
         }
     }
