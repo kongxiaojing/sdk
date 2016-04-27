@@ -23,8 +23,11 @@ namespace NabbActivator
                     using (var c = new WebClient())
                     {
                         var rawVersion =
-                            c.DownloadString("https://raw.githubusercontent.com/nabbhacker/ExoryREPO/master/NabbActivator/Properties/AssemblyInfo.cs");
-                        var match = new Regex(@"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]").Match(rawVersion);
+                            c.DownloadString("https://raw.githubusercontent.com/nabbhacker/SDKExoryREPO/master/NabbActivator/Properties/AssemblyInfo.cs");
+                        var match =
+                            new Regex(
+                                @"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]")
+                                .Match(rawVersion);
 
                         if (match.Success)
                         {
@@ -34,19 +37,18 @@ namespace NabbActivator
                             {
                                 Game.PrintChat(
                                     $"[SDK]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
+                                return;
                             }
-                            else
-                            {
-                                /// <summary>
-                                ///     Loads the activator index.
-                                /// </summary>
-                                Index.OnLoad();
 
-                                /// <summary>
-                                ///     Tells the player the assembly has been loaded.
-                                /// </summary>
-                                Game.PrintChat("[SDK]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Loaded!");
-                            }
+                            /// <summary>
+                            ///     Loads the activator index.
+                            /// </summary>
+                            Index.OnLoad();
+
+                            /// <summary>
+                            ///     Tells the player the assembly has been loaded.
+                            /// </summary>
+                            Game.PrintChat("[SDK]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Loaded!");
                         }
                     }
                 }
