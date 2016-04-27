@@ -38,6 +38,7 @@ namespace AsunaCondemn
                 }
                 Vars.Menu.Add(Vars.DrawingsMenu);
             }
+            Vars.Menu.Attach();
         }
     }
 }

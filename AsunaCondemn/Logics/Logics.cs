@@ -28,7 +28,7 @@ namespace AsunaCondemn
             /// </summary>
             if (Vars.E.IsReady() &&
                 Vars.Flash.IsReady() &&
-                Vars.Menu["asunacondemn"]["e"]["logical"].GetValue<MenuKeyBind>().Active)
+                Vars.Menu["e"]["logical"].GetValue<MenuKeyBind>().Active)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>

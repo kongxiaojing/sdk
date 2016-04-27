@@ -28,7 +28,8 @@ namespace AsunaCondemn
                 /// <summary>
                 ///     Loads the E drawing.
                 /// </summary>
-                if (Vars.E.IsReady() && Vars.Menu["asunacondemn"]["drawings"]["e"].GetValue<MenuBool>().Value)
+                if (Vars.E.IsReady() &&
+                    Vars.Menu["drawings"]["e"].GetValue<MenuBool>().Value)
                 {
                     foreach (var target in GameObjects.EnemyHeroes.Where(t => t.IsValidTarget(Vars.E.Range)))
                     {
