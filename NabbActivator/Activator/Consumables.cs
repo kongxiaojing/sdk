@@ -22,6 +22,11 @@ namespace NabbActivator
                 return;
             }
 
+            if (!Vars.Menu["consumables"].GetValue<MenuBool>().Value)
+            {
+                return;
+            }
+
             foreach (var item in ItemData.Entries.Where(i => Items.CanUseItem((int)i.Id)))
             {
                 if (!Bools.IsHealthPotRunning())

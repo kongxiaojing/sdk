@@ -18,7 +18,7 @@ namespace NabbActivator
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Cleansers(EventArgs args)
         {
-            if (!Vars.Menu["activator"]["cleansers"].GetValue<MenuBool>().Value)
+            if (!Vars.Menu["cleansers"].GetValue<MenuBool>().Value)
             {
                 return;
             }
