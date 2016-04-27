@@ -74,97 +74,87 @@ namespace ExorAIO.Utilities
         /// <summary>
         ///     Gets or sets the Q Spell.
         /// </summary>
-        public static Spell Q { get; set; }
+        public static Spell Q { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the 2nd stage of the Q Spell.
         /// </summary>
-        public static Spell Q2 { get; set; }
+        public static Spell Q2 { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the PowPow Range.
         /// </summary>
-        public static Spell PowPow { get; set; }
+        public static Spell PowPow { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the W Spell.
         /// </summary>
-        public static Spell W { get; set; }
+        public static Spell W { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the E Spell.
         /// </summary>
-        public static Spell E { get; set; }
+        public static Spell E { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the R Spell.
         /// </summary>
-        public static Spell R { get; set; }
+        public static Spell R { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the assembly menu.
         /// </summary>
-        public static Menu Menu { get; internal set; } = new Menu($"{MainMenuName}", $"[ExorAIO]: {GameObjects.Player.ChampionName}", true);
-
-        /// <summary>
-        ///     Gets or sets the orbwalker menu.
-        /// </summary>
-        public static Menu OrbwalkerMenu { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the targetselector menu.
-        /// </summary>
-        public static Menu TargetSelectorMenu { get; set; }
+        public static Menu Menu { get; internal set; } = new Menu("aio", $"[ExorAIO]: {GameObjects.Player.ChampionName}", true);
 
         /// <summary>
         ///     Gets or sets the settings menu.
         /// </summary>
-        public static Menu SpellsMenu { get; set; }
+        public static Menu SpellsMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the Q Spell menu.
         /// </summary>
-        public static Menu QMenu { get; set; }
+        public static Menu QMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the W Spell menu.
         /// </summary>
-        public static Menu WMenu { get; set; }
+        public static Menu WMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the E Spell menu.
         /// </summary>
-        public static Menu EMenu { get; set; }
+        public static Menu EMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the R Spell menu.
         /// </summary>
-        public static Menu RMenu { get; set; }
+        public static Menu RMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the Miscellaneous menu.
         /// </summary>
-        public static Menu MiscMenu { get; set; }
+        public static Menu MiscMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the Whitelist menu.
         /// </summary>
-        public static Menu WhiteListMenu { get; set; }
+        public static Menu WhiteListMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the Drawings menu.
         /// </summary>
-        public static Menu DrawingsMenu { get; set; }
+        public static Menu DrawingsMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the loaded champion.
         /// </summary>
-        public static bool IsLoaded { get; set; } = true;
+        public static bool IsLoaded { get; internal set; } = true;
 
         /// <summary>
         ///     Gets or sets the Soulbound.
         /// </summary>
-        public static Obj_AI_Hero SoulBound { get; set; }
+        public static Obj_AI_Hero SoulBound { get; internal set; }
 
         /// <summary>
         ///     Gets the Player's real AutoAttack-Range.
@@ -175,16 +165,6 @@ namespace ExorAIO.Utilities
                 (Items.HasItem(3094) && GameObjects.Player.GetBuffCount("itemstatikshankcharge") == 100
                     ? GameObjects.Player.GetRealAutoAttackRange() / 100 * 30
                     : 0f);
-
-        /// <summary>
-        ///     The main menu name.
-        /// </summary>
-        public static string MainMenuCodeName => "ExorAIO: Ultima";
-
-        /// <summary>
-        ///     The main menu codename.
-        /// </summary>
-        public static string MainMenuName => $"aio.{GameObjects.Player.ChampionName.ToLower()}";
 
         /// <summary>
         ///     The jungle HP bar offset.
