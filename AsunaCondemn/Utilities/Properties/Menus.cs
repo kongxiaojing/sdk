@@ -34,7 +34,7 @@ namespace AsunaCondemn
                 /// </summary>
                 Vars.DrawingsMenu = new Menu("drawings", "Drawings");
                 {
-                    Vars.DrawingsMenu.Add(new MenuBool("e", "E Prediction", true));
+                    Vars.DrawingsMenu.Add(new MenuBool("e", "E Prediction"));
                 }
                 Vars.Menu.Add(Vars.DrawingsMenu);
             }
