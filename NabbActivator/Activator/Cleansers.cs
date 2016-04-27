@@ -23,65 +23,62 @@ namespace NabbActivator
                 return;
             }
 
-            foreach (var item in ItemData.Entries.Where(i => Items.CanUseItem((int)i.Id)))
+            /// <summary>
+            ///     The Mikaels Crucible Logic.
+            /// </summary>
+            if (Items.CanUseItem(3222))
             {
-                /// <summary>
-                ///     The Mikaels Crucible Logic.
-                /// </summary>
-                if ((int)item.Id == 3222)
+                foreach (var ally in GameObjects.AllyHeroes.Where(
+                    a =>
+                        Bools.ShouldCleanse(a) &&
+                        a.IsValidTarget(750f, false)))
                 {
-                    foreach (var ally in GameObjects.AllyHeroes.Where(
-                        a =>
-                            Bools.ShouldCleanse(a) &&
-                            a.IsValidTarget(750f, false)))
+                    DelayAction.Add(Vars.Delay, () =>
+                    {
+                        Items.UseItem(3222, ally);
+                    });
+                }
+            }
+
+            if (!SpellSlots.Cleanse.IsReady() &&
+                SpellSlots.Cleanse == SpellSlot.Unknown)
+            {
+                if (Bools.ShouldUseCleanser() ||
+                    Bools.ShouldCleanse(ObjectManager.Player))
+                {
+                    /// <summary>
+                    ///     The Quicksilver Sash Logic.
+                    /// </summary>
+                    if (Items.CanUseItem(3140))
                     {
                         DelayAction.Add(Vars.Delay, () =>
                         {
-                            Items.UseItem((int)item.Id, ally);
+                            Items.UseItem(3140);
+                            return;
                         });
                     }
-                }
 
-                if (!SpellSlots.Cleanse.IsReady() &&
-                    SpellSlots.Cleanse == SpellSlot.Unknown)
-                {
-                    if (Bools.ShouldUseCleanser() ||
-                        Bools.ShouldCleanse(ObjectManager.Player))
+                    /// <summary>
+                    ///     The Dervish Blade Logic.
+                    /// </summary>
+                    if (Items.CanUseItem(3137))
                     {
-                        /// <summary>
-                        ///     The Quicksilver Sash Logic.
-                        /// </summary>
-                        if ((int)item.Id == 3140)
+                        DelayAction.Add(Vars.Delay, () =>
                         {
-                            DelayAction.Add(Vars.Delay, () =>
-                            {
-                                Items.UseItem((int)item.Id);
-                                return;
-                            });
-                        }
+                            Items.UseItem(3137);
+                            return;
+                        });
+                    }
 
-                        /// <summary>
-                        ///     The Dervish Blade Logic.
-                        /// </summary>
-                        if ((int)item.Id == 3137)
+                    /// <summary>
+                    ///     The Mercurial Scimitar Logic.
+                    /// </summary>
+                    if (Items.CanUseItem(3139))
+                    {
+                        DelayAction.Add(Vars.Delay, () =>
                         {
-                            DelayAction.Add(Vars.Delay, () =>
-                            {
-                                Items.UseItem((int)item.Id);
-                                return;
-                            });
-                        }
-
-                        /// <summary>
-                        ///     The Mercurial Scimitar Logic.
-                        /// </summary>
-                        if ((int)item.Id == 3139)
-                        {
-                            DelayAction.Add(Vars.Delay, () =>
-                            {
-                                Items.UseItem((int)item.Id);
-                            });
-                        }
+                            Items.UseItem(3139);
+                        });
                     }
                 }
             }

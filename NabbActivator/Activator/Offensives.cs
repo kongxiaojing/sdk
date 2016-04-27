@@ -24,69 +24,66 @@ namespace NabbActivator
                 return;
             }
 
-            foreach (var item in ItemData.Entries.Where(i => Items.CanUseItem((int)i.Id)))
+            /// <summary>
+            ///     The Bilgewater Cutlass Logic.
+            /// </summary>
+            if (Items.CanUseItem(3144) &&
+                Targets.Target.IsValidTarget(550f))
             {
-                /// <summary>
-                ///     The Bilgewater Cutlass Logic.
-                /// </summary>
-                if ((int)item.Id == 3144 &&
-                    Targets.Target.IsValidTarget(550f))
-                {
-                    Items.UseItem((int)item.Id, Targets.Target);
-                }
+                Items.UseItem(3144, Targets.Target);
+            }
 
-                /// <summary>
-                ///     The Blade of the Ruined King Logic.
-                /// </summary>
-                if ((int)item.Id == 3153 &&
-                    Targets.Target.IsValidTarget(550f))
-                {
-                    Items.UseItem((int)item.Id, Targets.Target);
-                }
+            /// <summary>
+            ///     The Blade of the Ruined King Logic.
+            /// </summary>
+            if (Items.CanUseItem(3153) &&
+                Targets.Target.IsValidTarget(550f))
+            {
+                Items.UseItem(3153, Targets.Target);
+            }
 
-                /// <summary>
-                ///     The Entropy Logic.
-                /// </summary>     
-                if ((int)item.Id == 3184 &&
-                    GameObjects.Player.IsWindingUp)
-                {
-                    Items.UseItem((int)item.Id);
-                }
+            /// <summary>
+            ///     The Entropy Logic.
+            /// </summary>     
+            if (Items.CanUseItem(3184) &&
+                GameObjects.Player.IsWindingUp)
+            {
+                Items.UseItem(3184);
+            }
 
-                /// <summary>
-                ///     The Frost Queen's Claim Logic.
-                /// </summary>
-                if ((int)item.Id == 3092)
+            /// <summary>
+            ///     The Frost Queen's Claim Logic.
+            /// </summary>
+            if (Items.CanUseItem(3092))
+            {
+                if (GameObjects.EnemyHeroes.Count(
+                    t =>
+                        t.IsValidTarget(4000f) &&
+                        t.CountEnemyHeroesInRange(1500f) <=
+                            GameObjects.Player.CountAllyHeroesInRange(1500f) + t.CountAllyHeroesInRange(1500f) - 1) >= 1)
                 {
-                    if (GameObjects.EnemyHeroes.Count(
-                            t =>
-                                t.IsValidTarget(4000f) &&
-                                t.CountEnemyHeroesInRange(1500f) <=
-                                    GameObjects.Player.CountAllyHeroesInRange(1500f) + t.CountAllyHeroesInRange(1500f) - 1) >= 1)
-                    {
-                        Items.UseItem((int)item.Id);
-                    }
+                    Items.UseItem(3092);
                 }
+            }
 
-                /// <summary>
-                ///     The Hextech Gunblade Logic.
-                /// </summary>
-                if ((int)item.Id == 3146 &&
-                    Targets.Target.IsValidTarget(700f))
-                {
-                    Items.UseItem((int)item.Id, Targets.Target);
-                }
+            /// <summary>
+            ///     The Hextech Gunblade Logic.
+            /// </summary>
+            if (Items.CanUseItem(3146) &&
+                Targets.Target.IsValidTarget(700f))
+            {
+                Items.UseItem(3146, Targets.Target);
+            }
 
-                /// <summary>
-                ///     The Youmuu's Ghostblade Logic.
-                /// </summary>
-                if ((int)item.Id == 3142)
+            /// <summary>
+            ///     The Youmuu's Ghostblade Logic.
+            /// </summary>
+            if (Items.CanUseItem(3142))
+            {
+                if (GameObjects.Player.IsWindingUp ||
+                    GameObjects.Player.IsCastingInterruptableSpell())
                 {
-                    if (GameObjects.Player.IsWindingUp ||
-                        GameObjects.Player.IsCastingInterruptableSpell())
-                    {
-                        Items.UseItem((int)item.Id);
-                    }
+                    Items.UseItem(3142);
                 }
             }
         }

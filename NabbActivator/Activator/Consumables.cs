@@ -28,77 +28,74 @@ namespace NabbActivator
                 return;
             }
 
-            foreach (var item in ItemData.Entries.Where(i => Items.CanUseItem((int)i.Id)))
+            if (!Bools.IsHealthPotRunning())
             {
-                if (!Bools.IsHealthPotRunning())
+                /// <summary>
+                ///     The Refillable Potion Logic.
+                /// </summary>
+                if (Items.CanUseItem(2031) &&
+                    ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
                 {
-                    /// <summary>
-                    ///     The Refillable Potion Logic.
-                    /// </summary>
-                    if ((int)item.Id == 2031 &&
-                        ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
-                    {
-                        Items.UseItem((int)item.Id);
-                        return;
-                    }
-
-                    /// <summary>
-                    ///     The Total Biscuit of Rejuvenation Logic.
-                    /// </summary>
-                    if ((int)item.Id == 2010 &&
-                        ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
-                    {
-                        Items.UseItem((int)item.Id);
-                        return;
-                    }
-
-                    /// <summary>
-                    ///     The Health Potion Logic.
-                    /// </summary>
-                    if ((int)item.Id == 2003 &&
-                        ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
-                    {
-                        Items.UseItem((int)item.Id);
-                    }
-                }
-
-                if (ObjectManager.Player.MaxMana < 200)
-                {
+                    Items.UseItem(2031);
                     return;
                 }
 
                 /// <summary>
-                ///     The Hunter's Potion Logic.
+                ///     The Total Biscuit of Rejuvenation Logic.
                 /// </summary>
-                if ((int)item.Id == 2032)
+                if (Items.CanUseItem(2010) &&
+                    ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
                 {
-                    if (!Bools.IsHealthPotRunning() &&
-                        ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
-                    {
-                        Items.UseItem((int)item.Id);
-                    }
-                    else if (!Bools.IsManaPotRunning() &&
-                        ObjectManager.Player.ManaPercent < Managers.MinManaPercent)
-                    {
-                        Items.UseItem((int)item.Id);
-                    }
+                    Items.UseItem(2010);
+                    return;
                 }
 
                 /// <summary>
-                ///     The Corrupting Potion Logic.
+                ///     The Health Potion Logic.
                 /// </summary>
-                if ((int)item.Id == 2033)
+                if (Items.CanUseItem(2003) &&
+                    ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
                 {
-                    if (!Bools.IsHealthPotRunning() &&
-                        ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
-                    {
-                        Items.UseItem((int)item.Id);
-                    }
-                    else if (!Bools.IsManaPotRunning() &&
-                        ObjectManager.Player.ManaPercent < Managers.MinManaPercent)
-                    {
-                        Items.UseItem((int)item.Id);
-                    }
+                    Items.UseItem(2003);
+                }
+            }
+
+            if (ObjectManager.Player.MaxMana < 200)
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     The Hunter's Potion Logic.
+            /// </summary>
+            if (Items.CanUseItem(2032))
+            {
+                if (!Bools.IsHealthPotRunning() &&
+                    ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
+                {
+                    Items.UseItem(2032);
+                }
+                else if (!Bools.IsManaPotRunning() &&
+                    ObjectManager.Player.ManaPercent < Managers.MinManaPercent)
+                {
+                    Items.UseItem(2032);
+                }
+            }
+
+            /// <summary>
+            ///     The Corrupting Potion Logic.
+            /// </summary>
+            if (Items.CanUseItem(2033))
+            {
+                if (!Bools.IsHealthPotRunning() &&
+                    ObjectManager.Player.HealthPercent < Managers.MinHealthPercent)
+                {
+                    Items.UseItem(2033);
+                }
+                else if (!Bools.IsManaPotRunning() &&
+                    ObjectManager.Player.ManaPercent < Managers.MinManaPercent)
+                {
+                    Items.UseItem(2033);
                 }
             }
         }

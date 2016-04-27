@@ -22,23 +22,20 @@ namespace NabbActivator
                 return;
             }
 
-            foreach (var item in ItemData.Entries.Where(i => Items.CanUseItem((int)i.Id)))
+            if (sender != null &&
+                args.Target != null)
             {
-                if (sender != null &&
-                    args.Target != null)
+                /// <summary>
+                ///     The Ohmwrecker logic.
+                /// </summary>
+                if (Items.CanUseItem(3056) &&
+                    sender.IsValidTarget(750f))
                 {
-                    /// <summary>
-                    ///     The Ohmwrecker logic.
-                    /// </summary>
-                    if ((int)item.Id == 3056)
+                    if (args.Target.IsAlly &&
+                        sender is Obj_AI_Turret &&
+                        args.Target is Obj_AI_Hero)
                     {
-                        if (args.Target.IsAlly &&
-                            sender is Obj_AI_Turret &&
-                            args.Target is Obj_AI_Hero &&
-                            sender.IsValidTarget(750f))
-                        {
-                            Items.UseItem((int)item.Id, sender);
-                        }
+                        Items.UseItem(3056, sender);
                     }
                 }
             }
