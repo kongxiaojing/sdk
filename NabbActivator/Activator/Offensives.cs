@@ -18,8 +18,8 @@ namespace NabbActivator
         public static void Offensives(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                !Vars.Menu["activator"]["combo"].GetValue<MenuKeyBind>().Active ||
-                !Vars.Menu["activator"]["offensives"].GetValue<MenuBool>().Value)
+                !Vars.Menu["combo"].GetValue<MenuKeyBind>().Active ||
+                !Vars.Menu["offensives"].GetValue<MenuBool>().Value)
             {
                 return;
             }

@@ -18,7 +18,7 @@ namespace NabbActivator
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Spells(EventArgs args)
         {
-            if (!Vars.Menu["activator"]["spells"].GetValue<MenuBool>().Value)
+            if (!Vars.Menu["spells"].GetValue<MenuBool>().Value)
             {
                 return;
             }

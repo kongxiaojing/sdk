@@ -54,6 +54,7 @@ namespace NabbActivator
                 }
                 Vars.Menu.Add(Vars.SmiteMenu);
             }
+            Vars.Menu.Attach();
         }
     }
 }

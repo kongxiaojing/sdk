@@ -17,7 +17,7 @@ namespace NabbActivator
         /// <param name="args">The args.</param>
         public static void Specials(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!Vars.Menu["activator"]["defensives"].GetValue<MenuBool>().Value)
+            if (!Vars.Menu["defensives"].GetValue<MenuBool>().Value)
             {
                 return;
             }
