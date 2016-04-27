@@ -20,6 +20,14 @@ namespace ExorAIO.Champions.Kalista
         public static void Combo(EventArgs args)
         {
             /// <summary>
+            ///     Orbwalk on minions.
+            /// </summary>
+            if (!GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.AARange)))
+            {
+                ObjectManager.Player.IssueOrder(GameObjectOrder.AttackUnit, Targets.Minions[0]);
+            }
+
+            /// <summary>
             ///     The Q Combo Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
