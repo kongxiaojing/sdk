@@ -13,27 +13,27 @@ namespace AsunaCondemn
         /// <summary>
         ///     Gets or sets the E Spell.
         /// </summary>
-        public static Spell E { get; set; }
+        public static Spell E { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the Flash Spell.
         /// </summary>
-        public static Spell Flash { get; set; }
+        public static Spell Flash { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the assembly menu.
         /// </summary>
-        public static Menu Menu { get; set; }
+        public static Menu Menu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the E Spell menu.
         /// </summary>
-        public static Menu EMenu { get; set; }
+        public static Menu EMenu { get; internal set; }
 
         /// <summary>
         ///     Gets or sets the Drawings menu.
         /// </summary>
-        public static Menu DrawingsMenu { get; set; }
+        public static Menu DrawingsMenu { get; internal set; }
 
         /// <summary>
         ///     Gets the Player's real AutoAttack-Range.
