@@ -55,10 +55,10 @@ namespace ExorAIO.Champions.Vayne
                         Drawing.DrawLine(
                             Drawing.WorldToScreen(target.Position + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).X,
                             Drawing.WorldToScreen(target.Position + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).Y,
-                            Drawing.WorldToScreen(target.Position + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 440).X,
-                            Drawing.WorldToScreen(target.Position + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 440).Y,
+                            Drawing.WorldToScreen(target.Position + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).X,
+                            Drawing.WorldToScreen(target.Position + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).Y,
                             1,
-                            (target.Position + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 440).IsWall()
+                            (target.Position + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).IsWall()
                                 ? Color.Green
                                 : Color.Red
                         );
@@ -70,7 +70,8 @@ namespace ExorAIO.Champions.Vayne
                             Drawing.WorldToScreen(GameObjects.Player.Position).X,
                             Drawing.WorldToScreen(GameObjects.Player.Position).Y,
                             Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).X,
-                            Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).Y, 1,
+                            Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).Y,
+                            1,
                             (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).IsWall()
                                 ? Color.Green
                                 : Color.Red
@@ -82,9 +83,10 @@ namespace ExorAIO.Champions.Vayne
                         Drawing.DrawLine(
                             Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).X,
                             Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).Y,
-                            Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 440).X,
-                            Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 440).Y, 1,
-                            (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 440).IsWall()
+                            Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).X,
+                            Drawing.WorldToScreen(Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).Y,
+                            1,
+                            (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).IsWall()
                                 ? Color.Green
                                 : Color.Red
                         );
