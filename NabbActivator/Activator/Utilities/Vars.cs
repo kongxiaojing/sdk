@@ -48,26 +48,28 @@ namespace NabbActivator
         /// <summary>
         ///     Gets the Delay.
         /// </summary>
-        public static int Delay => Menu["randomizer"].GetValue<MenuBool>().Value ? WeightedRandom.Next(200, 300) : 0;
+        public static int Delay => Menu["randomizer"].GetValue<MenuBool>().Value 
+            ? WeightedRandom.Next(200, 300) 
+            : 0;
 
         /// <summary>
         ///     Gets or sets the W Spell.
         /// </summary>
-        public static Spell W { get; internal set; }
+        public static Spell W { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the assembly menu.
         /// </summary>
-        public static Menu Menu { get; internal set; }
+        public static Menu Menu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the slider menu.
         /// </summary>
-        public static Menu SliderMenu { get; internal set; }
+        public static Menu SliderMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the smite menu.
         /// </summary>
-        public static Menu SmiteMenu { get; internal set; }
+        public static Menu SmiteMenu { internal get; set; }
     }
 }
