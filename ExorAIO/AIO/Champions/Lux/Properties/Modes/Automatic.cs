@@ -50,12 +50,13 @@ namespace ExorAIO.Champions.Lux
                     /// </summary>
                     case OrbwalkingMode.Combo:
 
-                        if (!Vars.R.IsReady())
+                        if (!Vars.R.IsReady() &&
+                            Lux.EMissile != null)
                         {
                             foreach (var target in GameObjects.EnemyHeroes.Where(
                                 t =>
                                     !t.HasBuff("luxilluminatingfraulein") &&
-                                    t.Distance(Lux.EMissile.Position) < Vars.W.Width))
+                                    t.Distance(Lux.EMissile.Position) < Vars.W.Width-10f))
                             {
                                 Vars.E.Cast();
                                 break;
@@ -67,11 +68,14 @@ namespace ExorAIO.Champions.Lux
                     ///     The E Clear Logic.
                     /// </summary>
                     case OrbwalkingMode.LaneClear:
-
-                        if (Targets.EMinions.Any() &&
-                            Targets.EMinions.Count() >= 3)
+                        
+                        if (Lux.EMissile != null)
                         {
-                            Vars.E.Cast();
+                            if (Targets.EMinions.Any() &&
+                                Targets.EMinions.Count() >= 3)
+                            {
+                                Vars.E.Cast();
+                            }
                         }
                         break;
 
@@ -89,6 +93,7 @@ namespace ExorAIO.Champions.Lux
                 foreach (var ally in GameObjects.AllyHeroes.Where(
                     a =>
                         a.IsValidTarget(Vars.W.Range, false) &&
+                        a.CountEnemyHeroesInRange(1000f) > 0 &&
                         Health.GetPrediction(a, (int) (1000f + Game.Ping/2f)) <= a.MaxHealth/2))
                 {
                     if (Vars.Menu["spells"]["w"]["whitelist"][ally.ChampionName.ToLower()].GetValue<MenuBool>().Value)

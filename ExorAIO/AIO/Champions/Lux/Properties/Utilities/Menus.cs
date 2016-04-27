@@ -42,7 +42,7 @@ namespace ExorAIO.Champions.Lux
                         /// <summary>
                         ///     Sets the whitelist menu for the W.
                         /// </summary>
-                        Vars.WhiteListMenu = new Menu("whitelistmenu", "Shield: Whitelist Menu", true);
+                        Vars.WhiteListMenu = new Menu("whitelist", "Shield: Whitelist Menu", true);
                         {
                             foreach (var ally in GameObjects.AllyHeroes)
                             {

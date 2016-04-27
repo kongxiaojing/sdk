@@ -19,9 +19,7 @@ namespace ExorAIO.Champions.Lux
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
-            if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget() ||
-                Invulnerable.Check(Targets.Target))
+            if (Bools.HasSheenBuff())
             {
                 return;
             }
@@ -41,15 +39,15 @@ namespace ExorAIO.Champions.Lux
                         t.HasBuff("luxilluminatingfraulein") &&
                         !Invulnerable.Check(t, DamageType.Magical)))
                 {
-                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                    Vars.R.Cast(target.ServerPosition);
                 }
             }
-
-            if (Targets.Target.HasBuff("luxilluminatingfraulein"))
+            
+            if (!Targets.Target.IsValidTarget())
             {
                 return;
             }
-
+            
             /// <summary>
             ///     The E Combo Logic.
             /// </summary>
@@ -65,16 +63,12 @@ namespace ExorAIO.Champions.Lux
             ///     The Q Combo Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Invulnerable.Check(Targets.Target) &&
+                !Invulnerable.Check(Targets.Target) &&
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
+                !Targets.Target.HasBuff("luxilluminatingfraulein") &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
                 if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => c.IsMinion) <= 1)
-                {
-                    Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
-                }
-                else if (!Vars.E.IsReady() ||
-                    GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1)
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }

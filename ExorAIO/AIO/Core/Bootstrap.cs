@@ -164,8 +164,9 @@ namespace ExorAIO.Core
             }
 
             Game.PrintChat(
-                $"<b><font color='#009aff'>Exor</font></b>AIO: <font color='#009aff'>Ultima</font> - {GameObjects.Player.ChampionName} " +
-                (Vars.IsLoaded ? "Loaded" : "Not supported."));
+                $"[SDK]<b><font color='#009aff'>Exor</font></b>AIO: <font color='#009aff'>Ultima</font> - {GameObjects.Player.ChampionName} " + (Vars.IsLoaded 
+                    ? "Loaded" 
+                    : "Not supported."));
         }
     }
 }

@@ -40,7 +40,7 @@ namespace ExorAIO.Core
                                 if (gitVersion != typeof(Updater).Assembly.GetName().Version)
                                 {
                                     Game.PrintChat(
-                                        $"<b>[SDK]<font color='#009aff'>Exor</font></b>AIO: <font color='#009aff'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
+                                        $"[SDK]<b><font color='#009aff'>Exor</font></b>AIO: <font color='#009aff'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
                                 }
                                 else
                                 {
