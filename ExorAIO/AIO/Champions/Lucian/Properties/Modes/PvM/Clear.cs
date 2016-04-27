@@ -122,6 +122,17 @@ namespace ExorAIO.Champions.Lucian
                 Vars.Menu["spells"]["e"]["building"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 5));
+                return;
+            }
+
+            /// <summary>
+            ///     The W BuildingClear Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
+                Vars.Menu["spells"]["w"]["building"].GetValue<MenuBool>().Value)
+            {
+                Vars.W.Cast(Game.CursorPos);
             }
         }
     }
