@@ -66,6 +66,24 @@ namespace ExorAIO.Champions.Jhin
             }
 
             /// <summary>
+            ///     The Automatic W Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                !GameObjects.Player.IsUnderEnemyTurret() &&
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
+            {
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.W.Range) &&
+                        t.HasBuff("jhinespotteddebuff") &&
+                        Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                {
+                    Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                }
+            }
+
+            /// <summary>
             ///     The Automatic E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&

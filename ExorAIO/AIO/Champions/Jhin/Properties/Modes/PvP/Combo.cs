@@ -56,23 +56,6 @@ namespace ExorAIO.Champions.Jhin
             {
                 Vars.Q.CastOnUnit(Targets.Target);
             }
-
-            /// <summary>
-            ///     The Combo W Logic.
-            /// </summary>
-            if (Vars.W.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.W.Range) &&
-                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
-            {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        t.HasBuff("jhinespotteddebuff") &&
-                        Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
-                {
-                    Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
-                }
-            }
         }
     }
 }
