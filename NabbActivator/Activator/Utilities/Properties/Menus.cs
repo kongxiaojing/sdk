@@ -28,18 +28,18 @@ namespace NabbActivator
                 Vars.Menu.Add(new MenuBool("resetters",   "Tiamat/Hydra/Titanic", true));
                 Vars.Menu.Add(new MenuBool("randomizer",  "Humanizer"));
                 Vars.Menu.Add(
-                    new MenuKeyBind("combo", "Combo:", Keys.Space, KeyBindType.Press));
+                    new MenuKeyBind("combokey", "Combo:", Keys.Space, KeyBindType.Press));
                 Vars.Menu.Add(
-                    new MenuKeyBind("laneclear", "LaneClear:", Keys.V, KeyBindType.Press));
+                    new MenuKeyBind("laneclearkey", "LaneClear:", Keys.V, KeyBindType.Press));
 
 
                 /// <summary>
                 ///     Sets consumable sliders menu.
                 /// </summary>
-                Vars.SliderMenu = new Menu("consumables", "Consumables Menu");
+                Vars.SliderMenu = new Menu("consumablesmenu", "Consumables Menu");
                 {
-                    Vars.SliderMenu.Add(new MenuSlider("health", "Consumables: Health < x%", 50, 0, 100));
-                    Vars.SliderMenu.Add(new MenuSlider("mana",   "Consumables: Mana < x%",   50, 0, 100));
+                    Vars.SliderMenu.Add(new MenuSlider("healthslider", "Consumables: Health < x%", 50, 0, 100));
+                    Vars.SliderMenu.Add(new MenuSlider("manaslider",   "Consumables: Mana < x%",   50, 0, 100));
                 }
                 Vars.Menu.Add(Vars.SliderMenu);
 

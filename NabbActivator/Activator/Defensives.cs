@@ -19,8 +19,8 @@ namespace NabbActivator
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Defensives(EventArgs args)
         {
-            if (!Vars.Menu["combo"].GetValue<MenuKeyBind>().Active ||
-                !Vars.Menu["defensives"].GetValue<MenuBool>().Value)
+            if (!Vars.Menu["defensives"].GetValue<MenuBool>().Value ||
+                !Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
             {
                 return;
             }

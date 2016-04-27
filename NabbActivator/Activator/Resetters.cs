@@ -23,8 +23,8 @@ namespace NabbActivator
                 return;
             }
 
-            if (!Vars.Menu["combo"].GetValue<MenuKeyBind>().Active ||
-                !Vars.Menu["laneclear"].GetValue<MenuKeyBind>().Active)
+            if (!Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active ||
+                !Vars.Menu["laneclearkey"].GetValue<MenuKeyBind>().Active)
             {
                 return;
             }
