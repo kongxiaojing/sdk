@@ -37,22 +37,12 @@ namespace NabbAlerter
         /// <summary>
         ///     The Menu.
         /// </summary>
-        public static Menu Menu { get; set; }
+        public static Menu Menu { get; internal set; }
 
         /// <summary>
         ///     The Hero Menu.
         /// </summary>
-        public static Menu HeroMenu { get; set; }
-
-        /// <summary>
-        ///     The Menu name.
-        /// </summary>
-        public static string MainMenuName => "alerter";
-
-        /// <summary>
-        ///     The Menu Codename.
-        /// </summary>
-        public static string MainMenuCodeName => "NabbAlerter";
+        public static Menu HeroMenu { get; internal set; }
 
         /// <summary>
         ///     Initializes the enemy names.
@@ -204,7 +194,7 @@ namespace NabbAlerter
                     str = "zil";
                     break;
                 default:
-                    str = $"{str.ToLower()}";
+                    str = str.ToLower();
                     break;
             }
 
