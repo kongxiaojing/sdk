@@ -74,87 +74,87 @@ namespace ExorAIO.Utilities
         /// <summary>
         ///     Gets or sets the Q Spell.
         /// </summary>
-        public static Spell Q { get; internal set; }
+        public static Spell Q { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the 2nd stage of the Q Spell.
         /// </summary>
-        public static Spell Q2 { get; internal set; }
+        public static Spell Q2 { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the PowPow Range.
         /// </summary>
-        public static Spell PowPow { get; internal set; }
+        public static Spell PowPow { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the W Spell.
         /// </summary>
-        public static Spell W { get; internal set; }
+        public static Spell W { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the E Spell.
         /// </summary>
-        public static Spell E { get; internal set; }
+        public static Spell E { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the R Spell.
         /// </summary>
-        public static Spell R { get; internal set; }
+        public static Spell R { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the assembly menu.
         /// </summary>
-        public static Menu Menu { get; internal set; } = new Menu("aio", $"[ExorAIO]: {GameObjects.Player.ChampionName}", true);
+        public static Menu Menu { internal get; set; } = new Menu("aio", $"[ExorAIO]: {GameObjects.Player.ChampionName}", true);
 
         /// <summary>
         ///     Gets or sets the settings menu.
         /// </summary>
-        public static Menu SpellsMenu { get; internal set; }
+        public static Menu SpellsMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the Q Spell menu.
         /// </summary>
-        public static Menu QMenu { get; internal set; }
+        public static Menu QMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the W Spell menu.
         /// </summary>
-        public static Menu WMenu { get; internal set; }
+        public static Menu WMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the E Spell menu.
         /// </summary>
-        public static Menu EMenu { get; internal set; }
+        public static Menu EMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the R Spell menu.
         /// </summary>
-        public static Menu RMenu { get; internal set; }
+        public static Menu RMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the Miscellaneous menu.
         /// </summary>
-        public static Menu MiscMenu { get; internal set; }
+        public static Menu MiscMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the Whitelist menu.
         /// </summary>
-        public static Menu WhiteListMenu { get; internal set; }
+        public static Menu WhiteListMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the Drawings menu.
         /// </summary>
-        public static Menu DrawingsMenu { get; internal set; }
+        public static Menu DrawingsMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the loaded champion.
         /// </summary>
-        public static bool IsLoaded { get; internal set; } = true;
+        public static bool IsLoaded { internal get; set; } = true;
 
         /// <summary>
         ///     Gets or sets the Soulbound.
         /// </summary>
-        public static Obj_AI_Hero SoulBound { get; internal set; }
+        public static Obj_AI_Hero SoulBound { internal get; set; }
 
         /// <summary>
         ///     Gets the Player's real AutoAttack-Range.
