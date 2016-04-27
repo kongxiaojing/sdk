@@ -80,7 +80,10 @@ namespace ExorAIO.Champions.Jhin
                         t.HasBuff("jhinespotteddebuff") &&
                         Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
-                    Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                    if (GameObjects.Player.Distance(Vars.W.GetPrediction(target).UnitPosition) > Vars.Q.Range)
+                    {
+                        Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                    }
                 }
             }
 
