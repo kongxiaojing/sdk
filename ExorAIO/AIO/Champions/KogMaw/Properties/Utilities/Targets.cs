@@ -5,7 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Utils;
 
-namespace ExorAIO.Champions.Akali
+namespace ExorAIO.Champions.KogMaw
 {
     /// <summary>
     ///     The targets class.
@@ -15,7 +15,7 @@ namespace ExorAIO.Champions.Akali
         /// <summary>
         ///     The main hero target.
         /// </summary>
-        public static Obj_AI_Hero Target => Variables.TargetSelector.GetTarget(Vars.R.Range, DamageType.Magical);
+        public static Obj_AI_Hero Target => Variables.TargetSelector.GetTarget(Vars.R.Range, DamageType.Physical);
 
         /// <summary>
         ///     The minions target.
@@ -24,7 +24,7 @@ namespace ExorAIO.Champions.Akali
             =>
                 GameObjects.EnemyMinions.Where(
                     m =>
-                        (m.IsMinion() || m.IsPet()) &&
+                        m.IsMinion() &&
                         m.IsValidTarget(Vars.E.Range)).ToList();
 
         /// <summary>

@@ -7,7 +7,7 @@ using LeagueSharp.SDK.Utils;
 using SharpDX;
 using Geometry = ExorAIO.Utilities.Geometry;
 
-namespace ExorAIO.Champions.Caitlyn
+namespace ExorAIO.Champions.KogMaw
 {
     /// <summary>
     ///     The logics class.
@@ -21,29 +21,29 @@ namespace ExorAIO.Champions.Caitlyn
         public static void Harass(EventArgs args)
         {
             /// <summary>
-            ///     The Harass Q Logic.
+            ///     The Harass E Logic.
             /// </summary>
-            if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+            if (Vars.E.IsReady() &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
             {
                 if (GameObjects.EnemyHeroes.Any(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.Q.Range)))
+                        t.IsValidTarget(Vars.E.Range)))
                 {
-                    if (Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).MinionsHit >= 3 &&
+                    if (Vars.E.GetLineFarmLocation(Targets.Minions, Vars.E.Width).MinionsHit >= 3 &&
                         !new Geometry.Rectangle(
                             GameObjects.Player.ServerPosition,
-                            GameObjects.Player.ServerPosition.Extend(Targets.Minions[0].ServerPosition, Vars.Q.Range),
-                            Vars.Q.Width).IsOutside(
+                            GameObjects.Player.ServerPosition.Extend(Targets.Minions[0].ServerPosition, Vars.E.Range),
+                            Vars.E.Width).IsOutside(
                                 (Vector2)
-                                    Vars.Q.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                                    Vars.E.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
                                         t =>
                                             !Invulnerable.Check(t) &&
-                                            t.IsValidTarget(Vars.Q.Range))).UnitPosition))
+                                            t.IsValidTarget(Vars.E.Range))).UnitPosition))
                     {
-                        Vars.Q.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).Position);
+                        Vars.E.Cast(Vars.E.GetLineFarmLocation(Targets.Minions, Vars.E.Width).Position);
                     }
                 }
             }

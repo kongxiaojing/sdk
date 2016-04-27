@@ -25,7 +25,7 @@ namespace ExorAIO.Core
                         {
                             var rawVersion =
                                 c.DownloadString(
-                                    "https://raw.githubusercontent.com/nabbhacker/ExoryREPO/master/ExorAIO/Properties/AssemblyInfo.cs");
+                                    "https://github.com/nabbhacker/SDKExoryREPO/blob/master/ExorAIO/Properties/AssemblyInfo.cs");
                             var match =
                                 new Regex(
                                     @"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]")
@@ -40,7 +40,7 @@ namespace ExorAIO.Core
                                 if (gitVersion != typeof(Updater).Assembly.GetName().Version)
                                 {
                                     Game.PrintChat(
-                                        $"<b><font color='#009aff'>Exor</font></b>AIO: <font color='#009aff'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
+                                        $"<b>[SDK]<font color='#009aff'>Exor</font></b>AIO: <font color='#009aff'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
                                 }
                                 else
                                 {
@@ -57,14 +57,10 @@ namespace ExorAIO.Core
                     {
                         Console.WriteLine(e);
                         Game.PrintChat(
-                            "<font color=\"#FFF280\">Exception thrown at ExorAIO.Updater, make a screenshot of the console and send it to Exory.");
-
-                        /// <summary>
-                        ///     Loads the AIO.
-                        /// </summary>
-                        AIO.OnLoad();
+                            "<font color=\"#FFF280\">Exception thrown at [SDK]ExorAIO.Updater, make a screenshot of the console and send it to Exory.");
                     }
-                });
+                }
+            );
         }
     }
 }
