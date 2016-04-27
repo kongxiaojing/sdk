@@ -32,7 +32,7 @@ namespace NabbAlerter
         /// <param name="Spell">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
         public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!Vars.Menu["alerter"]["enable"].GetValue<MenuBool>().Value)
+            if (!Vars.Menu["enable"].GetValue<MenuBool>().Value)
             {
                 return;
             }

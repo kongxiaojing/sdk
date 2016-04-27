@@ -17,7 +17,7 @@ namespace NabbAlerter
             /// <summary>
             ///     Sets the main menu.
             /// </summary>
-            Vars.Menu = new Menu("alerter", "NabbAlerter", true);
+            Vars.Menu = new Menu("nabbalerter", "NabbAlerter", true);
             {
                 Vars.Menu.Add(new MenuBool("enable", "Enable", true));
 
@@ -54,6 +54,7 @@ namespace NabbAlerter
                     }
                 }
             }
+            Vars.Menu.Attach();
         }
     }
 }
