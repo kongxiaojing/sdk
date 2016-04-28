@@ -3,6 +3,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LeagueSharp;
+using LeagueSharp.SDK;
 
 namespace AsunaCondemn
 {
@@ -40,6 +41,11 @@ namespace AsunaCondemn
                             }
                             else
                             {
+                                if (!GameObjects.Player.ChampionName.Equals("Vayne"))
+                                {
+                                    return;
+                                }
+
                                 /// <summary>
                                 ///     Loads the assembly.
                                 /// </summary>

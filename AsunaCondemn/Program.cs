@@ -13,7 +13,10 @@ namespace AsunaCondemn
         /// <param name="args">The arguments.</param>
         private static void Main(string[] args)
         {
-            Events.OnLoad += (sender, eventArgs) => { Updater.Check(); };
+            Events.OnLoad += (sender, eventArgs) =>
+            {
+                Updater.Check();
+            };
         }
     }
 }
