@@ -75,6 +75,10 @@ namespace ExorAIO.Champions.Kalista
             /// </summary>
             switch (Variables.Orbwalker.ActiveMode)
             {
+                case OrbwalkingMode.Combo:
+                    Logics.Combo(args);
+                    break;
+
                 case OrbwalkingMode.Hybrid:
                     Logics.Harass(args);
                     break;

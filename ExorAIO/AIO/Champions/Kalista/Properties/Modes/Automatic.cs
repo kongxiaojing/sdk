@@ -58,6 +58,7 @@ namespace ExorAIO.Champions.Kalista
             /// </summary>
             if (Vars.W.IsReady() &&
                 !GameObjects.Player.IsRecalling() &&
+                !GameObjects.Player.IsUnderEnemyTurret() &&
                 Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                 GameObjects.Player.CountEnemyHeroesInRange(1500f) == 0 &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
@@ -146,7 +147,6 @@ namespace ExorAIO.Champions.Kalista
                     foreach (var minion in Targets.JungleMinions.Where(
                         m =>
                             Bools.IsPerfectRendTarget(m) &&
-                            !m.CharData.BaseSkinName.Contains("Mini") &&
                             m.Health < KillSteal.GetPerfectRendDamage(m)))
                     {
 

@@ -22,9 +22,22 @@ namespace ExorAIO.Champions.Kalista
             /// <summary>
             ///     Orbwalk on minions.
             /// </summary>
-            if (!GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.AARange)))
+            if (Targets.Minions.Any(m => m.IsValidTarget(Vars.AARange)) &&
+                !GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.AARange)))
             {
-                ObjectManager.Player.IssueOrder(GameObjectOrder.AttackUnit, Targets.Minions[0]);
+                ObjectManager.Player.IssueOrder(GameObjectOrder.AttackUnit, Targets.Minions.FirstOrDefault(m => m.IsValidTarget(Vars.AARange)));
+            }
+
+            if (!Targets.Target.IsValidTarget() ||
+                Invulnerable.Check(Targets.Target))
+            {
+                return;
+            }
+
+            if (!Bools.HasSheenBuff() ||
+                !Targets.Target.IsValidTarget(Vars.AARange))
+            {
+                return;
             }
 
             /// <summary>
