@@ -102,6 +102,11 @@ namespace ExorAIO.Utilities
         public static Spell E { internal get; set; }
 
         /// <summary>
+        ///     Gets or sets the E2 Spell.
+        /// </summary>
+        public static Spell E2 { internal get; set; }
+
+        /// <summary>
         ///     Gets or sets the R Spell.
         /// </summary>
         public static Spell R { internal get; set; }

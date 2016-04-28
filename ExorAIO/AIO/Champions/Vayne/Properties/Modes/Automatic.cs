@@ -65,7 +65,9 @@ namespace ExorAIO.Champions.Vayne
                         if ((target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 42).IsWall() &&
                             (target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 45).IsWall() &&
                             (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 42).IsWall() &&
-                            (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 45).IsWall())
+                            (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 45).IsWall() &&
+                            (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 42).IsWall() &&
+                            (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 45).IsWall())
                         {
                             Vars.E.CastOnUnit(target);
                         }

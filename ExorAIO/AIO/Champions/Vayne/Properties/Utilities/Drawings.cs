@@ -90,6 +90,34 @@ namespace ExorAIO.Champions.Vayne
                                 ? Color.Green
                                 : Color.Red
                         );
+
+                        /// <summary>
+                        ///     The Prediction Assurance Line.
+                        /// </summary>
+                        Drawing.DrawLine(
+                            Drawing.WorldToScreen(GameObjects.Player.Position).X,
+                            Drawing.WorldToScreen(GameObjects.Player.Position).Y,
+                            Drawing.WorldToScreen(Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).X,
+                            Drawing.WorldToScreen(Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).Y,
+                            1,
+                            (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).IsWall()
+                                ? Color.Green
+                                : Color.Red
+                        );
+
+                        /// <summary>
+                        ///     The Angle-Check Prediction Assurance Line.
+                        /// </summary>
+                        Drawing.DrawLine(
+                            Drawing.WorldToScreen(Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).X,
+                            Drawing.WorldToScreen(Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 420).Y,
+                            Drawing.WorldToScreen(Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).X,
+                            Drawing.WorldToScreen(Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).Y,
+                            1,
+                            (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.Position - GameObjects.Player.Position) * 450).IsWall()
+                                ? Color.Green
+                                : Color.Red
+                        );
                     }
                 }
             };
