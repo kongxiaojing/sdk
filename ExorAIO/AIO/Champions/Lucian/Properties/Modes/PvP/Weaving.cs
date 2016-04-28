@@ -2,6 +2,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Lucian
 {
@@ -18,7 +19,7 @@ namespace ExorAIO.Champions.Lucian
         public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!(args.Target is Obj_AI_Hero) ||
-                Bools.HasAnyImmunity(args.Target as Obj_AI_Hero))
+                Invulnerable.Check(args.Target as Obj_AI_Hero))
             {
                 return;
             }
@@ -30,8 +31,7 @@ namespace ExorAIO.Champions.Lucian
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
                 if (!GameObjects.Player.IsUnderEnemyTurret() ||
-                    (args.Target as Obj_AI_Hero).Health <
-                        GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero)*2)
+                    (args.Target as Obj_AI_Hero).Health < GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero)*2)
                 {
                     if ((args.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2 ||
                         GameObjects.Player.Distance(Game.CursorPos) < Vars.AARange)

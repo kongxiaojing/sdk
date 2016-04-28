@@ -14,6 +14,7 @@ namespace ExorAIO.Champions.Ezreal
         {
             Game.OnUpdate += Ezreal.OnUpdate;
             Obj_AI_Base.OnDoCast += Ezreal.OnDoCast;
+            Obj_AI_Base.OnBuffAdd += Ezreal.OnBuffAdd;
         }
     }
 }

@@ -49,6 +49,15 @@ namespace ExorAIO.Champions.Ezreal
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
                 /// <summary>
+                ///     Sets the menu for the E.
+                /// </summary>
+                Vars.EMenu = new Menu("e", "Use E to:");
+                {
+                    Vars.EMenu.Add(new MenuBool("grab", "Anti-Grab", true));
+                }
+                Vars.SpellsMenu.Add(Vars.EMenu);
+
+                /// <summary>
                 ///     Sets the menu for the R.
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");

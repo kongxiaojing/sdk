@@ -3,6 +3,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
+using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Ezreal
@@ -115,6 +116,33 @@ namespace ExorAIO.Champions.Ezreal
                         
                     default:
                         break;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Fired when a buff is added.
+        /// </summary>
+        /// <param name="args">The <see cref="Obj_AI_BaseBuffAddEventArgs" /> instance containing the event data.</param>
+        public static void OnBuffAdd(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
+        {
+            if (sender.IsMe &&
+                Vars.E.IsReady() &&
+                Vars.Menu["spells"]["e"]["grab"].GetValue<MenuBool>().Value)
+            {
+                if (args.Buff.Name.Equals("ThreshQ"))
+                {
+                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(
+                        GameObjects.EnemyHeroes.Find(
+                        t =>
+                            t.ChampionName.Equals("Thresh")).ServerPosition, -Vars.E.Range));
+                }
+                else if (args.Buff.Name.Equals("rocketgrab2"))
+                {
+                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(
+                        GameObjects.EnemyHeroes.Find(
+                        t =>
+                            t.ChampionName.Equals("Blitzcrank")).ServerPosition, -Vars.E.Range));
                 }
             }
         }
