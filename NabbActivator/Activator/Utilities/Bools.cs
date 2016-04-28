@@ -86,7 +86,7 @@ namespace NabbActivator
                 (
                    GameObjects.Player.HasBuffOfType(BuffType.Suppression) ||
                    GameObjects.Player.HasBuff("ThreshQ") ||
-                   GameObjects.Player.HasBuff("zedrtargetmark") ||
+                   GameObjects.Player.HasBuff("zedrdeathmark") ||
                    GameObjects.Player.HasBuff("summonerexhaust") ||
                    GameObjects.Player.HasBuff("fizzmarinerdoombomb") ||
                    GameObjects.Player.HasBuff("vladimirhemoplague") ||
