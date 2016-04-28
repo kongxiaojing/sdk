@@ -37,7 +37,8 @@ namespace NabbActivator
             ///     The Blade of the Ruined King Logic.
             /// </summary>
             if (Items.CanUseItem(3153) &&
-                Targets.Target.IsValidTarget(550f))
+                Targets.Target.IsValidTarget(550f) &&
+                GameObjects.Player.HealthPercent <= 90)
             {
                 Items.UseItem(3153, Targets.Target);
             }
