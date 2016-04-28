@@ -23,8 +23,8 @@ using ExorAIO.Champions.Nunu;
 using ExorAIO.Champions.Olaf;
 using ExorAIO.Champions.Pantheon;
 using ExorAIO.Champions.Quinn;
-/*
 using ExorAIO.Champions.Renekton;
+/*
 using ExorAIO.Champions.Ryze;
 using ExorAIO.Champions.Sivir;
 using ExorAIO.Champions.Tristana;
@@ -40,8 +40,6 @@ using LeagueSharp.SDK;
 
 namespace ExorAIO.Core
 {
-    //using ExorAIO.Champions.Kassadin;
-
     /// <summary>
     ///     The bootstrap class.
     /// </summary>
@@ -129,10 +127,10 @@ namespace ExorAIO.Core
                 case "Quinn":
                     new Quinn().OnLoad();
                     break;
-                /*
                 case "Renekton":
                     new Renekton().OnLoad();
                     break;
+                /*
                 case "Ryze":
                     new Ryze().OnLoad();
                     break;

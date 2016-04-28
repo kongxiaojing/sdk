@@ -24,35 +24,6 @@ namespace NabbActivator
             }
 
             /// <summary>
-            ///     The Remove Scurvy Logic.
-            /// </summary>
-            if (GameObjects.Player.ChampionName.Equals("Gangplank"))
-            {
-                if (Vars.W.IsReady() &&
-                    Bools.ShouldCleanse(GameObjects.Player))
-                {
-                    DelayAction.Add(Vars.Delay, () =>
-                    {
-                        Vars.W.Cast();
-                    });
-                }
-            }
-
-            /// <summary>
-            ///     The Cleanse Logic.
-            /// </summary>
-            if (SpellSlots.Cleanse.IsReady())
-            {
-                if (Bools.ShouldCleanse(GameObjects.Player))
-                {
-                    DelayAction.Add(Vars.Delay, () =>
-                    {
-                        GameObjects.Player.Spellbook.CastSpell(SpellSlots.Cleanse);
-                    });
-                }
-            }
-
-            /// <summary>
             ///     The Clarity Logic.
             /// </summary>
             if (SpellSlots.Clarity.IsReady())
@@ -195,6 +166,42 @@ namespace NabbActivator
                         Health.GetPrediction(a, (int) (1000 + Game.Ping/2f)) <= a.MaxHealth/6))
                 {
                     GameObjects.Player.Spellbook.CastSpell(SpellSlots.Exhaust, Targets.Target);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Fired when a buff is added.
+        /// </summary>
+        /// <param name="args">The <see cref="Obj_AI_BaseBuffAddEventArgs" /> instance containing the event data.</param>
+        public static void Spells(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
+        {
+            /// <summary>
+            ///     The Remove Scurvy Logic.
+            /// </summary>
+            if (GameObjects.Player.ChampionName.Equals("Gangplank"))
+            {
+                if (Vars.W.IsReady() &&
+                    Bools.ShouldCleanse(GameObjects.Player))
+                {
+                    DelayAction.Add(Vars.Delay, () =>
+                    {
+                        Vars.W.Cast();
+                    });
+                }
+            }
+
+            /// <summary>
+            ///     The Cleanse Logic.
+            /// </summary>
+            if (SpellSlots.Cleanse.IsReady())
+            {
+                if (Bools.ShouldCleanse(GameObjects.Player))
+                {
+                    DelayAction.Add(Vars.Delay, () =>
+                    {
+                        GameObjects.Player.Spellbook.CastSpell(SpellSlots.Cleanse);
+                    });
                 }
             }
         }

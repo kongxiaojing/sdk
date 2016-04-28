@@ -5,7 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 
-namespace ExorAIO.Champions.Darius
+namespace ExorAIO.Champions.Renekton
 {
     /// <summary>
     ///     The logics class.
@@ -27,11 +27,21 @@ namespace ExorAIO.Champions.Darius
             ///     The Clear Q Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                (Targets.Minions.Count() >= 3 || Targets.JungleMinions.Any()) &&
                 Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
             {
-                Vars.Q.Cast();
+                if (Targets.Minions.Any() &&
+                    Targets.Minions.Count() >= 3)
+                {
+                    Vars.Q.Cast();
+                }
+                else if (Targets.JungleMinions.Any())
+                {
+                    if (!Vars.W.IsReady() &&
+                        !GameObjects.Player.HasBuff("RenektonPreExecute"))
+                    {
+                        Vars.Q.Cast();
+                    }
+                }
             }
         }
 
@@ -77,7 +87,7 @@ namespace ExorAIO.Champions.Darius
             ///     The W BuildingClear Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
                 Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast();

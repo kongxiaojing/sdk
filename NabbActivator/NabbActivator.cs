@@ -109,6 +109,11 @@ namespace NabbActivator
         public static void OnBuffAdd(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
         {
             /// <summary>
+            ///     Loads the spells logics.
+            /// </summary>
+            Activator.Spells(sender, args);
+
+            /// <summary>
             ///     Loads the cleansers logics.
             /// </summary>
             Activator.Cleansers(sender, args);
