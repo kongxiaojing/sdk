@@ -55,7 +55,7 @@ namespace ExorAIO.Champions.Kalista
                 }
                 else if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(
                     c =>
-                        c.IsMinion &&
+                        (c.IsMinion || c is Obj_AI_Hero) &&
                         c.Health < KillSteal.GetPerfectRendDamage(c)) == Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count())
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
