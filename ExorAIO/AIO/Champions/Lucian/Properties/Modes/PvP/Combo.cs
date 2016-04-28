@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -21,11 +22,26 @@ namespace ExorAIO.Champions.Lucian
         public static void Combo(EventArgs args)
         {
             /// <summary>
+            ///     The E Combo Logic.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.E.Range) &&
+                !Targets.Target.IsValidTarget(Vars.AARange) &&
+                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+            {
+                if ((Targets.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2 &&
+                    !GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange).IsUnderEnemyTurret())
+                {
+                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange));
+                }
+            }
+
+            /// <summary>
             ///     The W Combo Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
-                !Targets.Target.IsValidTarget(Vars.AARange) &&
+                !Targets.Target.IsValidTarget(Vars.E.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
                 if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c.IsMinion))
