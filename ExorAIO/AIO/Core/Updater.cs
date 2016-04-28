@@ -25,7 +25,7 @@ namespace ExorAIO.Core
                         {
                             var rawVersion =
                                 c.DownloadString(
-                                    "https://raw.githubusercontent.com/nabbhacker/SDKExoryREPO/master/ExorAIO/Properties/AssemblyInfo.cs");
+                                    "https://github.com/nabbhacker/SDKExoryREPO/blob/master/ExorAIO/Properties/AssemblyInfo.cs");
                             var match =
                                 new Regex(
                                     @"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]")

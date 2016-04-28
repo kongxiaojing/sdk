@@ -114,7 +114,7 @@ namespace ExorAIO.Utilities
         /// <summary>
         ///     Gets or sets the assembly menu.
         /// </summary>
-        public static Menu Menu { internal get; set; } = new Menu("aio", $"[ExorAIO]: {GameObjects.Player.ChampionName}", true);
+        public static Menu Menu { get; set; } = new Menu($"aio.{GameObjects.Player.ChampionName.ToLower()}", $"[ExorAIO]: {GameObjects.Player.ChampionName}", true);
 
         /// <summary>
         ///     Gets or sets the settings menu.
