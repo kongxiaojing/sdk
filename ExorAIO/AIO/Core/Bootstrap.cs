@@ -20,8 +20,8 @@ using ExorAIO.Champions.Lucian;
 using ExorAIO.Champions.Lux;
 using ExorAIO.Champions.Nautilus;
 using ExorAIO.Champions.Nunu;
-/*
 using ExorAIO.Champions.Olaf;
+/*
 using ExorAIO.Champions.Pantheon;
 using ExorAIO.Champions.Quinn;
 using ExorAIO.Champions.Renekton;
@@ -120,10 +120,10 @@ namespace ExorAIO.Core
                 case "Nunu":
                     new Nunu().OnLoad();
                     break;
-                /*
                 case "Olaf":
                     new Olaf().OnLoad();
                     break;
+                /*
                 case "Pantheon":
                     new Pantheon().OnLoad();
                     break;
