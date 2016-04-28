@@ -70,6 +70,11 @@ namespace ExorAIO.Utilities
             "Hecarim",
             "Blitzcrank"
         };
+        
+        /// <summary>
+        ///     The args End.
+        /// </summary>
+        public static Vector3 End { internal get; set; } = Vector3.Zero;
 
         /// <summary>
         ///     Gets or sets the Q Spell.

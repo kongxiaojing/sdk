@@ -16,6 +16,7 @@ namespace ExorAIO.Champions.Jhin
             Game.OnUpdate += Jhin.OnUpdate;
             Obj_AI_Base.OnDoCast += Jhin.OnDoCast;
             Events.OnGapCloser += Jhin.OnGapCloser;
+            Obj_AI_Base.OnProcessSpellCast += Jhin.OnProcessSpellCast;
         }
     }
 }

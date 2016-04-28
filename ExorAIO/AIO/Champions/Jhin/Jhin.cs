@@ -124,11 +124,25 @@ namespace ExorAIO.Champions.Jhin
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (Vars.E.IsReady() &&
+                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                !Bools.HasAnyImmunity(args.Sender, true) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(args.End);
+            }
+        }
+
+        /// <summary>
+        ///     Handles the <see cref="E:ProcessSpell" /> event.
+        /// </summary>
+        /// <param name="unit">The unit.</param>
+        /// <param name="Spell">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
+        public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (sender.IsMe &&
+                args.SData.Name.Equals("JhinR"))
+            {
+                Vars.End = args.End;
             }
         }
     }

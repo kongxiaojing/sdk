@@ -38,6 +38,9 @@
     <Reference Include="LeagueSharp">
       <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.dll</HintPath>
     </Reference>
+    <Reference Include="LeagueSharp.Common">
+      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.Common.dll</HintPath>
+    </Reference>
     <Reference Include="LeagueSharp.SDK">
       <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.SDK.dll</HintPath>
     </Reference>
@@ -326,6 +329,18 @@
     <Compile Include="AIO\Champions\Nautilus\Properties\Utilities\Methods.cs" />
     <Compile Include="AIO\Champions\Nautilus\Properties\Utilities\Spells.cs" />
     <Compile Include="AIO\Champions\Nautilus\Properties\Utilities\Targets.cs" />
+    <Compile Include="AIO\Champions\Nunu\Nunu.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Modes\Automatic.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Modes\PvM\Clear.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Modes\PvM\LastHit.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Modes\PvP\Combo.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Modes\PvP\Harass.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Modes\PvP\Killsteal.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Modes\PvP\Weaving.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Utilities\Menus.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Utilities\Methods.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Utilities\Spells.cs" />
+    <Compile Include="AIO\Champions\Nunu\Properties\Utilities\Targets.cs" />
     <Compile Include="AIO\Champions\Vayne\Vayne.cs" />
     <Compile Include="AIO\Champions\Vayne\Properties\Modes\Automatic.cs" />
     <Compile Include="AIO\Champions\Vayne\Properties\Modes\PvM\Clear.cs" />

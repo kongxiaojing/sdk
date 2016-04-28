@@ -1,7 +1,9 @@
+using System;
 using System.Linq;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Utils;
+using SharpDX;
 
 namespace ExorAIO.Utilities
 {
@@ -148,5 +150,21 @@ namespace ExorAIO.Utilities
             
             return false;
         }
+
+        /// <summary>
+        ///     Returns true if the target is inside a cone.
+        /// </summary>
+        public static bool IsInsideCone(Obj_AI_Hero enemy)
+            =>
+                (enemy.ServerPosition.ToVector2() - GameObjects.Player.ServerPosition.ToVector2())
+                    .Distance(new Vector2()) < Vars.R.Range * Vars.R.Range &&
+
+                (Vars.End.ToVector2() - GameObjects.Player.ServerPosition.ToVector2()
+                    .Rotated(-70f * (float)Math.PI / 180 / 2))
+                        .CrossProduct(enemy.ServerPosition.ToVector2() - GameObjects.Player.ServerPosition.ToVector2()) > 0 &&
+                        
+                (enemy.ServerPosition.ToVector2() - GameObjects.Player.ServerPosition.ToVector2())
+                    .CrossProduct(Vars.End.ToVector2() - GameObjects.Player.ServerPosition.ToVector2()
+                        .Rotated(-70f * (float)Math.PI / 180 / 2).Rotated(70f * (float)Math.PI / 180)) > 0;
     }
 }

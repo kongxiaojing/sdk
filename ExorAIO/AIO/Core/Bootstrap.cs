@@ -19,8 +19,8 @@ using ExorAIO.Champions.KogMaw;
 using ExorAIO.Champions.Lucian;
 using ExorAIO.Champions.Lux;
 using ExorAIO.Champions.Nautilus;
-/*
 using ExorAIO.Champions.Nunu;
+/*
 using ExorAIO.Champions.Olaf;
 using ExorAIO.Champions.Pantheon;
 using ExorAIO.Champions.Quinn;
@@ -117,10 +117,10 @@ namespace ExorAIO.Core
                 case "Nautilus":
                     new Nautilus().OnLoad();
                     break;
-                /*
                 case "Nunu":
                     new Nunu().OnLoad();
                     break;
+                /*
                 case "Olaf":
                     new Olaf().OnLoad();
                     break;

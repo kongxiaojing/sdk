@@ -34,9 +34,9 @@ namespace ExorAIO.Champions.Jhin
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
+                        Bools.IsInsideCone(t) &&
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.R.Range) &&
-                        GameObjects.Player.IsFacing(t)))
+                        t.IsValidTarget(Vars.R.Range)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     return;
