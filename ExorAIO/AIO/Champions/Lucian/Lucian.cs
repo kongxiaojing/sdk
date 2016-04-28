@@ -137,22 +137,5 @@ namespace ExorAIO.Champions.Lucian
                 }
             }
         }
-
-        /// <summary>
-        ///     Called upon calling a spellaneclearast.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="SpellbookCastSpellEventArgs" /> instance containing the event data.</param>
-        public static void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
-        {
-            if (sender.Owner.IsMe)
-            {
-                if (args.Slot == SpellSlot.R &&
-                    Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value)
-                {
-                    args.Process = false;
-                }
-            }
-        }
     }
 }

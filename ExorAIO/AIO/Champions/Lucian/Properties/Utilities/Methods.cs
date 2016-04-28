@@ -14,7 +14,6 @@ namespace ExorAIO.Champions.Lucian
         {
             Game.OnUpdate += Lucian.OnUpdate;
             Obj_AI_Base.OnDoCast += Lucian.OnDoCast;
-            Spellbook.OnCastSpell += Lucian.OnCastSpell;
             Obj_AI_Base.OnPlayAnimation += Lucian.OnPlayAnimation;
         }
     }
