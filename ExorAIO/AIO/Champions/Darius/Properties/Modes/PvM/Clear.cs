@@ -78,7 +78,7 @@ namespace ExorAIO.Champions.Darius
             /// </summary>
             if (Vars.W.IsReady() &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["w"]["building"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast();
             }

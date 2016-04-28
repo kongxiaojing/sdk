@@ -119,7 +119,7 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.E.IsReady() &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["building"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 5));
                 return;
@@ -130,7 +130,7 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.W.IsReady() &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["building"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast(Game.CursorPos);
             }

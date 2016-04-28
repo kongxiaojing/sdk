@@ -39,7 +39,7 @@ namespace ExorAIO.Champions.Olaf
                 {
                     Vars.WMenu.Add(new MenuBool("combo",       "Combo",       true));
                     Vars.WMenu.Add(new MenuBool("clear",       "Clear",       true));
-                    Vars.WMenu.Add(new MenuBool("building",    "Buildings",   true));
+                    Vars.WMenu.Add(new MenuBool("buildings",   "Buildings",   true));
                     Vars.WMenu.Add(
                         new MenuSlider("manamanager", "Harass/Clear: Mana >= x", 25, 10, 99));
                 }

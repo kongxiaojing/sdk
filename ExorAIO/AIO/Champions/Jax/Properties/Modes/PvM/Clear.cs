@@ -107,7 +107,7 @@ namespace ExorAIO.Champions.Jax
             /// </summary>
             if (Vars.W.IsReady() &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["building"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast();
             }

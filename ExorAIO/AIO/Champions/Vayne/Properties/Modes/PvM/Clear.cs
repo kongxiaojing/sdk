@@ -83,7 +83,7 @@ namespace ExorAIO.Champions.Vayne
             /// </summary>
             if (Vars.Q.IsReady() &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["building"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["q"]["buildings"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.Cast(Game.CursorPos);
             }

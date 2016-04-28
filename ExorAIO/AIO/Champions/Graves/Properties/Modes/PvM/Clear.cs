@@ -128,7 +128,7 @@ namespace ExorAIO.Champions.Graves
             /// </summary>
             if (Vars.E.IsReady() &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["building"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(Game.CursorPos);
             }

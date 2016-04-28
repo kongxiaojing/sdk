@@ -97,7 +97,7 @@ namespace ExorAIO.Champions.DrMundo
             /// </summary>
             if (Vars.E.IsReady() &&
                 GameObjects.Player.HealthPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["building"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast();
             }
