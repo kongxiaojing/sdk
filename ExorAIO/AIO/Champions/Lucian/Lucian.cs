@@ -54,6 +54,11 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             Logics.Automatic(args);
 
+            if (GameObjects.Player.HasBuff("LucianR"))
+            {
+                return;
+            }
+            
             /// <summary>
             ///     Initializes the Killsteal events.
             /// </summary>
@@ -90,6 +95,7 @@ namespace ExorAIO.Champions.Lucian
         public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (sender.IsMe &&
+                !GameObjects.Player.HasBuff("LucianR") &&
                 AutoAttack.IsAutoAttack(args.SData.Name))
             {
                 /// <summary>
