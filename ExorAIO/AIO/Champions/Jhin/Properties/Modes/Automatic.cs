@@ -82,11 +82,24 @@ namespace ExorAIO.Champions.Jhin
                     if (Bools.IsImmobile(target))
                     {
                         Vars.W.Cast(target.ServerPosition);
+                        return;
                     }
-                    else if (!target.IsValidTarget(Vars.Q.Range) &&
-                        GameObjects.Player.Distance(Vars.W.GetPrediction(target).UnitPosition) > Vars.Q.Range)
+                    else
                     {
-                        Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                        if (!target.IsFacing(GameObjects.Player) &&
+                            GameObjects.Player.IsFacing(target))
+                        {
+                            Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                            return;
+                        }
+
+                        if (!target.IsValidTarget(Vars.Q.Range) &&
+                            target.IsFacing(GameObjects.Player) &&
+                            !GameObjects.Player.IsFacing(target) &&
+                            GameObjects.Player.Distance(Vars.W.GetPrediction(target).UnitPosition) > Vars.Q.Range)
+                        {
+                            Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                        }
                     }
                 }
             }
