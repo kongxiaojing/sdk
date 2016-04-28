@@ -25,8 +25,8 @@ namespace ExorAIO.Champions.Lucian
             ///     The E Combo Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.E.Range) &&
                 !Targets.Target.IsValidTarget(Vars.AARange) &&
+                Targets.Target.IsValidTarget(Vars.E.Range + Vars.W.Range) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
                 if ((Targets.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2 &&
@@ -41,13 +41,16 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.W.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
-                !Targets.Target.IsValidTarget(Vars.E.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c.IsMinion))
+                if (Vars.E.IsReady() ||
+                    Targets.Target.IsValidTarget(Vars.E.Range))
                 {
-                    Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
-                    return;
+                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c.IsMinion))
+                    {
+                        Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
+                        return;
+                    }
                 }
             }
 
