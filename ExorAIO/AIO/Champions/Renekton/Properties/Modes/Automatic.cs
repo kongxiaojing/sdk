@@ -52,7 +52,7 @@ namespace ExorAIO.Champions.Renekton
             if (Vars.R.IsReady() &&
                 GameObjects.Player.CountEnemyHeroesInRange(700f) > 0)
             {
-                if (Health.GetPrediction(GameObjects.Player, (int)(250 + Game.Ping/2f)) <= GameObjects.Player.MaxHealth/4 &&
+                if (Health.GetPrediction(GameObjects.Player, (int)(250 + Game.Ping/2f)) <= GameObjects.Player.MaxHealth/6 &&
                     Vars.Menu["spells"]["r"]["lifesaver"].GetValue<MenuBool>().Value)
                 {
                     Vars.R.Cast();
