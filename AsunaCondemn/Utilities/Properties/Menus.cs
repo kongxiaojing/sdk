@@ -25,7 +25,7 @@ namespace AsunaCondemn
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.Menu.Add(new MenuKeyBind("logical", "Execute:", Keys.Space, KeyBindType.Press));
+                    Vars.EMenu.Add(new MenuKeyBind("logical", "Execute:", Keys.Space, KeyBindType.Press));
                 }
                 Vars.Menu.Add(Vars.EMenu);
 
