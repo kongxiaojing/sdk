@@ -68,7 +68,7 @@ namespace ExorAIO.Champions.Lux
                 !Targets.Target.HasBuff("luxilluminatingfraulein") &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => c.IsMinion) <= 1)
+                if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }

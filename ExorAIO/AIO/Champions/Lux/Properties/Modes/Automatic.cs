@@ -40,7 +40,6 @@ namespace ExorAIO.Champions.Lux
             ///     The E Missile Manager.
             /// </summary>
             if (Vars.E.IsReady() &&
-                !Vars.Q.IsReady() &&
                 GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState != 1)
             {
                 switch (Variables.Orbwalker.ActiveMode)
