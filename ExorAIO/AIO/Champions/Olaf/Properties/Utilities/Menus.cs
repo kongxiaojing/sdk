@@ -37,7 +37,11 @@ namespace ExorAIO.Champions.Olaf
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
+                    Vars.WMenu.Add(new MenuBool("combo",       "Combo",       true));
+                    Vars.WMenu.Add(new MenuBool("clear",       "Clear",       true));
+                    Vars.WMenu.Add(new MenuBool("building",    "Buildings",   true));
+                    Vars.WMenu.Add(
+                        new MenuSlider("manamanager", "Harass/Clear: Mana >= x", 25, 10, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 

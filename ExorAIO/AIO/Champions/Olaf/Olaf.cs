@@ -105,6 +105,11 @@ namespace ExorAIO.Champions.Olaf
                         Logics.Weaving(sender, args);
                         break;
 
+                    case OrbwalkingMode.LaneClear:
+                        Logics.JungleClear(sender, args);
+                        Logics.BuildingClear(sender, args);
+                        break;
+
                     default:
                         break;
                 }

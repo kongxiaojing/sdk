@@ -51,7 +51,7 @@ namespace ExorAIO.Champions.DrMundo
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo",       "Combo",       true));
-                    Vars.EMenu.Add(new MenuBool("buildings",   "Buildings",   true));
+                    Vars.EMenu.Add(new MenuBool("building",    "Buildings",   true));
                     Vars.EMenu.Add(new MenuBool("jungleclear", "JungleClear", true));
                     Vars.EMenu.Add(
                         new MenuSlider("manamanager", "Buildings/JungleClear: Mana >= x%", 50, 0, 99));
