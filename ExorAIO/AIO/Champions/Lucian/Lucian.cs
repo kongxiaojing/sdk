@@ -4,6 +4,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.SDK.UI;
 
 namespace ExorAIO.Champions.Lucian
 {
@@ -133,6 +134,23 @@ namespace ExorAIO.Champions.Lucian
                     args.Animation.Equals("Spell2"))
                 {
                     GameObjects.Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Called upon calling a spellaneclearast.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="SpellbookCastSpellEventArgs" /> instance containing the event data.</param>
+        public static void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
+        {
+            if (sender.Owner.IsMe)
+            {
+                if (args.Slot == SpellSlot.R &&
+                    Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value)
+                {
+                    args.Process = false;
                 }
             }
         }
