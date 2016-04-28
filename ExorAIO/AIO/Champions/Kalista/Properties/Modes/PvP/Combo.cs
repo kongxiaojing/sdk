@@ -34,10 +34,12 @@ namespace ExorAIO.Champions.Kalista
                 return;
             }
 
-            if (!Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget(Vars.AARange))
+            if (Bools.HasSheenBuff())
             {
-                return;
+                if (!Targets.Target.IsValidTarget(Vars.AARange))
+                {
+                    return;
+                }
             }
 
             /// <summary>

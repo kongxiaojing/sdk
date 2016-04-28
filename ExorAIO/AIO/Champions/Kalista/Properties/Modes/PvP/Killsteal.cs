@@ -28,6 +28,7 @@ namespace ExorAIO.Champions.Kalista
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
+                        !Bools.IsPerfectRendTarget(t) &&
                         t.IsValidTarget(Vars.Q.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.Health < Vars.Q.GetDamage(t)))
