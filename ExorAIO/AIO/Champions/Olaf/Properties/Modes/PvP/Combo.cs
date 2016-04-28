@@ -38,13 +38,13 @@ namespace ExorAIO.Champions.Olaf
             /// <summary>
             ///     The Q Combo Logic.
             /// </summary>
-            if (Vars.Q.IsReady() && !Targets.Target.HasBuffOfType(BuffType.Slow) &&
+            if (Vars.Q.IsReady() &&
+                !Targets.Target.HasBuffOfType(BuffType.Slow) &&
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                Vars.Q.Cast(
-                    Vars.Q.GetPrediction(Targets.Target)
-                        .CastPosition.Extend(Vars.Q.GetPrediction(Targets.Target).CastPosition, 75f));
+                Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target)
+                    .UnitPosition.Extend(GameObjects.Player.ServerPosition, -100f));
             }
         }
     }

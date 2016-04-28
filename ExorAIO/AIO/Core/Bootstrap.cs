@@ -22,8 +22,8 @@ using ExorAIO.Champions.Nautilus;
 using ExorAIO.Champions.Nunu;
 using ExorAIO.Champions.Olaf;
 using ExorAIO.Champions.Pantheon;
-/*
 using ExorAIO.Champions.Quinn;
+/*
 using ExorAIO.Champions.Renekton;
 using ExorAIO.Champions.Ryze;
 using ExorAIO.Champions.Sivir;
@@ -126,10 +126,10 @@ namespace ExorAIO.Core
                 case "Pantheon":
                     new Pantheon().OnLoad();
                     break;
-                /*
                 case "Quinn":
                     new Quinn().OnLoad();
                     break;
+                /*
                 case "Renekton":
                     new Renekton().OnLoad();
                     break;
