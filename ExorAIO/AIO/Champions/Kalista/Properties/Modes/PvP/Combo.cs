@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Kalista
 
             if (Bools.HasSheenBuff())
             {
-                if (!Targets.Target.IsValidTarget(Vars.AARange))
+                if (Targets.Target.IsValidTarget(Vars.AARange))
                 {
                     return;
                 }
