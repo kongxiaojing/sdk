@@ -38,10 +38,10 @@ namespace ExorAIO.Champions.Lucian
             ///     The Semi-Automatic R Management.
             /// </summary>
             if (Vars.R.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.R.Range) &&
                 Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value)
             {
                 if (!GameObjects.Player.HasBuff("LucianR") &&
+                    Targets.Target.IsValidTarget(Vars.R.Range) &&
                     Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
