@@ -40,46 +40,43 @@ namespace NabbActivator
                 }
             }
 
-            if (!SpellSlots.Cleanse.IsReady() &&
-                SpellSlots.Cleanse == SpellSlot.Unknown)
+            if (Bools.ShouldUseCleanser() ||
+                (!SpellSlots.Cleanse.IsReady() &&
+                    Bools.ShouldCleanse(GameObjects.Player)))
             {
-                if (Bools.ShouldUseCleanser() ||
-                    Bools.ShouldCleanse(ObjectManager.Player))
+                /// <summary>
+                ///     The Quicksilver Sash Logic.
+                /// </summary>
+                if (Items.CanUseItem(3140))
                 {
-                    /// <summary>
-                    ///     The Quicksilver Sash Logic.
-                    /// </summary>
-                    if (Items.CanUseItem(3140))
+                    DelayAction.Add(Vars.Delay, () =>
                     {
-                        DelayAction.Add(Vars.Delay, () =>
-                        {
-                            Items.UseItem(3140);
-                            return;
-                        });
-                    }
+                        Items.UseItem(3140);
+                        return;
+                    });
+                }
 
-                    /// <summary>
-                    ///     The Dervish Blade Logic.
-                    /// </summary>
-                    if (Items.CanUseItem(3137))
+                /// <summary>
+                ///     The Dervish Blade Logic.
+                /// </summary>
+                if (Items.CanUseItem(3137))
+                {
+                    DelayAction.Add(Vars.Delay, () =>
                     {
-                        DelayAction.Add(Vars.Delay, () =>
-                        {
-                            Items.UseItem(3137);
-                            return;
-                        });
-                    }
+                        Items.UseItem(3137);
+                        return;
+                    });
+                }
 
-                    /// <summary>
-                    ///     The Mercurial Scimitar Logic.
-                    /// </summary>
-                    if (Items.CanUseItem(3139))
+                /// <summary>
+                ///     The Mercurial Scimitar Logic.
+                /// </summary>
+                if (Items.CanUseItem(3139))
+                {
+                    DelayAction.Add(Vars.Delay, () =>
                     {
-                        DelayAction.Add(Vars.Delay, () =>
-                        {
-                            Items.UseItem(3139);
-                        });
-                    }
+                        Items.UseItem(3139);
+                    });
                 }
             }
         }
