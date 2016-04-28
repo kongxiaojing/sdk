@@ -80,6 +80,7 @@ namespace ExorAIO.Champions.Lucian
                     break;
 
                 case OrbwalkingMode.Hybrid:
+                case OrbwalkingMode.LaneClear:
                     Logics.Harass(args);
                     break;
 
