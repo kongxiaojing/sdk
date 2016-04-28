@@ -53,7 +53,8 @@ namespace ExorAIO.Champions.Lucian
                         t =>
                             !Invulnerable.Check(t) &&
                             !t.IsValidTarget(Vars.Q.Range) &&
-                            t.IsValidTarget(Vars.Q2.Range))).UnitPosition)
+                            t.IsValidTarget(Vars.Q2.Range) &&
+                            Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value)).UnitPosition)
 
                     select minion)
                 {
