@@ -68,11 +68,6 @@ namespace NabbActivator
             Activator.Spells(args);
 
             /// <summary>
-            ///     Loads the cleansers logics.
-            /// </summary>
-            Activator.Cleansers(args);
-
-            /// <summary>
             ///     Loads the offensives logics.
             /// </summary>
             Activator.Offensives(args);
@@ -104,6 +99,18 @@ namespace NabbActivator
             ///     Loads the resetter-items logics.
             /// </summary>
             Activator.Resetters(sender, args);
+        }
+
+        /// <summary>
+        ///     Fired when a buff is added.
+        /// </summary>
+        /// <param name="args">The <see cref="Obj_AI_BaseBuffAddEventArgs" /> instance containing the event data.</param>
+        public static void OnBuffAdd(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
+        {
+            /// <summary>
+            ///     Loads the cleansers logics.
+            /// </summary>
+            Activator.Cleansers(sender, args);
         }
     }
 }

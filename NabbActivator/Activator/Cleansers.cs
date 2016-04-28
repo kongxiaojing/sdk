@@ -13,12 +13,13 @@ namespace NabbActivator
     internal partial class Activator
     {
         /// <summary>
-        ///     Called when the game updates itself.
+        ///     Fired when a buff is added.
         /// </summary>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
-        public static void Cleansers(EventArgs args)
+        /// <param name="args">The <see cref="Obj_AI_BaseBuffAddEventArgs" /> instance containing the event data.</param>
+        public static void Cleansers(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
         {
-            if (!Vars.Menu["cleansers"].GetValue<MenuBool>().Value)
+            if (!sender.IsMe ||
+                !Vars.Menu["cleansers"].GetValue<MenuBool>().Value)
             {
                 return;
             }
@@ -56,6 +57,32 @@ namespace NabbActivator
                     });
                 }
 
+                /// <summary>
+                ///     The Dervish Blade Logic.
+                /// </summary>
+                if (Items.CanUseItem(3137))
+                {
+                    DelayAction.Add(Vars.Delay, () =>
+                    {
+                        Items.UseItem(3137);
+                        return;
+                    });
+                }
+
+                /// <summary>
+                ///     The Mercurial Scimitar Logic.
+                /// </summary>
+                if (Items.CanUseItem(3139))
+                {
+                    DelayAction.Add(Vars.Delay, () =>
+                    {
+                        Items.UseItem(3139);
+                    });
+                }
+            }
+
+            if (GameObjects.Player.HealthPercent < 10)
+            {
                 /// <summary>
                 ///     The Dervish Blade Logic.
                 /// </summary>

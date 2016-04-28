@@ -15,11 +15,11 @@ namespace NabbActivator
         /// </summary>
         public static bool IsHealthPotRunning()
         {
-            return ObjectManager.Player.HasBuff("ItemCrystalFlask") ||
-                   ObjectManager.Player.HasBuff("RegenerationPotion") ||
-                   ObjectManager.Player.HasBuff("ItemMiniRegenPotion") ||
-                   ObjectManager.Player.HasBuff("ItemDarkCrystalFlask") ||
-                   ObjectManager.Player.HasBuff("ItemCrystalFlaskJungle");
+            return GameObjects.Player.HasBuff("ItemCrystalFlask") ||
+                   GameObjects.Player.HasBuff("RegenerationPotion") ||
+                   GameObjects.Player.HasBuff("ItemMiniRegenPotion") ||
+                   GameObjects.Player.HasBuff("ItemDarkCrystalFlask") ||
+                   GameObjects.Player.HasBuff("ItemCrystalFlaskJungle");
         }
 
         /// <summary>
@@ -27,8 +27,8 @@ namespace NabbActivator
         /// </summary>
         public static bool IsManaPotRunning()
         {
-            return ObjectManager.Player.HasBuff("ItemDarkCrystalFlask") ||
-                   ObjectManager.Player.HasBuff("ItemCrystalFlaskJungle");
+            return GameObjects.Player.HasBuff("ItemDarkCrystalFlask") ||
+                   GameObjects.Player.HasBuff("ItemCrystalFlaskJungle");
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace NabbActivator
         /// </summary>
         public static bool IsValidSnare()
         {
-            return ObjectManager.Player.Buffs.Any(
+            return GameObjects.Player.Buffs.Any(
                 b =>
                     b.Type == BuffType.Snare &&
                     !Vars.InvalidSnareCasters.Contains((b.Caster as Obj_AI_Hero).ChampionName));
@@ -50,7 +50,7 @@ namespace NabbActivator
         /// </summary>
         public static bool IsValidStun()
         {
-            return ObjectManager.Player.Buffs.Any(
+            return GameObjects.Player.Buffs.Any(
                 b =>
                     b.Type == BuffType.Stun &&
                     !Vars.InvalidStunCasters.Contains((b.Caster as Obj_AI_Hero).ChampionName));
@@ -70,8 +70,9 @@ namespace NabbActivator
                    target.HasBuffOfType(BuffType.Charm) ||
                    target.HasBuffOfType(BuffType.Taunt) ||
                    target.HasBuffOfType(BuffType.Polymorph) ||
-                   (ObjectManager.Player.HealthPercent < 40 &&
-                    ObjectManager.Player.HasBuff("SummonerDot"))
+                   GameObjects.Player.HasBuff("ThreshQ") ||
+                   (GameObjects.Player.HealthPercent < 40 &&
+                    GameObjects.Player.HasBuff("SummonerDot"))
                 );
         }
 
@@ -80,15 +81,16 @@ namespace NabbActivator
         /// </summary>
         public static bool ShouldUseCleanser()
         {
-            return !Invulnerable.Check(ObjectManager.Player) &&
+            return !Invulnerable.Check(GameObjects.Player) &&
                 GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(1500f)) &&
                 (
-                   ObjectManager.Player.HasBuffOfType(BuffType.Suppression) ||
-                   ObjectManager.Player.HasBuff("zedrtargetmark") ||
-                   ObjectManager.Player.HasBuff("summonerexhaust") ||
-                   ObjectManager.Player.HasBuff("fizzmarinerdoombomb") ||
-                   ObjectManager.Player.HasBuff("vladimirhemoplague") ||
-                   ObjectManager.Player.HasBuff("mordekaiserchildrenofthegrave")
+                   GameObjects.Player.HasBuffOfType(BuffType.Suppression) ||
+                   GameObjects.Player.HasBuff("ThreshQ") ||
+                   GameObjects.Player.HasBuff("zedrtargetmark") ||
+                   GameObjects.Player.HasBuff("summonerexhaust") ||
+                   GameObjects.Player.HasBuff("fizzmarinerdoombomb") ||
+                   GameObjects.Player.HasBuff("vladimirhemoplague") ||
+                   GameObjects.Player.HasBuff("mordekaiserchildrenofthegrave")
                 );
         }
     }
