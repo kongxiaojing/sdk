@@ -36,29 +36,11 @@ namespace ExorAIO.Champions.Lucian
                 }
             }
 
-            /// <summary>
-            ///     The W Combo Logic.
-            /// </summary>
-            if (Vars.W.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.W.Range) &&
-                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
-            {
-                if (Vars.E.IsReady() ||
-                    Targets.Target.IsValidTarget(Vars.E.Range))
-                {
-                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c.IsMinion))
-                    {
-                        Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
-                        return;
-                    }
-                }
-            }
-
             if (!GameObjects.EnemyHeroes.Any(
                 t =>
                     !Invulnerable.Check(t) &&
                     !t.IsValidTarget(Vars.Q.Range) &&
-                    t.IsValidTarget(Vars.Q2.Range)))
+                    t.IsValidTarget(Vars.Q2.Range-50f)))
             {
                 return;
             }
@@ -78,7 +60,7 @@ namespace ExorAIO.Champions.Lucian
 
                     let polygon = new Geometry.Rectangle(
                         GameObjects.Player.ServerPosition,
-                        GameObjects.Player.ServerPosition.Extend(minion.ServerPosition, Vars.Q2.Range),
+                        GameObjects.Player.ServerPosition.Extend(minion.ServerPosition, Vars.Q2.Range-50f),
                         Vars.Q2.Width)
 
                     where !polygon.IsOutside(
@@ -86,7 +68,7 @@ namespace ExorAIO.Champions.Lucian
                         t =>
                             !Invulnerable.Check(t) &&
                             !t.IsValidTarget(Vars.Q.Range) &&
-                            t.IsValidTarget(Vars.Q2.Range))).UnitPosition)
+                            t.IsValidTarget(Vars.Q2.Range-50f))).UnitPosition)
 
                     select minion)
                 {
