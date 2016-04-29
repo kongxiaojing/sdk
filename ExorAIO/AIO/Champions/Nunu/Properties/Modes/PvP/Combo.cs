@@ -22,18 +22,22 @@ namespace ExorAIO.Champions.Nunu
                 return;
             }
 
-            if (!Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget(Vars.AARange))
+            if (Bools.HasSheenBuff())
             {
-                /// <summary>
-                ///     The E Combo Logic.
-                /// </summary>
-                if (Vars.E.IsReady() &&
-                    Targets.Target.IsValidTarget(Vars.E.Range) &&
-                    Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+                if (Targets.Target.IsValidTarget(Vars.AARange))
                 {
-                    Vars.E.CastOnUnit(Targets.Target);
+                    return;
                 }
+            }
+
+            /// <summary>
+            ///     The E Combo Logic.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.E.Range) &&
+                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+            {
+                Vars.E.CastOnUnit(Targets.Target);
             }
         }
     }

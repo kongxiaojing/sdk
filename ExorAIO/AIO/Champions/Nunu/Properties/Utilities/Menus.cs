@@ -51,11 +51,13 @@ namespace ExorAIO.Champions.Nunu
                     /// </summary>
                         Vars.WhiteListMenu = new Menu("whitelist", "W: Whitelist Menu", true);
                         {
-                            foreach (var champ in GameObjects.AllyHeroes.Where(h => !h.IsMe))
+                            foreach (var target in GameObjects.AllyHeroes.Where(h => !h.IsMe))
                             {
                                 Vars.WhiteListMenu.Add(
                                     new MenuBool(
-                                        champ.ChampionName.ToLower(), $"Use on: {champ.ChampionName}"));
+                                        target.ChampionName.ToLower(),
+                                        $"Use on: {target.ChampionName}",
+                                        true));
                             }
                         }
                         Vars.WMenu.Add(Vars.WhiteListMenu);

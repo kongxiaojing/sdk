@@ -26,6 +26,27 @@ namespace ExorAIO.Champions.Nunu
             }
 
             /// <summary>
+            ///     The Semi-Automatic R Management.
+            /// </summary>
+            if (Vars.R.IsReady() &&
+                Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value)
+            {
+                if (!GameObjects.Player.HasBuff("AbsoluteZero") &&
+                    GameObjects.Player.CountEnemyHeroesInRange(Vars.R.Range) > 0 &&
+                    Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
+                {
+                    Vars.R.Cast();
+                }
+
+                if (GameObjects.Player.HasBuff("AbsoluteZero") &&
+                    !Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
+                {
+                    Variables.Orbwalker.Move(Game.CursorPos);
+                    Vars.R.Cast();
+                }
+            }
+
+            /// <summary>
             ///     The JungleClear Q Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
@@ -72,52 +93,56 @@ namespace ExorAIO.Champions.Nunu
                     return;
                 }
 
-                if (GameObjects.AllyHeroes.Any(h => !h.IsMe))
+                switch (Variables.Orbwalker.ActiveMode)
                 {
-                    Vars.W.CastOnUnit(GameObjects.AllyHeroes.Where(
-                        a =>
-                            a.IsValidTarget(Vars.W.Range, false) &&
-                            Vars.Menu["spells"]["w"]["whitelist"][a.ChampionName.ToLower()].GetValue<MenuBool>().Value).OrderBy(
-                                o =>
-                                    o.TotalAttackDamage).First());
-                }
-                else if (Targets.Minions.Any() &&
-                    GameObjects.AllyMinions.Any() &&
-                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo)
-                {
-                    foreach (var minion in GameObjects.AllyMinions.Where(m => m.IsValidTarget(Vars.W.Range, false)))
-                    {
-                        if (minion.GetMinionType() == MinionTypes.Super ||
-                            minion.GetMinionType() == MinionTypes.Siege)
+                    case OrbwalkingMode.Combo:
+                        if (GameObjects.AllyHeroes.Any(
+                            h =>
+                                !h.IsMe &&
+                                h.IsValidTarget(Vars.W.Range, false)))
                         {
-                            Vars.W.CastOnUnit(minion);
+                            Vars.W.CastOnUnit(GameObjects.AllyHeroes.Where(
+                                a =>
+                                    Vars.Menu["spells"]["w"]["whitelist"][a.ChampionName.ToLower()].GetValue<MenuBool>().Value).OrderBy(
+                                        o =>
+                                            o.TotalAttackDamage).First());
                         }
-                    }
-                }
-                else
-                {
-                    Vars.W.CastOnUnit(GameObjects.Player);
-                }
-            }
-
-            /// <summary>
-            ///     The Semi-Automatic R Management.
-            ///     Testare Semi-Auto R.
-            /// </summary>
-            if (Vars.R.IsReady() &&
-                Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value)
-            {
-                if (!GameObjects.Player.HasBuff("AbsoluteZero") &&
-                    GameObjects.Player.CountEnemyHeroesInRange(Vars.R.Range) > 0 &&
-                    Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
-                {
-                    Vars.R.Cast();
-                }
-                else if (GameObjects.Player.HasBuff("AbsoluteZero") &&
-                    !Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
-                {
-                    GameObjects.Player.IssueOrder(GameObjectOrder.MoveTo, GameObjects.Player.Position);
-                    Vars.R.Cast();
+                        else
+                        {
+                            if (Targets.Target.IsValidTarget())
+                            {
+                                Vars.W.CastOnUnit(GameObjects.Player);
+                            }
+                        }
+                        break;
+                        
+                    case OrbwalkingMode.LaneClear:
+                        if (Targets.Minions.Any() ||
+                            Targets.JungleMinions.Any())
+                        {
+                            Vars.W.CastOnUnit(GameObjects.Player);
+                        }
+                        break;
+                        
+                    default:
+                        if (Targets.Minions.Any() &&
+                            GameObjects.AllyMinions.Any())
+                        {
+                            foreach (var minion in GameObjects.AllyMinions.Where(m => m.IsValidTarget(Vars.W.Range, false)))
+                            {
+                                if (minion.GetMinionType() == MinionTypes.Super ||
+                                    minion.GetMinionType() == MinionTypes.Siege)
+                                {
+                                    Vars.W.CastOnUnit(minion);
+                                }
+                            }
+                        }
+                        else if (!GameObjects.AllyMinions.Any() &&
+                            (Targets.Minions.Any() || Targets.JungleMinions.Any()))
+                        {
+                            Vars.W.CastOnUnit(GameObjects.Player);
+                        }
+                        break;
                 }
             }
         }
