@@ -27,7 +27,7 @@ namespace ExorAIO.Champions.Amumu
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                Vars.Menu["logical"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
                 /// <summary>
                 ///     If the player doesn't have the W Buff.
@@ -72,17 +72,6 @@ namespace ExorAIO.Champions.Amumu
                     switch (Variables.Orbwalker.ActiveMode)
                     {
                         /// <summary>
-                        ///     The W Combo Enable Logic.
-                        /// </summary>
-                        case OrbwalkingMode.Combo:
-
-                            if (!GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.W.Range)))
-                            {
-                                Vars.W.Cast();
-                            }
-                            break;
-
-                        /// <summary>
                         ///     The W Clear Disable Logic.
                         /// </summary>
                         case OrbwalkingMode.LaneClear:
@@ -94,7 +83,14 @@ namespace ExorAIO.Champions.Amumu
                             }
                             break;
 
+                        /// <summary>
+                        ///     The Default Disable Logic.
+                        /// </summary>
                         default:
+                            if (!GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.W.Range)))
+                            {
+                                Vars.W.Cast();
+                            }
                             break;
                     }
                 }

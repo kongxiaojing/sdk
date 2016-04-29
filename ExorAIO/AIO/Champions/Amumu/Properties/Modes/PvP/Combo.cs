@@ -29,13 +29,11 @@ namespace ExorAIO.Champions.Amumu
             ///     The Q Combo Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.Q.Range) &&
+                !Targets.Target.IsValidTarget(Vars.E.Range) &&
+                Targets.Target.IsValidTarget(Vars.Q.Range - 100f) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(
-                    c =>
-                        c is Obj_AI_Hero ||
-                        c is Obj_AI_Minion))
+                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
@@ -45,7 +43,7 @@ namespace ExorAIO.Champions.Amumu
             ///     The E Combo Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.E.Range) &&
+                Targets.Target.IsValidTarget(Vars.E.Range - 25f) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast();
@@ -56,7 +54,7 @@ namespace ExorAIO.Champions.Amumu
             /// </summary>
             if (Vars.R.IsReady() &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
-                GameObjects.Player.CountEnemyHeroesInRange(Vars.R.Range) >=
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.R.Range - 50f) >=
                     Vars.Menu["spells"]["r"]["enemies"].GetValue<MenuSlider>().Value)
             {
                 Vars.R.Cast();
