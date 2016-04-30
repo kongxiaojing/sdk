@@ -60,6 +60,32 @@ namespace ExorAIO.Champions.Ezreal
             }
 
             /// <summary>
+            ///     Initializes the orbwalkingmodes.
+            /// </summary>
+            switch (Variables.Orbwalker.ActiveMode)
+            {
+                case OrbwalkingMode.Combo:
+                    if (Variables.Orbwalker.GetTarget() as Obj_AI_Hero == null)
+                    {
+                        return;
+                    }
+                    break;
+
+                case OrbwalkingMode.LaneClear:
+                    if (Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
+                        Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
+                        Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+                    {
+                        return;
+                    }
+                    break;
+
+                default:
+                    return;
+                    break;
+            }
+
+            /// <summary>
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&

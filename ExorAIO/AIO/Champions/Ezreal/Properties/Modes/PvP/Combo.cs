@@ -69,7 +69,7 @@ namespace ExorAIO.Champions.Ezreal
             ///     The R Combo Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) == 0 &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.Q.Range) == 0 &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(

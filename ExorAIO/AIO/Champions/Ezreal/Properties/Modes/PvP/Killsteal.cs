@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Ezreal
 {
@@ -26,7 +27,7 @@ namespace ExorAIO.Champions.Ezreal
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Bools.HasAnyImmunity(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.Health < Vars.Q.GetDamage(t)))
@@ -47,8 +48,8 @@ namespace ExorAIO.Champions.Ezreal
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
-                        !Bools.HasAnyImmunity(t, true) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.Health < Vars.W.GetDamage(t)))
                 {
@@ -61,13 +62,13 @@ namespace ExorAIO.Champions.Ezreal
             ///     The KillSteal R Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.Q.Range) == 0 &&
                 Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        !Bools.HasAnyImmunity(t, true) &&
-                        !t.IsValidTarget(Vars.Q.Range) &&
                         t.Health < Vars.R.GetDamage(t)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
