@@ -60,9 +60,9 @@ namespace ExorAIO.Champions.Lucian
                 /// <summary>
                 ///     The LaneClear W Logic.
                 /// </summary>
-                if (Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).MinionsHit >= 3)
+                if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 2)
                 {
-                    Vars.W.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).Position);
+                    Vars.W.Cast(Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).Position);
                 }
 
                 /// <summary>
