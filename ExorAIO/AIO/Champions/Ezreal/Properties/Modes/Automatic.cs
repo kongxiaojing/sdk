@@ -89,6 +89,7 @@ namespace ExorAIO.Champions.Ezreal
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
+                ObjectManager.Player.ManaPercent < ManaManager.NeededWMana &&
                 GameObjects.Player.TotalMagicalDamage < GameObjects.Player.TotalAttackDamage &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {

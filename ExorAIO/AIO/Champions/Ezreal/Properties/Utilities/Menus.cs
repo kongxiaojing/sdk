@@ -44,7 +44,7 @@ namespace ExorAIO.Champions.Ezreal
                     Vars.WMenu.Add(new MenuBool("killsteal", "KillSteal", true));
                     Vars.WMenu.Add(new MenuBool("harass",    "Harass"));
                     Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Harass: Mana >= x", 50, 10, 99));
+                        new MenuSlider("manamanager", "Logical/Harass: Mana >= x", 50, 10, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
