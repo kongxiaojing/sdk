@@ -43,8 +43,8 @@ namespace ExorAIO.Champions.Ryze
                 /// <summary>
                 ///     The Passive Stacking Logic.
                 /// </summary>
-                if (Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuBool>().Value &&
-                    Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSlider>().Value >
+                if (Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().BValue &&
+                    Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().SValue >
                         GameObjects.Player.GetBuffCount("RyzePassiveStack"))
                 {
                     Vars.Q.Cast(Game.CursorPos);
