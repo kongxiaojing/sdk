@@ -75,8 +75,8 @@ namespace ExorAIO.Champions.Jhin
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.W.Range) &&
                         t.HasBuff("jhinespotteddebuff") &&
+                        t.IsValidTarget(Vars.W.Range-150f) &&
                         Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
                     if (Bools.IsImmobile(target))

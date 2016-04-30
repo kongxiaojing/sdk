@@ -29,7 +29,7 @@ namespace ExorAIO.Champions.Jhin
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        t.Health < Vars.R.GetDamage(t) * 2))
+                        t.Health < Vars.R.GetDamage(t)*2))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     return;
@@ -67,8 +67,8 @@ namespace ExorAIO.Champions.Jhin
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.W.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
+                        t.IsValidTarget(Vars.W.Range-100f) &&
                         t.Health < Vars.W.GetDamage(t)))
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
