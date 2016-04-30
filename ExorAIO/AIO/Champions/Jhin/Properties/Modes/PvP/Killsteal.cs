@@ -27,6 +27,7 @@ namespace ExorAIO.Champions.Jhin
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
+                        Bools.IsInsideCone(t) &&
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         t.Health < Vars.R.GetDamage(t)*2))
