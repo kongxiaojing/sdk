@@ -49,10 +49,10 @@ namespace ExorAIO.Utilities
                     target.MoveSpeed < 50 ||
                     (target as Obj_AI_Hero).IsRecalling() ||
                     (target as Obj_AI_Hero).IsCastingInterruptableSpell() ||
-                    target.HasBuffOfType(BuffType.Stun) ||
+                    IsValidStun(target as Obj_AI_Hero) ||
+                    IsValidSnare(target as Obj_AI_Hero) ||
                     target.HasBuffOfType(BuffType.Flee) ||
                     target.HasBuffOfType(BuffType.Sleep) ||
-                    target.HasBuffOfType(BuffType.Snare) ||
                     target.HasBuffOfType(BuffType.Taunt) ||
                     target.HasBuffOfType(BuffType.Charm) ||
                     target.HasBuffOfType(BuffType.Knockup) ||
@@ -60,6 +60,31 @@ namespace ExorAIO.Utilities
             }
             
             return false;
+        }
+
+        /// <summary>
+        ///     Gets a value indicating whether the target has protection or not.
+        /// </summary>
+        /// <summary>
+        ///     Gets a value indicating whether a determined root is worth cleansing.
+        /// </summary>
+        public static bool IsValidSnare(Obj_AI_Hero target)
+        {
+            return target.Buffs.Any(
+                b =>
+                    b.Type == BuffType.Snare &&
+                    !Vars.InvalidSnareCasters.Contains((b.Caster as Obj_AI_Hero).ChampionName));
+        }
+
+        /// <summary>
+        ///     Gets a value indicating whether a determined Stun is worth cleansing.
+        /// </summary>
+        public static bool IsValidStun(Obj_AI_Hero target)
+        {
+            return target.Buffs.Any(
+                b =>
+                    b.Type == BuffType.Stun &&
+                    !Vars.InvalidStunCasters.Contains((b.Caster as Obj_AI_Hero).ChampionName));
         }
 
         /// <summary>

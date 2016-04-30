@@ -55,8 +55,8 @@ namespace ExorAIO.Utilities
         /// </summary>
         public static readonly List<string> InvalidSnareCasters = new List<string>
         {
-            "Leona",
-            "Zyra"
+            "Leona"
+            //"Zyra"
         };
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace ExorAIO.Utilities
         /// </summary>
         public static readonly List<string> InvalidStunCasters = new List<string>
         {
-            "Amumu",
+            //"Amumu",
             "LeeSin",
             "Alistar",
             "Hecarim",
