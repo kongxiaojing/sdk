@@ -38,8 +38,9 @@ namespace ExorAIO.Champions.Sivir
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.WMenu.Add(new MenuBool("clear", "Clear", true));
+                    Vars.WMenu.Add(new MenuBool("combo",     "Combo",     true));
+                    Vars.WMenu.Add(new MenuBool("clear",     "Clear",     true));
+                    Vars.WMenu.Add(new MenuBool("buildings", "Buildings", true));
                     Vars.WMenu.Add(
                         new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
                 }
