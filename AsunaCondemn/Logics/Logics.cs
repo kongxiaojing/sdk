@@ -39,9 +39,9 @@ namespace AsunaCondemn
                     for (var i = 1; i < 10; i++)
                     {
                         if ((target.ServerPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*42).IsWall() &&
-                            (target.ServerPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*45).IsWall() &&
+                            (target.ServerPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*44).IsWall() &&
                             (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*42).IsWall() &&
-                            (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*45).IsWall())
+                            (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*44).IsWall())
                         {
                             Vars.E.CastOnUnit(target);
                             Vars.Flash.Cast(ObjectManager.Player.ServerPosition.Extend(target.ServerPosition, Vars.Flash.Range));
