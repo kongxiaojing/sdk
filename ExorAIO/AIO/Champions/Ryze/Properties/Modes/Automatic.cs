@@ -33,8 +33,8 @@ namespace ExorAIO.Champions.Ryze
                 ///     The Tear Stacking Logic.
                 /// </summary>
                 if (Bools.HasTear(GameObjects.Player) &&
-                    Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                     GameObjects.Player.CountEnemyHeroesInRange(1500) == 0 &&
+                    Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                     Vars.Menu["miscellaneous"]["tear"].GetValue<MenuBool>().Value)
                 {
                     Vars.Q.Cast(Game.CursorPos);
@@ -43,7 +43,9 @@ namespace ExorAIO.Champions.Ryze
                 /// <summary>
                 ///     The Passive Stacking Logic.
                 /// </summary>
-                if (Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().BValue &&
+                if (!GameObjects.Player.HasBuff("RyzePassiveCharged") &&
+                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
+                    Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().BValue &&
                     Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().SValue >
                         GameObjects.Player.GetBuffCount("RyzePassiveStack"))
                 {

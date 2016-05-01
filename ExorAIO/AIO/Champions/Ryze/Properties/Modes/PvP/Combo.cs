@@ -17,7 +17,8 @@ namespace ExorAIO.Champions.Ryze
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
-            if (Invulnerable.Check(Targets.Target))
+            if (!Targets.Target.IsValidTarget() ||
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -35,6 +36,7 @@ namespace ExorAIO.Champions.Ryze
             /// </summary>
             if (Vars.R.IsReady() &&
                 Bools.IsImmobile(Targets.Target) &&
+                GameObjects.Player.ManaPercent > 20 &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.R.Cast();
@@ -55,9 +57,9 @@ namespace ExorAIO.Champions.Ryze
             ///     The Q Combo Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.Q.Range) &&
+                Targets.Target.IsValidTarget(Vars.Q.Range-50f) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
-            {
+            { 
                 Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
             }
 

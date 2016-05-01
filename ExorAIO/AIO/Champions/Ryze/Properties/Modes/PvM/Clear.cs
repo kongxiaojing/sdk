@@ -27,6 +27,7 @@ namespace ExorAIO.Champions.Ryze
             /// </summary>
             if (Vars.R.IsReady() &&
                 Vars.E.IsReady() &&
+                GameObjects.Player.ManaPercent > 20 &&
                 Vars.Menu["spells"]["r"]["clear"].GetValue<MenuBool>().Value)
             {
                 /// <summary>
@@ -59,13 +60,9 @@ namespace ExorAIO.Champions.Ryze
                 /// <summary>
                 ///     The LaneClear Q Logic.
                 /// </summary>
-                foreach (var minion in Targets.Minions.Where(m => m.Health < Vars.Q.GetDamage(m)))
+                if (Targets.Minions.Any())
                 {
-                    if (!Vars.Q.GetPrediction(minion).CollisionObjects.Any(c => c.IsMinion))
-                    {
-                        Vars.Q.Cast(Vars.Q.GetPrediction(minion).UnitPosition);
-                        return;
-                    }
+                    Vars.Q.Cast(Targets.Minions[0].ServerPosition);
                 }
 
                 /// <summary>
@@ -115,16 +112,16 @@ namespace ExorAIO.Champions.Ryze
                 {
                     if (Targets.Minions.Count(m => m.Distance(Targets.Minions[0]) < 200f) >= 3)
                     {
-                        Vars.W.CastOnUnit(Targets.Minions[0]);
+                        Vars.E.CastOnUnit(Targets.Minions[0]);
                     }
                 }
 
                 /// <summary>
-                ///     The JungleClear W Logic.
+                ///     The JungleClear E Logic.
                 /// </summary>
                 else if (Targets.JungleMinions.Any())
                 {
-                    Vars.W.CastOnUnit(Targets.JungleMinions[0]);
+                    Vars.E.CastOnUnit(Targets.JungleMinions[0]);
                 }
             }
         }
