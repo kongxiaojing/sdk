@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Windows.Forms;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
@@ -31,35 +32,40 @@ namespace ExorAIO.Champions.Lucian
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
                     Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
                     Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Energy >= x%", 50, 0, 99));
+                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
                     {
                         /// <summary>
                         ///     Sets the Extended Q menu.
                         /// </summary>
-                        Vars.Q2Menu = new Menu("extended", "Extended Q Menu", true);
+                        Vars.Q2Menu = new Menu("extended", "Use Extended Q in:", true);
                         {
-                            Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
-                            Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                            Vars.QMenu.Add(new MenuSliderButton("clear", "Clear", 50, 0, 99, true));
-                            Vars.QMenu.Add(new MenuSliderButton("mixed", "Mixed", 50, 0, 99, true));
+                            Vars.Q2Menu.Add(new MenuBool("exkillsteal", "KillSteal",  true));
+                            Vars.Q2Menu.Add(new MenuBool("excombo",     "Combo Mode", true));
+                            Vars.Q2Menu.Add(new MenuSliderButton("mixed",     "Mixed Mode / if Mana >= %",     50, 0, 99, true));
+                            Vars.Q2Menu.Add(new MenuSliderButton("laneclear", "LaneClear Mode / if Mana >= %", 50, 0, 99, true));
                         }
                         Vars.QMenu.Add(Vars.Q2Menu);
 
                         /// <summary>
                         ///     Sets the Whitelist menu for the Q.
                         /// </summary>
-                        Vars.WhiteListMenu = new Menu("whitelist", "Extended Harass: Whitelist", true);
+                        if (GameObjects.EnemyHeroes.Any())
                         {
-                            foreach (var target in GameObjects.EnemyHeroes)
+                            Vars.WhiteListMenu = new Menu("whitelist", "Extended Harass: Whitelist", true);
                             {
-                                Vars.WhiteListMenu.Add(
-                                    new MenuBool(
-                                        target.ChampionName.ToLower(),
-                                        $"Harass: {target.ChampionName}",
-                                        true));
+                                Vars.WhiteListMenu.Add(new MenuSeparator("extendedsep", "Note: The Whitelist only works for Mixed and LaneClear."));
+
+                                foreach (var target in GameObjects.EnemyHeroes)
+                                {
+                                    Vars.WhiteListMenu.Add(
+                                        new MenuBool(
+                                            target.ChampionName.ToLower(),
+                                            $"Harass: {target.ChampionName}",
+                                            true));
+                                }
                             }
+                            Vars.QMenu.Add(Vars.WhiteListMenu);
                         }
-                        Vars.QMenu.Add(Vars.WhiteListMenu);
                     }
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);

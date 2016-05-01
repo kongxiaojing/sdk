@@ -26,8 +26,8 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.Q.IsReady())
             {
-                if (Vars.Menu["spells"]["q"]["extended"]["harass"].GetValue<MenuSliderButton>().BValue &&
-                    Vars.Menu["spells"]["q"]["extended"]["harass"].GetValue<MenuSliderButton>().SValue <
+                if (Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().BValue &&
+                    Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().SValue <
                         GameObjects.Player.ManaPercent)
                 {
                     /// <summary>
