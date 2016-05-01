@@ -3,6 +3,7 @@ using System.Linq;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 using SharpDX;
 
 namespace AsunaCondemn
@@ -32,6 +33,8 @@ namespace AsunaCondemn
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
+                        !Invulnerable.Check(t) &&
+                        !GameObjects.Player.IsDashing() &&
                         !t.IsValidTarget(ObjectManager.Player.BoundingRadius) &&
                         ObjectManager.Player.Distance(ObjectManager.Player.ServerPosition.Extend(t.ServerPosition, Vars.Flash.Range)) >
                             ObjectManager.Player.Distance(t) + t.BoundingRadius))
