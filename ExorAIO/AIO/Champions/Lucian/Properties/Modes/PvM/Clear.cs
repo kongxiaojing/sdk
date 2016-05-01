@@ -26,7 +26,7 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.Q.IsReady() &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededQLaneClearMana &&
-                Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().BValue)
+                Vars.Menu["spells"]["q"]["extended"]["exlaneclear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     Through enemy minions.
@@ -62,14 +62,16 @@ namespace ExorAIO.Champions.Lucian
             /// <summary>
             ///     The Clear Q Logic.
             /// </summary>
-            if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+            if (Vars.Q.IsReady())
             {
                 /// <summary>
                 ///     The JungleClear Q Logic.
                 /// </summary>
-                if (Targets.JungleMinions.Any())
+                if (Targets.JungleMinions.Any() &&
+                    GameObjects.Player.ManaPercent > 
+                        Vars.Menu["spells"]["q"]["jungleclear"].GetValue<MenuSliderButton>().SValue +
+                        (int)(GameObjects.Player.Spellbook.GetSpell(Vars.Q.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                    Vars.Menu["spells"]["q"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
                 {
                     Vars.Q.CastOnUnit(Targets.JungleMinions[0]);
                 }
@@ -77,14 +79,20 @@ namespace ExorAIO.Champions.Lucian
                 /// <summary>
                 ///     The LaneClear Q Logic.
                 /// </summary>
-                else if (!GameObjects.EnemyHeroes.Any(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.Q2.Range + 100f)))
+                else if (GameObjects.Player.ManaPercent > 
+                    Vars.Menu["spells"]["q"]["laneclear"].GetValue<MenuSliderButton>().SValue +
+                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.Q.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                    Vars.Menu["spells"]["q"]["laneclear"].GetValue<MenuSliderButton>().BValue)
                 {
-                    if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 3)
+                    if (!GameObjects.EnemyHeroes.Any(
+                        t =>
+                            !Invulnerable.Check(t) &&
+                            t.IsValidTarget(Vars.Q2.Range + 100f)))
                     {
-                        Vars.Q.CastOnUnit(Targets.Minions[0]);
+                        if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 3)
+                        {
+                            Vars.Q.CastOnUnit(Targets.Minions[0]);
+                        }
                     }
                 }
                 return;
@@ -93,26 +101,47 @@ namespace ExorAIO.Champions.Lucian
             /// <summary>
             ///     The Clear W Logic.
             /// </summary>
-            if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
+            if (Vars.W.IsReady())
             {
-                /// <summary>
-                ///     The LaneClear W Logic.
-                /// </summary>
-                if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 2)
-                {
-                    Vars.W.Cast(Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).Position);
-                }
-
                 /// <summary>
                 ///     The JungleClear W Logic.
                 /// </summary>
-                else if (Targets.JungleMinions.Any())
+                if (Targets.JungleMinions.Any() &&
+                    GameObjects.Player.ManaPercent > 
+                        Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().SValue +
+                        (int)(GameObjects.Player.Spellbook.GetSpell(Vars.W.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                    Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
                 {
                     Vars.W.Cast(Targets.JungleMinions[0].ServerPosition);
                 }
-                return;
+
+                /// <summary>
+                ///     The LaneClear W Logic.
+                /// </summary>
+                else if (GameObjects.Player.ManaPercent >
+                    Vars.Menu["spells"]["w"]["laneclear"].GetValue<MenuSliderButton>().SValue +
+                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.W.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                    Vars.Menu["spells"]["w"]["laneclear"].GetValue<MenuSliderButton>().BValue)
+                {
+                    if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 2)
+                    {
+                        Vars.W.Cast(Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).Position);
+                        return;
+                    }
+                }
+            }
+
+            /// <summary>
+            ///     The E LaneClear Logic.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                Targets.Minions.Any() &&
+                GameObjects.Player.ManaPercent > 
+                    Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuSliderButton>().SValue +
+                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.E.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuSliderButton>().BValue)
+            {
+                Vars.E.Cast(Game.CursorPos);
             }
         }
 
@@ -133,8 +162,10 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.E.IsReady() &&
                 Targets.JungleMinions.Any() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent > 
+                    Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().SValue +
+                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.E.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.Cast(Game.CursorPos);
             }
@@ -158,8 +189,10 @@ namespace ExorAIO.Champions.Lucian
             ///     The E BuildingClear Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent > 
+                    Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuSliderButton>().SValue +
+                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.E.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 5));
                 return;
@@ -169,8 +202,10 @@ namespace ExorAIO.Champions.Lucian
             ///     The W BuildingClear Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent > 
+                    Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuSliderButton>().SValue +
+                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.W.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast(Game.CursorPos);
             }

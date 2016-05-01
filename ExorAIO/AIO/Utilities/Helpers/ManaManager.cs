@@ -34,8 +34,8 @@ namespace ExorAIO.Utilities
         /// </summary>
         public static int NeededQLaneClearMana
             =>
-                Vars.Menu["spells"]["q"]["extended"]["laneclear"] != null
-                    ? Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().SValue +
+                Vars.Menu["spells"]["q"]["extended"]["exlaneclear"] != null
+                    ? Vars.Menu["spells"]["q"]["extended"]["exlaneclear"].GetValue<MenuSliderButton>().SValue +
                         (int)(GameObjects.Player.Spellbook.GetSpell(Vars.Q.Slot).ManaCost / GameObjects.Player.MaxMana * 100)
                     : 0;
 
