@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
@@ -15,11 +16,10 @@ namespace ExorAIO.Champions.Lucian
     internal partial class Logics
     {
         /// <summary>
-        ///     Called on do-cast.
+        ///     Fired when the game is updated.
         /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">The args.</param>
-        public static void Clear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
+        public static void Clear(EventArgs args)
         {
             /// <summary>
             ///     The Extended Q LaneClear Harass Logic.
