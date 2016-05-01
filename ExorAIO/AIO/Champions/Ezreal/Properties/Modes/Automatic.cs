@@ -28,6 +28,7 @@ namespace ExorAIO.Champions.Ezreal
             ///     The Q LastHit Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
+                Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
@@ -88,7 +89,7 @@ namespace ExorAIO.Champions.Ezreal
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                ObjectManager.Player.ManaPercent < ManaManager.NeededWMana &&
+                ObjectManager.Player.ManaPercent > ManaManager.NeededWMana &&
                 GameObjects.Player.TotalMagicalDamage < GameObjects.Player.TotalAttackDamage &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {

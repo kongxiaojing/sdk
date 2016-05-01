@@ -25,18 +25,6 @@ namespace ExorAIO.Champions.Ezreal
             }
 
             /// <summary>
-            ///     The W Harass Logic.
-            /// </summary>
-            if (Vars.W.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.W.Range) &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["harass"].GetValue<MenuBool>().Value)
-            {
-                Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
-                return;
-            }
-
-            /// <summary>
             ///     The Q Harass Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
@@ -47,7 +35,19 @@ namespace ExorAIO.Champions.Ezreal
                 if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
+                    return;
                 }
+            }
+
+            /// <summary>
+            ///     The W Harass Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.W.Range) &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
+                Vars.Menu["spells"]["w"]["harass"].GetValue<MenuBool>().Value)
+            {
+                Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
             }
         }
     }
