@@ -30,7 +30,7 @@ namespace ExorAIO.Champions.Ezreal
             if (Vars.Q.IsReady() &&
                 Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
                 GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["q"]["farmhelper"].GetValue<MenuBool>().Value)
             {
                 foreach (var minion in Targets.Minions.Where(
                     m =>

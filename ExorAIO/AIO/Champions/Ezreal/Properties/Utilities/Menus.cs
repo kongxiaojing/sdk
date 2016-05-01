@@ -24,13 +24,13 @@ namespace ExorAIO.Champions.Ezreal
                 /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
-                    Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
-                    Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.QMenu.Add(new MenuBool("logical",   "LastHit",   true));
-                    Vars.QMenu.Add(new MenuBool("harass",    "Harass",    true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
+                    Vars.QMenu.Add(new MenuBool("combo",      "Combo",      true));
+                    Vars.QMenu.Add(new MenuBool("killsteal",  "KillSteal",  true));
+                    Vars.QMenu.Add(new MenuBool("farmhelper", "FarmHelper", true));
+                    Vars.QMenu.Add(new MenuBool("harass",     "Harass",     true));
+                    Vars.QMenu.Add(new MenuBool("clear",      "Clear",      true));
                     Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "LastHit/Harass/Clear: Mana >= x", 50, 10, 99));
+                        new MenuSlider("manamanager", "FarmHelper/Harass/Clear: Mana >= x", 50, 10, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
