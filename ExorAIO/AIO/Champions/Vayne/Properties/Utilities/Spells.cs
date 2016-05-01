@@ -22,7 +22,7 @@ namespace ExorAIO.Champions.Vayne
             Vars.R = new Spell(SpellSlot.R);
 
             Vars.E.SetSkillshot(0.4f, 50f, 1000f, false, SkillshotType.SkillshotLine);
-            Vars.E2.SetSkillshot(0.55f, 50f, 1000f, false, SkillshotType.SkillshotLine);
+            Vars.E2.SetSkillshot(0.5f, 50f, 1000f, false, SkillshotType.SkillshotLine);
         }
     }
 }
