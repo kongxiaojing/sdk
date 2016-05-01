@@ -24,66 +24,70 @@ namespace ExorAIO.Champions.Lucian
             /// <summary>
             ///     The Extended Q LaneClear Harass Logic.
             /// </summary>
-            if (Vars.Q.IsReady())
+            if (Vars.Q.IsReady() &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQLaneClearMana &&
+                Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().BValue)
             {
-                if (GameObjects.Player.ManaPercent > ManaManager.NeededQLaneClearMana &&
-                    Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().BValue)
+                /// <summary>
+                ///     Through enemy minions.
+                /// </summary>
+                foreach (var minion 
+                    in from minion
+                    in Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range))
+
+                    let polygon = new Geometry.Rectangle(
+                        GameObjects.Player.ServerPosition,
+                        GameObjects.Player.ServerPosition.Extend(minion.ServerPosition, Vars.Q2.Range-50f),
+                        Vars.Q2.Width)
+
+                    where !polygon.IsOutside(
+                        (Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                        t =>
+                            !Invulnerable.Check(t) &&
+                            !t.IsValidTarget(Vars.Q.Range) &&
+                            t.IsValidTarget(Vars.Q2.Range-50f) &&
+                            Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value)).UnitPosition)
+
+                    select minion)
                 {
-                    /// <summary>
-                    ///     Through enemy minions.
-                    /// </summary>
-                    foreach (var minion 
-                        in from minion
-                        in Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range))
+                    Vars.Q.CastOnUnit(minion);
+                }
+            }
 
-                        let polygon = new Geometry.Rectangle(
-                            GameObjects.Player.ServerPosition,
-                            GameObjects.Player.ServerPosition.Extend(minion.ServerPosition, Vars.Q2.Range-50f),
-                            Vars.Q2.Width)
+            if (GameObjects.Player.HasBuff("lucianpassivebuff"))
+            {
+                return;
+            }
 
-                        where !polygon.IsOutside(
-                            (Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
-                            t =>
-                                !Invulnerable.Check(t) &&
-                                !t.IsValidTarget(Vars.Q.Range) &&
-                                t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value)).UnitPosition)
-
-                        select minion)
-                    {
-                        Vars.Q.CastOnUnit(minion);
-                    }
+            /// <summary>
+            ///     The Clear Q Logic.
+            /// </summary>
+            if (Vars.Q.IsReady() &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+            {
+                /// <summary>
+                ///     The JungleClear Q Logic.
+                /// </summary>
+                if (Targets.JungleMinions.Any())
+                {
+                    Vars.Q.CastOnUnit(Targets.JungleMinions[0]);
                 }
 
                 /// <summary>
-                ///     The Clear Q Logic.
+                ///     The LaneClear Q Logic.
                 /// </summary>
-                else if (GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                    Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                else if (!GameObjects.EnemyHeroes.Any(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.Q2.Range + 100f)))
                 {
-                    /// <summary>
-                    ///     The JungleClear Q Logic.
-                    /// </summary>
-                    if (Targets.JungleMinions.Any())
+                    if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 3)
                     {
-                        Vars.Q.CastOnUnit(Targets.JungleMinions[0]);
+                        Vars.Q.CastOnUnit(Targets.Minions[0]);
                     }
-
-                    /// <summary>
-                    ///     The LaneClear Q Logic.
-                    /// </summary>
-                    else if (!GameObjects.EnemyHeroes.Any(
-                        t =>
-                            !Invulnerable.Check(t) &&
-                            t.IsValidTarget(Vars.Q2.Range + 100f)))
-                    {
-                        if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 3)
-                        {
-                            Vars.Q.CastOnUnit(Targets.Minions[0]);
-                        }
-                    }
-                    return;
                 }
+                return;
             }
 
             /// <summary>

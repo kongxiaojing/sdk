@@ -79,8 +79,11 @@ namespace ExorAIO.Champions.Lucian
                     Logics.Combo(args);
                     break;
 
-                case OrbwalkingMode.Hybrid:
                 case OrbwalkingMode.LaneClear:
+                    Logics.Clear(args);
+                    break;
+
+                case OrbwalkingMode.Hybrid:
                     Logics.Harass(args);
                     break;
 
@@ -110,7 +113,6 @@ namespace ExorAIO.Champions.Lucian
                         break;
 
                     case OrbwalkingMode.LaneClear:
-                        Logics.Clear(sender, args);
                         Logics.JungleClear(sender, args);
                         Logics.BuildingClear(sender, args);
                         break;
