@@ -22,7 +22,7 @@ namespace ExorAIO.Champions.Lucian
         public static void Clear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             /// <summary>
-            ///     The Q Harass Logic.
+            ///     The Extended Q LaneClear Harass Logic.
             /// </summary>
             if (Vars.Q.IsReady())
             {

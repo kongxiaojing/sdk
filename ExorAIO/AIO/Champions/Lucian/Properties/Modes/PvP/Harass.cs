@@ -30,10 +30,10 @@ namespace ExorAIO.Champions.Lucian
             }
 
             /// <summary>
-            ///     The Q Harass Logic.
+            ///     The Extended Q Mixed Harass Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQLaneClearMana &&
+                GameObjects.Player.ManaPercent > ManaManager.NeededQMixedMana &&
                 Vars.Menu["spells"]["q"]["extended"]["mixed"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
