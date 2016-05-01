@@ -87,12 +87,12 @@ namespace NabbActivator
                 /// <summary>
                 ///     The Killsteal Smite Logic.
                 /// </summary>
-                if (Vars.Menu["activator"]["smite"]["killsteal"].GetValue<MenuBool>().Value)
+                if (Vars.Menu["smite"]["killsteal"].GetValue<MenuBool>().Value)
                 {
                     if (GameObjects.Player.HasBuff("smitedamagetrackerstalker") ||
                         GameObjects.Player.HasBuff("smitedamagetrackerskirmisher"))
                     {
-                        if (Vars.Menu["activator"]["stacks"]["smite"].GetValue<MenuBool>().Value)
+                        if (Vars.Menu["smite"]["stacks"].GetValue<MenuBool>().Value)
                         {
                             if (GameObjects.Player.Spellbook.GetSpell(SpellSlots.GetSmiteSlot()).Ammo == 1)
                             {
@@ -102,11 +102,13 @@ namespace NabbActivator
 
                         foreach (var target in GameObjects.EnemyHeroes.Where(t => t.IsValidTarget(500f)))
                         {
-                            if (Vars.GetChallengingSmiteDamage > target.Health && GameObjects.Player.HasBuff("smitedamagetrackerstalker"))
+                            if (Vars.GetChallengingSmiteDamage > target.Health &&
+                                GameObjects.Player.HasBuff("smitedamagetrackerstalker"))
                             {
                                 GameObjects.Player.Spellbook.CastSpell(SpellSlots.GetSmiteSlot(), target);
                             }
-                            else if (Vars.GetChallengingSmiteDamage > target.Health && GameObjects.Player.HasBuff("smitedamagetrackerskirmisher"))
+                            else if (Vars.GetChallengingSmiteDamage > target.Health &&
+                                GameObjects.Player.HasBuff("smitedamagetrackerskirmisher"))
                             {
                                 GameObjects.Player.Spellbook.CastSpell(SpellSlots.GetSmiteSlot(), target);
                             }
@@ -123,7 +125,7 @@ namespace NabbActivator
                         m.Health < GameObjects.Player.GetBuffCount(
                             GameObjects.Player.Buffs.FirstOrDefault(b => b.Name.ToLower().Contains("smitedamagetracker")).Name)))
                 {
-                    if (Vars.Menu["activator"]["smite"]["limit"].GetValue<MenuBool>().Value)
+                    if (Vars.Menu["smite"]["limit"].GetValue<MenuBool>().Value)
                     {
                         if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
                             !minion.CharData.BaseSkinName.Equals("SRU_Dragon") &&
@@ -133,7 +135,7 @@ namespace NabbActivator
                         }
                     }
 
-                    if (Vars.Menu["activator"]["smite"]["stacks"].GetValue<MenuBool>().Value)
+                    if (Vars.Menu["smite"]["stacks"].GetValue<MenuBool>().Value)
                     {
                         if (GameObjects.Player.Spellbook.GetSpell(SpellSlots.GetSmiteSlot()).Ammo == 1)
                         {
