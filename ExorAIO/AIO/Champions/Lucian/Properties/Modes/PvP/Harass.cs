@@ -33,9 +33,8 @@ namespace ExorAIO.Champions.Lucian
             ///     The Q Harass Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Vars.Menu["spells"]["q"]["extended"]["mixed"].GetValue<MenuSliderButton>().BValue &&
-                Vars.Menu["spells"]["q"]["extended"]["mixed"].GetValue<MenuSliderButton>().SValue <
-                    GameObjects.Player.ManaPercent)
+                GameObjects.Player.ManaPercent > ManaManager.NeededQLaneClearMana &&
+                Vars.Menu["spells"]["q"]["extended"]["mixed"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     Through enemy minions.

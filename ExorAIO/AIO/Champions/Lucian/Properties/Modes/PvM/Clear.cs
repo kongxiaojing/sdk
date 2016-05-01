@@ -26,9 +26,8 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.Q.IsReady())
             {
-                if (Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().BValue &&
-                    Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().SValue <
-                        GameObjects.Player.ManaPercent)
+                if (GameObjects.Player.ManaPercent > ManaManager.NeededQLaneClearMana &&
+                    Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().BValue)
                 {
                     /// <summary>
                     ///     Through enemy minions.

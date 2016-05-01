@@ -20,6 +20,26 @@ namespace ExorAIO.Utilities
                     : 0;
 
         /// <summary>
+        ///     The minimum mana needed to cast the Extended Q Spell in Mixed.
+        /// </summary>
+        public static int NeededQMixedMana
+            =>
+                Vars.Menu["spells"]["q"]["extended"]["mixed"] != null
+                    ? Vars.Menu["spells"]["q"]["extended"]["mixed"].GetValue<MenuSliderButton>().SValue +
+                        (int)(GameObjects.Player.Spellbook.GetSpell(Vars.Q.Slot).ManaCost / GameObjects.Player.MaxMana * 100)
+                    : 0;
+
+        /// <summary>
+        ///     The minimum mana needed to cast the Extended Q Spell in Mixed.
+        /// </summary>
+        public static int NeededQLaneClearMana
+            =>
+                Vars.Menu["spells"]["q"]["extended"]["laneclear"] != null
+                    ? Vars.Menu["spells"]["q"]["extended"]["laneclear"].GetValue<MenuSliderButton>().SValue +
+                        (int)(GameObjects.Player.Spellbook.GetSpell(Vars.Q.Slot).ManaCost / GameObjects.Player.MaxMana * 100)
+                    : 0;
+
+        /// <summary>
         ///     The minimum mana needed to cast the W Spell.
         /// </summary>
         public static int NeededWMana
