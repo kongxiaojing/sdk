@@ -30,8 +30,10 @@ namespace ExorAIO.Champions.Sivir
             /// </summary>
             if (Vars.Q.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["harass"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent > 
+                    Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().SValue +
+                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.Q.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue)
             {
                 if (GameObjects.Player.Distance(Targets.Target) > 650 &&
                     Vars.Q.GetPrediction(Targets.Target).Hitchance >= HitChance.Medium)
