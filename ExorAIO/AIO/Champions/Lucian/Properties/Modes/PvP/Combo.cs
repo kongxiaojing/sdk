@@ -49,7 +49,7 @@ namespace ExorAIO.Champions.Lucian
             ///     The Q Combo Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["q"]["extended"]["combo"].GetValue<MenuBool>().Value)
             {
                 /// <summary>
                 ///     Through enemy minions.

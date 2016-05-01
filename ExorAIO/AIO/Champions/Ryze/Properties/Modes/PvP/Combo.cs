@@ -17,11 +17,17 @@ namespace ExorAIO.Champions.Ryze
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
-            if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget() ||
-                Invulnerable.Check(Targets.Target))
+            if (Invulnerable.Check(Targets.Target))
             {
                 return;
+            }
+            
+            if (Bools.HasSheenBuff())
+            {
+                if (Targets.Target.IsValidTarget(Vars.AARange))
+                {
+                    return;
+                }
             }
 
             /// <summary>

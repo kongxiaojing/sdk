@@ -4,6 +4,8 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using SharpDX;
+using Geometry = ExorAIO.Utilities.Geometry;
 
 namespace ExorAIO.Champions.Lucian
 {
@@ -20,34 +22,69 @@ namespace ExorAIO.Champions.Lucian
         public static void Clear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             /// <summary>
-            ///     The Clear Q Logic.
+            ///     The Q Harass Logic.
             /// </summary>
-            if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+            if (Vars.Q.IsReady())
             {
-                /// <summary>
-                ///     The JungleClear Q Logic.
-                /// </summary>
-                if (Targets.JungleMinions.Any())
+                if (Vars.Menu["spells"]["q"]["extended"]["harass"].GetValue<MenuSliderButton>().BValue &&
+                    Vars.Menu["spells"]["q"]["extended"]["harass"].GetValue<MenuSliderButton>().SValue <
+                        GameObjects.Player.ManaPercent)
                 {
-                    Vars.Q.CastOnUnit(Targets.JungleMinions[0]);
+                    /// <summary>
+                    ///     Through enemy minions.
+                    /// </summary>
+                    foreach (var minion 
+                        in from minion
+                        in Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range))
+
+                        let polygon = new Geometry.Rectangle(
+                            GameObjects.Player.ServerPosition,
+                            GameObjects.Player.ServerPosition.Extend(minion.ServerPosition, Vars.Q2.Range-50f),
+                            Vars.Q2.Width)
+
+                        where !polygon.IsOutside(
+                            (Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                            t =>
+                                !Invulnerable.Check(t) &&
+                                !t.IsValidTarget(Vars.Q.Range) &&
+                                t.IsValidTarget(Vars.Q2.Range-50f) &&
+                                Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value)).UnitPosition)
+
+                        select minion)
+                    {
+                        Vars.Q.CastOnUnit(minion);
+                    }
                 }
 
                 /// <summary>
-                ///     The LaneClear Q Logic.
+                ///     The Clear Q Logic.
                 /// </summary>
-                else if (!GameObjects.EnemyHeroes.Any(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.Q2.Range + 100f)))
+                else if (GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
+                    Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
                 {
-                    if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 3)
+                    /// <summary>
+                    ///     The JungleClear Q Logic.
+                    /// </summary>
+                    if (Targets.JungleMinions.Any())
                     {
-                        Vars.Q.CastOnUnit(Targets.Minions[0]);
+                        Vars.Q.CastOnUnit(Targets.JungleMinions[0]);
                     }
+
+                    /// <summary>
+                    ///     The LaneClear Q Logic.
+                    /// </summary>
+                    else if (!GameObjects.EnemyHeroes.Any(
+                        t =>
+                            !Invulnerable.Check(t) &&
+                            t.IsValidTarget(Vars.Q2.Range + 100f)))
+                    {
+                        if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 3)
+                        {
+                            Vars.Q.CastOnUnit(Targets.Minions[0]);
+                        }
+                    }
+                    return;
                 }
-                return;
             }
 
             /// <summary>

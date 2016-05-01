@@ -27,13 +27,24 @@ namespace ExorAIO.Champions.Lucian
                 /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
-                    Vars.QMenu.Add(new MenuBool("combo",     "Combo",           true));
-                    Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal",       true));
-                    Vars.QMenu.Add(new MenuBool("harass",    "Extended Harass", true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",           true));
+                    Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
+                    Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
+                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
                     Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Harass/Clear: Energy >= x%", 50, 0, 99));
+                        new MenuSlider("manamanager", "Clear: Energy >= x%", 50, 0, 99));
                     {
+                        /// <summary>
+                        ///     Sets the Extended Q menu.
+                        /// </summary>
+                        Vars.Q2Menu = new Menu("extended", "Extended Q Menu", true);
+                        {
+                            Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
+                            Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
+                            Vars.QMenu.Add(new MenuSliderButton("clear", "Clear", 50, 0, 99, true));
+                            Vars.QMenu.Add(new MenuSliderButton("mixed", "Mixed", 50, 0, 99, true));
+                        }
+                        Vars.QMenu.Add(Vars.Q2Menu);
+
                         /// <summary>
                         ///     Sets the Whitelist menu for the Q.
                         /// </summary>

@@ -127,6 +127,11 @@ namespace ExorAIO.Utilities
         public static Menu QMenu { internal get; set; }
 
         /// <summary>
+        ///     Gets or sets the Q2 Spell menu.
+        /// </summary>
+        public static Menu Q2Menu { internal get; set; }
+
+        /// <summary>
         ///     Gets or sets the W Spell menu.
         /// </summary>
         public static Menu WMenu { internal get; set; }

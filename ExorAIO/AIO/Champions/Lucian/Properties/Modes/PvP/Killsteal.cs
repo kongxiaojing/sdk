@@ -24,7 +24,7 @@ namespace ExorAIO.Champions.Lucian
             ///     The Q Killsteal Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["q"]["extended"]["killsteal"].GetValue<MenuBool>().Value)
             {
                 if (!GameObjects.EnemyHeroes.Any(
                     t =>
