@@ -13,7 +13,7 @@ namespace NabbActivator
         /// <summary>
         ///     A list of the names of the champions who cast Invalid Snares.
         /// </summary>
-        public static readonly List<string> InvalidSnareCasters = new List<string> {"Leona", "Zyra"};
+        public static readonly List<string> InvalidSnareCasters = new List<string> {"Leona", "Zyra", "Lissandra"};
 
         /// <summary>
         ///     A list of the names of the champions who cast Invalid Stuns.
