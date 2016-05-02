@@ -26,8 +26,8 @@ using ExorAIO.Champions.Quinn;
 using ExorAIO.Champions.Renekton;
 using ExorAIO.Champions.Ryze;
 using ExorAIO.Champions.Sivir;
-/*
 using ExorAIO.Champions.Tristana;
+/*
 using ExorAIO.Champions.Tryndamere;
 using ExorAIO.Champions.Twitch;
 using ExorAIO.Champions.Udyr;
@@ -136,10 +136,10 @@ namespace ExorAIO.Core
                 case "Sivir":
                     new Sivir().OnLoad();
                     break;
-                /*
                 case "Tristana":
                     new Tristana().OnLoad();
                     break;
+                /*
                 case "Tryndamere":
                     new Tryndamere().OnLoad();
                     break;

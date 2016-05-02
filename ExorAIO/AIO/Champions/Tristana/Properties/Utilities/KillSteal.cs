@@ -2,10 +2,10 @@ using LeagueSharp;
 using LeagueSharp.Data.Enumerations;
 using LeagueSharp.SDK;
 
-namespace ExorAIO.Champions.Kalista
+namespace ExorAIO.Champions.Tristana
 {
     /// <summary>
-    ///     The Killsteal class.
+    ///     The killsteal class.
     /// </summary>
     internal class KillSteal
     {
@@ -18,7 +18,7 @@ namespace ExorAIO.Champions.Kalista
         /// <returns>
         ///     The damage dealt against all the sources.
         /// </returns>
-        public static float GetPerfectRendDamage(Obj_AI_Base target)
+        public static float GetEDamage(Obj_AI_Hero target)
         {
             var healthDebuffer = 0f;
             var damage =
@@ -37,7 +37,7 @@ namespace ExorAIO.Champions.Kalista
                 }
             }
 
-            return damage
+            return damage 
                 - target.PhysicalShield 
                 - target.HPRegenRate
                 - healthDebuffer;

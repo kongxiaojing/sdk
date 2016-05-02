@@ -33,7 +33,7 @@ namespace ExorAIO.Champions.Caitlyn
                         t =>
                             !Bools.HasAnyImmunity(t) &&
                             t.Health < Vars.Q.GetDamage(t) &&
-                            GameObjects.Player.Distance(Vars.Q.GetPrediction(t).UnitPosition) < Vars.Q.Range - 50))
+                            t.IsValidTarget(Vars.Q.Range-100f)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                     return;
