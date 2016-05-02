@@ -4,9 +4,8 @@ using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
-using SharpDX;
 
-namespace ExorAIO.Champions.Sivir
+namespace ExorAIO.Champions.Tryndamere
 {
     /// <summary>
     ///     The logics class.
@@ -20,21 +19,19 @@ namespace ExorAIO.Champions.Sivir
         public static void Killsteal(EventArgs args)
         {
             /// <summary>
-            ///     The KillSteal Q Logic.
+            ///     The KillSteal E Logic.
             /// </summary>
-            if (Vars.Q.IsReady() &&
-                Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
+            if (Vars.E.IsReady() &&
+                Vars.Menu["spells"]["e"]["killsteal"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.E.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
-                        t.IsValidTarget(Vars.Q.Range - 100f) &&
-                        t.Health < Vars.Q.GetDamage(t)*2))
+                        t.Health < GameObjects.Player.GetAutoAttackDamage(t)*3))
                 {
-                    Vars.Q.Cast(
-                        Vars.Q.GetPrediction(Targets.Target)
-                            .UnitPosition.Extend((Vector2)GameObjects.Player.ServerPosition, -140));
+                    Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).UnitPosition);
                 }
             }
         }

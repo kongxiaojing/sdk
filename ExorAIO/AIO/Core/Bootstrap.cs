@@ -27,8 +27,8 @@ using ExorAIO.Champions.Renekton;
 using ExorAIO.Champions.Ryze;
 using ExorAIO.Champions.Sivir;
 using ExorAIO.Champions.Tristana;
-/*
 using ExorAIO.Champions.Tryndamere;
+/*
 using ExorAIO.Champions.Twitch;
 using ExorAIO.Champions.Udyr;
 using ExorAIO.Champions.Warwick;
@@ -139,10 +139,10 @@ namespace ExorAIO.Core
                 case "Tristana":
                     new Tristana().OnLoad();
                     break;
-                /*
                 case "Tryndamere":
                     new Tryndamere().OnLoad();
                     break;
+                /*
                 case "Twitch":
                     new Twitch().OnLoad();
                     break;
