@@ -42,10 +42,15 @@ namespace NabbTracker
                                     ? Color.Cyan
                                     : pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 0 &&
                                       pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time <= 4
-                                        ? Color.Red
+                                        ? (Vars.Menu["miscellaneous"]["colorblind"].GetValue<MenuBool>().Value 
+                                            ? Color.FromBgra(0xFFB1AF27)
+                                            : Color.Red)
                                         : pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 4
                                             ? Color.Yellow 
-                                            : Color.LightGreen);
+                                            : (Vars.Menu["miscellaneous"]["colorblind"].GetValue<MenuBool>().Value 
+                                                ? Color.FromBgra(0xFFF6F9C8)
+                                                : Color.LightGreen)
+                        );
 
                         for (var DrawSpellLevel = 0; DrawSpellLevel <= pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).Level - 1; DrawSpellLevel++)
                         {

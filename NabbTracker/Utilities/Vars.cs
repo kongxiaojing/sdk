@@ -25,9 +25,14 @@ namespace NabbTracker
         public static SpellSlot[] SummonerSpellSlots = {SpellSlot.Summoner1, SpellSlot.Summoner2};
 
         /// <summary>
-        ///     The Menu.
+        ///     The Main Menu.
         /// </summary>
         public static Menu Menu { internal get; set; }
+
+        /// <summary>
+        ///     The Miscellaneous Menu.
+        /// </summary>
+        public static Menu MiscMenu { internal get; set; }
 
         /// <summary>
         ///     The Text fcnt.

@@ -19,6 +19,15 @@ namespace NabbTracker
             {
                 Vars.Menu.Add(new MenuBool("allies", "Allies", true));
                 Vars.Menu.Add(new MenuBool("enemies", "Enemies", true));
+
+                /// <summary>
+                ///     The miscellaneous Menu.
+                /// </summary>
+                Vars.MiscMenu = new Menu("misc", "Miscellaneous", true);
+                {
+                    Vars.MiscMenu.Add(new MenuBool("colorblind", "Colorblind Mode"));
+                }
+                Vars.Menu.Add(Vars.MiscMenu);
             }
             Vars.Menu.Attach();
         }
