@@ -21,11 +21,6 @@ namespace ExorAIO.Champions.Lucian
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Clear(EventArgs args)
         {
-            if (GameObjects.Player.HasBuff("LucianPassiveBuff"))
-            {
-                return;
-            }
-
             /// <summary>
             ///     The Extended Q LaneClear Harass Logic.
             /// </summary>
@@ -101,6 +96,11 @@ namespace ExorAIO.Champions.Lucian
                 return;
             }
 
+            if (GameObjects.Player.HasBuff("LucianPassiveBuff"))
+            {
+                return;
+            }
+
             /// <summary>
             ///     The Clear W Logic.
             /// </summary>
@@ -126,7 +126,6 @@ namespace ExorAIO.Champions.Lucian
                     Vars.Menu["spells"]["w"]["laneclear"].GetValue<MenuSliderButton>().BValue)
                 {
                     Vars.W.Cast(Targets.Minions[0].ServerPosition);
-                    return;
                 }
             }
 
@@ -134,14 +133,14 @@ namespace ExorAIO.Champions.Lucian
             ///     The E LaneClear Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Targets.Minions.Any(
-                m =>
-                    m.Distance(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range)) < Vars.AARange) &&
                 GameObjects.Player.ManaPercent >
                     ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["laneclear"]) &&
                 Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuSliderButton>().BValue)
             {
-                Vars.E.Cast(Game.CursorPos);
+                if (Targets.Minions.Any(m => m.Distance(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range)) < Vars.AARange))
+                {
+                    Vars.E.Cast(Game.CursorPos);
+                }
             }
         }
 
