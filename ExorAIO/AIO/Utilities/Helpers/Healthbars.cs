@@ -47,8 +47,8 @@ namespace ExorAIO.Utilities
                             (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E) +
                             (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E, DamageStage.Buff)
                                 ? width * (((Vars.GetRealHealth(unit) -
-                                    (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E) +
-                                    (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E, DamageStage.Buff)) / unit.MaxHealth * 100) / 100)
+                                    ((float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E) +
+                                     (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E, DamageStage.Buff))) / unit.MaxHealth * 100) / 100)
                                 : 0);
 
                         Drawing.DrawLine(drawStartXPos, barPos.Y, drawEndXPos, barPos.Y, height, Vars.GetRealHealth(unit) <
