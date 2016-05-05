@@ -23,7 +23,7 @@ namespace ExorAIO.Champions.Ezreal
             ///     The R Combo Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                GameObjects.Player.CountEnemyHeroesInRange(Vars.Q.Range) == 0 &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) == 0 &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
@@ -35,7 +35,9 @@ namespace ExorAIO.Champions.Ezreal
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                 }
 
-                if (Bools.IsImmobile(Targets.Target))
+                if (!Targets.Target.IsValidTarget() &&
+                    Bools.IsImmobile(Targets.Target) &&
+                    !Invulnerable.Check(Targets.Target))
                 {
                     Vars.R.Cast(Targets.Target.ServerPosition);
                 }
