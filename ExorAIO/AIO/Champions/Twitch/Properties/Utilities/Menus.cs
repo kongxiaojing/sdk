@@ -25,6 +25,7 @@ namespace ExorAIO.Champions.Twitch
                 {
                     Vars.QMenu.Add(new MenuBool("combo",   "Combo",   true));
                     Vars.QMenu.Add(new MenuBool("logical", "Logical", true));
+                    Vars.QMenu.Add(new MenuSliderButton("jungleclear",  "JungleClear / if Mana >= x%",  50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 

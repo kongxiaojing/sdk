@@ -25,6 +25,18 @@ namespace ExorAIO.Champions.Twitch
             }
 
             /// <summary>
+            ///     The Q JungleClear Logic.
+            /// </summary>
+            if (Vars.Q.IsReady() &&
+                Targets.JungleMinions.Any() &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["jungleclear"]) &&
+                Vars.Menu["spells"]["q"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
+            {
+                Vars.Q.Cast();
+            }
+
+            /// <summary>
             ///     The LaneClear W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
@@ -44,9 +56,9 @@ namespace ExorAIO.Champions.Twitch
                 /// <summary>
                 ///     The W JungleClear Logic.
                 /// </summary>
-                else if (Targets.JungleMinions.Any())
+                else if (Targets.JungleMinions.Any(m => m.GetBuffCount("twitchdeadlyvenom") <= 4))
                 {
-                    Vars.W.Cast(Targets.JungleMinions[0].ServerPosition);
+                    Vars.W.Cast(Targets.JungleMinions.FirstOrDefault(m => m.GetBuffCount("twitchdeadlyvenom") <= 4).ServerPosition);
                 }
             }
 
