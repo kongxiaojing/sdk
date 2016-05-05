@@ -27,7 +27,7 @@ namespace ExorAIO.Champions.Draven
             /// </summary>
             if (Vars.Q.IsReady() &&
                 Variables.Orbwalker.ActiveMode != OrbwalkingMode.None &&
-                GameObjects.Player.GetBuffCount("dravenspinningattack") < 2 &&
+                GameObjects.Player.GetBuffCount("dravenspinningattack") < 1 &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.Cast();
