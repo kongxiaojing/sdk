@@ -23,7 +23,7 @@ namespace NabbTracker
                 /// <summary>
                 ///     The miscellaneous Menu.
                 /// </summary>
-                Vars.MiscMenu = new Menu("misc", "Miscellaneous", true);
+                Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous", true);
                 {
                     Vars.MiscMenu.Add(new MenuBool("colorblind", "Colorblind Mode"));
                 }
