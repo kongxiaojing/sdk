@@ -83,13 +83,13 @@ namespace ExorAIO.Champions.Anivia
                     /// <summary>
                     ///     The Q Clear Logic.
                     /// </summary>
-                    case OrbwalkingMode.Combo:
-
-                        if (Targets.QMinions.Count() >= 2)
+                    case OrbwalkingMode.LaneClear:
+                    
+                        if (Anivia.QMissile.Position.CountEnemyHeroesInRange(Vars.Q.Width*2-10f) > 0)
                         {
                             Vars.Q.Cast();
                         }
-                        else if (Anivia.QMissile.Position.CountEnemyHeroesInRange(100f) > 0)
+                        else if (Targets.QMinions.Count() >= 2)
                         {
                             Vars.Q.Cast();
                         }
@@ -99,10 +99,11 @@ namespace ExorAIO.Champions.Anivia
                     ///     The Default Q Logic.
                     /// </summary>
                     default:
-                        if (Anivia.QMissile.Position.CountEnemyHeroesInRange(100f) > 0)
+                        if (Anivia.QMissile.Position.CountEnemyHeroesInRange(Vars.Q.Width*2-10f) > 0)
                         {
                             Vars.Q.Cast();
                         }
+                        
                         break;
                 }
             }
@@ -131,7 +132,7 @@ namespace ExorAIO.Champions.Anivia
                     ///     The Default R Logic.
                     /// </summary>
                     default:
-                        if (Anivia.RMissile.Position.CountEnemyHeroesInRange(Vars.R.Width) < 1)
+                        if (Anivia.RMissile.Position.CountEnemyHeroesInRange(Vars.R.Width+250f) < 1)
                         {
                             Vars.R.Cast();
                         }

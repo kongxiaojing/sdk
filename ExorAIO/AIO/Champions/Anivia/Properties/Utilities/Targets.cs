@@ -42,8 +42,8 @@ namespace ExorAIO.Champions.Anivia
         /// </summary>
         public static List<Obj_AI_Minion> QMinions
             =>
-                GameObjects.EnemyMinions.Concat(GameObjects.Jungle)
-                    .Where(m => m.Distance(Anivia.QMissile.Position) < Vars.Q.Width)
+                Minions.Concat(JungleMinions)
+                    .Where(m => m.Distance(Anivia.QMissile.Position) < Vars.Q.Width*2 -10f)
                     .ToList();
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace ExorAIO.Champions.Anivia
         /// </summary>
         public static List<Obj_AI_Minion> RMinions
             =>
-                GameObjects.EnemyMinions.Concat(GameObjects.Jungle)
-                    .Where(m => m.Distance(Anivia.RMissile.Position) < Vars.R.Width)
+                Minions.Concat(JungleMinions)
+                    .Where(m => m.Distance(Anivia.RMissile.Position) < Vars.R.Width+250f)
                     .ToList();
     }
 }
