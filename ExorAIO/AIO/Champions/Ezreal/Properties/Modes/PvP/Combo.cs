@@ -28,7 +28,8 @@ namespace ExorAIO.Champions.Ezreal
                 /// <summary>
                 ///     The R Combo Logic.
                 /// </summary>
-                if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
+                if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
+                    !Vars.Menu["spells"]["r"]["aoe"].GetValue<MenuSliderButton>().BValue)
                 {
                     foreach (var target in GameObjects.EnemyHeroes.Where(
                         t =>
