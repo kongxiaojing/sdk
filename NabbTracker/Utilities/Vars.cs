@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using LeagueSharp;
 using LeagueSharp.SDK.UI;
 using SharpDX.Direct3D9;
@@ -25,6 +26,11 @@ namespace NabbTracker
         public static SpellSlot[] SummonerSpellSlots = {SpellSlot.Summoner1, SpellSlot.Summoner2};
 
         /// <summary>
+        ///     A list of the names of the champions who have a different healthbar.
+        /// </summary>
+        public static readonly List<string> SpecialChampions = new List<string> {"Annie", "Jhin"};
+
+        /// <summary>
         ///     The Main Menu.
         /// </summary>
         public static Menu Menu { internal get; set; }
@@ -50,6 +56,16 @@ namespace NabbTracker
         public static int SpellY { internal get; set; }
 
         /// <summary>
+        ///     The SpellLevel X coordinate.
+        /// </summary>
+        public static int SpellLevelX { internal get; set; }
+
+        /// <summary>
+        ///     The Healthbars Y coordinate.
+        /// </summary>
+        public static int SpellLevelY { internal get; set; }
+
+        /// <summary>
         ///     The SummonerSpells Healthbar X coordinate.
         /// </summary>
         public static int SummonerSpellX { internal get; set; }
@@ -60,13 +76,55 @@ namespace NabbTracker
         public static int SummonerSpellY { internal get; set; }
 
         /// <summary>
-        ///     The SpellLevel X coordinate.
+        ///     The Spells Healthbars X coordinate adjustment.
         /// </summary>
-        public static int SpellLevelX { internal get; set; }
+        public static int SpellXAdjustment(Obj_AI_Hero target)
+        {
+            if (SpecialChampions.Contains(target.ChampionName))
+            {
+                return 17;
+            }
+            
+            return 10;
+        }
 
         /// <summary>
-        ///     The Healthbars Y coordinate.
+        ///     The Spells Healthbars Y coordinate adjustment.
         /// </summary>
-        public static int SpellLevelY { internal get; set; }
+        public static int SpellYAdjustment(Obj_AI_Hero target)
+        {
+            if (SpecialChampions.Contains(target.ChampionName))
+            {
+                return 25;
+            }
+            
+            return 35;
+        }
+
+        /// <summary>
+        ///     The Healthbars X coordinate adjustment.
+        /// </summary>
+        public static int SummonerSpellXAdjustment(Obj_AI_Hero target)
+        {
+            if (SpecialChampions.Contains(target.ChampionName))
+            {
+                return 2;
+            }
+            
+            return 10;
+        }
+
+        /// <summary>
+        ///     SummonerSpells The Healthbars Y coordinate adjustment.
+        /// </summary>
+        public static int SummonerSpellYAdjustment(Obj_AI_Hero target)
+        {
+            if (SpecialChampions.Contains(target.ChampionName))
+            {
+                return -12;
+            }
+            
+            return 4;
+        }
     }
 }

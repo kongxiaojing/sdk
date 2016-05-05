@@ -27,8 +27,8 @@ namespace NabbTracker
                 {
                     for (var Spell = 0; Spell < Vars.SpellSlots.Count(); Spell++)
                     {
-                        Vars.SpellX = (int) pg.HPBarPosition.X + (pg.ChampionName.Equals("Jhin") ? 17 : 10) + Spell*25;
-                        Vars.SpellY = (int) pg.HPBarPosition.Y + (pg.ChampionName.Equals("Jhin") ? 25 : 35);
+                        Vars.SpellX = (int)pg.HPBarPosition.X + Vars.SpellXAdjustment(pg) + Spell*25;
+                        Vars.SpellY = (int)pg.HPBarPosition.Y + Vars.SpellYAdjustment(pg);
 
                         Vars.DisplayTextFont.DrawText(
                             null,
@@ -63,8 +63,8 @@ namespace NabbTracker
 
                     for (var SummonerSpell = 0; SummonerSpell < Vars.SummonerSpellSlots.Count(); SummonerSpell++)
                     {
-                        Vars.SummonerSpellX = (int) pg.HPBarPosition.X + 10 + SummonerSpell*88;
-                        Vars.SummonerSpellY = (int) pg.HPBarPosition.Y + (pg.ChampionName.Equals("Jhin") ? -10 : 4);
+                        Vars.SummonerSpellX = (int)pg.HPBarPosition.X + Vars.SummonerSpellXAdjustment(pg) + SummonerSpell*88;
+                        Vars.SummonerSpellY = (int)pg.HPBarPosition.Y + Vars.SummonerSpellYAdjustment(pg);
 
                         switch (pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).Name.ToLower())
                         {
