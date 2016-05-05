@@ -3,6 +3,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Vayne
 {
@@ -18,7 +19,7 @@ namespace ExorAIO.Champions.Vayne
         public static void Harass(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -29,8 +30,9 @@ namespace ExorAIO.Champions.Vayne
             if (Vars.Q.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
                 Targets.Target.CountEnemyHeroesInRange(700f) == 1 &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["harass"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["harass"]) &&
+                Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue)
             {
                 if (Targets.Target.Distance(
                         GameObjects.Player.Position.Extend(Game.CursorPos, Vars.Q.Range - Vars.AARange)) < Vars.AARange)

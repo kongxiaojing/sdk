@@ -3,6 +3,7 @@ using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Nunu
 {
@@ -18,7 +19,7 @@ namespace ExorAIO.Champions.Nunu
         public static void Harass(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -28,9 +29,10 @@ namespace ExorAIO.Champions.Nunu
             /// </summary>
             if (Vars.E.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.E.Range) &&
-                Vars.Menu["spells"]["e"]["harass"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue)
             {
-                if (GameObjects.Player.ManaPercent < ManaManager.NeededQMana &&
+                if (GameObjects.Player.ManaPercent <
+                        ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["harass"]) &&
                     !GameObjects.Player.Buffs.Any(b => b.Name.Equals("visionary")))
                 {
                     return;

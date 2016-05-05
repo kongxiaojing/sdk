@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Amumu
 {
@@ -20,7 +21,7 @@ namespace ExorAIO.Champions.Amumu
         {
             if (Bools.HasSheenBuff() ||
                 !Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target, DamageType.Magical, false))
             {
                 return;
             }
@@ -33,7 +34,7 @@ namespace ExorAIO.Champions.Amumu
                 Targets.Target.IsValidTarget(Vars.Q.Range - 100f) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
+                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
@@ -53,9 +54,9 @@ namespace ExorAIO.Champions.Amumu
             ///     The R Combo Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
                 GameObjects.Player.CountEnemyHeroesInRange(Vars.R.Range - 50f) >=
-                    Vars.Menu["spells"]["r"]["enemies"].GetValue<MenuSlider>().Value)
+                    Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().SValue &&
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.R.Cast();
             }

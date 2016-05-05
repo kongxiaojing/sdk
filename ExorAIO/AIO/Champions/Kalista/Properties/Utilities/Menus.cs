@@ -26,9 +26,8 @@ namespace ExorAIO.Champions.Kalista
                 {
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= %", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%",   50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -37,9 +36,7 @@ namespace ExorAIO.Champions.Kalista
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("logical", "Logical", true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("mana", "Logical: Mana >= %", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("logical", "Logical / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -51,12 +48,9 @@ namespace ExorAIO.Champions.Kalista
                     Vars.EMenu.Add(new MenuBool("killsteal",   "KillSteal",      true));
                     Vars.EMenu.Add(new MenuBool("junglesteal", "JungleSteal",    true));
                     Vars.EMenu.Add(new MenuBool("ondeath",     "Before Death",   true));
-                    Vars.EMenu.Add(new MenuBool("harass",      "Minion Harass",  true));
-                    Vars.EMenu.Add(new MenuBool("farmhelper",  "FarmHelper",     true));
-                    Vars.EMenu.Add(new MenuBool("laneclear",   "LaneClear",      true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "FarmHelper/LaneClear/Minion Harass: Mana >= %", 50, 0, 99));
-
+                    Vars.EMenu.Add(new MenuSliderButton("harass",      "Minion Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("farmhelper",  "FarmHelper / if Mana >= x%",    50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",     50, 0, 99, true));
                     {
                         /// <summary>
                         ///     Sets the menu for the E Whitelist.

@@ -4,6 +4,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Caitlyn
 {
@@ -95,7 +96,7 @@ namespace ExorAIO.Champions.Caitlyn
         {
             if (Vars.W.IsReady() &&
                 args.Sender.IsValidTarget(Vars.W.Range) &&
-                !Bools.HasAnyImmunity(args.Sender, true) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast(args.End);

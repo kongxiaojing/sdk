@@ -34,8 +34,9 @@ namespace ExorAIO.Champions.Lux
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
+                        Bools.IsImmobile(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        Bools.IsImmobile(Targets.Target) &&
+                        Invulnerable.Check(Targets.Target) &&
                         t.HasBuff("luxilluminatingfraulein") &&
                         !Invulnerable.Check(t, DamageType.Magical)))
                 {
@@ -68,7 +69,7 @@ namespace ExorAIO.Champions.Lux
                 !Targets.Target.HasBuff("luxilluminatingfraulein") &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => Targets.Minions.Contains(c)) <= 1)
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }

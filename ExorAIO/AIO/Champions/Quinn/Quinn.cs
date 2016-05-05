@@ -1,5 +1,6 @@
 using System;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
@@ -96,8 +97,8 @@ namespace ExorAIO.Champions.Quinn
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (Vars.E.IsReady() &&
-                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.CastOnUnit(args.Sender);
@@ -112,8 +113,8 @@ namespace ExorAIO.Champions.Quinn
         public static void OnInterruptableTarget(object sender, Events.InterruptableTargetEventArgs args)
         {
             if (Vars.E.IsReady() &&
-                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
                 Vars.Menu["spells"]["e"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.E.CastOnUnit(args.Sender);

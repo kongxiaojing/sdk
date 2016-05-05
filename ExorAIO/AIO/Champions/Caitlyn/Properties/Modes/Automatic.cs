@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Caitlyn
 {
@@ -29,11 +30,10 @@ namespace ExorAIO.Champions.Caitlyn
             if (Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.Q.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.Q.Range)))
                 {
                     if (target.HasBuff("caitlynyordletrapdebuff") ||
                         target.HasBuff("caitlynyordletrapinternal"))
@@ -49,12 +49,11 @@ namespace ExorAIO.Champions.Caitlyn
             if (Vars.W.IsReady() &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            Bools.IsImmobile(t) &&
-                            !Bools.HasAnyImmunity(t, true) &&
-                            t.IsValidTarget(Vars.W.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.W.Range)))
                 {
                     if (!GameObjects.Minions.Any(
                         m =>

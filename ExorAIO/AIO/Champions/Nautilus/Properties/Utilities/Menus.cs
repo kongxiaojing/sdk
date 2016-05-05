@@ -35,10 +35,8 @@ namespace ExorAIO.Champions.Nautilus
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo",       "Combo",       true));
-                    Vars.WMenu.Add(new MenuBool("buildings",   "Buildings",   true));
-                    Vars.WMenu.Add(new MenuBool("jungleclear", "JungleClear", true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Buildings/JungleClear: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("buildings",   "Buildings / if Mana >= x%",   50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -48,10 +46,8 @@ namespace ExorAIO.Champions.Nautilus
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo",  "Combo",  true));
-                    Vars.EMenu.Add(new MenuBool("harass", "Harass", true));
-                    Vars.EMenu.Add(new MenuBool("clear",  "Clear",  true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

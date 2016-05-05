@@ -4,6 +4,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Anivia
 {
@@ -177,7 +178,6 @@ namespace ExorAIO.Champions.Anivia
         {
             if (Vars.W.IsReady() &&
                 args.Sender.IsValidTarget(Vars.W.Range) &&
-                !Bools.HasAnyImmunity(args.Sender, true) &&
                 Vars.Menu["spells"]["w"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast(

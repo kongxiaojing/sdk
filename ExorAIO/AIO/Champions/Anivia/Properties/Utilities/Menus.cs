@@ -27,9 +27,7 @@ namespace ExorAIO.Champions.Anivia
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.QMenu.Add(new MenuBool("logical",   "Logical",   true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -78,7 +76,7 @@ namespace ExorAIO.Champions.Anivia
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
                     Vars.RMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.RMenu.Add(new MenuBool("clear", "Clear", true));
+                    Vars.RMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
             }
@@ -89,7 +87,7 @@ namespace ExorAIO.Champions.Anivia
             /// </summary>
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
-                Vars.MiscMenu.Add(new MenuBool("tear", "Smart Tear Stacking", true));
+                Vars.MiscMenu.Add(new MenuBool("tear", "Stack Tear", true));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

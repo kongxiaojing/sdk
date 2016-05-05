@@ -27,8 +27,9 @@ namespace ExorAIO.Champions.Nautilus
             ///     The E Clear Logics.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["clear"]) &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The E LaneClear Logic.
@@ -58,7 +59,8 @@ namespace ExorAIO.Champions.Nautilus
         /// <param name="args">The args.</param>
         public static void JungleClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null)
+            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null ||
+                !Targets.JungleMinions.Contains(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
             {
                 return;
             }
@@ -67,9 +69,9 @@ namespace ExorAIO.Champions.Nautilus
             ///     The W JungleClear Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuBool>().Value &&
-                Targets.JungleMinions.Contains(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["jungleclear"]) &&
+                Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast();
             }
@@ -93,8 +95,9 @@ namespace ExorAIO.Champions.Nautilus
             ///     The W BuildingClear Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["building"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["buildings"]) &&
+                Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast();
             }

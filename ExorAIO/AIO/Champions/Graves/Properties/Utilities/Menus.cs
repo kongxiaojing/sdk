@@ -25,11 +25,9 @@ namespace ExorAIO.Champions.Graves
                 {
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.QMenu.Add(new MenuBool("harass",    "Harass",    true));
                     Vars.QMenu.Add(new MenuBool("logical",   "Logical",   true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -50,11 +48,10 @@ namespace ExorAIO.Champions.Graves
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("combo",       "Combo",       true));
-                    Vars.EMenu.Add(new MenuBool("buildings",   "Buildings",   true));
-                    Vars.EMenu.Add(new MenuBool("jungleclear", "JungleClear", true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Buildings/JungleClear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuBool("combo",   "Combo",   true));
+                    Vars.EMenu.Add(new MenuBool("engager", "Engager", true));
+                    Vars.EMenu.Add(new MenuSliderButton("buildings",   "Buildings / if Mana >= x%",   50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

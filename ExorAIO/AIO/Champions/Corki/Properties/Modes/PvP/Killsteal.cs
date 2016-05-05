@@ -4,6 +4,8 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Corki
 {
@@ -24,13 +26,13 @@ namespace ExorAIO.Champions.Corki
             if (Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.Health < Vars.Q.GetDamage(t) &&
-                            !t.IsValidTarget(Vars.AARange) &&
-                            t.IsValidTarget(Vars.Q.Range - 100f)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        !t.IsValidTarget(Vars.AARange) &&
+                        t.IsValidTarget(Vars.Q.Range - 100f) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(target).CastPosition);
                     return;
@@ -43,15 +45,17 @@ namespace ExorAIO.Champions.Corki
             if (Vars.R.IsReady() &&
                 Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.R.Range) &&
-                            !t.IsValidTarget(Vars.AARange) &&
-                            t.Health < Vars.R.GetDamage(t)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.R.Range) &&
+                        !t.IsValidTarget(Vars.AARange) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R, (ObjectManager.Player.HasBuff("corkimissilebarragecounterbig")
+                                ? DamageStage.Empowered
+                                : DamageStage.Default))))
                 {
-                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     }

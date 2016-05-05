@@ -28,8 +28,9 @@ namespace ExorAIO.Champions.Ashe
             if (Vars.Q.IsReady() &&
                 Items.HasItem(3085) &&
                 GameObjects.Player.HasBuff("AsheQCastReady") &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.Q.Cast();
             }
@@ -37,8 +38,10 @@ namespace ExorAIO.Champions.Ashe
             /// <summary>
             ///     The Clear W Logic.
             /// </summary>
-            if (Vars.W.IsReady() && GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
+            if (Vars.W.IsReady() &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
+                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear W Logic.

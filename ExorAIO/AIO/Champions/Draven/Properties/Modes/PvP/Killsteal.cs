@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Draven
 {
@@ -23,13 +25,13 @@ namespace ExorAIO.Champions.Draven
             if (Vars.E.IsReady() &&
                 Vars.Menu["spells"]["e"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.E.Range) &&
-                            !t.IsValidTarget(Vars.AARange) &&
-                            t.Health < Vars.E.GetDamage(t)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.E.Range) &&
+                        !t.IsValidTarget(Vars.AARange) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.Cast(Vars.E.GetPrediction(target).UnitPosition);
                     return;
@@ -44,10 +46,11 @@ namespace ExorAIO.Champions.Draven
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Bools.HasAnyImmunity(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
-                        t.Health < Vars.R.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                 }

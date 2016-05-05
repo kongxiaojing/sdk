@@ -54,8 +54,9 @@ namespace ExorAIO.Champions.Ryze
             ///     The Clear Q Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear Q Logic.
@@ -78,8 +79,9 @@ namespace ExorAIO.Champions.Ryze
             ///     The Clear W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
+                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear W Logic.
@@ -102,8 +104,9 @@ namespace ExorAIO.Champions.Ryze
             ///     The Clear E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["clear"]) &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear E Logic.

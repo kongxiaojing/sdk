@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Anivia
 {
@@ -42,12 +43,11 @@ namespace ExorAIO.Champions.Anivia
                 GameObjects.Player.Spellbook.GetSpell(SpellSlot.Q).ToggleState == 1 &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            Bools.IsImmobile(t) &&
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.Q.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.Q.Range)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                 }
@@ -59,11 +59,11 @@ namespace ExorAIO.Champions.Anivia
             if (Vars.W.IsReady() &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            Bools.IsImmobile(t) &&
-                            t.IsValidTarget(Vars.W.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.W.Range)))
                 {
                     Vars.W.Cast(
                         GameObjects.Player.ServerPosition.Extend(

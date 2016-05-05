@@ -20,7 +20,7 @@ namespace ExorAIO.Champions.Renekton
         public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!(args.Target is Obj_AI_Hero) ||
-                Bools.HasAnyImmunity(args.Target as Obj_AI_Hero))
+                Invulnerable.Check(args.Target as Obj_AI_Hero))
             {
                 return;
             }

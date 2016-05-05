@@ -3,6 +3,7 @@ using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Evelynn
 {
@@ -19,7 +20,7 @@ namespace ExorAIO.Champions.Evelynn
         {
             if (Bools.HasSheenBuff() ||
                 !Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -59,12 +60,12 @@ namespace ExorAIO.Champions.Evelynn
             ///     The R Combo Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
-                Targets.RTargets.Count() >=
-                    Vars.Menu["spells"]["r"]["enemies"].GetValue<MenuSlider>().Value)
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().BValue &&
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().SValue <=
+                    Targets.RTargets.Count())
             {
                 Vars.R.CastIfWillHit(
-                    Targets.RTargets[0], Vars.Menu["spells"]["r"]["enemies"].GetValue<MenuSlider>().Value);
+                    Targets.RTargets[0], Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().SValue);
             }
         }
     }

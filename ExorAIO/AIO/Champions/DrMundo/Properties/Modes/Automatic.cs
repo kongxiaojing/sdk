@@ -24,16 +24,18 @@ namespace ExorAIO.Champions.DrMundo
             /// </summary>
             if (Vars.Q.IsReady() &&
                 Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
-                GameObjects.Player.HealthPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
+                GameObjects.Player.HealthPercent >
+                    ManaManager.GetNeededHealth(Vars.Q.Slot, Vars.Menu["spells"]["q"]["logical"]) &&
+                Vars.Menu["spells"]["q"]["logical"].GetValue<MenuSliderButton>().BValue)
             {
                 foreach (var minion in GameObjects.EnemyMinions.Where(
                     m =>
                         m.IsValidTarget(Vars.Q.Range) &&
                         !m.IsValidTarget(Vars.AARange) &&
-                        m.Health < Vars.Q.GetDamage(m)))
+                        Vars.GetRealHealth(m) <
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)))
                 {
-                    if (!Vars.Q.GetPrediction(minion).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (!Vars.Q.GetPrediction(minion).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.Q.Cast(minion.ServerPosition);
                     }
@@ -56,11 +58,15 @@ namespace ExorAIO.Champions.DrMundo
                         ///     LaneClear W enable logic. 
                         /// </summary>
                         case OrbwalkingMode.LaneClear:
-                            if (GameObjects.Player.HealthPercent >= ManaManager.NeededWMana &&
-                                (Targets.JungleMinions.Any() || Targets.Minions.Count() >= 2) &&
-                                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
+                            if (GameObjects.Player.HealthPercent >=
+                                ManaManager.GetNeededHealth(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
+                                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
                             {
-                                Vars.W.Cast();
+                                if (Targets.JungleMinions.Any() ||
+                                    Targets.Minions.Count() >= 2)
+                                {
+                                    Vars.W.Cast();
+                                }
                             }
                             break;
 
@@ -91,9 +97,10 @@ namespace ExorAIO.Champions.DrMundo
                         ///     LaneClear Combo disable logic. 
                         /// </summary>
                         case OrbwalkingMode.LaneClear:
-                            if (GameObjects.Player.HealthPercent < ManaManager.NeededWMana ||
+                            if (GameObjects.Player.HealthPercent <
+                                ManaManager.GetNeededHealth(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) ||
                                 !Targets.JungleMinions.Any() && Targets.Minions.Count() < 2 ||
-                                !Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
+                                !Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
                             {
                                 Vars.W.Cast();
                             }

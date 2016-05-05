@@ -27,12 +27,15 @@ namespace ExorAIO.Champions.Lucian
             if (Vars.E.IsReady() &&
                 !Targets.Target.IsValidTarget(Vars.AARange) &&
                 Targets.Target.IsValidTarget(Vars.E.Range + Vars.W.Range) &&
-                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["engager"].GetValue<MenuBool>().Value)
             {
-                if ((Targets.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2 &&
-                    !GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange).IsUnderEnemyTurret())
+                if (GameObjects.Player.Distance(Game.CursorPos) > Vars.AARange &&
+                    GameObjects.Player.ServerPosition
+                        .Extend(Game.CursorPos, Vars.E.Range - Vars.AARange).CountEnemyHeroesInRange(1000f) < 2 &&
+                    Targets.Target
+                        .Distance(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange)) < Vars.AARange)
                 {
-                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange));
+                    Vars.E.Cast(Game.CursorPos);
                 }
             }
 

@@ -25,11 +25,9 @@ namespace ExorAIO.Champions.DrMundo
                 {
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.QMenu.Add(new MenuBool("harass",    "Harass",    true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
                     Vars.QMenu.Add(new MenuBool("logical",   "Logical",   true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Harass/Clear: Energy >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / If Health >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",  "Clear / If Health >= x%",  50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -38,10 +36,8 @@ namespace ExorAIO.Champions.DrMundo
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.WMenu.Add(new MenuBool("clear", "Clear", true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Combo/Clear: Health >= x%", 20, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("combo", "Combo / If Health >= x%", 20, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("clear", "Clear / If Health >= x%", 25, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -50,11 +46,9 @@ namespace ExorAIO.Champions.DrMundo
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("combo",       "Combo",       true));
-                    Vars.EMenu.Add(new MenuBool("buildings",   "Buildings",   true));
-                    Vars.EMenu.Add(new MenuBool("jungleclear", "JungleClear", true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Buildings/JungleClear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
+                    Vars.EMenu.Add(new MenuSliderButton("buildings",   "Buildings / If Health >= x%",   50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / If Health >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

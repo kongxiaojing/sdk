@@ -34,14 +34,14 @@ namespace ExorAIO.Champions.Jhin
             {
                 if (GameObjects.EnemyHeroes.Any(
                     t =>
-                        Bools.IsInsideCone(t) &&
                         !Invulnerable.Check(t) &&
+                        GameObjects.Player.IsFacing(t) &&
                         t.IsValidTarget(Vars.R.Range)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
                         t =>
-                            Bools.IsInsideCone(t) &&
                             !Invulnerable.Check(t) &&
+                            GameObjects.Player.IsFacing(t) &&
                             t.IsValidTarget(Vars.R.Range))).UnitPosition);
                 }
                 else

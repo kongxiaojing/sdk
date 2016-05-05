@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Nunu
 {
@@ -25,9 +27,10 @@ namespace ExorAIO.Champions.Nunu
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Bools.HasAnyImmunity(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range) &&
-                        t.Health < Vars.E.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.CastOnUnit(target);
                 }

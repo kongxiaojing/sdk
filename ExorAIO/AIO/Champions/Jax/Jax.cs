@@ -125,8 +125,9 @@ namespace ExorAIO.Champions.Jax
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (Vars.E.IsReady() &&
-                !Bools.HasAnyImmunity(args.Sender, true) &&
-                GameObjects.Player.Distance(args.End) < Vars.E.Range &&
+                args.IsDirectedToPlayer &&
+                args.Sender.IsValidTarget(Vars.Q.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast();

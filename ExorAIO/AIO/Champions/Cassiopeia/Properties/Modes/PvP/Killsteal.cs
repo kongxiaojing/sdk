@@ -1,8 +1,11 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Cassiopeia
 {
@@ -25,9 +28,9 @@ namespace ExorAIO.Champions.Cassiopeia
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Bools.HasAnyImmunity(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range) &&
-                        t.Health < Vars.E.GetDamage(t)))
+                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.CastOnUnit(target);
                     return;
@@ -42,10 +45,9 @@ namespace ExorAIO.Champions.Cassiopeia
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Bools.HasAnyImmunity(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        !t.IsValidTarget(Vars.Q.Range) &&
-                        t.Health < Vars.R.GetDamage(t)))
+                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                 }

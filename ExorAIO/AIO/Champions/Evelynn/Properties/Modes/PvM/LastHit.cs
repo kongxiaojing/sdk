@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 
@@ -23,7 +24,7 @@ namespace ExorAIO.Champions.Evelynn
             if (Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["q"]["lasthit"].GetValue<MenuBool>().Value)
             {
-                foreach (var minion in Targets.Minions.Where(m => m.Health < Vars.Q.GetDamage(m)))
+                foreach (var minion in Targets.Minions.Where(m => Vars.GetRealHealth(m) < (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)))
                 {
                     Vars.Q.Cast();
                 }

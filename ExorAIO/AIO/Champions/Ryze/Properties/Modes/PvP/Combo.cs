@@ -35,7 +35,7 @@ namespace ExorAIO.Champions.Ryze
             ///     The R Combo Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                Bools.IsImmobile(Targets.Target) &&
+                Invulnerable.Check(Targets.Target) &&
                 GameObjects.Player.ManaPercent > 20 &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
@@ -46,7 +46,7 @@ namespace ExorAIO.Champions.Ryze
             ///     The W Combo Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                !Bools.IsImmobile(Targets.Target) &
+                !Invulnerable.Check(Targets.Target) &
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {

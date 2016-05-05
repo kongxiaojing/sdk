@@ -35,10 +35,10 @@ namespace ExorAIO.Champions.Tristana
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo",     "Combo",     true));
-                    Vars.EMenu.Add(new MenuSliderButton("harass",      "Harass",      50, 0, 99, true));
-                    Vars.EMenu.Add(new MenuSliderButton("buildings",   "Buildings",   50, 0, 99, true));
-                    Vars.EMenu.Add(new MenuSliderButton("laneclear",   "LaneClear",   50, 0, 99, true));
-                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("harass",      "Harass / if Mana >= x%",      50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("buildings",   "Buildings / if Mana >= x%",   50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",   50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                     {
                         Vars.WhiteListMenu = new Menu("whitelist", "E: Whitelist Menu", true);
                         {

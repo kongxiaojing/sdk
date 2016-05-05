@@ -39,11 +39,12 @@ namespace ExorAIO.Champions.Vayne
             /// <summary>
             ///     The Automatic Stealth Logic.
             /// </summary>
-            if (GameObjects.Player.HasBuff("summonerexhaust") ||
-                GameObjects.Player.HasBuffOfType(BuffType.Blind) ||
-                Vars.Menu["miscellaneous"]["stealth"].GetValue<MenuBool>().Value)
+            if (GameObjects.Player.HasBuff("vaynetumblefade"))
             {
-                Variables.Orbwalker.SetAttackState(!GameObjects.Player.HasBuff("vaynetumblefade"));
+                Variables.Orbwalker.SetAttackState(
+                    !GameObjects.Player.HasBuff("summonerexhaust") ||
+                    !GameObjects.Player.HasBuffOfType(BuffType.Blind) ||
+                    !Vars.Menu["miscellaneous"]["stealth"].GetValue<MenuBool>().Value);
             }
 
             /// <summary>
@@ -53,13 +54,12 @@ namespace ExorAIO.Champions.Vayne
                 !GameObjects.Player.IsDashing() &&
                 Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Invulnerable.Check(t) &&
-                            t.IsValidTarget(Vars.E.Range) &&
-                            !t.IsValidTarget(GameObjects.Player.BoundingRadius) &&
-                            Vars.Menu["spells"]["e"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        t.IsValidTarget(Vars.E.Range) &&
+                        !Invulnerable.Check(t, DamageType.Physical, false) &&
+                        !t.IsValidTarget(GameObjects.Player.BoundingRadius) &&
+                        Vars.Menu["spells"]["e"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
                     for (var i = 1; i < 10; i++)
                     {
@@ -87,7 +87,9 @@ namespace ExorAIO.Champions.Vayne
                 {
                     Vars.R.Cast();
 
-                    DelayAction.Add(GameObjects.Player.HasBuff("summonerexhaust") ? 1500 : 500, () =>
+                    DelayAction.Add(GameObjects.Player.HasBuff("summonerexhaust") 
+                        ? 1500 
+                        : 500, () =>
                     {
                         Vars.Q.Cast(Game.CursorPos);
                     });

@@ -30,8 +30,8 @@ namespace ExorAIO.Champions.Lucian
                 {
                     Vars.QMenu.Add(new MenuBool("combo",       "Combo",       true));
                     Vars.QMenu.Add(new MenuBool("killsteal",   "KillSteal",   true));
-                    Vars.QMenu.Add(new MenuSliderButton("laneclear",   "LaneClear",   50, 0, 99, true));
-                    Vars.QMenu.Add(new MenuSliderButton("jungleclear", "JungleClear", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",   50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                     {
                         /// <summary>
                         ///     Sets the Extended Q menu.
@@ -76,9 +76,9 @@ namespace ExorAIO.Champions.Lucian
                 {
                     Vars.WMenu.Add(new MenuBool("combo",     "Combo",       true));
                     Vars.WMenu.Add(new MenuBool("killsteal", "KillSteal",   true));
-                    Vars.WMenu.Add(new MenuSliderButton("buildings",   "Buildings",   50, 0, 99, true));
-                    Vars.WMenu.Add(new MenuSliderButton("laneclear",   "LaneClear",   50, 0, 99, true));
-                    Vars.WMenu.Add(new MenuSliderButton("jungleclear", "JungleClear", 50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("buildings",   "Buildings / if Mana >= x%",   50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",   50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -87,10 +87,11 @@ namespace ExorAIO.Champions.Lucian
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.EMenu.Add(new MenuSliderButton("buildings",   "Buildings",   50, 0, 99, true));
-                    Vars.EMenu.Add(new MenuSliderButton("laneclear",   "LaneClear",   50, 0, 99, true));
-                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuBool("combo",   "Combo",   true));
+                    Vars.EMenu.Add(new MenuBool("engager", "Engager", true));
+                    Vars.EMenu.Add(new MenuSliderButton("buildings",   "Buildings / if Mana >= x%",   50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",   50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

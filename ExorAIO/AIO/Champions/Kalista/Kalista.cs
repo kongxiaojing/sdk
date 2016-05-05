@@ -4,6 +4,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Kalista
 {
@@ -115,7 +116,9 @@ namespace ExorAIO.Champions.Kalista
         {
             if (Vars.E.IsReady() &&
                 Bools.IsPerfectRendTarget(args.Target as Obj_AI_Minion) &&
-                (args.Target as Obj_AI_Minion).Health < KillSteal.GetPerfectRendDamage(args.Target as Obj_AI_Minion))
+                (args.Target as Obj_AI_Minion).Health <
+                    (float)GameObjects.Player.GetSpellDamage(args.Target as Obj_AI_Minion, SpellSlot.E) +
+                    (float)GameObjects.Player.GetSpellDamage(args.Target as Obj_AI_Minion, SpellSlot.E, DamageStage.Buff))
             {
                 Vars.E.Cast();
             }

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 
@@ -29,10 +30,11 @@ namespace ExorAIO.Champions.Vayne
                         t.IsValidTarget(Vars.Q.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.CountEnemyHeroesInRange(700f) <= 2 &&
-                        t.Health < Vars.Q.GetDamage(t) +
+                        Vars.GetRealHealth(t) <
                             GameObjects.Player.GetAutoAttackDamage(t) +
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q) +
                             (t.GetBuffCount("vaynesilvereddebuff") == 2
-                                ? Vars.W.GetDamage(t)
+                                ? (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)
                                 : 0)))
                 {
                     Vars.Q.Cast(target.ServerPosition);
@@ -50,9 +52,10 @@ namespace ExorAIO.Champions.Vayne
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         t.IsValidTarget(Vars.E.Range) &&
-                        t.Health < Vars.E.GetDamage(t) +
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E) +
                             (t.GetBuffCount("vaynesilvereddebuff") == 2
-                                ? Vars.W.GetDamage(t)
+                                ? (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)
                                 : 0)))
                 {
                     Vars.E.CastOnUnit(target);

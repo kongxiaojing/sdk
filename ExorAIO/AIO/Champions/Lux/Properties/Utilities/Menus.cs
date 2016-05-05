@@ -25,10 +25,9 @@ namespace ExorAIO.Champions.Lux
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",       true));
+                    Vars.QMenu.Add(new MenuBool("logical",   "Logical",     true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal",   true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",       true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -65,9 +64,7 @@ namespace ExorAIO.Champions.Lux
                 {
                     Vars.EMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.EMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.EMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

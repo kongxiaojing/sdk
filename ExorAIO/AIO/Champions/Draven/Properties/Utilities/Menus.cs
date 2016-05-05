@@ -33,9 +33,7 @@ namespace ExorAIO.Champions.Draven
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Combo: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("combo", "Combo / If Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -45,12 +43,10 @@ namespace ExorAIO.Champions.Draven
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo",       "Combo",                    true));
-                    Vars.EMenu.Add(new MenuBool("clear",       "Clear",                    true));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / If Mana >= x%", 50, 0, 99, true));
                     Vars.EMenu.Add(new MenuBool("killsteal",   "KillSteal",                true));
                     Vars.EMenu.Add(new MenuBool("gapcloser",   "Anti-Gapcloser",           true));
                     Vars.EMenu.Add(new MenuBool("interrupter", "Interrupt Enemy Channels", true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

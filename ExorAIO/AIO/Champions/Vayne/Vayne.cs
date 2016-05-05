@@ -131,6 +131,7 @@ namespace ExorAIO.Champions.Vayne
             if (Vars.E.IsReady() &&
                 args.IsDirectedToPlayer &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.CastOnUnit(args.Sender);
@@ -146,7 +147,7 @@ namespace ExorAIO.Champions.Vayne
         {
             if (Vars.E.IsReady() &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                !Bools.HasAnyImmunity(args.Sender, true) &&
+                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
                 Vars.Menu["spells"]["e"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.E.CastOnUnit(args.Sender);

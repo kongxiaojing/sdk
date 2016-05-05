@@ -27,9 +27,7 @@ namespace ExorAIO.Champions.Corki
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.QMenu.Add(new MenuBool("logical",   "Logical",   true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -40,8 +38,7 @@ namespace ExorAIO.Champions.Corki
                 {
                     Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
                     Vars.EMenu.Add(new MenuBool("clear", "Clear", true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
@@ -52,11 +49,9 @@ namespace ExorAIO.Champions.Corki
                 {
                     Vars.RMenu.Add(new MenuBool("combo",      "Combo",      true));
                     Vars.RMenu.Add(new MenuBool("killsteal",  "KillSteal",  true));
-                    Vars.RMenu.Add(new MenuBool("clear",      "Clear",      true));
-                    Vars.RMenu.Add(new MenuBool("autoharass", "AutoHarass", true));
                     Vars.RMenu.Add(new MenuBool("logical",    "Logical",    true));
-                    Vars.RMenu.Add(
-                        new MenuSlider("manamanager", "Clear/AutoHarass: Mana >= x%", 50, 0, 99));
+                    Vars.RMenu.Add(new MenuSliderButton("clear",      "Clear / if Mana >= x%",      50, 0, 99, true));
+                    Vars.RMenu.Add(new MenuSliderButton("autoharass", "AutoHarass / if Mana >= x%", 50, 0, 99));
                     {
                         /// <summary>
                         ///     Sets the menu for the R Whitelist.

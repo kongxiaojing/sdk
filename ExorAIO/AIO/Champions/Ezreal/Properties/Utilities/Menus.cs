@@ -26,11 +26,26 @@ namespace ExorAIO.Champions.Ezreal
                 {
                     Vars.QMenu.Add(new MenuBool("combo",      "Combo",      true));
                     Vars.QMenu.Add(new MenuBool("killsteal",  "KillSteal",  true));
-                    Vars.QMenu.Add(new MenuBool("farmhelper", "FarmHelper", true));
-                    Vars.QMenu.Add(new MenuBool("harass",     "Harass",     true));
-                    Vars.QMenu.Add(new MenuBool("clear",      "Clear",      true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "FarmHelper/Harass/Clear: Mana >= x", 50, 10, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("farmhelper", "FarmHelper / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("harass",     "Harass / if Mana >= x%",     50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",      "Clear / if Mana >= x%",      50, 0, 99, true));
+                    {
+                        /// <summary>
+                        ///     Sets the menu for the Q Whitelist.
+                        /// </summary>
+                        Vars.WhiteListMenu = new Menu("whitelist1", "Harass: Whitelist Menu");
+                        {
+                            foreach (var target in GameObjects.EnemyHeroes)
+                            {
+                                Vars.WhiteListMenu.Add(
+                                    new MenuBool(
+                                        target.ChampionName.ToLower(),
+                                        $"Use against: {target.ChampionName}",
+                                        true));
+                            }
+                        }
+                        Vars.RMenu.Add(Vars.WhiteListMenu);
+                    }
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -40,11 +55,9 @@ namespace ExorAIO.Champions.Ezreal
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo",     "Combo",     true));
-                    Vars.WMenu.Add(new MenuBool("logical",   "Logical",   true));
                     Vars.WMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.WMenu.Add(new MenuBool("harass",    "Harass"));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Logical/Harass: Mana >= x", 50, 10, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("logical", "Logical / if Mana >= x%", 50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("harass",  "Harass / if Mana >= x%", 50, 0, 99));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -53,7 +66,7 @@ namespace ExorAIO.Champions.Ezreal
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("grab", "Anti-Grab", true));
+                    Vars.EMenu.Add(new MenuBool("antigrab", "Anti-Grab", true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
@@ -68,7 +81,7 @@ namespace ExorAIO.Champions.Ezreal
                         /// <summary>
                         ///     Sets the menu for the R Whitelist.
                         /// </summary>
-                        Vars.WhiteListMenu = new Menu("whitelist", "Ultimate: Whitelist Menu");
+                        Vars.WhiteList2Menu = new Menu("whitelist2", "Ultimate: Whitelist Menu");
                         {
                             foreach (var target in GameObjects.EnemyHeroes)
                             {
@@ -91,9 +104,7 @@ namespace ExorAIO.Champions.Ezreal
             /// </summary>
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
-                Vars.MiscMenu.Add(new MenuBool("tear", "Stack Tear", true));
-                Vars.MiscMenu.Add(
-                    new MenuSlider("manamanager", "Stack Tear: Mana > x%", 80, 1, 95));
+                Vars.MiscMenu.Add(new MenuSliderButton("tear", "Stack Tear", 80, 1, 99, true));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

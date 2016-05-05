@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -31,7 +32,8 @@ namespace ExorAIO.Champions.Lucian
                         !Invulnerable.Check(t) &&
                         !t.IsValidTarget(Vars.Q.Range) &&
                         t.IsValidTarget(Vars.Q2.Range-50f) &&
-                        t.Health < Vars.Q.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     return;
                 }
@@ -54,7 +56,8 @@ namespace ExorAIO.Champions.Lucian
                             !Invulnerable.Check(t) &&
                             !t.IsValidTarget(Vars.Q.Range) &&
                             t.IsValidTarget(Vars.Q2.Range-50f) &&
-                            t.Health < Vars.Q.GetDamage(t))).UnitPosition)
+                            Vars.GetRealHealth(t) <
+                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q))).UnitPosition)
 
                     select minion)
                 {
@@ -82,7 +85,8 @@ namespace ExorAIO.Champions.Lucian
                             !Invulnerable.Check(t) &&
                             !t.IsValidTarget(Vars.Q.Range) &&
                             t.IsValidTarget(Vars.Q2.Range-50f) &&
-                            t.Health < Vars.Q.GetDamage(t))).UnitPosition)
+                            Vars.GetRealHealth(t) <
+                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q))).UnitPosition)
 
                     select target)
                 {
@@ -101,9 +105,13 @@ namespace ExorAIO.Champions.Lucian
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
                         !t.IsValidTarget(Vars.Q.Range) &&
-                        t.Health < Vars.W.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
-                    Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                    if (!Vars.W.GetPrediction(target).CollisionObjects.Any())
+                    {
+                        Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                    }
                 }
             }
         }

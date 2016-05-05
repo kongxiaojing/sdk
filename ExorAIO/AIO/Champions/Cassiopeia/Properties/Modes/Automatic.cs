@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Cassiopeia
 {
@@ -43,8 +44,9 @@ namespace ExorAIO.Champions.Cassiopeia
                 !GameObjects.Player.IsRecalling() &&
                 Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                 GameObjects.Player.CountEnemyHeroesInRange(1500) == 0 &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededTearMana &&
-                Vars.Menu["miscellaneous"]["tear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["miscellaneous"]["tear"]) &&
+                Vars.Menu["miscellaneous"]["tear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.Q.Cast(Game.CursorPos);
             }
@@ -58,7 +60,7 @@ namespace ExorAIO.Champions.Cassiopeia
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         Bools.IsImmobile(t) &&
-                        !Bools.HasAnyImmunity(t, true) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range)))
                 {
                     Vars.Q.Cast(target.ServerPosition);
@@ -69,19 +71,22 @@ namespace ExorAIO.Champions.Cassiopeia
             /// <summary>
             ///     The Automatic W Logic.
             /// </summary>
-            if (Vars.W.IsReady() &&
-                !Vars.Q.IsReady() &&
-                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
+            DelayAction.Add(1000, () =>
             {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
-                    t =>
-                        Bools.IsImmobile(t) &&
-                        !Bools.HasAnyImmunity(t, true) &&
-                        t.IsValidTarget(Vars.W.Range)))
+                if (Vars.W.IsReady() &&
+                    !Vars.Q.IsReady() &&
+                    Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
                 {
-                    Vars.W.Cast(target.ServerPosition);
+                    foreach (var target in GameObjects.EnemyHeroes.Where(
+                        t =>
+                            Bools.IsImmobile(t) &&
+                            !Invulnerable.Check(t) &&
+                            t.IsValidTarget(Vars.W.Range)))
+                    {
+                        Vars.W.Cast(target.ServerPosition);
+                    }
                 }
-            }
+            });
         }
     }
 }

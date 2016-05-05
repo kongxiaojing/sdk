@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Ashe
                 Vars.Q.Cast();
             }
 
-            if (Bools.HasAnyImmunity(Targets.Target) ||
+            if (Invulnerable.Check(Targets.Target) ||
                 Targets.Target.IsValidTarget(Vars.AARange))
             {
                 return;

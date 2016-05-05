@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -29,7 +30,8 @@ namespace ExorAIO.Champions.Nautilus
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
-                        t.Health < Vars.Q.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
                     {
@@ -50,7 +52,8 @@ namespace ExorAIO.Champions.Nautilus
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
-                        t.Health < Vars.R.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
                     Vars.R.CastOnUnit(target);
                 }

@@ -1,8 +1,10 @@
 using System;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Draven
 {
@@ -94,10 +96,10 @@ namespace ExorAIO.Champions.Draven
         {
             if (Vars.E.IsReady() &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                !Bools.HasAnyImmunity(args.Sender, true) &&
+                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
-                Vars.E.Cast(args.Sender.ServerPosition);
+                Vars.E.Cast(Vars.E.GetPrediction(args.Sender).UnitPosition);
             }
         }
 
@@ -110,7 +112,7 @@ namespace ExorAIO.Champions.Draven
         {
             if (Vars.E.IsReady() &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                !Bools.HasAnyImmunity(args.Sender, true) &&
+                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
                 Vars.Menu["spells"]["e"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(args.Sender.ServerPosition);

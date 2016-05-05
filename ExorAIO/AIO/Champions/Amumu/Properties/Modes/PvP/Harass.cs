@@ -1,6 +1,4 @@
 using System;
-using ExorAIO.Utilities;
-using LeagueSharp.SDK;
 
 namespace ExorAIO.Champions.Amumu
 {
@@ -13,9 +11,6 @@ namespace ExorAIO.Champions.Amumu
         ///     Called when the game updates itself.
         /// </summary>
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
-        public static void Harass(EventArgs args)
-        {
-            if (!Targets.Target.IsValidTarget() || Bools.HasAnyImmunity(Targets.Target)) {}
-        }
+        public static void Harass(EventArgs args) {}
     }
 }

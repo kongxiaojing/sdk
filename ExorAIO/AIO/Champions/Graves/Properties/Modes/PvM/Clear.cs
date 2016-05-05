@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 using SharpDX;
 using Geometry = ExorAIO.Utilities.Geometry;
 
@@ -29,8 +30,9 @@ namespace ExorAIO.Champions.Graves
             ///     The Clear Q Logics.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The JungleClear Q Logic.
@@ -50,19 +52,17 @@ namespace ExorAIO.Champions.Graves
                     /// </summary>
                     if (GameObjects.EnemyHeroes.Any(
                         t =>
-                            !Bools.HasAnyImmunity(t) &&
+                            !Invulnerable.Check(t) &&
                             t.IsValidTarget(Vars.Q.Range)))
                     {
                         if (Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).MinionsHit >= 3 &&
                             !new Geometry.Rectangle(
                                 GameObjects.Player.ServerPosition,
                                 GameObjects.Player.ServerPosition.Extend(Targets.Minions[0].ServerPosition, Vars.Q.Range),
-                                Vars.Q.Width).IsOutside(
-                                    (Vector2)
-                                        Vars.Q.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
-                                            t =>
-                                                !Bools.HasAnyImmunity(t) &&
-                                                t.IsValidTarget(Vars.Q.Range))).UnitPosition))
+                                Vars.Q.Width).IsOutside((Vector2)Vars.Q.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                                    t =>
+                                        !Invulnerable.Check(t) &&
+                                        t.IsValidTarget(Vars.Q.Range))).UnitPosition))
                         {
                             Vars.Q.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).Position);
                         }
@@ -73,7 +73,7 @@ namespace ExorAIO.Champions.Graves
                     /// </summary>
                     else if (!GameObjects.EnemyHeroes.Any(
                         t =>
-                            !Bools.HasAnyImmunity(t) &&
+                            !Invulnerable.Check(t) &&
                             t.IsValidTarget(Vars.Q.Range + 100f)))
                     {
                         if (Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).MinionsHit >= 3)
@@ -92,7 +92,8 @@ namespace ExorAIO.Champions.Graves
         /// <param name="args">The args.</param>
         public static void JungleClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null)
+            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null ||
+                !Targets.JungleMinions.Contains(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
             {
                 return;
             }
@@ -101,9 +102,9 @@ namespace ExorAIO.Champions.Graves
             ///     The E JungleClear Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuBool>().Value &&
-                Targets.JungleMinions.Contains(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["jungleclear"]) &&
+                Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.Cast(Game.CursorPos);
             }
@@ -127,8 +128,9 @@ namespace ExorAIO.Champions.Graves
             ///     The E BuildingClear Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["buildings"]) &&
+                Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.Cast(Game.CursorPos);
             }

@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Kalista
 {
@@ -26,16 +28,22 @@ namespace ExorAIO.Champions.Kalista
             ///     The Q Clear Logics.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The Q LaneClear Logic.
                 /// </summary>
-                if (Targets.Minions.Count(m => m.Health < Vars.Q.GetDamage(m)) >= 3 &&
-                    Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).MinionsHit >= 3)
+                if (Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
+                    m =>
+                        Vars.GetRealHealth(m) <
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).MinionsHit >= 3)
                 {
-                    Vars.Q.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions, Vars.Q.Width).Position);
+                    Vars.Q.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
+                        m =>
+                            Vars.GetRealHealth(m) <
+                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).Position);
                 }
 
                 /// <summary>
@@ -51,13 +59,16 @@ namespace ExorAIO.Champions.Kalista
             ///     The E LaneClear Logics.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["laneclear"]) &&
+                Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuSliderButton>().BValue)
             {
                 if (Targets.Minions.Count(
                     m =>
                         Bools.IsPerfectRendTarget(m) &&
-                        m.Health < KillSteal.GetPerfectRendDamage(m)) >= 3)
+                        Vars.GetRealHealth(m) <
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) >= 3)
                 {
                     Vars.E.Cast();
                 }

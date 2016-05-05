@@ -24,7 +24,7 @@ namespace ExorAIO.Champions.Cassiopeia
             if (Vars.E.IsReady() &&
                 Vars.Menu["spells"]["e"]["lasthit"].GetValue<MenuBool>().Value)
             {
-                foreach (var minion in Targets.Minions.Where(m => m.Health < Vars.E.GetDamage(m)))
+                foreach (var minion in Targets.Minions.Where(m => Vars.GetRealHealth(m) < Vars.E.GetDamage(m)))
                 {
                     DelayAction.Add(Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value, () =>
                     {

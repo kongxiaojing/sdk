@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -26,11 +27,12 @@ namespace ExorAIO.Champions.Ryze
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Invulnerable.Check(t) &&
-                        t.Health < Vars.Q.GetDamage(t) &&
-                        t.IsValidTarget(Vars.Q.Range - 100f)))
+                        t.IsValidTarget(Vars.Q.Range - 50f) &&
+                        !Invulnerable.Check(t, DamageType.Magical) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
-                    if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => c.IsMinion))
+                    if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                         return;
@@ -46,9 +48,10 @@ namespace ExorAIO.Champions.Ryze
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
-                        t.Health < Vars.W.GetDamage(t)))
+                        !Invulnerable.Check(t, DamageType.Magical, false) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
                     Vars.W.CastOnUnit(target);
                     return;
@@ -63,9 +66,10 @@ namespace ExorAIO.Champions.Ryze
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range) &&
-                        t.Health < Vars.E.GetDamage(t)))
+                        !Invulnerable.Check(t, DamageType.Magical, false) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.CastOnUnit(target);
                 }

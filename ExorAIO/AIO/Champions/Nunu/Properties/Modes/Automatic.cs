@@ -57,7 +57,7 @@ namespace ExorAIO.Champions.Nunu
                     foreach (var minion in Targets.JungleMinions.Where(
                         m =>
                             m.IsValidTarget(Vars.Q.Range) &&
-                            m.Health < Vars.Q.GetDamage(m)))
+                            Vars.GetRealHealth(m) < Vars.Q.GetDamage(m)))
                     {
                         Vars.Q.CastOnUnit(minion);
                     }
@@ -85,9 +85,10 @@ namespace ExorAIO.Champions.Nunu
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuSliderButton>().BValue)
             {
-                if (GameObjects.Player.ManaPercent < ManaManager.NeededWMana &&
+                if (GameObjects.Player.ManaPercent <
+                        ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["logical"]) &&
                     !GameObjects.Player.Buffs.Any(b => b.Name.Equals("visionary")))
                 {
                     return;

@@ -30,12 +30,11 @@ namespace ExorAIO.Champions.Sivir
             if (Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            Bools.IsImmobile(t) &&
-                            !Invulnerable.Check(t) &&
-                            t.IsValidTarget(Vars.Q.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.Q.Range)))
                 {
                     Vars.Q.Cast(Targets.Target.ServerPosition);
                 }

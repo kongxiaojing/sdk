@@ -4,6 +4,8 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Anivia
 {
@@ -24,13 +26,13 @@ namespace ExorAIO.Champions.Anivia
             if (Vars.E.IsReady() &&
                 Vars.Menu["spells"]["e"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.E.Range) &&
-                            t.Health < Vars.E.GetDamage(t))
-                    )
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.E.Range) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E) +
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E, DamageStage.Buff)))
                 {
                     Vars.E.CastOnUnit(target);
                     return;
@@ -44,13 +46,11 @@ namespace ExorAIO.Champions.Anivia
                 GameObjects.Player.Spellbook.GetSpell(SpellSlot.Q).ToggleState == 1 &&
                 Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.Q.Range) &&
-                            t.Health < Vars.Q.GetDamage(t))
-                    )
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.Q.Range) &&
+                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                 }

@@ -33,7 +33,7 @@ namespace ExorAIO.Champions.KogMaw
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
@@ -67,23 +67,12 @@ namespace ExorAIO.Champions.KogMaw
             if (Vars.R.IsReady() &&
                 Targets.Target.HealthPercent < 50 &&
                 Targets.Target.IsValidTarget(Vars.R.Range) &&
-                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().BValue &&
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().SValue >
+                    GameObjects.Player.GetBuffCount("kogmawlivingartillerycost"))
             {
-                if (GameObjects.Player.GetBuffCount("kogmawlivingartillerycost") >
-                        Vars.Menu["spells"]["r"]["stacks"].GetValue<MenuSlider>().Value)
-                {
-                    return;
-                }
-                if (GameObjects.Player.ManaPercent < ManaManager.NeededRMana)
-                {
-                    return;
-                }
-
-                if (!Targets.Target.IsValidTarget(Vars.W.Range))
-                {
-                    Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).CastPosition);
-                }
-                else if (Vars.W.IsReady() &&
+                if (Vars.W.IsReady() &&
+                    !Targets.Target.IsValidTarget(Vars.W.Range) &&
                     !GameObjects.Player.HasBuff("KogMawBioArcaneBarrage"))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).CastPosition);

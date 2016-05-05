@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -30,7 +31,8 @@ namespace ExorAIO.Champions.Sivir
                         !Invulnerable.Check(t) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.IsValidTarget(Vars.Q.Range - 100f) &&
-                        t.Health < Vars.Q.GetDamage(t)*2))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)*2))
                 {
                     Vars.Q.Cast(
                         Vars.Q.GetPrediction(Targets.Target)

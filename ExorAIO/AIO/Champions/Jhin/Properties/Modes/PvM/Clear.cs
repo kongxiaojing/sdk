@@ -26,8 +26,9 @@ namespace ExorAIO.Champions.Jhin
             ///     The Clear Q Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear Q Logic.
@@ -41,7 +42,7 @@ namespace ExorAIO.Champions.Jhin
                                 h =>
                                     (int)(h.Health / GameObjects.Player.TotalAttackDamage)) >= 3)
                     {
-                        Vars.Q.CastOnUnit(Targets.Minions.OrderBy(m => m.Health).First());
+                        Vars.Q.CastOnUnit(Targets.Minions.OrderBy(m => Vars.GetRealHealth(m)).First());
                     }
                 }
 
@@ -59,8 +60,9 @@ namespace ExorAIO.Champions.Jhin
             ///     The Clear W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
+                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear W Logic.
@@ -75,7 +77,7 @@ namespace ExorAIO.Champions.Jhin
                 /// </summary>
                 else if (Targets.JungleMinions.Any())
                 {
-                    Vars.W.Cast(Targets.JungleMinions[0].Position);
+                    Vars.W.Cast(Targets.JungleMinions[0].ServerPosition);
                 }
             }
         }

@@ -3,6 +3,7 @@ using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Ashe
 {
@@ -94,7 +95,7 @@ namespace ExorAIO.Champions.Ashe
         {
             if (Vars.R.IsReady() &&
                 args.IsDirectedToPlayer &&
-                !Bools.HasAnyImmunity(args.Sender) &&
+                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.R.Range) &&
                 Vars.Menu["spells"]["r"]["gapcloser"].GetValue<MenuBool>().Value)
             {
@@ -110,7 +111,7 @@ namespace ExorAIO.Champions.Ashe
         public static void OnInterruptableTarget(object sender, Events.InterruptableTargetEventArgs args)
         {
             if (Vars.R.IsReady() &&
-                !Bools.HasAnyImmunity(args.Sender) &&
+                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.R.Range) &&
                 Vars.Menu["spells"]["r"]["interrupter"].GetValue<MenuBool>().Value)
             {

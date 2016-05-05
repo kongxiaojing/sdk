@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.KogMaw
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range)))
                 {
-                    if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.Q.Cast(target.ServerPosition);
                     }
@@ -64,10 +64,10 @@ namespace ExorAIO.Champions.KogMaw
             ///     The Automatic R Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                
-                GameObjects.Player.ManaPercent > ManaManager.NeededRMana &&
-                Vars.Menu["spells"]["r"]["logical"].GetValue<MenuBool>().Value &&
-                Vars.Menu["spells"]["r"]["stacks"].GetValue<MenuSlider>().Value >
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.R.Slot, Vars.Menu["spells"]["r"]["logical"]) &&
+                Vars.Menu["spells"]["r"]["logical"].GetValue<MenuSliderButton>().BValue &&
+                Vars.Menu["spells"]["r"]["logical"].GetValue<MenuSliderButton>().SValue >
                     GameObjects.Player.GetBuffCount("kogmawlivingartillerycost"))
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(

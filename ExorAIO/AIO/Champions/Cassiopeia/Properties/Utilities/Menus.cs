@@ -25,10 +25,8 @@ namespace ExorAIO.Champions.Cassiopeia
                 {
                     Vars.QMenu.Add(new MenuBool("combo",   "Combo",   true));
                     Vars.QMenu.Add(new MenuBool("logical", "Logical", true));
-                    Vars.QMenu.Add(new MenuBool("harass",  "Harass",  true));
-                    Vars.QMenu.Add(new MenuBool("clear",   "Clear",   true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Harass/Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -39,10 +37,8 @@ namespace ExorAIO.Champions.Cassiopeia
                 {
                     Vars.WMenu.Add(new MenuBool("combo",   "Combo",   true));
                     Vars.WMenu.Add(new MenuBool("logical", "Logical", true));
-                    Vars.WMenu.Add(new MenuBool("harass",  "Harass",  true));
-                    Vars.WMenu.Add(new MenuBool("clear",   "Clear",   true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Harass/Clear: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -52,13 +48,10 @@ namespace ExorAIO.Champions.Cassiopeia
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo",     "Combo",     true));
-                    Vars.EMenu.Add(new MenuBool("lasthit",   "LastHit", true));
+                    Vars.EMenu.Add(new MenuBool("lasthit",   "LastHit",   true));
                     Vars.EMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.EMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
-                    Vars.EMenu.Add(
-                        new MenuSlider("delay", "E Delay (ms)", 0, 0, 250));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSlider("delay", "E Delay (ms)", 0, 0, 250));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
@@ -66,14 +59,11 @@ namespace ExorAIO.Champions.Cassiopeia
                 ///     Sets the menu for the R.
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
-                //.SetFontStyle(FontStyle.Regular, Color.Red);
                 {
+                    Vars.RMenu.Add(new MenuSliderButton("combo", "Combo / if facing Enemies >=", 1, 1, 5, true));
                     Vars.RMenu.Add(new MenuBool("killsteal",   "KillSteal",      true));
-                    Vars.RMenu.Add(new MenuBool("combo",       "Combo",          true));
                     Vars.RMenu.Add(new MenuBool("gapcloser",   "Anti-Gapcloser", true));
                     Vars.RMenu.Add(new MenuBool("interrupter", "Interrupter",    true));
-                    Vars.RMenu.Add(
-                        new MenuSlider("enemies", "Combo: if facing Enemies >=", 1, 1, 5));
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
             }
@@ -85,9 +75,7 @@ namespace ExorAIO.Champions.Cassiopeia
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
                 Vars.MiscMenu.Add(new MenuBool("noaa", "Don't AA in Combo"));
-                Vars.MiscMenu.Add(new MenuBool("tear", "Stack Tear", true));
-                Vars.MiscMenu.Add(
-                    new MenuSlider("manamanager", "Stack Tear: Mana >= x%", 80, 1, 95));
+                Vars.MiscMenu.Add(new MenuSliderButton("tear", "Stack Tear / if Mana >= x%", 80, 0, 95, true));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

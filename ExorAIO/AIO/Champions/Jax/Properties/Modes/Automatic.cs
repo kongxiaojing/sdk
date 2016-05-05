@@ -3,6 +3,7 @@ using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Jax
 {
@@ -48,7 +49,7 @@ namespace ExorAIO.Champions.Jax
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Bools.HasAnyImmunity(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range)))
                 {
                     Vars.E.Cast();

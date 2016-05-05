@@ -2,6 +2,7 @@ using System;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Akali
 {
@@ -17,7 +18,7 @@ namespace ExorAIO.Champions.Akali
         public static void Harass(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -28,8 +29,9 @@ namespace ExorAIO.Champions.Akali
             if (Vars.Q.IsReady() &&
                 !GameObjects.Player.IsUnderEnemyTurret() &&
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["harass"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["harass"]) &&
+                Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.Q.CastOnUnit(Targets.Target);
             }

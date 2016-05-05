@@ -6,6 +6,7 @@ using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Kalista
 {
@@ -61,16 +62,17 @@ namespace ExorAIO.Champions.Kalista
                 !GameObjects.Player.IsUnderEnemyTurret() &&
                 Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                 GameObjects.Player.CountEnemyHeroesInRange(1500f) == 0 &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["logical"]) &&
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuSliderButton>().BValue)
             {
                 foreach (var loc in Vars.Locations.Where(
                     l =>
                         GameObjects.Player.Distance(l) < Vars.W.Range &&
-                        !GameObjects.AllyMinions.Any(
+                        !ObjectManager.Get<Obj_AI_Base>().Any(
                             m =>
                                 m.Distance(l) < 2000f &&
-                                m.CharData.BaseSkinName.Equals("RobotBuddy"))))
+                                m.CharData.BaseSkinName.Contains("RobotBuddy"))))
                 {
                     Vars.W.Cast(loc);
                 }
@@ -93,33 +95,41 @@ namespace ExorAIO.Champions.Kalista
                 /// <summary>
                 ///     The E Minion Harass Logic.
                 /// </summary>
-                if (Targets.Minions.Any(
+                if (GameObjects.EnemyHeroes.Any(t => Bools.IsPerfectRendTarget(t)) &&
+                    Targets.Minions.Any(
                     m =>
                         Bools.IsPerfectRendTarget(m) &&
-                        m.Health < KillSteal.GetPerfectRendDamage(m)) &&
-                    GameObjects.EnemyHeroes.Any(t => Bools.IsPerfectRendTarget(t)) &&
-                    Vars.Menu["spells"]["e"]["harass"].GetValue<MenuBool>().Value)
+                        Vars.GetRealHealth(m) <
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) &&
+                    Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue)
                 {
                     /// <summary>
-                    ///     Check for Mana Manager if the killable minion is only one, else do not use it.)
+                    ///     Check for Mana Manager if in combo mode or the killable minion is only one, else do not use it.
                     /// </summary>
-                    if (Targets.Minions.Count(
+                    if (Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo ||
+                        Targets.Minions.Count(
                         m =>
                             Bools.IsPerfectRendTarget(m) &&
-                            m.Health < KillSteal.GetPerfectRendDamage(m)) == 1)
+                            Vars.GetRealHealth(m) <
+                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
+                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) == 1)
                     {
-                        if (GameObjects.Player.ManaPercent < ManaManager.NeededEMana)
+                        if (GameObjects.Player.ManaPercent <
+                                ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["harass"]))
                         {
                             return;
                         }
                     }
 
                     /// <summary>
-                    ///     Check for E Whitelist if the harassable target is only one, else do not use it.)
+                    ///     Check for E Whitelist if the harassable target is only one, else do not use the whitelist.
                     /// </summary>
                     if (GameObjects.EnemyHeroes.Count(t => Bools.IsPerfectRendTarget(t)) == 1)
                     {
-                        if (!Vars.Menu["spells"]["e"]["whitelist"][GameObjects.EnemyHeroes.FirstOrDefault(t => Bools.IsPerfectRendTarget(t)).ChampionName.ToLower()].GetValue<MenuBool>().Value)
+                        if (!Vars.Menu["spells"]["e"]["whitelist"][GameObjects.EnemyHeroes.FirstOrDefault(
+                            t =>
+                                Bools.IsPerfectRendTarget(t)).ChampionName.ToLower()].GetValue<MenuBool>().Value)
                         {
                             return;
                         }
@@ -130,7 +140,7 @@ namespace ExorAIO.Champions.Kalista
                     /// </summary>
                     foreach (var target in GameObjects.EnemyHeroes.Where(t => Bools.IsPerfectRendTarget(t)))
                     {
-                        if (Invulnerable.Check(target, DamageType.Physical, false))
+                        if (Invulnerable.Check(target, DamageType.Physical))
                         {
                             return;
                         }
@@ -147,9 +157,10 @@ namespace ExorAIO.Champions.Kalista
                     foreach (var minion in Targets.JungleMinions.Where(
                         m =>
                             Bools.IsPerfectRendTarget(m) &&
-                            m.Health < KillSteal.GetPerfectRendDamage(m)))
+                            Vars.GetRealHealth(m) <
+                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
+                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)))
                     {
-
                         Vars.E.Cast();
                     }
                 }

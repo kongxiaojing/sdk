@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Ezreal
 {
@@ -18,9 +19,33 @@ namespace ExorAIO.Champions.Ezreal
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
+            /// <summary>
+            ///     The R Combo Logic.
+            /// </summary>
+            if (Vars.R.IsReady() &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.Q.Range) == 0 &&
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
+            {
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(2000f) &&
+                        Vars.Menu["spells"]["r"]["whitelist2"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                {
+                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                }
+
+                if (Invulnerable.Check(Targets.Target))
+                {
+                    Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
+                }
+                
+                Vars.R.CastIfWillHit(Targets.Target, 2);
+            }
+
             if (Bools.HasSheenBuff() ||
                 !Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -33,16 +58,11 @@ namespace ExorAIO.Champions.Ezreal
                 !Targets.Target.IsValidTarget(Vars.AARange) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                     return;
                 }
-            }
-
-            if (Bools.HasAnyImmunity(Targets.Target, true))
-            {
-                return;
             }
 
             /// <summary>
@@ -63,30 +83,6 @@ namespace ExorAIO.Champions.Ezreal
                     Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
                 }
                 return;
-            }
-
-            /// <summary>
-            ///     The R Combo Logic.
-            /// </summary>
-            if (Vars.R.IsReady() &&
-                GameObjects.Player.CountEnemyHeroesInRange(Vars.Q.Range) == 0 &&
-                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
-            {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
-                    t =>
-                        Bools.IsImmobile(t) &&
-                        t.IsValidTarget(2000f) &&
-                        Vars.Menu["spells"]["r"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
-                {
-                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
-                }
-
-                if (Bools.IsImmobile(Targets.Target))
-                {
-                    Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
-                }
-                
-                Vars.R.CastIfWillHit(Targets.Target, 2);
             }
         }
     }

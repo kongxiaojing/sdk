@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -28,8 +29,8 @@ namespace ExorAIO.Champions.Renekton
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range) &&
-                        !t.IsValidTarget(Vars.AARange) &&
-                        t.Health < Vars.Q.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     Vars.Q.Cast();
                 }

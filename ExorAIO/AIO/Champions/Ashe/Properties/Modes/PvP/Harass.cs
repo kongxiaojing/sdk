@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Ashe
 {
@@ -19,7 +20,7 @@ namespace ExorAIO.Champions.Ashe
         public static void Harass(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -29,7 +30,7 @@ namespace ExorAIO.Champions.Ashe
             /// </summary>
             if (Vars.W.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
+                GameObjects.Player.ManaPercent > ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["manamanager"]) &&
                 Vars.Menu["spells"]["w"]["harass"].GetValue<MenuBool>().Value)
             {
                 if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))

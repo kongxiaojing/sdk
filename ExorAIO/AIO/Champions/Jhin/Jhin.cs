@@ -135,14 +135,20 @@ namespace ExorAIO.Champions.Jhin
         /// <summary>
         ///     Handles the <see cref="E:ProcessSpell" /> event.
         /// </summary>
-        /// <param name="unit">The unit.</param>
-        /// <param name="Spell">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
         public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (sender.IsMe &&
-                args.SData.Name.Equals("JhinR"))
+                args.Slot == SpellSlot.R)
             {
-                Vars.End = args.End;
+                if (!Vars.R.Instance.Name.Equals("JhinRShot"))
+                {
+                    Vars.ShotsCount = 0;
+                    return;
+                }
+
+                Vars.ShotsCount++;
             }
         }
     }

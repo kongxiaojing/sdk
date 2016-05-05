@@ -129,11 +129,11 @@ namespace ExorAIO.Champions.Lux
         {
             if (Vars.Q.IsReady() &&
                 args.IsDirectedToPlayer &&
-                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.Q.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["q"]["gapcloser"].GetValue<MenuBool>().Value)
             {
-                Vars.Q.Cast(args.Sender);
+                Vars.Q.Cast(args.Sender.ServerPosition);
             }
         }
     }

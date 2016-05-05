@@ -13,15 +13,6 @@ namespace ExorAIO.Utilities
     internal class Bools
     {
         /// <summary>
-        ///     Gets a value indicating whether the target has protection or not.
-        /// </summary>
-        public static bool HasAnyImmunity(Obj_AI_Hero unit, bool includeSpellShields = false)
-            =>
-                unit.IsInvulnerable ||
-                unit.HasBuffOfType(BuffType.SpellImmunity) ||
-                (includeSpellShields && unit.HasBuffOfType(BuffType.SpellShield));
-
-        /// <summary>
         ///     Gets a value indicating whether the player has a sheen-like buff.
         /// </summary>
         public static bool HasSheenBuff()
@@ -102,32 +93,12 @@ namespace ExorAIO.Utilities
                         item.Id.Equals(ItemId.Manamune_Crystal_Scar));
 
         /// <summary>
-        ///     Gets a value indicating whether a determined root is worth cleansing.
-        /// </summary>
-        public static bool IsValidSnare()
-            =>
-                GameObjects.Player.Buffs.Any(
-                    b =>
-                        b.Type == BuffType.Snare &&
-                        !Vars.InvalidSnareCasters.Contains((b.Caster as Obj_AI_Hero).ChampionName));
-
-        /// <summary>
-        ///     Gets a value indicating whether a determined Stun is worth cleansing.
-        /// </summary>
-        public static bool IsValidStun()
-            =>
-                GameObjects.Player.Buffs.Any(
-                    b =>
-                        b.Type == BuffType.Stun &&
-                        !Vars.InvalidStunCasters.Contains((b.Caster as Obj_AI_Hero).ChampionName));
-
-        /// <summary>
         ///     Gets a value indicating whether BuffType is worth cleansing.
         /// </summary>
         public static bool ShouldCleanse(Obj_AI_Hero target)
             =>
-                !HasAnyImmunity(GameObjects.Player, true) &&
                 GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(1500f)) &&
+                !Invulnerable.Check(GameObjects.Player, DamageType.True, false) &&
                 (
                     target.HasBuffOfType(BuffType.Flee) ||
                     target.HasBuffOfType(BuffType.Charm) ||
@@ -143,7 +114,7 @@ namespace ExorAIO.Utilities
         /// </summary>
         public static bool HasDeadlyMark()
             =>
-                !HasAnyImmunity(GameObjects.Player) &&
+                !Invulnerable.Check(GameObjects.Player, DamageType.True, false) &&
                 GameObjects.Player.HasBuff("zedrtargetmark") ||
                 GameObjects.Player.HasBuff("summonerexhaust") ||
                 GameObjects.Player.HasBuff("fizzmarinerdoombomb") ||
@@ -175,21 +146,5 @@ namespace ExorAIO.Utilities
             
             return false;
         }
-
-        /// <summary>
-        ///     Returns true if the target is inside a cone.
-        /// </summary>
-        public static bool IsInsideCone(Obj_AI_Hero enemy)
-            =>
-                (enemy.ServerPosition.ToVector2() - GameObjects.Player.ServerPosition.ToVector2())
-                    .Distance(new Vector2()) < Vars.R.Range * Vars.R.Range &&
-
-                (Vars.End.ToVector2() - GameObjects.Player.ServerPosition.ToVector2()
-                    .Rotated(-70f * (float)Math.PI / 180 / 2))
-                        .CrossProduct(enemy.ServerPosition.ToVector2() - GameObjects.Player.ServerPosition.ToVector2()) > 0 &&
-                        
-                (enemy.ServerPosition.ToVector2() - GameObjects.Player.ServerPosition.ToVector2())
-                    .CrossProduct(Vars.End.ToVector2() - GameObjects.Player.ServerPosition.ToVector2()
-                        .Rotated(-70f * (float)Math.PI / 180 / 2).Rotated(70f * (float)Math.PI / 180)) > 0;
     }
 }

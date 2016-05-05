@@ -2,6 +2,7 @@ using System;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Cassiopeia
 {
@@ -17,7 +18,7 @@ namespace ExorAIO.Champions.Cassiopeia
         public static void Harass(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target, true))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -27,8 +28,9 @@ namespace ExorAIO.Champions.Cassiopeia
             /// </summary>
             if (Vars.Q.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["harass"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["harass"]) &&
+                Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).CastPosition);
                 return;
@@ -37,14 +39,18 @@ namespace ExorAIO.Champions.Cassiopeia
             /// <summary>
             ///     The W Combo Logic.
             /// </summary>
-            if (Vars.W.IsReady() &&
-                !Vars.Q.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.W.Range) &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["harass"].GetValue<MenuBool>().Value)
+            DelayAction.Add(1000, () =>
             {
-                Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
-            }
+                if (Vars.W.IsReady() &&
+                    !Vars.Q.IsReady() &&
+                    Targets.Target.IsValidTarget(Vars.W.Range) &&
+                    GameObjects.Player.ManaPercent >
+                        ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["harass"]) &&
+                    Vars.Menu["spells"]["w"]["harass"].GetValue<MenuSliderButton>().BValue)
+                {
+                    Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
+                }
+            });
         }
     }
 }

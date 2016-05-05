@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Jhin
 {
@@ -27,10 +29,13 @@ namespace ExorAIO.Champions.Jhin
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        Bools.IsInsideCone(t) &&
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        t.Health < Vars.R.GetDamage(t)*2))
+                        GameObjects.Player.IsFacing(t) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R, (Vars.ShotsCount == 3
+                                ? DamageStage.Empowered
+                                : DamageStage.Default))))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     return;
@@ -52,7 +57,8 @@ namespace ExorAIO.Champions.Jhin
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range) &&
-                        t.Health < Vars.Q.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     Vars.Q.CastOnUnit(target);
                     return;
@@ -70,7 +76,8 @@ namespace ExorAIO.Champions.Jhin
                         !Invulnerable.Check(t) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.IsValidTarget(Vars.W.Range-100f) &&
-                        t.Health < Vars.W.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                 }

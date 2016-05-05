@@ -1,5 +1,6 @@
 using ExorAIO.Utilities;
 using LeagueSharp;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Anivia
 {
@@ -15,7 +16,7 @@ namespace ExorAIO.Champions.Anivia
         /// <param name="args">The args.</param>
         public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!(args.Target is Obj_AI_Hero) || Bools.HasAnyImmunity((Obj_AI_Hero) args.Target)) {}
+            if (!(args.Target is Obj_AI_Hero) || Invulnerable.Check((Obj_AI_Hero) args.Target)) {}
         }
     }
 }

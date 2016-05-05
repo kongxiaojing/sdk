@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Corki
 {
@@ -19,7 +20,7 @@ namespace ExorAIO.Champions.Corki
         public static void Harass(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -29,11 +30,12 @@ namespace ExorAIO.Champions.Corki
             /// </summary>
             if (Vars.R.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.R.Range) &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededRMana &&
-                Vars.Menu["spells"]["r"]["autoharass"].GetValue<MenuBool>().Value &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.R.Slot, Vars.Menu["spells"]["r"]["autoharass"]) &&
+                Vars.Menu["spells"]["r"]["autoharass"].GetValue<MenuSliderButton>().BValue &&
                 Vars.Menu["spells"]["r"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
-                if (!Vars.R.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                if (!Vars.R.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
                 }

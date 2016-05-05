@@ -2,6 +2,7 @@ using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Ezreal
 {
@@ -18,7 +19,7 @@ namespace ExorAIO.Champions.Ezreal
         public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!(args.Target is Obj_AI_Hero) ||
-                Bools.HasAnyImmunity(args.Target as Obj_AI_Hero))
+                Invulnerable.Check(args.Target as Obj_AI_Hero))
             {
                 return;
             }
@@ -29,7 +30,7 @@ namespace ExorAIO.Champions.Ezreal
             if (Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(args.Target as Obj_AI_Hero).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                if (!Vars.Q.GetPrediction(args.Target as Obj_AI_Hero).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(args.Target as Obj_AI_Hero).UnitPosition);
                     return;

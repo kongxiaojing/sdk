@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Akali
 {
@@ -23,13 +25,11 @@ namespace ExorAIO.Champions.Akali
             if (Vars.R.IsReady() &&
                 Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.R.Range) &&
-                            t.Health < Vars.R.GetDamage(t))
-                    )
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        t.IsValidTarget(Vars.R.Range) &&
+                        !Invulnerable.Check(t, DamageType.Magical) &&
+                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
                     Vars.R.CastOnUnit(target);
                     return;
@@ -42,13 +42,11 @@ namespace ExorAIO.Champions.Akali
             if (Vars.E.IsReady() &&
                 Vars.Menu["spells"]["e"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.E.Range) &&
-                            t.Health < Vars.E.GetDamage(t))
-                    )
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        t.IsValidTarget(Vars.E.Range) &&
+                        !Invulnerable.Check(t, DamageType.Physical) &&
+                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.Cast();
                     return;
@@ -61,13 +59,12 @@ namespace ExorAIO.Champions.Akali
             if (Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.Q.Range) &&
-                            t.Health < Vars.Q.GetDamage(t))
-                    )
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        t.IsValidTarget(Vars.Q.Range) &&
+                        Vars.GetRealHealth(t) < Vars.Q.GetDamage(t) &&
+                        !Invulnerable.Check(t, DamageType.Magical) &&
+                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     Vars.Q.CastOnUnit(target);
                 }

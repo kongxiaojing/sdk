@@ -1,6 +1,7 @@
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Graves
 {
@@ -17,7 +18,7 @@ namespace ExorAIO.Champions.Graves
         public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!(args.Target is Obj_AI_Hero) ||
-                Bools.HasAnyImmunity(args.Target as Obj_AI_Hero))
+                Invulnerable.Check(args.Target as Obj_AI_Hero))
             {
                 return;
             }

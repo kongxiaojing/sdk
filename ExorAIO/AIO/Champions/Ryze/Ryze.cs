@@ -1,5 +1,6 @@
 using System;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
@@ -94,8 +95,8 @@ namespace ExorAIO.Champions.Ryze
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (Vars.W.IsReady() &&
-                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.W.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.W.CastOnUnit(args.Sender);

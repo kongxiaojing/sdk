@@ -3,6 +3,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Anivia
 {
@@ -19,7 +20,7 @@ namespace ExorAIO.Champions.Anivia
         {
             if (Bools.HasSheenBuff() ||
                 !Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -63,7 +64,8 @@ namespace ExorAIO.Champions.Anivia
             /// <summary>
             ///     The Q Combo Logic.
             /// </summary>
-            if (Vars.Q.IsReady() && Targets.Target.IsValidTarget(Vars.Q.Range) &&
+            if (Vars.Q.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.Q.Range) &&
                 GameObjects.Player.Spellbook.GetSpell(SpellSlot.Q).ToggleState == 1 &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {

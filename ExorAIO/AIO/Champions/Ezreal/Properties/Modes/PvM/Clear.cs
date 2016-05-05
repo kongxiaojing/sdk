@@ -27,8 +27,9 @@ namespace ExorAIO.Champions.Ezreal
             ///     The Clear Q Logics.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear Q Logic.
@@ -57,7 +58,8 @@ namespace ExorAIO.Champions.Ezreal
         /// <param name="args">The args.</param>
         public static void JungleClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null)
+            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null ||
+                !Targets.JungleMinions.Contains(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
             {
                 return;
             }
@@ -66,9 +68,9 @@ namespace ExorAIO.Champions.Ezreal
             ///     The Q JungleClear Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value &&
-                Targets.JungleMinions.Contains(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.Q.Cast((Variables.Orbwalker.GetTarget() as Obj_AI_Minion).ServerPosition);
             }

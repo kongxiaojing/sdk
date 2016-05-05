@@ -91,8 +91,8 @@ namespace ExorAIO.Champions.Jinx
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (Vars.E.IsReady() &&
-                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(args.End);

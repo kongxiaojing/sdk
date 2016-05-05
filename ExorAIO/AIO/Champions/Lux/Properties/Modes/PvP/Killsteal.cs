@@ -29,8 +29,9 @@ namespace ExorAIO.Champions.Lux
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         t.IsValidTarget(Vars.E.Range) &&
-                        t.Health < Vars.E.GetDamage(t) &&
-                        !Invulnerable.Check(t, DamageType.Magical)))
+                        !Invulnerable.Check(t, DamageType.Magical) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.Cast(Vars.E.GetPrediction(target).CastPosition);
                     return;
@@ -46,10 +47,11 @@ namespace ExorAIO.Champions.Lux
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         t.IsValidTarget(Vars.Q.Range) &&
-                        t.Health < Vars.Q.GetDamage(t) &&
-                        !Invulnerable.Check(t, DamageType.Magical)))
+                        !Invulnerable.Check(t, DamageType.Magical) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
-                    if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => c is Obj_AI_Minion) <= 1)
+                    if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => Targets.Minions.Contains(c)) <= 1)
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                         return;
@@ -57,23 +59,27 @@ namespace ExorAIO.Champions.Lux
                 }
             }
 
-            /// <summary>
-            ///     The KillSteal R Logic.
-            /// </summary>
-            if (Vars.R.IsReady() &&
-                Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
+            DelayAction.Add(!Targets.Target.IsValidTarget(Vars.E.Range)
+                ? 1500
+                : 0, () =>
             {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
-                    t =>
-                        t.IsValidTarget(Vars.R.Range) &&
-                        !t.IsValidTarget(Vars.AARange) &&
-                        t.Health > Vars.E.GetDamage(t) &&
-                        t.Health < Vars.R.GetDamage(t) &&
-                        !Invulnerable.Check(t, DamageType.Magical)))
+                /// <summary>
+                ///     The KillSteal R Logic.
+                /// </summary>
+                if (Vars.R.IsReady() &&
+                    Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
                 {
-                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                    foreach (var target in GameObjects.EnemyHeroes.Where(
+                        t =>
+                            t.IsValidTarget(Vars.R.Range) &&
+                            !Invulnerable.Check(t, DamageType.Magical) &&
+                            Vars.GetRealHealth(t) <
+                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
+                    {
+                        Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                    }
                 }
-            }
+            });
         }
     }
 }

@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Ashe
 {
@@ -30,12 +31,11 @@ namespace ExorAIO.Champions.Ashe
             if (Vars.W.IsReady() &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            Bools.IsImmobile(t) &&
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.W.Range)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.W.Range)))
                 {
                     if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
                     {
@@ -50,7 +50,7 @@ namespace ExorAIO.Champions.Ashe
             if (Vars.E.IsReady() &&
                 Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                 GameObjects.Player.CountEnemyHeroesInRange(1000f) == 0 &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
+                GameObjects.Player.ManaPercent > ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["manamanager"]) &&
                 Vars.Menu["spells"]["e"]["vision"].GetValue<MenuBool>().Value)
             {
                 if (GameObjects.EnemyHeroes.Any(

@@ -27,7 +27,7 @@ namespace ExorAIO.Champions.Amumu
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     If the player doesn't have the W Buff.
@@ -52,7 +52,8 @@ namespace ExorAIO.Champions.Amumu
                         /// </summary>
                         case OrbwalkingMode.LaneClear:
 
-                            if (GameObjects.Player.ManaPercent >= ManaManager.NeededWMana &&
+                            if (GameObjects.Player.ManaPercent >=
+                                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["logical"]) &&
                                 (Targets.Minions.Count() >= 2 || Targets.JungleMinions.Any()))
                             {
                                 Vars.W.Cast();
@@ -76,8 +77,9 @@ namespace ExorAIO.Champions.Amumu
                         /// </summary>
                         case OrbwalkingMode.LaneClear:
 
-                            if (GameObjects.Player.ManaPercent < ManaManager.NeededWMana &&
-                                (!Targets.JungleMinions.Any() && Targets.Minions.Count() < 2))
+                            if (GameObjects.Player.ManaPercent <
+                                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["logical"]) &&
+                                (Targets.Minions.Count() < 2 && !Targets.JungleMinions.Any()))
                             {
                                 Vars.W.Cast();
                             }

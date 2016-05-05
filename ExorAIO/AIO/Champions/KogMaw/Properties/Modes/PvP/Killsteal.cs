@@ -31,9 +31,10 @@ namespace ExorAIO.Champions.KogMaw
                         !Invulnerable.Check(t) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.IsValidTarget(Vars.Q.Range - 100f) &&
-                        t.Health < Vars.Q.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
-                    if (Vars.Q.GetPrediction(target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (!Vars.Q.GetPrediction(target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                         return;
@@ -52,7 +53,8 @@ namespace ExorAIO.Champions.KogMaw
                         !Invulnerable.Check(t) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.IsValidTarget(Vars.E.Range - 100f) &&
-                        t.Health < Vars.E.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.Cast(Vars.E.GetPrediction(target).UnitPosition);
                     return;
@@ -63,8 +65,8 @@ namespace ExorAIO.Champions.KogMaw
             ///     The KillSteal R Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value &&
-                Vars.Menu["spells"]["r"]["stacks"].GetValue<MenuSlider>().Value >
+                Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuSliderButton>().BValue &&
+                Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuSliderButton>().SValue >
                     GameObjects.Player.GetBuffCount("kogmawlivingartillerycost"))
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
@@ -72,7 +74,8 @@ namespace ExorAIO.Champions.KogMaw
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         !t.IsValidTarget(Vars.W.Range) &&
-                        t.Health < Vars.R.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).CastPosition);
                 }

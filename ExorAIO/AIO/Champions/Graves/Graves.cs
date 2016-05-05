@@ -127,7 +127,7 @@ namespace ExorAIO.Champions.Graves
             if (Vars.W.IsReady() &&
                 args.IsDirectedToPlayer &&
                 args.Sender.IsValidTarget(Vars.W.Range) &&
-                !Bools.HasAnyImmunity(args.Sender, true) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast(args.End);

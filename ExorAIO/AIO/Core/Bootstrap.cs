@@ -28,8 +28,8 @@ using ExorAIO.Champions.Ryze;
 using ExorAIO.Champions.Sivir;
 using ExorAIO.Champions.Tristana;
 using ExorAIO.Champions.Tryndamere;
-/*
 using ExorAIO.Champions.Twitch;
+/*
 using ExorAIO.Champions.Udyr;
 using ExorAIO.Champions.Warwick;
 */
@@ -142,10 +142,10 @@ namespace ExorAIO.Core
                 case "Tryndamere":
                     new Tryndamere().OnLoad();
                     break;
-                /*
                 case "Twitch":
                     new Twitch().OnLoad();
                     break;
+                /*
                 case "Udyr":
                     new Udyr().OnLoad();
                     break;

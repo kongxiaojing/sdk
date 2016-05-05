@@ -30,9 +30,10 @@ namespace ExorAIO.Champions.Jinx
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
-                        t.Health < Vars.W.GetDamage(t)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
-                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                         return;
@@ -51,7 +52,8 @@ namespace ExorAIO.Champions.Jinx
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         !t.IsValidTarget(Vars.Q.Range) &&
-                        t.Health < Vars.R.GetDamage(t) * 2))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)/2))
                 {
                     if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => c is Obj_AI_Hero))
                     {

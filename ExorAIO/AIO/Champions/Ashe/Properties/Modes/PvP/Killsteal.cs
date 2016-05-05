@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Ashe
 {
@@ -24,15 +25,14 @@ namespace ExorAIO.Champions.Ashe
             if (Vars.W.IsReady() &&
                 Vars.Menu["spells"]["w"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.Health < Vars.W.GetDamage(t) &&
-                            !t.IsValidTarget(Vars.AARange) &&
-                            t.IsValidTarget(Vars.W.Range - 100f)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        !t.IsValidTarget(Vars.AARange) &&
+                        t.IsValidTarget(Vars.W.Range - 100f) &&
+                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
-                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                         return;
@@ -46,15 +46,14 @@ namespace ExorAIO.Champions.Ashe
             if (Vars.R.IsReady() &&
                 Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.R.Range) &&
-                            !t.IsValidTarget(Vars.W.Range) &&
-                            t.Health < Vars.R.GetDamage(t)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.R.Range) &&
+                        !t.IsValidTarget(Vars.W.Range) &&
+                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
-                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => c is Obj_AI_Hero))
+                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => GameObjects.EnemyHeroes.Contains(c)))
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     }

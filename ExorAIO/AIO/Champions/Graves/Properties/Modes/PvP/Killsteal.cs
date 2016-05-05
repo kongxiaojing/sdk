@@ -1,8 +1,11 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Graves
 {
@@ -26,10 +29,11 @@ namespace ExorAIO.Champions.Graves
                 foreach (var target in
                     GameObjects.EnemyHeroes.Where(
                         t =>
-                            !Bools.HasAnyImmunity(t) &&
+                            !Invulnerable.Check(t) &&
                             t.IsValidTarget(Vars.W.Range) &&
                             !t.IsValidTarget(Vars.AARange) &&
-                            t.Health < Vars.W.GetDamage(t)))
+                            Vars.GetRealHealth(t) <
+                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(target).CastPosition);
                     return;
@@ -45,10 +49,11 @@ namespace ExorAIO.Champions.Graves
                 foreach (var target in
                     GameObjects.EnemyHeroes.Where(
                         t =>
-                            !Bools.HasAnyImmunity(t) &&
+                            !Invulnerable.Check(t) &&
                             t.IsValidTarget(Vars.Q.Range) &&
                             !t.IsValidTarget(Vars.AARange) &&
-                            t.Health < Vars.Q.GetDamage(t)))
+                            Vars.GetRealHealth(t) <
+                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                     return;
@@ -64,10 +69,13 @@ namespace ExorAIO.Champions.Graves
                 foreach (var target in
                     GameObjects.EnemyHeroes.Where(
                         t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.R.Range) &&
+                            !Invulnerable.Check(t) &&
                             !t.IsValidTarget(Vars.E.Range) &&
-                            t.Health < Vars.R.GetDamage(t)))
+                            t.IsValidTarget(Vars.R.Range+150f) &&
+                            Vars.GetRealHealth(t) <
+                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R, (t.IsValidTarget(Vars.R.Range)
+                                    ? DamageStage.Default
+                                    : DamageStage.Detonation))))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                 }

@@ -26,19 +26,24 @@ namespace ExorAIO.Champions.Corki
             ///     The Clear E Logics.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                (Targets.Minions.Count() >= 3 || Targets.JungleMinions.Any()) &&
-                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["clear"]) &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
-                Vars.E.Cast();
+                if (Targets.Minions.Count() >= 3 ||
+                    Targets.JungleMinions.Any())
+                {
+                    Vars.E.Cast();
+                }
             }
 
             /// <summary>
             ///     The Clear Q Logics.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear Q Logic.
@@ -62,8 +67,9 @@ namespace ExorAIO.Champions.Corki
             ///     The Clear R Logics.
             /// </summary>
             if (Vars.R.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededRMana &&
-                Vars.Menu["spells"]["r"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.R.Slot, Vars.Menu["spells"]["r"]["clear"]) &&
+                Vars.Menu["spells"]["r"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The LaneClear R Logic.

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 
@@ -27,24 +28,29 @@ namespace ExorAIO.Champions.Nunu
             /// </summary>
             if (Vars.Q.IsReady() &&
                 Targets.Minions.Any() &&
-                Vars.Menu["spells"]["q"]["laneclear"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["q"]["laneclear"].GetValue<MenuSliderButton>().BValue)
             {
-                if (GameObjects.Player.ManaPercent < ManaManager.NeededQMana &&
+                if (GameObjects.Player.ManaPercent <
+                        ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["laneclear"]) &&
                     !GameObjects.Player.Buffs.Any(b => b.Name.Equals("visionary")))
                 {
                     return;
                 }
 
-                Vars.Q.CastOnUnit(Targets.Minions.FirstOrDefault(m => m.Health < Vars.Q.GetDamage(m)));
+                Vars.Q.CastOnUnit(Targets.Minions.FirstOrDefault(
+                    m =>
+                        Vars.GetRealHealth(m) <
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)));
             }
 
             /// <summary>
             ///     The E Clear Logics.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
-                if (GameObjects.Player.ManaPercent < ManaManager.NeededQMana &&
+                if (GameObjects.Player.ManaPercent <
+                        ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
                     !GameObjects.Player.Buffs.Any(b => b.Name.Equals("visionary")))
                 {
                     return;
@@ -56,7 +62,7 @@ namespace ExorAIO.Champions.Nunu
                 foreach (var minion in Targets.Minions.Where(
                     m =>
                         m.IsValidTarget(Vars.E.Range) &&
-                        m.Health < Vars.E.GetDamage(m)))
+                        Vars.GetRealHealth(m) < (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E)))
                 {
                     Vars.E.CastOnUnit(minion);
                 }

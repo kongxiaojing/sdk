@@ -30,9 +30,8 @@ namespace ExorAIO.Champions.Sivir
             ///     The Clear W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > 
-                    Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().SValue +
-                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.W.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
                 Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
@@ -57,9 +56,8 @@ namespace ExorAIO.Champions.Sivir
             ///     The Clear Q Logics.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > 
-                    Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().SValue +
-                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.Q.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
                 Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
@@ -133,9 +131,8 @@ namespace ExorAIO.Champions.Sivir
             ///     The W BuildingClear Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > 
-                    Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuSliderButton>().SValue +
-                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.W.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["buildings"]) &&
                 Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast();

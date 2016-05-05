@@ -1,5 +1,6 @@
 using System;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
@@ -89,8 +90,8 @@ namespace ExorAIO.Champions.Pantheon
         public static void OnInterruptableTarget(object sender, Events.InterruptableTargetEventArgs args)
         {
             if (Vars.W.IsReady() &&
-                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.W.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
                 Vars.Menu["spells"]["w"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.W.CastOnUnit(args.Sender);

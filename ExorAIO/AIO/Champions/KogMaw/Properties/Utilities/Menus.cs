@@ -28,9 +28,7 @@ namespace ExorAIO.Champions.KogMaw
                     Vars.QMenu.Add(new MenuBool("logical",     "Logical",        true));
                     Vars.QMenu.Add(new MenuBool("killsteal",   "KillSteal",      true));
                     Vars.QMenu.Add(new MenuBool("gapcloser",   "Anti-Gapcloser", true));
-                    Vars.QMenu.Add(new MenuBool("jungleclear", "JungleClear",    true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "JungleClear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -40,9 +38,7 @@ namespace ExorAIO.Champions.KogMaw
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.WMenu.Add(new MenuBool("clear", "Clear", true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -55,9 +51,7 @@ namespace ExorAIO.Champions.KogMaw
                     Vars.EMenu.Add(new MenuBool("logical",   "Logical",        true));
                     Vars.EMenu.Add(new MenuBool("killsteal", "KillSteal",      true));
                     Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
-                    Vars.EMenu.Add(new MenuBool("clear",     "Clear",          true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
@@ -66,13 +60,9 @@ namespace ExorAIO.Champions.KogMaw
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
-                    Vars.RMenu.Add(new MenuBool("combo",     "Combo",     true));
-                    Vars.RMenu.Add(new MenuBool("logical",   "Logical", true));
-                    Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.RMenu.Add(
-                        new MenuSlider("manamanager", "Combo: Mana >= x", 60, 1, 99));
-                    Vars.RMenu.Add(
-                        new MenuSlider("stacks", "Combo: Stacks <= x", 2, 1, 10));
+                    Vars.RMenu.Add(new MenuSliderButton("combo",     "Combo / if Stacks <= x",     2, 1, 10, true));
+                    Vars.RMenu.Add(new MenuSliderButton("logical",   "Logical / if Stacks <= x",   2, 1, 10, true));
+                    Vars.RMenu.Add(new MenuSliderButton("killsteal", "KillSteal / if Stacks <= x", 3, 1, 10, true));
                     {   
                         /// <summary>
                         ///     Sets the menu for the R Whitelist.

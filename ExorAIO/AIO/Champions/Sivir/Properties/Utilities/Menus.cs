@@ -26,8 +26,8 @@ namespace ExorAIO.Champions.Sivir
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
                     Vars.QMenu.Add(new MenuBool("logical",   "Logical",   true));
-                    Vars.QMenu.Add(new MenuSliderButton("harass",    "Harass", 50, 0, 99, true));
-                    Vars.QMenu.Add(new MenuSliderButton("clear",     "Clear",  50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -37,8 +37,8 @@ namespace ExorAIO.Champions.Sivir
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo",     "Combo",     true));
-                    Vars.WMenu.Add(new MenuSliderButton("clear",     "Clear",     50, 0, 99, true));
-                    Vars.WMenu.Add(new MenuSliderButton("buildings", "Buildings", 50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("clear",     "Clear / if Mana >= x%",     50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("buildings", "Buildings / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 

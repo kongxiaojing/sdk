@@ -30,8 +30,9 @@ namespace ExorAIO.Champions.Olaf
             ///     The Q Clear Logics.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The JungleClear Q Logic.
@@ -49,7 +50,7 @@ namespace ExorAIO.Champions.Olaf
                     /// <summary>
                     ///     The Aggressive LaneClear Q Logic.
                     /// </summary>
-                    if (GameObjects.EnemyHeroes.Any(t => !Bools.HasAnyImmunity(t) && t.IsValidTarget(Vars.Q.Range)))
+                    if (GameObjects.EnemyHeroes.Any(t => !Invulnerable.Check(t) && t.IsValidTarget(Vars.Q.Range)))
                     {
                         if (Vars.Q.GetLineFarmLocation(Targets.Minions).MinionsHit >= 3 &&
                             !new Geometry.Rectangle(
@@ -81,13 +82,18 @@ namespace ExorAIO.Champions.Olaf
                 }
             }
 
+            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null)
+            {
+                return;
+            }
+
             /// <summary>
             ///     The W Clear Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Variables.Orbwalker.GetTarget() as Obj_AI_Minion != null &&
-                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
+                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast();
             }
@@ -100,7 +106,8 @@ namespace ExorAIO.Champions.Olaf
         /// <param name="args">The args.</param>
         public static void JungleClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null)
+            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion == null ||
+                !Targets.JungleMinions.Contains(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
             {
                 return;
             }
@@ -109,9 +116,9 @@ namespace ExorAIO.Champions.Olaf
             ///     The E JungleClear Logics.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuBool>().Value &&
-                Targets.JungleMinions.Contains(Variables.Orbwalker.GetTarget() as Obj_AI_Minion))
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["jungleclear"]) &&
+                Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.CastOnUnit(Targets.JungleMinions[0]);
             }
@@ -135,8 +142,9 @@ namespace ExorAIO.Champions.Olaf
             ///     The W BuildingClear Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["buildings"]) &&
+                Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast();
             }

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -27,11 +28,12 @@ namespace ExorAIO.Champions.Quinn
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.Health < Vars.Q.GetDamage(t) &&
                         !t.IsValidTarget(Vars.AARange) &&
-                        t.IsValidTarget(Vars.Q.Range - 100f)))
+                        t.IsValidTarget(Vars.Q.Range - 100f) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
-                    if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
+                    if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                     }
@@ -49,7 +51,9 @@ namespace ExorAIO.Champions.Quinn
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
-                        t.Health < Vars.E.GetDamage(t) + GameObjects.Player.GetAutoAttackDamage(t)*2))
+                        Vars.GetRealHealth(t) <
+                            GameObjects.Player.GetAutoAttackDamage(t)*2 +
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.CastOnUnit(target);
                 }

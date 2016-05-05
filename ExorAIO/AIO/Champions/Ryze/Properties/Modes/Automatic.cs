@@ -26,8 +26,7 @@ namespace ExorAIO.Champions.Ryze
             /// <summary>
             ///     The Stacking Logics.
             /// </summary>
-            if (Vars.Q.IsReady() &
-                GameObjects.Player.ManaPercent > ManaManager.NeededTearMana)
+            if (Vars.Q.IsReady())
             {
                 /// <summary>
                 ///     The Tear Stacking Logic.
@@ -35,7 +34,9 @@ namespace ExorAIO.Champions.Ryze
                 if (Bools.HasTear(GameObjects.Player) &&
                     GameObjects.Player.CountEnemyHeroesInRange(1500) == 0 &&
                     Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
-                    Vars.Menu["miscellaneous"]["tear"].GetValue<MenuBool>().Value)
+                    GameObjects.Player.ManaPercent >
+                        ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["miscellaneous"]["tear"]) &&
+                    Vars.Menu["miscellaneous"]["tear"].GetValue<MenuSliderButton>().BValue)
                 {
                     Vars.Q.Cast(Game.CursorPos);
                 }

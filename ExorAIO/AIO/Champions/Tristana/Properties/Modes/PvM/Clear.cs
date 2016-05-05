@@ -44,9 +44,8 @@ namespace ExorAIO.Champions.Tristana
                 ///     The JungleClear E Logic.
                 /// </summary>
                 if (Targets.JungleMinions.Any() &&
-                    GameObjects.Player.ManaPercent > 
-                        Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().SValue +
-                        (int)(GameObjects.Player.Spellbook.GetSpell(Vars.E.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                    GameObjects.Player.ManaPercent >
+                        ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["jungleclear"]) &&
                     Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
                 {
                     Vars.E.CastOnUnit(Targets.JungleMinions[0]);
@@ -64,15 +63,14 @@ namespace ExorAIO.Champions.Tristana
                         t =>
                             !Invulnerable.Check(t) &&
                             t.IsValidTarget(Vars.W.Range)) &&
-                        GameObjects.Player.ManaPercent > 
-                            Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().SValue +
-                            (int)(GameObjects.Player.Spellbook.GetSpell(Vars.E.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
-                        Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue)
+                            GameObjects.Player.ManaPercent >
+                                ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["harass"]) &&
+                            Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue)
                     {
                         foreach (var minion in Targets.Minions.Where(
                             m =>
                                 m.CountEnemyHeroesInRange(150f) > 0 &&
-                                m.Health < GameObjects.Player.GetAutoAttackDamage(m)))
+                                Vars.GetRealHealth(m) < GameObjects.Player.GetAutoAttackDamage(m)))
                         {
                             Vars.E.CastOnUnit(minion);
                         }
@@ -83,9 +81,8 @@ namespace ExorAIO.Champions.Tristana
                         ///     The Normal LaneClear E Logic.
                         /// </summary>
                         if (Targets.Minions.Any() &&
-                            GameObjects.Player.ManaPercent > 
-                                Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuSliderButton>().SValue +
-                                (int)(GameObjects.Player.Spellbook.GetSpell(Vars.E.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                            GameObjects.Player.ManaPercent >
+                                ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["laneclear"]) &&
                             Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuSliderButton>().BValue)
                         {
                             if (Targets.Minions.Count(m => m.Distance(Targets.Minions[0]) < 150f) >= 3)
@@ -113,9 +110,8 @@ namespace ExorAIO.Champions.Tristana
             ///     The E BuildingClear Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > 
-                    Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuSliderButton>().SValue +
-                    (int)(GameObjects.Player.Spellbook.GetSpell(Vars.E.Slot).ManaCost / GameObjects.Player.MaxMana * 100) &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["buildings"]) &&
                 Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.CastOnUnit(Variables.Orbwalker.GetTarget() as Obj_AI_Turret);

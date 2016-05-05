@@ -37,7 +37,7 @@ namespace ExorAIO.Champions.Quinn
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
+                GameObjects.Player.ManaPercent > ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["manamanager"]) &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
                 foreach (var enemy in GameObjects.EnemyHeroes.Where(

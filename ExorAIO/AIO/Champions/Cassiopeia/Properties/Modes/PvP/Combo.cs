@@ -21,7 +21,7 @@ namespace ExorAIO.Champions.Cassiopeia
         {
             if (Bools.HasSheenBuff() ||
                 !Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target, true))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -34,7 +34,8 @@ namespace ExorAIO.Champions.Cassiopeia
                 Targets.Target.HasBuffOfType(BuffType.Poison) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
-                DelayAction.Add(Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value, () =>
+                DelayAction.Add(
+                    Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value, () =>
                 {
                     Vars.E.CastOnUnit(Targets.Target);
                 });
@@ -44,9 +45,9 @@ namespace ExorAIO.Champions.Cassiopeia
             ///     The R Combo Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
-                Targets.RTargets.Count() >=
-                    Vars.Menu["spells"]["r"]["enemies"].GetValue<MenuSlider>().Value)
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().BValue &&
+                Vars.Menu["spells"]["r"]["enemies"].GetValue<MenuSliderButton>().SValue <=
+                    Targets.RTargets.Count())
             {
                 Vars.R.Cast(Targets.RTargets[0].ServerPosition);
             }
@@ -70,13 +71,16 @@ namespace ExorAIO.Champions.Cassiopeia
             /// <summary>
             ///     The W Combo Logic.
             /// </summary>
-            if (Vars.W.IsReady() &&
-                !Vars.Q.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.W.Range) &&
-                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
+            DelayAction.Add(1000, () =>
             {
-                Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
-            }
+                if (Vars.W.IsReady() &&
+                    !Vars.Q.IsReady() &&
+                    Targets.Target.IsValidTarget(Vars.W.Range) &&
+                    Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
+                {
+                    Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
+                }
+            });
         }
     }
 }

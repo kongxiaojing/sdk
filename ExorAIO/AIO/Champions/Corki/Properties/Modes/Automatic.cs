@@ -4,7 +4,9 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.Data.Enumerations;
 using LeagueSharp.SDK.Enumerations;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Corki
 {
@@ -33,7 +35,7 @@ namespace ExorAIO.Champions.Corki
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         Bools.IsImmobile(t) &&
-                        !Bools.HasAnyImmunity(t) &&
+                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range)))
                 {
                     Vars.Q.Cast(target.ServerPosition);
@@ -45,18 +47,23 @@ namespace ExorAIO.Champions.Corki
             /// </summary>
             if (Vars.R.IsReady() &&
                 Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededRMana &&
-                Vars.Menu["spells"]["r"]["logical"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.R.Slot, Vars.Menu["spells"]["r"]["logical"]) &&
+                Vars.Menu["spells"]["r"]["logical"].GetValue<MenuSliderButton>().BValue)
             {
                 foreach (var minion in GameObjects.EnemyMinions.Where(
                     m =>
                         m.IsValidTarget(Vars.R.Range) &&
-                        !m.IsValidTarget(Vars.AARange) &&
-                        m.Health < Vars.R.GetDamage(m)))
+                        !m.IsValidTarget(Vars.AARange)))
                 {
-                    if (!Vars.R.GetPrediction(minion).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (Vars.GetRealHealth(minion) < (float)GameObjects.Player.GetSpellDamage(minion, SpellSlot.R, (ObjectManager.Player.HasBuff("corkimissilebarragecounterbig")
+                        ? DamageStage.Empowered
+                        : DamageStage.Default)))
                     {
-                        Vars.R.Cast(minion.ServerPosition);
+                        if (!Vars.R.GetPrediction(minion).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                        {
+                            Vars.R.Cast(minion.ServerPosition);
+                        }
                     }
                 }
             }

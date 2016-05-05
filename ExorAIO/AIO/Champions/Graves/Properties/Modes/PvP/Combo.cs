@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.Data.Enumerations;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Graves
 {
@@ -21,7 +22,7 @@ namespace ExorAIO.Champions.Graves
         {
             if (Bools.HasSheenBuff() ||
                 !Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -33,12 +34,6 @@ namespace ExorAIO.Champions.Graves
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                /*
-                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.HasFlag(CollisionableObjects.Walls))
-                {
-                    Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
-                }
-                */
                 Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
             }
 
@@ -48,7 +43,7 @@ namespace ExorAIO.Champions.Graves
             if (Vars.E.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.E.Range) &&
                 !Targets.Target.IsValidTarget(Vars.AARange) &&
-                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["engager"].GetValue<MenuBool>().Value)
             {
                 if (GameObjects.Player.Distance(Game.CursorPos) > Vars.AARange &&
                     GameObjects.Player.ServerPosition

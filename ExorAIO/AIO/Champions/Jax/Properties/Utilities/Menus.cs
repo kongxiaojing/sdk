@@ -23,11 +23,9 @@ namespace ExorAIO.Champions.Jax
                 /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
-                    Vars.QMenu.Add(new MenuBool("combo",       "Combo",       true));
-                    Vars.QMenu.Add(new MenuBool("killsteal",   "KillSteal",   true));
-                    Vars.QMenu.Add(new MenuBool("junglegrab",  "JungleGrab",  true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "JungleGrab: Mana >= x", 50, 10, 99));
+                    Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
+                    Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
+                    Vars.QMenu.Add(new MenuSliderButton("junglegrab", "JungleGrab / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -37,10 +35,8 @@ namespace ExorAIO.Champions.Jax
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo",     "Combo",     true));
-                    Vars.WMenu.Add(new MenuBool("buildings", "Buildings", true));
-                    Vars.WMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Buildings/Clear: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("buildings", "Buildings / if Mana >= x%", 50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("clear",     "Clear / if Mana >= x%",     50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -51,9 +47,7 @@ namespace ExorAIO.Champions.Jax
                 {
                     Vars.EMenu.Add(new MenuBool("logical",   "Logical",        true));
                     Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
-                    Vars.EMenu.Add(new MenuBool("clear",     "Clear",          true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x", 50, 10, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

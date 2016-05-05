@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Amumu
 {
@@ -25,10 +26,11 @@ namespace ExorAIO.Champions.Amumu
                 Vars.Menu["spells"]["e"]["killsteal"].GetValue<MenuBool>().Value)
             {
                 if (GameObjects.EnemyHeroes.Any(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.E.Range) &&
-                            t.Health < Vars.E.GetDamage(t)))
+                    t =>
+                        t.IsValidTarget(Vars.E.Range) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E) &&
+                        !Invulnerable.Check(t, DamageType.Magical)))
                 {
                     Vars.E.Cast();
                     return;
@@ -41,19 +43,21 @@ namespace ExorAIO.Champions.Amumu
             if (Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["q"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in
-                    GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.Q.Range) &&
-                            t.Health < Vars.Q.GetDamage(t) &&
-                            !Vars.Q.GetPrediction(t).CollisionObjects.Any(
-                                c =>
-                                    c is Obj_AI_Hero ||
-                                    c is Obj_AI_Minion)))
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        t.IsValidTarget(Vars.Q.Range) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q) &&
+                        !Invulnerable.Check(t, DamageType.Magical)))
                 {
-                    Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
-                    return;
+                    if (!Vars.Q.GetPrediction(target).CollisionObjects.Any(
+                        c =>
+                            GameObjects.EnemyHeroes.Contains(c) ||
+                            GameObjects.EnemyMinions.Contains(c)))
+                    {
+                        Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
+                        return;
+                    }
                 }
             }
 
@@ -64,10 +68,11 @@ namespace ExorAIO.Champions.Amumu
                 Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
             {
                 if (GameObjects.EnemyHeroes.Any(
-                        t =>
-                            !Bools.HasAnyImmunity(t) &&
-                            t.IsValidTarget(Vars.R.Range) &&
-                            t.Health < Vars.R.GetDamage(t)))
+                    t =>
+                        t.IsValidTarget(Vars.R.Range) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R) &&
+                        !Invulnerable.Check(t, DamageType.Magical)))
                 {
                     Vars.R.Cast();
                 }

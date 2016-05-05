@@ -13,6 +13,16 @@ namespace ExorAIO.Utilities
     internal class Vars
     {
         /// <summary>
+        ///     A list of the names of the champions who cast Invalid Snares.
+        /// </summary>
+        public static readonly List<string> InvalidSnareCasters = new List<string> {"Leona", "Zyra", "Lissandra"};
+
+        /// <summary>
+        ///     A list of the names of the champions who cast Invalid Stuns.
+        /// </summary>
+        public static readonly List<string> InvalidStunCasters = new List<string> {"Amumu", "LeeSin", "Alistar", "Hecarim", "Blitzcrank"};
+
+        /// <summary>
         ///     The default enemy HP bar offset.
         /// </summary>
         public static int XOffset = 10;
@@ -38,7 +48,11 @@ namespace ExorAIO.Utilities
         /// </summary>
         internal static readonly List<JungleHpBarOffset> JungleHpBarOffsetList = new List<JungleHpBarOffset>
         {
-            new JungleHpBarOffset { BaseSkinName = "SRU_Dragon", Width = 140, Height = 4, XOffset = 12, YOffset = 24 },
+            new JungleHpBarOffset { BaseSkinName = "SRU_Dragon_Air", Width = 140, Height = 4, XOffset = 12, YOffset = 24 },
+            new JungleHpBarOffset { BaseSkinName = "SRU_Dragon_Fire", Width = 140, Height = 4, XOffset = 12, YOffset = 24 },
+            new JungleHpBarOffset { BaseSkinName = "SRU_Dragon_Water", Width = 140, Height = 4, XOffset = 12, YOffset = 24 },
+            new JungleHpBarOffset { BaseSkinName = "SRU_Dragon_Earth", Width = 140, Height = 4, XOffset = 12, YOffset = 24 },
+            new JungleHpBarOffset { BaseSkinName = "SRU_Dragon_Elder", Width = 140, Height = 4, XOffset = 12, YOffset = 24 },
             new JungleHpBarOffset { BaseSkinName = "SRU_Baron", Width = 190, Height = 10, XOffset = 16, YOffset = 24 },
             new JungleHpBarOffset { BaseSkinName = "SRU_RiftHerald", Width = 139, Height = 6, XOffset = 12, YOffset = 22 },
             new JungleHpBarOffset { BaseSkinName = "SRU_Red", Width = 139, Height = 4, XOffset = 12, YOffset = 24 },
@@ -48,27 +62,6 @@ namespace ExorAIO.Utilities
             new JungleHpBarOffset { BaseSkinName = "SRU_Krug", Width = 79, Height = 2, XOffset = 1, YOffset = 7 },
             new JungleHpBarOffset { BaseSkinName = "SRU_Razorbeak", Width = 74, Height = 2, XOffset = 1, YOffset = 7 },
             new JungleHpBarOffset { BaseSkinName = "SRU_Murkwolf", Width = 74, Height = 2, XOffset = 1, YOffset = 7 }
-        };
-
-        /// <summary>
-        ///     A list of the names of the champions who cast Invalid Snares.
-        /// </summary>
-        public static readonly List<string> InvalidSnareCasters = new List<string>
-        {
-            "Leona"
-            //"Zyra"
-        };
-
-        /// <summary>
-        ///     A list of the names of the champions who cast Invalid Stuns.
-        /// </summary>
-        public static readonly List<string> InvalidStunCasters = new List<string>
-        {
-            //"Amumu",
-            "LeeSin",
-            "Alistar",
-            "Hecarim",
-            "Blitzcrank"
         };
         
         /// <summary>
@@ -152,9 +145,14 @@ namespace ExorAIO.Utilities
         public static Menu MiscMenu { internal get; set; }
 
         /// <summary>
-        ///     Gets or sets the Whitelist menu.
+        ///     Gets or sets the first Whitelist menu.
         /// </summary>
         public static Menu WhiteListMenu { internal get; set; }
+
+        /// <summary>
+        ///     Gets or sets the second Whitelist menu.
+        /// </summary>
+        public static Menu WhiteList2Menu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the Drawings menu.
@@ -191,6 +189,42 @@ namespace ExorAIO.Utilities
             internal int Width;
             internal int XOffset;
             internal int YOffset;
+        }
+
+        /// <returns>
+        ///     The Jhin's shot count.
+        /// </returns>
+        public static int ShotsCount { get ; internal set; }
+
+        /// <summary>
+        ///     Gets the health with Blitzcrank's Shield support.
+        /// </summary>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <returns>
+        ///     The target Health with Blitzcrank's Shield support.
+        /// </returns>
+        public static float GetRealHealth(Obj_AI_Base target)
+        {
+            var debuffer = 0f;
+
+            /// <summary>
+            ///     Gets the predicted reduction from Blitzcrank Shield.
+            /// </summary>
+            if (target is Obj_AI_Hero)
+            {
+                if ((target as Obj_AI_Hero).ChampionName.Equals("Blitzcrank") &&
+                    !(target as Obj_AI_Hero).HasBuff("BlitzcrankManaBarrierCD"))
+                {
+                    debuffer += target.Mana / 2;
+                }
+            }
+
+            return target.Health
+                + target.PhysicalShield 
+                + target.HPRegenRate
+                + debuffer;
         }
     }
 }

@@ -26,11 +26,9 @@ namespace ExorAIO.Champions.Jhin
                 {
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.QMenu.Add(new MenuBool("lasthit",   "LastHit",   true));
-                    Vars.QMenu.Add(new MenuBool("harass",    "Harass",    true));
-                    Vars.QMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "LastHit/Harass/Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("lasthit", "LastHit / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("harass",  "Harass / if Mana >= x%",  50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",   "Clear / if Mana >= x%",   50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -41,9 +39,7 @@ namespace ExorAIO.Champions.Jhin
                 {
                     Vars.WMenu.Add(new MenuBool("logical",   "Logical",   true));
                     Vars.WMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.WMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                     {
                         /// <summary>
                         ///     Sets the menu for the W Whitelist.

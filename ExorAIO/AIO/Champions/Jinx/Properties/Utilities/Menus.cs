@@ -23,10 +23,9 @@ namespace ExorAIO.Champions.Jinx
                 /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
-                    Vars.QMenu.Add(new MenuBool("logical", "Logical", true));
-                    Vars.QMenu.Add(new MenuBool("clear",   "Clear",   true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuBool("combo", "Combo", true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -37,10 +36,8 @@ namespace ExorAIO.Champions.Jinx
                 {
                     Vars.WMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.WMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.WMenu.Add(new MenuBool("harass",    "Harass",    true));
                     Vars.WMenu.Add(new MenuBool("logical",   "Logical",   true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Harass: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 

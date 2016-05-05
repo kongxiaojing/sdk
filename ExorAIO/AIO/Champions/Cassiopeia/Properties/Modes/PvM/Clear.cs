@@ -28,8 +28,9 @@ namespace ExorAIO.Champions.Cassiopeia
             ///     The E Clear Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["clear"]) &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 if (Targets.JungleMinions.Any())
                 {
@@ -56,35 +57,12 @@ namespace ExorAIO.Champions.Cassiopeia
             }
 
             /// <summary>
-            ///     The W Clear Logic.
-            /// </summary>
-            if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededWMana &&
-                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuBool>().Value)
-            {
-                /// <summary>
-                ///     The W LaneClear Logic.
-                /// </summary>
-                if (Vars.W.GetCircularFarmLocation(Targets.Minions, Vars.W.Width).MinionsHit >= 3)
-                {
-                    Vars.W.Cast(Vars.W.GetCircularFarmLocation(Targets.Minions, Vars.W.Width).Position);
-                }
-
-                /// <summary>
-                ///     The W JungleClear Logic.
-                /// </summary>
-                else if (Targets.JungleMinions.Any())
-                {
-                    Vars.W.Cast(Targets.JungleMinions[0].ServerPosition);
-                }
-            }
-
-            /// <summary>
             ///     The Q Clear Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
+                Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 /// <summary>
                 ///     The Q LaneClear Logic.
@@ -100,6 +78,31 @@ namespace ExorAIO.Champions.Cassiopeia
                 else if (Targets.JungleMinions.Any())
                 {
                     Vars.Q.Cast(Targets.JungleMinions[0].ServerPosition);
+                }
+            }
+
+            /// <summary>
+            ///     The W Clear Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
+                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
+            {
+                /// <summary>
+                ///     The W LaneClear Logic.
+                /// </summary>
+                if (Vars.W.GetCircularFarmLocation(Targets.Minions, Vars.W.Width).MinionsHit >= 3)
+                {
+                    Vars.W.Cast(Vars.W.GetCircularFarmLocation(Targets.Minions.Where(m => !m.HasBuffOfType(BuffType.Poison)).ToList(), Vars.W.Width).Position);
+                }
+
+                /// <summary>
+                ///     The W JungleClear Logic.
+                /// </summary>
+                else if (Targets.JungleMinions.Any(m => !m.HasBuffOfType(BuffType.Poison)))
+                {
+                    Vars.W.Cast(Targets.JungleMinions.Where(m => !m.HasBuffOfType(BuffType.Poison)).FirstOrDefault().ServerPosition);
                 }
             }
         }

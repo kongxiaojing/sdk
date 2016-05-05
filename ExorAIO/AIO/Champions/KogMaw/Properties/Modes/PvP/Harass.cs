@@ -24,8 +24,9 @@ namespace ExorAIO.Champions.KogMaw
             ///     The Harass E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededEMana &&
-                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["clear"]) &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 if (GameObjects.EnemyHeroes.Any(
                     t =>
@@ -36,12 +37,10 @@ namespace ExorAIO.Champions.KogMaw
                         !new Geometry.Rectangle(
                             GameObjects.Player.ServerPosition,
                             GameObjects.Player.ServerPosition.Extend(Targets.Minions[0].ServerPosition, Vars.E.Range),
-                            Vars.E.Width).IsOutside(
-                                (Vector2)
-                                    Vars.E.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
-                                        t =>
-                                            !Invulnerable.Check(t) &&
-                                            t.IsValidTarget(Vars.E.Range))).UnitPosition))
+                            Vars.E.Width).IsOutside((Vector2)Vars.E.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                                t =>
+                                    !Invulnerable.Check(t) &&
+                                    t.IsValidTarget(Vars.E.Range))).UnitPosition))
                     {
                         Vars.E.Cast(Vars.E.GetLineFarmLocation(Targets.Minions, Vars.E.Width).Position);
                     }

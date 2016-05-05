@@ -84,6 +84,25 @@ namespace ExorAIO.Champions.Lux
             }
 
             /// <summary>
+            ///     The Automatic Q Logic.
+            /// </summary>
+            if (Vars.Q.IsReady() &&
+                Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
+            {
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        Bools.IsImmobile(t) &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.Q.Range)))
+                {
+                    if (Vars.Q.GetPrediction(target).CollisionObjects.Count(c => Targets.Minions.Contains(c)) <= 1)
+                    {
+                        Vars.Q.Cast(target.ServerPosition);
+                    }
+                }
+            }
+
+            /// <summary>
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
@@ -91,15 +110,15 @@ namespace ExorAIO.Champions.Lux
             {
                 foreach (var ally in GameObjects.AllyHeroes.Where(
                     a =>
-                        a.IsValidTarget(Vars.W.Range, false) &&
                         a.CountEnemyHeroesInRange(1000f) > 0 &&
+                        a.IsValidTarget(Vars.W.Range, false) &&
                         Health.GetPrediction(a, (int) (1000f + Game.Ping/2f)) <= a.MaxHealth/2))
                 {
                     if (Vars.Menu["spells"]["w"]["whitelist"][ally.ChampionName.ToLower()].GetValue<MenuBool>().Value)
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(ally).UnitPosition);
                     }
-                    else if (Vars.W.GetPrediction(ally).CollisionObjects.Count(c => c is Obj_AI_Hero) > 2)
+                    else if (Vars.W.GetPrediction(ally).CollisionObjects.Count(c => GameObjects.AllyHeroes.Contains(c)) >= 2)
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(ally).UnitPosition);
                     }

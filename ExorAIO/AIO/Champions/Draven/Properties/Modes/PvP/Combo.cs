@@ -2,6 +2,7 @@ using System;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Draven
 {
@@ -18,7 +19,7 @@ namespace ExorAIO.Champions.Draven
         {
             if (Bools.HasSheenBuff() ||
                 !Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -29,8 +30,9 @@ namespace ExorAIO.Champions.Draven
             if (Vars.W.IsReady() &&
                 !Targets.Target.IsValidTarget(Vars.AARange) &&
                 !GameObjects.Player.HasBuff("dravenfurybuff") &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["combo"]) &&
+                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast();
             }

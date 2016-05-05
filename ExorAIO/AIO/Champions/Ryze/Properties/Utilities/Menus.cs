@@ -23,12 +23,10 @@ namespace ExorAIO.Champions.Ryze
                 /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
-                    Vars.QMenu.Add(new MenuBool("combo",       "Combo",     true));
-                    Vars.QMenu.Add(new MenuBool("harass",      "Harass",    true));
-                    Vars.QMenu.Add(new MenuBool("killsteal",   "KillSteal", true));
-                    Vars.QMenu.Add(new MenuBool("clear",       "Clear",     true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Harass/Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
+                    Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
+                    Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -40,9 +38,7 @@ namespace ExorAIO.Champions.Ryze
                     Vars.WMenu.Add(new MenuBool("combo",     "Combo",          true));
                     Vars.WMenu.Add(new MenuBool("killsteal", "KillSteal",      true));
                     Vars.WMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
-                    Vars.WMenu.Add(new MenuBool("clear",     "Clear",          true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -53,9 +49,7 @@ namespace ExorAIO.Champions.Ryze
                 {
                     Vars.EMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.EMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.EMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
@@ -76,11 +70,8 @@ namespace ExorAIO.Champions.Ryze
             /// </summary>
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
-                Vars.MiscMenu.Add(new MenuBool("tear",   "Stack Tear", true));
-                Vars.MiscMenu.Add(
-                    new MenuSliderButton("stacks", "Keep Passive Stacks:", 3, 1, 4));
-                Vars.MiscMenu.Add(
-                    new MenuSlider("manamanager", "Keep Passive/Stack Tear: Mana > x%", 75, 1, 95));
+                Vars.MiscMenu.Add(new MenuSliderButton("tear",    "Stack Tear / if Mana >= x%", 75, 1, 95, true));
+                Vars.MiscMenu.Add(new MenuSliderButton("stacks",  "Keep Passive Stacks:",        3, 1, 4,  true));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

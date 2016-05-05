@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Kalista
 {
@@ -22,8 +23,10 @@ namespace ExorAIO.Champions.Kalista
             /// <summary>
             ///     Orbwalk on minions.
             /// </summary>
-            if (Targets.Minions.Any(m => m.IsValidTarget(Vars.AARange)) &&
-                !GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.AARange)))
+            if (Items.HasItem(3085) &&
+                Targets.Minions.Any(m => m.IsValidTarget(Vars.AARange)) &&
+                !GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.AARange)) &&
+                Vars.Menu["miscellaneous"]["minionsorbwalk"].GetValue<MenuBool>().Value)
             {
                 ObjectManager.Player.IssueOrder(GameObjectOrder.AttackUnit, Targets.Minions.FirstOrDefault(m => m.IsValidTarget(Vars.AARange)));
             }
@@ -55,8 +58,10 @@ namespace ExorAIO.Champions.Kalista
                 }
                 else if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(
                     c =>
-                        (c.IsMinion || c is Obj_AI_Hero) &&
-                        c.Health < KillSteal.GetPerfectRendDamage(c)) == Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count())
+                        Targets.Minions.Contains(c) &&
+                        c.Health <
+                            (float)GameObjects.Player.GetSpellDamage(c, SpellSlot.E) +
+                            (float)GameObjects.Player.GetSpellDamage(c, SpellSlot.E, DamageStage.Buff)) == Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => Targets.Minions.Contains(c)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }

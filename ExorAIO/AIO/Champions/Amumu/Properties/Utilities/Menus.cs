@@ -34,9 +34,7 @@ namespace ExorAIO.Champions.Amumu
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("logical", "Logical", true));                   
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Logical: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("logical", "Logical / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -47,9 +45,7 @@ namespace ExorAIO.Champions.Amumu
                 {
                     Vars.EMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.EMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.EMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
@@ -58,10 +54,8 @@ namespace ExorAIO.Champions.Amumu
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
-                    Vars.RMenu.Add(new MenuBool("combo",     "Combo",     true));
+                    Vars.RMenu.Add(new MenuSliderButton("combo", "Combo / if Enemies in Range >=", 1, 1, 5, true));
                     Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal"));
-                    Vars.RMenu.Add(
-                        new MenuSlider("enemies", "Combo: if hittable Enemies >=", 1, 1, 5));
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
             }

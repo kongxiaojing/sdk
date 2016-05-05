@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Caitlyn
 {
@@ -20,7 +21,7 @@ namespace ExorAIO.Champions.Caitlyn
         {
             if (Bools.HasSheenBuff() ||
                 !Targets.Target.IsValidTarget() ||
-                Bools.HasAnyImmunity(Targets.Target))
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
@@ -37,7 +38,7 @@ namespace ExorAIO.Champions.Caitlyn
                     GameObjects.EnemyHeroes.Where(
                         t =>
                             t.IsValidTarget(600f) &&
-                            !Bools.HasAnyImmunity(t) &&
+                            !Invulnerable.Check(t) &&
                             !t.HasBuff("caitlynyordletrapinternal")))
                 {
                     if (!Vars.E.GetPrediction(target).CollisionObjects.Any(c => c is Obj_AI_Minion))

@@ -29,18 +29,19 @@ namespace ExorAIO.Champions.Ezreal
             /// </summary>
             if (Vars.Q.IsReady() &&
                 Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededQMana &&
-                Vars.Menu["spells"]["q"]["farmhelper"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["farmhelper"]) &&
+                Vars.Menu["spells"]["q"]["farmhelper"].GetValue<MenuSliderButton>().BValue)
             {
                 foreach (var minion in Targets.Minions.Where(
                     m =>
                         !m.IsValidTarget(Vars.AARange) &&
-                        m.Health < Vars.Q.GetDamage(m) &&
-                        m.Health > GameObjects.Player.GetAutoAttackDamage(m)).OrderBy(
+                        Vars.GetRealHealth(m) > GameObjects.Player.GetAutoAttackDamage(m) &&
+                        Vars.GetRealHealth(m) < (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).OrderBy(
                             o =>
                                 o.MaxHealth))
                 {
-                    if (!Vars.Q.GetPrediction(minion).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (!Vars.Q.GetPrediction(minion).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(minion).UnitPosition);
                     }
@@ -54,10 +55,16 @@ namespace ExorAIO.Champions.Ezreal
                 Bools.HasTear(GameObjects.Player) &&
                 Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                 GameObjects.Player.CountEnemyHeroesInRange(1500) == 0 &&
-                GameObjects.Player.ManaPercent > ManaManager.NeededTearMana &&
-                Vars.Menu["miscellaneous"]["tear"].GetValue<MenuBool>().Value)
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["miscellaneous"]["tear"]) &&
+                Vars.Menu["miscellaneous"]["tear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.Q.Cast(Game.CursorPos);
+            }
+
+            if (GameObjects.Player.TotalMagicalDamage > GameObjects.Player.TotalAttackDamage)
+            {
+                return;
             }
 
             /// <summary>
@@ -89,9 +96,9 @@ namespace ExorAIO.Champions.Ezreal
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                ObjectManager.Player.ManaPercent > ManaManager.NeededWMana &&
-                GameObjects.Player.TotalMagicalDamage < GameObjects.Player.TotalAttackDamage &&
-                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
+                ObjectManager.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["logical"]) &&
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuSliderButton>().BValue)
             {
                 foreach (var target in GameObjects.AllyHeroes.Where(
                     t =>

@@ -25,9 +25,7 @@ namespace ExorAIO.Champions.Ashe
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
                     Vars.QMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.QMenu.Add(new MenuBool("clear", "Clear", true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manapercent", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -39,10 +37,8 @@ namespace ExorAIO.Champions.Ashe
                     Vars.WMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.WMenu.Add(new MenuBool("logical",   "Logical",   true));
                     Vars.WMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.WMenu.Add(new MenuBool("harass",    "Harass",    true));
-                    Vars.WMenu.Add(new MenuBool("clear",     "Clear",     true));
-                    Vars.WMenu.Add(
-                        new MenuSlider("manamanager", "Harass/Clear: Mana >= x%", 50, 0, 99));
+                    Vars.WMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -52,9 +48,7 @@ namespace ExorAIO.Champions.Ashe
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("logical", "Logical", true));
-                    Vars.EMenu.Add(new MenuBool("vision",  "Vision",  true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Vision: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("vision", "Vision / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

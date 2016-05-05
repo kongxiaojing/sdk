@@ -25,10 +25,8 @@ namespace ExorAIO.Champions.Pantheon
                 {
                     Vars.QMenu.Add(new MenuBool("combo",       "Combo",       true));
                     Vars.QMenu.Add(new MenuBool("killsteal",   "KillSteal",   true));
-                    Vars.QMenu.Add(new MenuBool("harass",      "Harass",      true));
-                    Vars.QMenu.Add(new MenuBool("jungleclear", "JungleClear", true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Harass/JungleClear: Mana >= x", 50, 10, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("harass",      "Harass / if Mana >= x%",      50, 10, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 10, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -49,9 +47,7 @@ namespace ExorAIO.Champions.Pantheon
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.EMenu.Add(new MenuBool("clear", "Clear", true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x", 50, 10, 99));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 10, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
             }

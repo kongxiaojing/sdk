@@ -14,21 +14,25 @@ namespace ExorAIO.Champions.Evelynn
         public static void Initialize()
         {
             /// <summary>
-            /// Sets the spells menu.
+            ///     Sets the spells menu.
             /// </summary>
             Vars.SpellsMenu = new Menu("spells", "Spells");
             {
+                /// <summary>
+                ///     Sets the menu for the Q.
+                /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
                     Vars.QMenu.Add(new MenuBool("combo",   "Combo",   true));
                     Vars.QMenu.Add(new MenuBool("harass",  "Harass",  true));
                     Vars.QMenu.Add(new MenuBool("lasthit", "LastHit", true));
-                    Vars.QMenu.Add(new MenuBool("clear",   "Clear",   true));
-                    Vars.QMenu.Add(
-                        new MenuSlider("manamanager", "Clear: Mana >= x%", 50, 0, 99));
+                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
+                /// <summary>
+                ///     Sets the menu for the W.
+                /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo",   "Combo",   true));
@@ -36,21 +40,23 @@ namespace ExorAIO.Champions.Evelynn
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
+                /// <summary>
+                ///     Sets the menu for the E.
+                /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("combo",       "Combo",       true));
-                    Vars.EMenu.Add(new MenuBool("jungleclear", "JungleClear", true));
-                    Vars.EMenu.Add(
-                        new MenuSlider("manamanager", "JungleClear: Mana >= x%", 50, 0, 99));
+                    Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
+                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
+                /// <summary>
+                ///     Sets the menu for the Q.
+                /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
-                    Vars.RMenu.Add(new MenuBool("combo",     "Combo",    true));
+                    Vars.RMenu.Add(new MenuSliderButton("combo", "Combo / If can hit >= x enemies", 1, 1, 5, true));
                     Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal"));
-                    Vars.RMenu.Add(
-                        new MenuSlider("enemies", "Combo: if hittable Enemies >=", 1, 1, 5));
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
             }

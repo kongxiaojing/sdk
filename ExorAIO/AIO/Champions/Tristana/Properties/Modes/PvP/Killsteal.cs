@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Tristana
 {
@@ -29,10 +30,13 @@ namespace ExorAIO.Champions.Tristana
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        t.Health > GameObjects.Player.GetAutoAttackDamage(t)*2))
+                        Vars.GetRealHealth(t) > GameObjects.Player.GetAutoAttackDamage(t)*3))
                 {
-                    if (target.Health > KillSteal.GetEDamage(target) &&
-                        target.Health < (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.R) + KillSteal.GetEDamage(target))
+                    if (Vars.GetRealHealth(target) < (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.R) +
+                            (target.HasBuff("TristanaECharge")
+                                ? (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.E) +
+                                  (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff)
+                                : 0))
                     {
                         Vars.R.CastOnUnit(target);
                     }
