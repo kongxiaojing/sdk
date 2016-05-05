@@ -33,7 +33,7 @@ namespace ExorAIO.Champions.Ezreal
                         /// <summary>
                         ///     Sets the menu for the Q Whitelist.
                         /// </summary>
-                        Vars.WhiteListMenu = new Menu("whitelist1", "Harass: Whitelist Menu");
+                        Vars.WhiteListMenu = new Menu("whitelist", "Harass: Whitelist Menu");
                         {
                             foreach (var target in GameObjects.EnemyHeroes)
                             {
@@ -44,7 +44,7 @@ namespace ExorAIO.Champions.Ezreal
                                         true));
                             }
                         }
-                        Vars.RMenu.Add(Vars.WhiteListMenu);
+                        Vars.QMenu.Add(Vars.WhiteListMenu);
                     }
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
@@ -85,14 +85,14 @@ namespace ExorAIO.Champions.Ezreal
                         {
                             foreach (var target in GameObjects.EnemyHeroes)
                             {
-                                Vars.WhiteListMenu.Add(
+                                Vars.WhiteList2Menu.Add(
                                     new MenuBool(
                                         target.ChampionName.ToLower(),
                                         $"Use against: {target.ChampionName}",
                                         true));
                             }
                         }
-                        Vars.RMenu.Add(Vars.WhiteListMenu);
+                        Vars.RMenu.Add(Vars.WhiteList2Menu);
                     }
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
@@ -104,7 +104,7 @@ namespace ExorAIO.Champions.Ezreal
             /// </summary>
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
-                Vars.MiscMenu.Add(new MenuSliderButton("tear", "Stack Tear", 80, 1, 99, true));
+                Vars.MiscMenu.Add(new MenuSliderButton("tear", "Stack Tear / if Mana >= x%", 80, 1, 99, true));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

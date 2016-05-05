@@ -66,7 +66,7 @@ namespace ExorAIO.Champions.Ezreal
                 ///     The KillSteal R Logic.
                 /// </summary>
                 if (Vars.R.IsReady() &&
-                    GameObjects.Player.CountEnemyHeroesInRange(Vars.Q.Range) == 0 &&
+                    GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) == 0 &&
                     Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
                 {
                     foreach (var target in GameObjects.EnemyHeroes.Where(

@@ -33,7 +33,7 @@ namespace ExorAIO.Champions.Ezreal
                 GameObjects.Player.ManaPercent >
                     ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["harass"]) &&
                 Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue &&
-                Vars.Menu["spells"]["q"]["whitelist1"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["q"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
                 if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {

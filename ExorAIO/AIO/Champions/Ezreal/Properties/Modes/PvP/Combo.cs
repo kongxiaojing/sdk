@@ -35,9 +35,9 @@ namespace ExorAIO.Champions.Ezreal
                     Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                 }
 
-                if (Invulnerable.Check(Targets.Target))
+                if (Bools.IsImmobile(Targets.Target))
                 {
-                    Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
+                    Vars.R.Cast(Targets.Target.ServerPosition);
                 }
                 
                 Vars.R.CastIfWillHit(Targets.Target, 2);
