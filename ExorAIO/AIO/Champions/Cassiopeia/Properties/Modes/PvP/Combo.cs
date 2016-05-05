@@ -46,7 +46,7 @@ namespace ExorAIO.Champions.Cassiopeia
             /// </summary>
             if (Vars.R.IsReady() &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().BValue &&
-                Vars.Menu["spells"]["r"]["enemies"].GetValue<MenuSliderButton>().SValue <=
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().SValue <=
                     Targets.RTargets.Count())
             {
                 Vars.R.Cast(Targets.RTargets[0].ServerPosition);
@@ -71,16 +71,14 @@ namespace ExorAIO.Champions.Cassiopeia
             /// <summary>
             ///     The W Combo Logic.
             /// </summary>
-            DelayAction.Add(1000, () =>
+            if (Vars.W.IsReady() &&
+                !Vars.Q.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.W.Range) &&
+                !Targets.Target.IsValidTarget(Vars.AARange - GameObjects.Player.BoundingRadius) &&
+                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (Vars.W.IsReady() &&
-                    !Vars.Q.IsReady() &&
-                    Targets.Target.IsValidTarget(Vars.W.Range) &&
-                    Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
-                {
-                    Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
-                }
-            });
+                Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
+            }
         }
     }
 }

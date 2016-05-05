@@ -48,7 +48,7 @@ namespace ExorAIO.Champions.Cassiopeia
                     ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["miscellaneous"]["tear"]) &&
                 Vars.Menu["miscellaneous"]["tear"].GetValue<MenuSliderButton>().BValue)
             {
-                Vars.Q.Cast(Game.CursorPos);
+                Vars.Q.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.Q.Range-5f));
             }
 
             /// <summary>
