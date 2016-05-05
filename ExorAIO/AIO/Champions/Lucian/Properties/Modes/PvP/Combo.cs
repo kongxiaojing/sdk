@@ -48,6 +48,11 @@ namespace ExorAIO.Champions.Lucian
                 return;
             }
 
+            if (GameObjects.Player.HasBuff("LucianPassiveBuff"))
+            {
+                return;
+            }
+
             /// <summary>
             ///     The Q Combo Logic.
             /// </summary>

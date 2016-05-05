@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Lucian
                     if ((args.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2 ||
                         GameObjects.Player.Distance(Game.CursorPos) < Vars.AARange)
                     {
-                        Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 5));
+                        Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 25));
                     }
                     else
                     {

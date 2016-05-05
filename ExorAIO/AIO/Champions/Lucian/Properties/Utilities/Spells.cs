@@ -21,7 +21,6 @@ namespace ExorAIO.Champions.Lucian
             Vars.E = new Spell(SpellSlot.E, Vars.AARange + 475f);
             Vars.R = new Spell(SpellSlot.R, 1150f);
 
-            Vars.Q.SetTargetted(0.5f, 1400f);
             Vars.Q2.SetSkillshot(0.5f, 65f, float.MaxValue, false, SkillshotType.SkillshotLine);
             Vars.W.SetSkillshot(0.30f, 80f, 1600f, true, SkillshotType.SkillshotLine);
             Vars.R.SetSkillshot(0.2f, 110f, 2500f, false, SkillshotType.SkillshotLine);

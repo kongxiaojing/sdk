@@ -21,60 +21,56 @@ namespace ExorAIO.Champions.Lucian
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Clear(EventArgs args)
         {
-            /// <summary>
-            ///     The Extended Q LaneClear Harass Logic.
-            /// </summary>
-            if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > 
-                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["extended"]["exlaneclear"]) &&
-                Vars.Menu["spells"]["q"]["extended"]["exlaneclear"].GetValue<MenuSliderButton>().BValue)
-            {
-                if (!GameObjects.EnemyHeroes.Any(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        !t.IsValidTarget(Vars.Q.Range) &&
-                        t.IsValidTarget(Vars.Q2.Range-50f) &&
-                        Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
-                {
-                    return;
-                }
-
-                /// <summary>
-                ///     Through enemy minions.
-                /// </summary>
-                foreach (var minion 
-                    in from minion
-                    in Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range))
-
-                    let polygon = new Geometry.Rectangle(
-                        GameObjects.Player.ServerPosition,
-                        GameObjects.Player.ServerPosition.Extend(minion.ServerPosition, Vars.Q2.Range-50f),
-                        Vars.Q2.Width)
-
-                    where !polygon.IsOutside(
-                        (Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
-                        t =>
-                            !Invulnerable.Check(t) &&
-                            !t.IsValidTarget(Vars.Q.Range) &&
-                            t.IsValidTarget(Vars.Q2.Range-50f) &&
-                            Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value)).UnitPosition)
-
-                    select minion)
-                {
-                    Vars.Q.CastOnUnit(minion);
-                }
-            }
-
             if (GameObjects.Player.HasBuff("LucianPassiveBuff"))
             {
                 return;
             }
 
             /// <summary>
-            ///     The Clear Q Logic.
+            ///     The Extended Q LaneClear Harass Logic.
             /// </summary>
             if (Vars.Q.IsReady())
             {
+                if (GameObjects.Player.ManaPercent > 
+                        ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["extended"]["exlaneclear"]) &&
+                    Vars.Menu["spells"]["q"]["extended"]["exlaneclear"].GetValue<MenuSliderButton>().BValue)
+                {
+                    if (!GameObjects.EnemyHeroes.Any(
+                        t =>
+                            !Invulnerable.Check(t) &&
+                            !t.IsValidTarget(Vars.Q.Range) &&
+                            t.IsValidTarget(Vars.Q2.Range-50f) &&
+                            Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                    {
+                        return;
+                    }
+
+                    /// <summary>
+                    ///     Through enemy minions.
+                    /// </summary>
+                    foreach (var minion 
+                        in from minion
+                        in Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range))
+
+                        let polygon = new Geometry.Rectangle(
+                            GameObjects.Player.ServerPosition,
+                            GameObjects.Player.ServerPosition.Extend(minion.ServerPosition, Vars.Q2.Range-50f),
+                            Vars.Q2.Width)
+
+                        where !polygon.IsOutside(
+                            (Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                            t =>
+                                !Invulnerable.Check(t) &&
+                                !t.IsValidTarget(Vars.Q.Range) &&
+                                t.IsValidTarget(Vars.Q2.Range-50f) &&
+                                Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value)).UnitPosition)
+
+                        select minion)
+                    {
+                        Vars.Q.CastOnUnit(minion);
+                    }
+                }
+
                 /// <summary>
                 ///     The JungleClear Q Logic.
                 /// </summary>
@@ -89,7 +85,8 @@ namespace ExorAIO.Champions.Lucian
                 /// <summary>
                 ///     The LaneClear Q Logic.
                 /// </summary>
-                else if (GameObjects.Player.ManaPercent >
+                if (Targets.Minions.Any() &&
+                    GameObjects.Player.ManaPercent >
                         ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["laneclear"]) &&
                     Vars.Menu["spells"]["q"]["laneclear"].GetValue<MenuSliderButton>().BValue)
                 {
@@ -195,7 +192,7 @@ namespace ExorAIO.Champions.Lucian
                     ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["buildings"]) &&
                 Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
-                Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 5));
+                Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 25));
                 return;
             }
 

@@ -1,4 +1,5 @@
 using LeagueSharp;
+using LeagueSharp.SDK;
 
 namespace ExorAIO.Champions.Lucian
 {
@@ -14,6 +15,7 @@ namespace ExorAIO.Champions.Lucian
         {
             Game.OnUpdate += Lucian.OnUpdate;
             Obj_AI_Base.OnDoCast += Lucian.OnDoCast;
+            Events.OnGapCloser += Lucian.OnGapCloser;
             Obj_AI_Base.OnPlayAnimation += Lucian.OnPlayAnimation;
         }
     }

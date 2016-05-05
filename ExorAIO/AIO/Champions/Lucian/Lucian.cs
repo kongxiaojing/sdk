@@ -55,7 +55,8 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             Logics.Automatic(args);
 
-            if (GameObjects.Player.HasBuff("LucianR"))
+            if (GameObjects.Player.IsWindingUp ||
+                GameObjects.Player.HasBuff("LucianR"))
             {
                 return;
             }
@@ -64,11 +65,6 @@ namespace ExorAIO.Champions.Lucian
             ///     Initializes the Killsteal events.
             /// </summary>
             Logics.Killsteal(args);
-
-            if (GameObjects.Player.IsWindingUp)
-            {
-                return;
-            }
 
             /// <summary>
             ///     Initializes the orbwalkingmodes.
@@ -138,6 +134,22 @@ namespace ExorAIO.Champions.Lucian
                 {
                     GameObjects.Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
                 }
+            }
+        }
+
+        /// <summary>
+        ///     Fired on an incoming gapcloser.
+        /// </summary>
+        /// <param name="sender">The object.</param>
+        /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
+        public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
+        {
+            if (Vars.E.IsReady() &&
+                args.IsDirectedToPlayer &&
+                args.Sender.IsValidTarget(Vars.E.Range) &&
+                Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
+            {
+                Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, -(Vars.E.Range - Vars.AARange)));
             }
         }
     }
