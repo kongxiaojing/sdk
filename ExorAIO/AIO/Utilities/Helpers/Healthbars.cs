@@ -42,7 +42,7 @@ namespace ExorAIO.Utilities
                         barPos.X += xOffset;
                         barPos.Y += yOffset;
 
-                        var drawEndXPos = barPos.X + width * (Vars.GetRealHealth(unit) / 100);
+                        var drawEndXPos = barPos.X + width * (unit.HealthPercent / 100);
                         var drawStartXPos = barPos.X + (Vars.GetRealHealth(unit) >
                             (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E) +
                             (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E, DamageStage.Buff)
