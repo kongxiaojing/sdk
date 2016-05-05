@@ -76,7 +76,9 @@ namespace ExorAIO.Champions.Ezreal
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
                     Vars.RMenu.Add(new MenuBool("combo",     "Combo",     true));
+                    Vars.RMenu.Add(new MenuBool("logical",   "Logical",   true));
                     Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal", true));
+                    Vars.RMenu.Add(new MenuSliderButton("aoe", "AoE / if Enemies hit >=", 2, 2, 5, true));
                     {
                         /// <summary>
                         ///     Sets the menu for the R Whitelist.

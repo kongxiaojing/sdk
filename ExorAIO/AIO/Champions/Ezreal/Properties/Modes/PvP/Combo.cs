@@ -20,29 +20,48 @@ namespace ExorAIO.Champions.Ezreal
         public static void Combo(EventArgs args)
         {
             /// <summary>
-            ///     The R Combo Logic.
+            ///     The R Logics.
             /// </summary>
             if (Vars.R.IsReady() &&
-                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) == 0 &&
-                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) == 0)
             {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        t.IsValidTarget(2000f) &&
-                        Vars.Menu["spells"]["r"]["whitelist2"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                /// <summary>
+                ///     The R Combo Logic.
+                /// </summary>
+                if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
                 {
-                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                    foreach (var target in GameObjects.EnemyHeroes.Where(
+                        t =>
+                            !Invulnerable.Check(t) &&
+                            t.IsValidTarget(2000f) &&
+                            Vars.Menu["spells"]["r"]["whitelist2"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                    {
+                        Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                        return;
+                    }
                 }
 
-                if (!Targets.Target.IsValidTarget() &&
-                    Bools.IsImmobile(Targets.Target) &&
-                    !Invulnerable.Check(Targets.Target))
+                /// <summary>
+                ///     The Automatic R Logic.
+                /// </summary>
+                if (Vars.Menu["spells"]["r"]["logical"].GetValue<MenuBool>().Value)
                 {
-                    Vars.R.Cast(Targets.Target.ServerPosition);
+                    if (!Targets.Target.IsValidTarget() &&
+                        Bools.IsImmobile(Targets.Target) &&
+                        !Invulnerable.Check(Targets.Target))
+                    {
+                        Vars.R.Cast(Targets.Target.ServerPosition);
+                        return;
+                    }
                 }
-                
-                Vars.R.CastIfWillHit(Targets.Target, 2);
+
+                /// <summary>
+                ///     The AoE R Logic.
+                /// </summary>
+                if (Vars.Menu["spells"]["r"]["aoe"].GetValue<MenuSliderButton>().BValue)
+                {
+                    Vars.R.CastIfWillHit(Targets.Target, Vars.Menu["spells"]["r"]["aoe"].GetValue<MenuSliderButton>().SValue);
+                }
             }
 
             if (Bools.HasSheenBuff() ||
