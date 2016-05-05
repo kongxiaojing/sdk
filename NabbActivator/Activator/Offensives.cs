@@ -87,6 +87,25 @@ namespace NabbActivator
                     Items.UseItem(3142);
                 }
             }
+
+            /// <summary>
+            ///     The Hextech GLP-800 Logic.
+            /// </summary>
+            if (Items.CanUseItem(3030) &&
+                Targets.Target.IsValidTarget(800f))
+            {
+                Items.UseItem(3030, Movement.GetPrediction(Targets.Target, 0.5f).UnitPosition);
+            }
+            
+            /// <summary>
+            ///     The Hextech Protobelt Logic.
+            /// </summary>
+            if (Items.CanUseItem(3152) &&
+                Targets.Target.IsValidTarget(
+                    GameObjects.Player.Distance(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 850f))))
+            {
+                Items.UseItem(3152, GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 850f));
+            }
         }
     }
 }
