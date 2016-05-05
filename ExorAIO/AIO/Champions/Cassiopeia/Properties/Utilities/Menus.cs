@@ -48,9 +48,9 @@ namespace ExorAIO.Champions.Cassiopeia
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo",     "Combo",     true));
-                    Vars.EMenu.Add(new MenuBool("lasthit",   "LastHit",   true));
                     Vars.EMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("clear",   "Clear / if Mana >= x%", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("lasthit", "LastHit only / if Mana < x%", 50, 1, 100, true));
                     Vars.EMenu.Add(new MenuSlider("delay", "E Delay (ms)", 0, 0, 250));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);

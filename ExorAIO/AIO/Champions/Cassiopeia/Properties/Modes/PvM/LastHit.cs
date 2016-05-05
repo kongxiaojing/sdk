@@ -2,8 +2,10 @@ using System;
 using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
+using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Cassiopeia
 {
@@ -22,15 +24,21 @@ namespace ExorAIO.Champions.Cassiopeia
             ///     The E LastHit Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Vars.Menu["spells"]["e"]["lasthit"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["lasthit"].GetValue<MenuSliderButton>().BValue)
             {
-                foreach (var minion in Targets.Minions.Where(m => Vars.GetRealHealth(m) < Vars.E.GetDamage(m)))
+                DelayAction.Add(Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value, () =>
                 {
-                    DelayAction.Add(Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value, () =>
+                    foreach (var minion in Targets.Minions.Where(
+                        m =>
+                            Vars.GetRealHealth(m) <
+                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) + 
+                                    (m.HasBuffOfType(BuffType.Poison)
+                                        ? (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Empowered)
+                                        : 0)))
                     {
                         Vars.E.CastOnUnit(minion);
-                    });
-                }
+                    }
+                });
             }
         }
     }

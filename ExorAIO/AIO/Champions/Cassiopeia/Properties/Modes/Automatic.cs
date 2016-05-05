@@ -32,8 +32,9 @@ namespace ExorAIO.Champions.Cassiopeia
             {
                 Variables.Orbwalker.SetAttackState(
                     Bools.HasSheenBuff() ||
+                    GameObjects.Player.ManaPercent < 10 ||
                     Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo ||
-                    GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).Level < 1);
+                    (!Vars.Q.IsReady() && !Vars.W.IsReady() && !Vars.E.IsReady()));
             }
 
             /// <summary>

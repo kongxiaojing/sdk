@@ -31,8 +31,7 @@ namespace ExorAIO.Champions.Anivia
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range) &&
                         Vars.GetRealHealth(t) <
-                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E) +
-                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E, DamageStage.Buff)))
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.E)))
                 {
                     Vars.E.CastOnUnit(target);
                     return;
@@ -50,7 +49,8 @@ namespace ExorAIO.Champions.Anivia
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range) &&
-                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                 }
