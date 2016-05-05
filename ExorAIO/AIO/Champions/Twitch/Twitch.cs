@@ -94,8 +94,7 @@ namespace ExorAIO.Champions.Twitch
         public static void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
             if (sender.Owner.IsMe &&
-                GameObjects.Player.IsRecalling() &&
-                //GameObjects.Player.GetSpell(args.Slot).Name.Equals("recall") &&
+                GameObjects.Player.Spellbook.GetSpell(args.Slot).Name.Equals("recall") &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.Cast();
