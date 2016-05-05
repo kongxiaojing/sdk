@@ -128,8 +128,12 @@ namespace NabbActivator
                     if (Vars.Menu["smite"]["limit"].GetValue<MenuBool>().Value)
                     {
                         if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald"))
+                            !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
+                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Air") &&
+                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Fire") &&
+                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Earth") &&
+                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Water") &&
+                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Elder"))
                         {
                             return;
                         }
@@ -140,8 +144,12 @@ namespace NabbActivator
                         if (GameObjects.Player.Spellbook.GetSpell(SpellSlots.GetSmiteSlot()).Ammo == 1)
                         {
                             if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald"))
+                                !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
+                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Air") &&
+                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Fire") &&
+                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Earth") &&
+                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Water") &&
+                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Elder"))
                             {
                                 return;
                             }
