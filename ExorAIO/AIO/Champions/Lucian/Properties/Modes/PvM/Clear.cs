@@ -29,6 +29,16 @@ namespace ExorAIO.Champions.Lucian
                     ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["extended"]["exlaneclear"]) &&
                 Vars.Menu["spells"]["q"]["extended"]["exlaneclear"].GetValue<MenuSliderButton>().BValue)
             {
+                if (!GameObjects.EnemyHeroes.Any(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        !t.IsValidTarget(Vars.Q.Range) &&
+                        t.IsValidTarget(Vars.Q2.Range-50f) &&
+                        Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                {
+                    return;
+                }
+
                 /// <summary>
                 ///     Through enemy minions.
                 /// </summary>
@@ -55,7 +65,7 @@ namespace ExorAIO.Champions.Lucian
                 }
             }
 
-            if (GameObjects.Player.HasBuff("lucianpassivebuff"))
+            if (GameObjects.Player.HasBuff("LucianPassiveBuff"))
             {
                 return;
             }
@@ -88,10 +98,7 @@ namespace ExorAIO.Champions.Lucian
                             !Invulnerable.Check(t) &&
                             t.IsValidTarget(Vars.Q2.Range + 100f)))
                     {
-                        if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 3)
-                        {
-                            Vars.Q.CastOnUnit(Targets.Minions[0]);
-                        }
+                        Vars.Q.CastOnUnit(Targets.Minions[0]);
                     }
                 }
                 return;
@@ -107,7 +114,7 @@ namespace ExorAIO.Champions.Lucian
                 /// </summary>
                 if (Targets.JungleMinions.Any() &&
                     GameObjects.Player.ManaPercent >
-                        ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["w"]["jungleclear"]) &&
+                        ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["jungleclear"]) &&
                     Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
                 {
                     Vars.W.Cast(Targets.JungleMinions[0].ServerPosition);
@@ -116,15 +123,13 @@ namespace ExorAIO.Champions.Lucian
                 /// <summary>
                 ///     The LaneClear W Logic.
                 /// </summary>
-                else if (GameObjects.Player.ManaPercent >
-                        ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["w"]["laneclear"]) &&
+                else if (Targets.Minions.Any() &&
+                    GameObjects.Player.ManaPercent >
+                        ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["laneclear"]) &&
                     Vars.Menu["spells"]["w"]["laneclear"].GetValue<MenuSliderButton>().BValue)
                 {
-                    if (Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).MinionsHit >= 2)
-                    {
-                        Vars.W.Cast(Vars.Q2.GetLineFarmLocation(Targets.Minions, Vars.Q2.Width).Position);
-                        return;
-                    }
+                    Vars.W.Cast(Targets.Minions[0].ServerPosition);
+                    return;
                 }
             }
 
@@ -132,9 +137,11 @@ namespace ExorAIO.Champions.Lucian
             ///     The E LaneClear Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Targets.Minions.Any() &&
+                Targets.Minions.Any(
+                m =>
+                    m.Distance(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range)) < Vars.AARange) &&
                 GameObjects.Player.ManaPercent >
-                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["e"]["laneclear"]) &&
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["laneclear"]) &&
                 Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.Cast(Game.CursorPos);
@@ -159,7 +166,7 @@ namespace ExorAIO.Champions.Lucian
             if (Vars.E.IsReady() &&
                 Targets.JungleMinions.Any() &&
                 GameObjects.Player.ManaPercent >
-                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["e"]["jungleclear"]) &&
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["jungleclear"]) &&
                 Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.Cast(Game.CursorPos);
@@ -185,7 +192,7 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.E.IsReady() &&
                 GameObjects.Player.ManaPercent >
-                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["e"]["buildings"]) &&
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["buildings"]) &&
                 Vars.Menu["spells"]["e"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 5));
@@ -197,7 +204,7 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.W.IsReady() &&
                 GameObjects.Player.ManaPercent >
-                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["w"]["buildings"]) &&
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["buildings"]) &&
                 Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast(Game.CursorPos);
