@@ -32,22 +32,16 @@ namespace ExorAIO.Champions.Jhin
                 Vars.R.Instance.Name.Equals("JhinRShot") &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (GameObjects.EnemyHeroes.Any(
+                foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        GameObjects.Player.IsFacing(t) &&
                         t.IsValidTarget(Vars.R.Range)))
                 {
-                    Vars.R.Cast(Vars.R.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
-                        t =>
-                            !Invulnerable.Check(t) &&
-                            GameObjects.Player.IsFacing(t) &&
-                            t.IsValidTarget(Vars.R.Range))).UnitPosition);
+                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                    return;
                 }
-                else
-                {
-                    Vars.R.Cast(Game.CursorPos);
-                }
+
+                Vars.R.Cast(Game.CursorPos);
             }
 
             if (Invulnerable.Check(Targets.Target))

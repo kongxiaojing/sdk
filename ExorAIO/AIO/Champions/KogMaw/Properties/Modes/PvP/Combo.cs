@@ -71,9 +71,9 @@ namespace ExorAIO.Champions.KogMaw
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().SValue >
                     GameObjects.Player.GetBuffCount("kogmawlivingartillerycost"))
             {
-                if (Vars.W.IsReady() &&
-                    !Targets.Target.IsValidTarget(Vars.W.Range) &&
-                    !GameObjects.Player.HasBuff("KogMawBioArcaneBarrage"))
+                if (!Vars.W.IsReady() ||
+                    (!Targets.Target.IsValidTarget(Vars.W.Range) &&
+                    !GameObjects.Player.HasBuff("KogMawBioArcaneBarrage")))
                 {
                     Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).CastPosition);
                 }
