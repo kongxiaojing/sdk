@@ -29,11 +29,9 @@ using ExorAIO.Champions.Sivir;
 using ExorAIO.Champions.Tristana;
 using ExorAIO.Champions.Tryndamere;
 using ExorAIO.Champions.Twitch;
-/*
 using ExorAIO.Champions.Udyr;
-using ExorAIO.Champions.Warwick;
-*/
 using ExorAIO.Champions.Vayne;
+// using ExorAIO.Champions.Warwick;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -145,17 +143,17 @@ namespace ExorAIO.Core
                 case "Twitch":
                     new Twitch().OnLoad();
                     break;
-                /*
                 case "Udyr":
                     new Udyr().OnLoad();
                     break;
+                case "Vayne":
+                    new Vayne().OnLoad();
+                    break;
+                /*
                 case "Warwick":
                     new Warwick().OnLoad();
                     break;
                 */
-                case "Vayne":
-                    new Vayne().OnLoad();
-                    break;
                 default:
                     Vars.IsLoaded = false;
                     break;
