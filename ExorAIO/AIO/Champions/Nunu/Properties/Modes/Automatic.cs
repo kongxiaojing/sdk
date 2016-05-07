@@ -57,7 +57,8 @@ namespace ExorAIO.Champions.Nunu
                     foreach (var minion in Targets.JungleMinions.Where(
                         m =>
                             m.IsValidTarget(Vars.Q.Range) &&
-                            Vars.GetRealHealth(m) < Vars.Q.GetDamage(m)))
+                            Vars.GetRealHealth(m) <
+                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)))
                     {
                         Vars.Q.CastOnUnit(minion);
                     }
@@ -71,8 +72,10 @@ namespace ExorAIO.Champions.Nunu
                 Targets.Minions.Any() &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
-                if (GameObjects.Player.Health + (30 + 45 * GameObjects.Player.Spellbook.GetSpell(SpellSlot.Q).Level) +
-                    GameObjects.Player.TotalMagicalDamage * 0.75 < GameObjects.Player.MaxHealth)
+                if (GameObjects.Player.MaxHealth >
+                        GameObjects.Player.Health +
+                        (30 + 45 * GameObjects.Player.Spellbook.GetSpell(SpellSlot.Q).Level) +
+                        GameObjects.Player.TotalMagicalDamage * 0.75)
                 {
                     foreach (var minion in Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range)))
                     {
@@ -96,18 +99,32 @@ namespace ExorAIO.Champions.Nunu
 
                 switch (Variables.Orbwalker.ActiveMode)
                 {
+                    /// <summary>
+                    ///     The W Combo Logics.
+                    /// </summary>
                     case OrbwalkingMode.Combo:
+
+                        /// <summary>
+                        ///     The Ally W Combo Logic.
+                        /// </summary>
                         if (GameObjects.AllyHeroes.Any(
-                            h =>
-                                !h.IsMe &&
-                                h.IsValidTarget(Vars.W.Range, false)))
+                            a =>
+                                !a.IsMe &&
+                                a.IsValidTarget(Vars.W.Range, false) &&
+                                Vars.Menu["spells"]["w"]["whitelist"][a.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                         {
                             Vars.W.CastOnUnit(GameObjects.AllyHeroes.Where(
                                 a =>
+                                    !a.IsMe &&
+                                    a.IsValidTarget(Vars.W.Range, false) &&
                                     Vars.Menu["spells"]["w"]["whitelist"][a.ChampionName.ToLower()].GetValue<MenuBool>().Value).OrderBy(
                                         o =>
                                             o.TotalAttackDamage).First());
                         }
+
+                        /// <summary>
+                        ///     The Normal W Combo Logic.
+                        /// </summary>
                         else
                         {
                             if (Targets.Target.IsValidTarget())
@@ -116,34 +133,43 @@ namespace ExorAIO.Champions.Nunu
                             }
                         }
                         break;
-                        
+
+                    /// <summary>
+                    ///     The W Clearing Logic.
+                    /// </summary>
                     case OrbwalkingMode.LaneClear:
+
+                        /// <summary>
+                        ///     Use if There are Enemy Minions in range.
+                        /// </summary>
                         if (Targets.Minions.Any() ||
                             Targets.JungleMinions.Any())
                         {
                             Vars.W.CastOnUnit(GameObjects.Player);
                         }
                         break;
-                        
+
                     default:
-                        if (Targets.Minions.Any() &&
-                            GameObjects.AllyMinions.Any())
-                        {
-                            foreach (var minion in GameObjects.AllyMinions.Where(m => m.IsValidTarget(Vars.W.Range, false)))
-                            {
-                                if (minion.GetMinionType() == MinionTypes.Super ||
-                                    minion.GetMinionType() == MinionTypes.Siege)
-                                {
-                                    Vars.W.CastOnUnit(minion);
-                                }
-                            }
-                        }
-                        else if (!GameObjects.AllyMinions.Any() &&
-                            (Targets.Minions.Any() || Targets.JungleMinions.Any()))
-                        {
-                            Vars.W.CastOnUnit(GameObjects.Player);
-                        }
                         break;
+                }
+
+                /// <summary>
+                ///     The W Pushing Logic.
+                /// </summary>
+                if (Targets.Minions.Any() &&
+                    GameObjects.AllyMinions.Any())
+                {
+                    /// <summary>
+                    ///     Use if there are Super or Siege minions in W Range.
+                    /// </summary>
+                    foreach (var minion in GameObjects.AllyMinions.Where(m => m.IsValidTarget(Vars.W.Range, false)))
+                    {
+                        if (minion.GetMinionType() == MinionTypes.Super ||
+                            minion.GetMinionType() == MinionTypes.Siege)
+                        {
+                            Vars.W.CastOnUnit(minion);
+                        }
+                    }
                 }
             }
         }
