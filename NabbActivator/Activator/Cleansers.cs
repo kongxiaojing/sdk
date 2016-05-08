@@ -13,13 +13,12 @@ namespace NabbActivator
     internal partial class Activator
     {
         /// <summary>
-        ///     Fired when a buff is added.
+        ///     Called when the game updates itself.
         /// </summary>
-        /// <param name="args">The <see cref="Obj_AI_BaseBuffAddEventArgs" /> instance containing the event data.</param>
-        public static void Cleansers(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
+        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
+        public static void Cleansers(EventArgs args)
         {
-            if (!sender.IsMe ||
-                !Vars.Menu["cleansers"].GetValue<MenuBool>().Value)
+            if (!Vars.Menu["cleansers"].GetValue<MenuBool>().Value)
             {
                 return;
             }
