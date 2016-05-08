@@ -36,19 +36,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LeagueSharp">
-      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.dll</HintPath>
+      <HintPath>C:\Users\utente\Desktop\XD Beta\System\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Data">
-      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.Data.dll</HintPath>
+      <HintPath>C:\Users\utente\Desktop\XD Beta\System\LeagueSharp.Data.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.SDK">
-      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.SDK.dll</HintPath>
+      <HintPath>C:\Users\utente\Desktop\XD Beta\System\LeagueSharp.SDK.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\Users\utente\Desktop\XD\System\SharpDX.dll</HintPath>
+      <HintPath>C:\Users\utente\Desktop\XD Beta\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
-      <HintPath>C:\Users\utente\Desktop\XD\System\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\Users\utente\Desktop\XD Beta\System\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

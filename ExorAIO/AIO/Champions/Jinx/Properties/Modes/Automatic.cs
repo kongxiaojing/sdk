@@ -77,8 +77,10 @@ namespace ExorAIO.Champions.Jinx
                             ///     Enable if:
                             ///     No hero in PowPow Range but 1 or more heroes in FishBones range. (Range Logic).
                             /// </summary>
-                            if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.W.Range)) &&
-                                !GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range)))
+                            if (!GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range) &&
+                                GameObjects.EnemyHeroes.Any(t2 => t2.IsValidTarget(Variables.Orbwalker.ActiveMode == OrbwalkingMode.Hybrid
+                                    ? Vars.Q.Range
+                                    : Vars.W.Range))))
                             {
                                 Console.WriteLine("ExorAIO: Jinx - Combo/Hybrid - Enabled for Range Check.");
                                 Vars.Q.Cast();
@@ -259,11 +261,11 @@ namespace ExorAIO.Champions.Jinx
                             {
                                 /// <summary>
                                 ///     Disable if:
-                                ///     Less than 2 enemies in explosion range from the target. (AOE Logic),
+                                ///     No enemies in explosion range from the target. (AOE Logic),
                                 ///     Any hero in PowPow Range. (Range Logic).
                                 /// </summary>
-                                if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range - 50f)) &&
-                                    (Variables.Orbwalker.GetTarget() as Obj_AI_Hero).CountEnemyHeroesInRange(200f) < 3)
+                                if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range)) &&
+                                    (Variables.Orbwalker.GetTarget() as Obj_AI_Hero).CountEnemyHeroesInRange(200f) < 2)
                                 {
                                     Vars.Q.Cast();
                                     Console.WriteLine("ExorAIO: Jinx - Combo/Hybrid - Disabled.");
@@ -275,7 +277,9 @@ namespace ExorAIO.Champions.Jinx
                             ///     Disable if:
                             ///     No enemies in range. (General Logic).
                             /// </summary>
-                            if (!Targets.Target.IsValidTarget())
+                            if (!Targets.Target.IsValidTarget(Variables.Orbwalker.ActiveMode == OrbwalkingMode.Hybrid
+                                    ? Vars.Q.Range
+                                    : Vars.W.Range))
                             {
                                 Vars.Q.Cast();
                                 Console.WriteLine("ExorAIO: Jinx - General - No Enemies Disable.");

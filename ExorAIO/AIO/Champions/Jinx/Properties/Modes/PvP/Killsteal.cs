@@ -53,7 +53,7 @@ namespace ExorAIO.Champions.Jinx
                         t.IsValidTarget(Vars.R.Range) &&
                         !t.IsValidTarget(Vars.Q.Range) &&
                         Vars.GetRealHealth(t) <
-                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)/2))
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
                     if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => c is Obj_AI_Hero))
                     {

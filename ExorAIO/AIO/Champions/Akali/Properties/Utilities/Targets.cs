@@ -24,7 +24,7 @@ namespace ExorAIO.Champions.Akali
             =>
                 GameObjects.EnemyMinions.Where(
                     m =>
-                        (m.IsMinion() || m.IsPet()) &&
+                        m.IsMinion() &&
                         m.IsValidTarget(Vars.E.Range)).ToList();
 
         /// <summary>
