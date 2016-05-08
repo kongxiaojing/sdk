@@ -34,7 +34,6 @@ namespace ExorAIO.Champions.Jinx
             =>
                 GameObjects.Jungle.Where(
                     m =>
-                        m.IsValidTarget(Vars.Q.Range) &&
-                        !GameObjects.JungleSmall.Contains(m)).ToList();
+                        m.IsValidTarget(Vars.Q.Range)).ToList();
     }
 }

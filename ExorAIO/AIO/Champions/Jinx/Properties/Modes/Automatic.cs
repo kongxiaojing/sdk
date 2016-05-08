@@ -45,15 +45,6 @@ namespace ExorAIO.Champions.Jinx
                         case OrbwalkingMode.Hybrid:
 
                             /// <summary>
-                            ///     Start if:
-                            ///     The target is a valid minion. (Target Check).
-                            /// </summary>
-                            if (!Targets.Target.IsValidTarget())
-                            {
-                                return;
-                            }
-
-                            /// <summary>
                             ///     Enable if:
                             ///     If you are in combo mode, the combo option is enabled. (Option check).
                             /// </summary>
@@ -61,6 +52,7 @@ namespace ExorAIO.Champions.Jinx
                             {
                                 if (!Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
                                 {
+                                    Console.WriteLine("ExorAIO: Jinx - Combo - Option Block.");
                                     return;
                                 }
                             }
@@ -76,28 +68,21 @@ namespace ExorAIO.Champions.Jinx
                                         ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["q"]["harass"]) ||
                                     !Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue)
                                 {
+                                    Console.WriteLine("ExorAIO: Jinx - Hybrid - ManaManager or Option Block.");
                                     return;
                                 }
                             }
 
                             /// <summary>
                             ///     Enable if:
-                            ///     2 Or more enemies in explosion range from the target. (AOE Logic),
                             ///     No hero in PowPow Range but 1 or more heroes in FishBones range. (Range Logic).
                             /// </summary>
-                            if (Variables.Orbwalker.GetTarget() as Obj_AI_Hero != null &&
-                                (Variables.Orbwalker.GetTarget() as Obj_AI_Hero).IsValidTarget())
+                            if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.W.Range)) &&
+                                !GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range)))
                             {
-                                /// <summary>
-                                ///     Disable if:
-                                ///     Less than 2 enemies in explosion range from the target. (AOE Logic),
-                                ///     Any hero in PowPow Range. (Range Logic).
-                                /// </summary>
-                                if ((Variables.Orbwalker.GetTarget() as Obj_AI_Hero).CountEnemyHeroesInRange(200f) >= 2 &&
-                                    !GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range)))
-                                {
-                                    Vars.Q.Cast();
-                                }
+                                Console.WriteLine("ExorAIO: Jinx - Combo/Hybrid - Enabled for Range Check.");
+                                Vars.Q.Cast();
+                                return;
                             }
                             break;
 
@@ -115,50 +100,102 @@ namespace ExorAIO.Champions.Jinx
                                     ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["q"]["clear"]) ||
                                 !Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
                             {
+                                Console.WriteLine("ExorAIO: Jinx - Clear - ManaManager or Option Block.");
                                 return;
                             }
 
                             /// <summary>
-                            ///     Start if:
-                            ///     The target is a valid minion. (Target Check),
+                            ///     LaneClear Logics.
                             /// </summary>
-                            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion != null &&
-                                (Variables.Orbwalker.GetTarget() as Obj_AI_Minion).IsValidTarget())
+                            if (Targets.Minions.Any())
                             {
                                 /// <summary>
                                 ///     Enable if:
-                                ///     No minion in PowPow Range but 1 or more minions in FishBones range. (Lane Range Logic).
-                                ///     Or 2 or more minions in explosion range from the minion target. (Lane AoE Logic).
+                                ///     No minion in PowPow Range and at least 1 minion in Fishbones Range. (Lane Range Logic).
                                 /// </summary>
-                                if (Targets.Minions.Any(
-                                    m =>
-                                        m.IsValidTarget(Vars.Q.Range) &&
-                                        !m.IsValidTarget(Vars.PowPow.Range)))
+                                if (!Targets.Minions.Any(m => m.IsValidTarget(Vars.PowPow.Range)))
                                 {
                                     Vars.Q.Cast();
-                                }
-                                else if (Targets.Minions
-                                        .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >= 3)
-                                {
-                                    Vars.Q.Cast();
+                                    Console.WriteLine("ExorAIO: Jinx - LaneClear - Enabled for Range Check.");
+                                    return;
                                 }
 
                                 /// <summary>
                                 ///     Enable if:
-                                ///     No jungle minion in PowPow Range but 1 or more jungle minions in FishBones range. (Jungle Range Logic).
-                                ///     Or 1 or more jungle minions in explosion range from the jungle minion target. (Jungle AOE Logic).
+                                ///     More or equal than 2 minions in explosion range from the target minion. (Lane AoE Logic).
                                 /// </summary>
-                                if (Targets.JungleMinions.Any(
-                                    m =>
-                                        m.IsValidTarget(Vars.Q.Range) &&
-                                        !m.IsValidTarget(Vars.PowPow.Range)))
+                                else if (Targets.Minions.Count(m2 => m2.Distance(Targets.Minions[0]) < 250f) >= 3)
                                 {
                                     Vars.Q.Cast();
+                                    Console.WriteLine("ExorAIO: Jinx - LaneClear - Enabled for AoE Check.");
+                                    return;
                                 }
-                                else if (Targets.JungleMinions
-                                        .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) >= 2)
+                            }
+
+                            /// <summary>
+                            ///     JungleClear Logics.
+                            /// </summary>
+                            else if (Targets.JungleMinions.Any())
+                            {
+                                /// <summary>
+                                ///     Enable if:
+                                ///     No monster in PowPow Range and at least 1 monster in Fishbones Range.. (Jungle Range Logic).
+                                /// </summary>
+                                if (!Targets.JungleMinions.Any(m => m.IsValidTarget(Vars.PowPow.Range)))
                                 {
                                     Vars.Q.Cast();
+                                    Console.WriteLine("ExorAIO: Jinx - JungleClear - Enabled for Range Check.");
+                                    return;
+                                }
+
+                                /// <summary>
+                                ///     Enable if:
+                                ///     More or equal than 1 monster in explosion range from the target monster. (Lane AoE Logic).
+                                /// </summary>
+                                else if (Targets.JungleMinions.Count(m2 => m2.Distance(Targets.JungleMinions[0]) < 250f) >= 2)
+                                {
+                                    Vars.Q.Cast();
+                                    Console.WriteLine("ExorAIO: Jinx - JungleClear - Enabled for AoE Check.");
+                                    return;
+                                }
+                            }
+                            break;
+
+                        /// <summary>
+                        ///     The Q LastHit Disable Logic.
+                        /// </summary>
+                        case OrbwalkingMode.LastHit:
+
+                            /// <summary>
+                            ///     Start if:
+                            ///     It respects the ManaManager Check, (Mana check).
+                            ///     The LastHit Option is enabled. (Option check).
+                            /// </summary>
+                            if (GameObjects.Player.ManaPercent <
+                                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["q"]["lasthit"]) ||
+                                !Vars.Menu["spells"]["q"]["lasthit"].GetValue<MenuSliderButton>().BValue)
+                            {
+                                Console.WriteLine("ExorAIO: Jinx - LastHit - ManaManager or Option Block.");
+                                return;
+                            }
+                            
+                            /// <summary>
+                            ///     Enable if:
+                            ///     Any killable minion in FishBones Range and no killable minions in PowPow Range. (LastHit Range Logic).
+                            /// </summary>
+                            if (Targets.Minions.Any(
+                                m =>
+                                    !m.IsValidTarget(Vars.PowPow.Range) &&
+                                    m.Health < GameObjects.Player.GetAutoAttackDamage(m) * 1.1))
+                            {
+                                if (!Targets.Minions.Any(
+                                    m =>
+                                        m.IsValidTarget(Vars.PowPow.Range) &&
+                                        m.Health < GameObjects.Player.GetAutoAttackDamage(m)))
+                                {
+                                    Vars.Q.Cast();
+                                    Console.WriteLine("ExorAIO: Jinx - LastHit - Enabled.");
+                                    return;
                                 }
                             }
                             break;
@@ -176,75 +213,11 @@ namespace ExorAIO.Champions.Jinx
                     switch (Variables.Orbwalker.ActiveMode)
                     {
                         /// <summary>
-                        ///     The Q Clear Disable Logics.
+                        ///     The Q Combo Enable Logics,
+                        ///     The Q Harass Enable Logics.
                         /// </summary>
-                        case OrbwalkingMode.LaneClear:
-
-                            /// <summary>
-                            ///     Disable if:
-                            ///     Doesn't respect the ManaManager Check, (Mana check).
-                            ///     The Clear Option is disabled. (Option check).
-                            /// </summary>
-                            if (GameObjects.Player.ManaPercent <
-                                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) ||
-                                !Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
-                            {
-                                Vars.Q.Cast();
-                            }
-
-                            /// <summary>
-                            ///     Disable if:
-                            ///     The target is not a valid minion. (Target Check).
-                            /// </summary>
-                            if (Variables.Orbwalker.GetTarget() as Obj_AI_Minion != null &&
-                                (Variables.Orbwalker.GetTarget() as Obj_AI_Minion).IsValidTarget())
-                            {
-                                /// <summary>
-                                ///     Disable if:
-                                ///     Any minion in PowPow Range. (Lane Range Logic).
-                                ///     And less than 2 minions in explosion range from the minion target (Lane AoE Logic).
-                                /// </summary>
-                                if (!Targets.Minions.Any(
-                                    m =>
-                                        m.IsValidTarget(Vars.Q.Range) &&
-                                        !m.IsValidTarget(Vars.PowPow.Range)))
-                                {
-                                    Vars.Q.Cast();
-                                }
-                                else if (Targets.Minions
-                                        .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 250f) < 3)
-                                {
-                                    Vars.Q.Cast();
-                                }
-
-                                /// <summary>
-                                ///     Disable if:
-                                ///     Any minion in PowPow range. (Jungle Range Logic).
-                                ///     And no minions in explosion range from the minion target (Jungle AoE Logic).
-                                /// </summary>
-                                if (!Targets.JungleMinions.Any(
-                                    m =>
-                                        m.IsValidTarget(Vars.Q.Range) &&
-                                        !m.IsValidTarget(Vars.PowPow.Range)))
-                                {
-                                    Vars.Q.Cast();
-                                }
-                                else if (Targets.JungleMinions
-                                        .Count(m2 => m2.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 200f) < 2)
-                                {
-                                    Vars.Q.Cast();
-                                }
-                            }
-                            else
-                            {
-                                Vars.Q.Cast();
-                            }
-                            break;
-
-                        /// <summary>
-                        ///     General Q disabling logic.
-                        /// </summary>
-                        default:
+                        case OrbwalkingMode.Combo:
+                        case OrbwalkingMode.Hybrid:
 
                             /// <summary>
                             ///     Disable if:
@@ -255,6 +228,8 @@ namespace ExorAIO.Champions.Jinx
                                 if (!Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
                                 {
                                     Vars.Q.Cast();
+                                    Console.WriteLine("ExorAIO: Jinx - Combo - Option Disable.");
+                                    return;
                                 }
                             }
 
@@ -270,6 +245,8 @@ namespace ExorAIO.Champions.Jinx
                                     !Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue)
                                 {
                                     Vars.Q.Cast();
+                                    Console.WriteLine("ExorAIO: Jinx - Mixed - ManaManager or Option Disable.");
+                                    return;
                                 }
                             }
 
@@ -285,16 +262,122 @@ namespace ExorAIO.Champions.Jinx
                                 ///     Less than 2 enemies in explosion range from the target. (AOE Logic),
                                 ///     Any hero in PowPow Range. (Range Logic).
                                 /// </summary>
-                                if ((Variables.Orbwalker.GetTarget() as Obj_AI_Hero).CountEnemyHeroesInRange(200f) < 2 &&
-                                    GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range)))
+                                if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range - 50f)) &&
+                                    (Variables.Orbwalker.GetTarget() as Obj_AI_Hero).CountEnemyHeroesInRange(200f) < 3)
                                 {
                                     Vars.Q.Cast();
+                                    Console.WriteLine("ExorAIO: Jinx - Combo/Hybrid - Disabled.");
+                                    return;
                                 }
                             }
-                            else
+
+                            /// <summary>
+                            ///     Disable if:
+                            ///     No enemies in range. (General Logic).
+                            /// </summary>
+                            if (!Targets.Target.IsValidTarget())
                             {
                                 Vars.Q.Cast();
+                                Console.WriteLine("ExorAIO: Jinx - General - No Enemies Disable.");
+                                return;
                             }
+                            break;
+
+                        /// <summary>
+                        ///     The Q Clear Disable Logics.
+                        /// </summary>
+                        case OrbwalkingMode.LaneClear:
+
+                            /// <summary>
+                            ///     Disable if:
+                            ///     Doesn't respect the ManaManager Check, (Mana check).
+                            ///     The Clear Option is disabled. (Option check).
+                            /// </summary>
+                            if (GameObjects.Player.ManaPercent <
+                                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["q"]["clear"]) ||
+                                !Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
+                            {
+                                Vars.Q.Cast();
+                                Console.WriteLine("ExorAIO: Jinx - Clear - ManaManager or Option Disable.");
+                                return;
+                            }
+
+                            /// <summary>
+                            ///     Disable if:
+                            ///     There is at least 1 minion in PowPow Range.. (Lane Range Logic).
+                            ///     .. And less than 2 minions in explosion range from the minion target (Lane AoE Logic).
+                            /// </summary>
+                            if (Targets.Minions.Any(m => m.IsValidTarget(Vars.PowPow.Range)) &&
+                                Targets.Minions.Count(m2 => m2.Distance(Targets.Minions[0]) < 250f) < 3)
+                            {
+                                Vars.Q.Cast();
+                                Console.WriteLine("ExorAIO: Jinx - LaneClear - Disabled.");
+                                return;
+                            }
+
+                            /// <summary>
+                            ///     Disable if:
+                            ///     There is at least 1 monster in PowPow Range.. (Jungle Range Logic).
+                            ///     .. And less than 1 monster in explosion range from the monster target (Jungle AoE Logic).
+                            /// </summary>
+                            else if (Targets.JungleMinions.Any(m => m.IsValidTarget(Vars.PowPow.Range)) &&
+                                Targets.JungleMinions.Count(m2 => m2.Distance(Targets.JungleMinions[0]) < 250f) < 2)
+                            {
+                                Vars.Q.Cast();
+                                Console.WriteLine("ExorAIO: Jinx - JungleClear - Disabled.");
+                                return;
+                            }
+                            break;
+
+                        /// <summary>
+                        ///     The Q LastHit Disable Logic.
+                        /// </summary>
+                        case OrbwalkingMode.LastHit:
+
+                            /// <summary>
+                            ///     Disable if:
+                            ///     Doesn't respect the ManaManager Check, (Mana check).
+                            ///     The LastHit Option is disabled. (Option check).
+                            /// </summary>
+                            if (GameObjects.Player.ManaPercent <
+                                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["q"]["lasthit"]) ||
+                                !Vars.Menu["spells"]["q"]["lasthit"].GetValue<MenuSliderButton>().BValue)
+                            {
+                                Vars.Q.Cast();
+                                Console.WriteLine("ExorAIO: Jinx - LastHit - ManaManager or Option Disable.");
+                                return;
+                            }
+                            
+                            /// <summary>
+                            ///     Disable if:
+                            ///     No killable minion in FishBones Range. (LastHit Range Logic).
+                            /// </summary>
+                            if (!Targets.Minions.Any(
+                                m =>
+                                    !m.IsValidTarget(Vars.PowPow.Range) &&
+                                    m.Health < GameObjects.Player.GetAutoAttackDamage(m) * 1.1))
+                            {
+                                Vars.Q.Cast();
+                                Console.WriteLine("ExorAIO: Jinx - LastHit - Range Killable Disable.");
+                                return;
+                            }
+                            else if (Targets.Minions.Any(
+                                m =>
+                                    m.IsValidTarget(Vars.PowPow.Range) &&
+                                    m.Health < GameObjects.Player.GetAutoAttackDamage(m)))
+                            {
+                                Vars.Q.Cast();
+                                Console.WriteLine("ExorAIO: Jinx - LastHit - Normally Killable Disable.");
+                                return;
+                            }
+                            break;
+
+                        /// <summary>
+                        ///     The General Q Disable Logic.
+                        /// </summary>
+                        default:
+                            Vars.Q.Cast();
+                            Console.WriteLine("ExorAIO: Jinx - General - Disabled.");
                             break;
                     }
                 }
@@ -365,9 +448,9 @@ namespace ExorAIO.Champions.Jinx
                         /// <summary>
                         ///     Block if:
                         ///     It doesn't respect the ManaManager Check, (Mana check),
-                        ///     The Clear Option isn't enabled. (Option check).
                         /// </summary>
-                        if (GameObjects.Player.ManaPercent < ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["manamanager"]))
+                        if (GameObjects.Player.ManaPercent <
+                                ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["q"]["clear"]))
                         {
                             args.Process = false;
                         }
