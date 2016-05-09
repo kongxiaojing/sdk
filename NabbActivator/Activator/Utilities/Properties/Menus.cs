@@ -48,6 +48,7 @@ namespace NabbActivator
                 /// </summary>
                 Vars.SmiteMenu = new Menu("smite", "Smite Menu");
                 {
+                    Vars.SmiteMenu.Add(new MenuBool("combo",     "Combo",                                true));
                     Vars.SmiteMenu.Add(new MenuBool("killsteal", "KillSteal",                            true));
                     Vars.SmiteMenu.Add(new MenuBool("limit",     "Only on Dragon/Baron/Herald"               ));
                     Vars.SmiteMenu.Add(new MenuBool("stacks",    "Keep 1 Stack for Dragon/Baron/Herald", true));

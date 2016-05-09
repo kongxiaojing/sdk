@@ -116,6 +116,17 @@ namespace NabbActivator
                 /// <summary>
                 ///     The Killsteal Smite Logic.
                 /// </summary>
+                if (Vars.Menu["smite"]["combo"].GetValue<MenuBool>().Value)
+                {
+                    if (Variables.Orbwalker.GetTarget() as Obj_AI_Hero != null) 
+                    {
+                        GameObjects.Player.Spellbook.CastSpell(SpellSlots.GetSmiteSlot(), Variables.Orbwalker.GetTarget() as Obj_AI_Hero);
+                    }
+                }
+
+                /// <summary>
+                ///     The Killsteal Smite Logic.
+                /// </summary>
                 if (Vars.Menu["smite"]["killsteal"].GetValue<MenuBool>().Value)
                 {
                     if (GameObjects.Player.HasBuff("smitedamagetrackerstalker") ||
