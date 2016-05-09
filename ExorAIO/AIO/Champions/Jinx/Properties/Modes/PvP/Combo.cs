@@ -62,7 +62,13 @@ namespace ExorAIO.Champions.Jinx
             if (Vars.R.IsReady() &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
-                Vars.R.CastIfWillHit(GameObjects.EnemyHeroes.Where(t => t.Health < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)).First(), 2);
+                if (GameObjects.EnemyHeroes.Count(
+                    t =>
+                        t.HealthPercent < 50 &&
+                        t.IsValidTarget(Vars.R.Range)) >= 2)
+                {
+                    Vars.R.CastIfWillHit(Targets.Target, 2);
+                }
             }
         }
     }

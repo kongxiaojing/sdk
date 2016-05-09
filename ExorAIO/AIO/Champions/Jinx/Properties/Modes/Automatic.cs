@@ -111,6 +111,7 @@ namespace ExorAIO.Champions.Jinx
                             /// </summary>
                             if (Targets.Minions.Any())
                             {
+                                /*
                                 /// <summary>
                                 ///     Enable if:
                                 ///     No minion in PowPow Range and at least 1 minion in Fishbones Range. (Lane Range Logic).
@@ -121,12 +122,13 @@ namespace ExorAIO.Champions.Jinx
                                     Console.WriteLine("ExorAIO: Jinx - LaneClear - Enabled for Range Check.");
                                     return;
                                 }
-
+                                */
+                                
                                 /// <summary>
                                 ///     Enable if:
                                 ///     More or equal than 2 minions in explosion range from the target minion. (Lane AoE Logic).
                                 /// </summary>
-                                else if (Targets.Minions.Count(m2 => m2.Distance(Targets.Minions[0]) < 250f) >= 3)
+                                if (Targets.Minions.Count(m2 => m2.Distance(Targets.Minions[0]) < 250f) >= 3)
                                 {
                                     Vars.Q.Cast();
                                     Console.WriteLine("ExorAIO: Jinx - LaneClear - Enabled for AoE Check.");
