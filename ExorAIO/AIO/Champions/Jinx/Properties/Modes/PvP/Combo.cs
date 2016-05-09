@@ -47,7 +47,7 @@ namespace ExorAIO.Champions.Jinx
             ///     The W Combo Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                !Targets.Target.IsUnderEnemyTurret() &&
+                !GameObjects.Player.IsUnderEnemyTurret() &&
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {

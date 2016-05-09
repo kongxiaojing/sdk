@@ -17,8 +17,8 @@ namespace ExorAIO.Champions.Vayne
         {
             Vars.Q = new Spell(SpellSlot.Q, Vars.AARange + 300f);
             Vars.W = new Spell(SpellSlot.W);
-            Vars.E = new Spell(SpellSlot.E, Vars.AARange);
-            Vars.E2 = new Spell(SpellSlot.E, Vars.AARange);
+            Vars.E = new Spell(SpellSlot.E, 550f + GameObjects.Player.BoundingRadius);
+            Vars.E2 = new Spell(SpellSlot.E, 550f + GameObjects.Player.BoundingRadius);
             Vars.R = new Spell(SpellSlot.R);
 
             Vars.E.SetSkillshot(0.42f, 50f, 1000f, false, SkillshotType.SkillshotLine);

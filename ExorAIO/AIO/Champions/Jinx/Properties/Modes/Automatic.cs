@@ -380,6 +380,7 @@ namespace ExorAIO.Champions.Jinx
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
+                !GameObjects.Player.IsUnderEnemyTurret() &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
