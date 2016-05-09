@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -31,7 +32,8 @@ namespace ExorAIO.Champions.Ryze
                 /// <summary>
                 ///     The Tear Stacking Logic.
                 /// </summary>
-                if (Bools.HasTear(GameObjects.Player) &&
+                if (!Targets.Minions.Any() &&
+                    Bools.HasTear(GameObjects.Player) &&
                     GameObjects.Player.CountEnemyHeroesInRange(1500) == 0 &&
                     Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                     GameObjects.Player.ManaPercent >
