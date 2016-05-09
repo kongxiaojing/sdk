@@ -20,8 +20,7 @@ namespace ExorAIO.Champions.Cassiopeia
         public static void Combo(EventArgs args)
         {
             if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget() ||
-                Invulnerable.Check(Targets.Target))
+                !Targets.Target.IsValidTarget())
             {
                 return;
             }
@@ -39,6 +38,11 @@ namespace ExorAIO.Champions.Cassiopeia
                 {
                     Vars.E.CastOnUnit(Targets.Target);
                 });
+            }
+
+            if (Invulnerable.Check(Targets.Target, DamageType.Magical))
+            {
+                return;
             }
 
             /// <summary>

@@ -29,11 +29,10 @@ namespace ExorAIO.Champions.Tristana
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.R.Range) &&
-                        Vars.GetRealHealth(t) > GameObjects.Player.GetAutoAttackDamage(t)*3))
+                        t.IsValidTarget(Vars.R.Range)))
                 {
-                    if (Vars.GetRealHealth(target) < (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.R) +
-                            (target.HasBuff("TristanaECharge")
+                    if (Vars.GetRealHealth(target) <
+                            (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.R) + (target.HasBuff("TristanaECharge")
                                 ? (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.E) +
                                   (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff)
                                 : 0))
