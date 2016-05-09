@@ -272,19 +272,6 @@ namespace ExorAIO.Champions.Jinx
                                     return;
                                 }
                             }
-
-                            /// <summary>
-                            ///     Disable if:
-                            ///     No enemies in range. (General Logic).
-                            /// </summary>
-                            if (!Targets.Target.IsValidTarget(Variables.Orbwalker.ActiveMode == OrbwalkingMode.Hybrid
-                                    ? Vars.Q.Range
-                                    : Vars.W.Range))
-                            {
-                                Vars.Q.Cast();
-                                Console.WriteLine("ExorAIO: Jinx - General - No Enemies Disable.");
-                                return;
-                            }
                             break;
 
                         /// <summary>

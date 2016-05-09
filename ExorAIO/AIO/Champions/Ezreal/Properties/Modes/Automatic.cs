@@ -89,7 +89,7 @@ namespace ExorAIO.Champions.Ezreal
                     break;
 
                 default:
-                    return;
+                    break;
             }
 
             /// <summary>
