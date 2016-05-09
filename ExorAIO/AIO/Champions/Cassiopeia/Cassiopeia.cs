@@ -117,6 +117,7 @@ namespace ExorAIO.Champions.Cassiopeia
             if (Vars.R.IsReady() &&
                 !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.R.Range) &&
+                args.Sender.IsFacing(GameObjects.Player) &&
                 Vars.Menu["spells"]["r"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.R.Cast(args.Sender.ServerPosition);
