@@ -85,12 +85,13 @@ namespace NabbActivator
                 GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(1500f)) &&
                 (
                    GameObjects.Player.HasBuffOfType(BuffType.Suppression) ||
-                   GameObjects.Player.HasBuff("ThreshQ") ||
+                   GameObjects.Player.HasBuff("ThreshQ") /* ||
                    GameObjects.Player.HasBuff("zedrdeathmark") ||
                    GameObjects.Player.HasBuff("summonerexhaust") ||
                    GameObjects.Player.HasBuff("fizzmarinerdoombomb") ||
                    GameObjects.Player.HasBuff("vladimirhemoplague") ||
                    GameObjects.Player.HasBuff("mordekaiserchildrenofthegrave")
+                   */
                 );
         }
     }
