@@ -66,7 +66,8 @@ namespace ExorAIO.Champions.Ezreal
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("antigrab", "Anti-Grab", true));
+                    Vars.EMenu.Add(new MenuBool("antigrab",  "Anti-Grab",      true));
+                    Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

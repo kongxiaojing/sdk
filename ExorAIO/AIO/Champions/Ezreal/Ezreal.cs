@@ -5,6 +5,7 @@ using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Ezreal
 {
@@ -145,6 +146,25 @@ namespace ExorAIO.Champions.Ezreal
                         t =>
                             t.ChampionName.Equals("Blitzcrank")).ServerPosition, -Vars.E.Range));
                 }
+            }
+        }
+
+        /// <summary>
+        ///     Fired on an incoming gapcloser.
+        /// </summary>
+        /// <param name="sender">The object.</param>
+        /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
+        public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
+        {
+            if (Vars.E.IsReady() &&
+                args.Sender.IsMelee &&
+                args.Sender.IsValidTarget(Vars.E.Range) &&
+                args.SkillType == GapcloserType.Targeted &&
+                GameObjects.Player.Distance(args.End) <
+                    args.Sender.GetRealAutoAttackRange(args.Sender) &&
+                Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
+            {
+                Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, -Vars.E.Range));
             }
         }
     }
