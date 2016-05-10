@@ -70,7 +70,7 @@ namespace ExorAIO.Champions.Graves
                     GameObjects.EnemyHeroes.Where(
                         t =>
                             !Invulnerable.Check(t) &&
-                            !t.IsValidTarget(Vars.E.Range) &&
+                            !t.IsValidTarget(Vars.AARange) &&
                             t.IsValidTarget(Vars.R.Range+150f) &&
                             Vars.GetRealHealth(t) <
                                 (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R, (t.IsValidTarget(Vars.R.Range)
