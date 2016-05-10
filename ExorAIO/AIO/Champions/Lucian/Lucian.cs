@@ -5,6 +5,7 @@ using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.Utils;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Lucian
 {
@@ -145,8 +146,11 @@ namespace ExorAIO.Champions.Lucian
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (Vars.E.IsReady() &&
-                args.IsDirectedToPlayer &&
+                args.Sender.IsMelee &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
+                args.SkillType == GapcloserType.Targeted &&
+                GameObjects.Player.Distance(args.End) <
+                    args.Sender.GetRealAutoAttackRange(args.Sender) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, -(Vars.E.Range - Vars.AARange)));
