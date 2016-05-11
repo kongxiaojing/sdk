@@ -3,6 +3,7 @@ using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Jhin
@@ -16,6 +17,17 @@ namespace ExorAIO.Champions.Jhin
         ///     The main hero target.
         /// </summary>
         public static Obj_AI_Hero Target => Variables.TargetSelector.GetTarget(Vars.R.Range, DamageType.Physical);
+
+        /// <summary>
+        ///     The R targets.
+        /// </summary>
+        public static List<Obj_AI_Hero> RTargets
+            =>
+                GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.R.Range) &&
+                        Vars.Menu["spells"]["r"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value).ToList();
 
         /// <summary>
         ///     The minions target.

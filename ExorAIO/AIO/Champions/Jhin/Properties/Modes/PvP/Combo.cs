@@ -19,8 +19,7 @@ namespace ExorAIO.Champions.Jhin
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
-            if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget())
+            if (Bools.HasSheenBuff())
             {
                 return;
             }
@@ -32,13 +31,18 @@ namespace ExorAIO.Champions.Jhin
                 Vars.R.Instance.Name.Equals("JhinRShot") &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.R.Range)))
+                if (Targets.RTargets.Any())
                 {
-                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
-                    return;
+                    if (Vars.Menu["spells"]["r"]["nearmouse"].GetValue<MenuBool>().Value)
+                    {
+                        Vars.R.Cast(Vars.R.GetPrediction(Targets.RTargets.OrderBy(t => t.Distance(Game.CursorPos)).FirstOrDefault()).UnitPosition);
+                        return;
+                    }
+                    else
+                    {
+                        Vars.R.Cast(Vars.R.GetPrediction(Targets.RTargets.FirstOrDefault()).UnitPosition);
+                        return;
+                    }
                 }
 
                 Vars.R.Cast(Game.CursorPos);

@@ -77,8 +77,26 @@ namespace ExorAIO.Champions.Jhin
                 {
                     Vars.RMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal", true));
+                    Vars.RMenu.Add(new MenuBool("nearmouse", "Focus the enemy nearest to your cursor"));
                     Vars.RMenu.Add(
                         new MenuSeparator("separator", "- You need to manually start the Ultimate. -"));
+                    {
+                        /// <summary>
+                        ///     Sets the menu for the R Whitelist.
+                        /// </summary>
+                        Vars.WhiteList2Menu = new Menu("whitelist", "R: Whitelist Menu", true);
+                        {
+                            foreach (var target in GameObjects.EnemyHeroes)
+                            {
+                                Vars.WhiteListMenu.Add(
+                                    new MenuBool(
+                                        target.ChampionName.ToLower(),
+                                        $"Use against: {target.ChampionName}",
+                                        true));
+                            }
+                        }
+                        Vars.RMenu.Add(Vars.WhiteList2Menu);
+                    }
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
             }

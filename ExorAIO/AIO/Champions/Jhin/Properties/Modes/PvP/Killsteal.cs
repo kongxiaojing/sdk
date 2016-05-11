@@ -32,16 +32,16 @@ namespace ExorAIO.Champions.Jhin
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         GameObjects.Player.IsFacing(t) &&
-                        !Vars.R.GetPrediction(t).CollisionObjects.Any(
-                            c =>
-                                GameObjects.EnemyHeroes.Contains(c)) &&
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R, (Vars.ShotsCount == 3
                                 ? DamageStage.Empowered
                                 : DamageStage.Default))))
                 {
-                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
-                    return;
+                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => GameObjects.EnemyHeroes.Contains(c)))
+                    {
+                        Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
+                        return;
+                    }
                 }
             }
 
