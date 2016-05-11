@@ -35,8 +35,9 @@ namespace ExorAIO.Champions.Cassiopeia
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("combo",   "Combo",   true));
-                    Vars.WMenu.Add(new MenuBool("logical", "Logical", true));
+                    Vars.WMenu.Add(new MenuBool("combo",     "Combo",          true));
+                    Vars.WMenu.Add(new MenuBool("logical",   "Logical",        true));
+                    Vars.WMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
                     Vars.WMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
                     Vars.WMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  50, 0, 99, true));
                 }

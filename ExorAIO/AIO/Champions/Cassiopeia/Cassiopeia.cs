@@ -97,10 +97,19 @@ namespace ExorAIO.Champions.Cassiopeia
         /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
+            if (Vars.W.IsReady() &&
+                args.Sender.IsValidTarget(Vars.W.Range) &&
+                GameObjects.Player.Distance(args.End) > 550 &&
+                Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
+            {
+                Vars.W.Cast(args.End);
+                return;
+            }
+
             if (Vars.R.IsReady() &&
-                args.IsDirectedToPlayer &&
                 !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.R.Range) &&
+                args.Sender.IsFacing(GameObjects.Player) &&
                 Vars.Menu["spells"]["r"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.R.Cast(args.End);

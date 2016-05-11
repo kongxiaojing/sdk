@@ -80,7 +80,7 @@ namespace ExorAIO.Champions.Jhin
                         !t.IsValidTarget(Vars.AARange) &&
                         t.IsValidTarget(Vars.W.Range-100f) &&
                         Vars.GetRealHealth(t) <
-                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W, DamageStage.Empowered)))
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                 }
