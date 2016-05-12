@@ -84,7 +84,12 @@ namespace ExorAIO.Champions.Anivia
                     ///     The Q Clear Logic.
                     /// </summary>
                     case OrbwalkingMode.LaneClear:
-                    
+
+                        if (Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
+                        {
+                            return;
+                        }
+
                         if (Anivia.QMissile.Position.CountEnemyHeroesInRange(Vars.Q.Width*2-10f) > 0)
                         {
                             Vars.Q.Cast();
@@ -99,6 +104,12 @@ namespace ExorAIO.Champions.Anivia
                     ///     The Default Q Logic.
                     /// </summary>
                     default:
+
+                        if (Vars.Menu["spells"]["q"]["combo"].GetValue<MenuSliderButton>().BValue)
+                        {
+                            return;
+                        }
+
                         if (Anivia.QMissile.Position.CountEnemyHeroesInRange(Vars.Q.Width*2-10f) > 0)
                         {
                             Vars.Q.Cast();
@@ -122,6 +133,17 @@ namespace ExorAIO.Champions.Anivia
                     ///     The R Clear Logic.
                     /// </summary>
                     case OrbwalkingMode.LaneClear:
+
+                        if (Vars.Menu["spells"]["r"]["clear"].GetValue<MenuSliderButton>().BValue)
+                        {
+                            return;
+                        }
+
+                        if (GameObjects.Player.ManaPercent <
+                                ManaManager.GetNeededMana(Vars.R.Slot, Vars.Menu["spells"]["r"]["clear"]))
+                        {
+                            Vars.R.Cast();
+                        }
                         if (!Targets.RMinions.Any())
                         {
                             Vars.R.Cast();
@@ -132,6 +154,12 @@ namespace ExorAIO.Champions.Anivia
                     ///     The Default R Logic.
                     /// </summary>
                     default:
+
+                        if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().BValue)
+                        {
+                            return;
+                        }
+
                         if (Anivia.RMissile.Position.CountEnemyHeroesInRange(Vars.R.Width+250f) < 1)
                         {
                             Vars.R.Cast();
