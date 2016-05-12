@@ -88,7 +88,7 @@ namespace ExorAIO.Champions.Jhin
                         {
                             foreach (var target in GameObjects.EnemyHeroes)
                             {
-                                Vars.WhiteListMenu.Add(
+                                Vars.WhiteList2Menu.Add(
                                     new MenuBool(
                                         target.ChampionName.ToLower(),
                                         $"Use against: {target.ChampionName}",
