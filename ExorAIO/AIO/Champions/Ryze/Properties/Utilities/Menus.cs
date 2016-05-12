@@ -71,7 +71,7 @@ namespace ExorAIO.Champions.Ryze
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
                 Vars.MiscMenu.Add(new MenuSliderButton("tear",    "Stack Tear / if Mana >= x%", 75, 1, 95, true));
-                Vars.MiscMenu.Add(new MenuSliderButton("stacks",  "Keep Passive Stacks:",        3, 1, 4,  true));
+                Vars.MiscMenu.Add(new MenuSliderButton("stacks",  "Keep Passive Stacks:",        1, 1, 4,  true));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

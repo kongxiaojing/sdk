@@ -35,22 +35,38 @@ namespace ExorAIO.Champions.Ryze
             ///     The R Combo Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                Invulnerable.Check(Targets.Target) &&
                 GameObjects.Player.ManaPercent > 20 &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
-                Vars.R.Cast();
+                if (!GameObjects.Player.HasBuff("RyzePassiveCharged") &&
+                    GameObjects.Player.GetBuffCount("RyzePassiveStack") == 0)
+                {
+                    return;
+                }
+
+                if (!Vars.Q.IsReady() &&
+                    GameObjects.Player.GetBuffCount("RyzePassiveStack") == 3)
+                {
+                    Vars.R.Cast();
+                }
+                else if (GameObjects.Player.GetBuffCount("RyzePassiveStack") < 3)
+                {
+                    Vars.R.Cast();
+                }
             }
 
             /// <summary>
             ///     The W Combo Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                !Invulnerable.Check(Targets.Target) &
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
-                Vars.W.CastOnUnit(Targets.Target);
+                if (GameObjects.Player.HasBuff("RyzePassiveCharged") ||
+                    GameObjects.Player.GetBuffCount("RyzePassiveStack") != 0)
+                {
+                    Vars.W.CastOnUnit(Targets.Target);
+                }
             }
 
             /// <summary>
@@ -70,7 +86,11 @@ namespace ExorAIO.Champions.Ryze
                 Targets.Target.IsValidTarget(Vars.E.Range) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
-                Vars.E.CastOnUnit(Targets.Target);
+                if (GameObjects.Player.HasBuff("RyzePassiveCharged") ||
+                    GameObjects.Player.GetBuffCount("RyzePassiveStack") != 0)
+                {
+                    Vars.E.CastOnUnit(Targets.Target);
+                }
             }
         }
     }
