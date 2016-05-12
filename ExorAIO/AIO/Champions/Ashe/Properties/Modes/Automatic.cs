@@ -52,7 +52,7 @@ namespace ExorAIO.Champions.Ashe
                 GameObjects.Player.CountEnemyHeroesInRange(1000f) == 0 &&
                 GameObjects.Player.ManaPercent >
                     ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["vision"]) &&
-                Vars.Menu["spells"]["e"]["vision"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["vision"].GetValue<MenuSliderButton>().BValue)
             {
                 if (GameObjects.EnemyHeroes.Any(
                     x =>

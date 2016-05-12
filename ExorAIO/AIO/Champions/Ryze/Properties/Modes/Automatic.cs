@@ -59,10 +59,12 @@ namespace ExorAIO.Champions.Ryze
                 ///     The Passive Stacking Logic.
                 /// </summary>
                 if (!GameObjects.Player.HasBuff("RyzePassiveCharged") &&
-                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
+                    Variables.Orbwalker.ActiveMode == OrbwalkingMode.None &&
                     Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().BValue &&
                     Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().SValue >
-                        GameObjects.Player.GetBuffCount("RyzePassiveStack"))
+                        GameObjects.Player.GetBuffCount("RyzePassiveStack") &&
+                    GameObjects.Player.ManaPercent >=
+                        Vars.Menu["miscellaneous"]["stacksmana"].GetValue<MenuSlider>().Value)
                 {
                     Vars.Q.Cast(Game.CursorPos);
                 }
