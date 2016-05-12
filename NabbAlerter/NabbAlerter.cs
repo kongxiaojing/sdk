@@ -91,6 +91,15 @@ namespace NabbAlerter
                 }
 
                 /// <summary>
+                ///     Irelia can cast R multiple times, let's just not spam it once she already casted R.
+                /// </summary>
+                if ((sender as Obj_AI_Hero).ChampionName.Equals("Irelia") &&
+                    (sender as Obj_AI_Hero).HasBuff("IreliaTrascendentBladesSpell"))
+                {
+                    return;
+                }
+
+                /// <summary>
                 ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
                 /// </summary>
                 DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
