@@ -70,6 +70,7 @@ namespace ExorAIO.Champions.Ryze
             /// </summary>
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
+                Vars.MiscMenu.Add(new MenuBool("noaa", "Don't AA in Combo", true));
                 Vars.MiscMenu.Add(new MenuSliderButton("tear",    "Stack Tear / if Mana >= x%", 75, 1, 95, true));
                 Vars.MiscMenu.Add(new MenuSliderButton("stacks",  "Keep Passive Stacks:",        1, 1, 4,  true));
             }
