@@ -62,6 +62,12 @@ namespace ExorAIO.Champions.Ryze
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
+                if (!Vars.Q.IsReady() &&
+                    GameObjects.Player.GetBuffCount("RyzePassiveStack") == 1)
+                {
+                    return;
+                }
+
                 if (GameObjects.Player.HasBuff("RyzePassiveCharged") ||
                     GameObjects.Player.GetBuffCount("RyzePassiveStack") != 0)
                 {
@@ -86,6 +92,12 @@ namespace ExorAIO.Champions.Ryze
                 Targets.Target.IsValidTarget(Vars.E.Range) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
+                if (!Vars.Q.IsReady() &&
+                    GameObjects.Player.GetBuffCount("RyzePassiveStack") == 1)
+                {
+                    return;
+                }
+
                 if (GameObjects.Player.HasBuff("RyzePassiveCharged") ||
                     GameObjects.Player.GetBuffCount("RyzePassiveStack") != 0)
                 {
