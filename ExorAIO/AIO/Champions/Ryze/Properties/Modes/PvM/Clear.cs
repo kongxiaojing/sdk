@@ -113,10 +113,7 @@ namespace ExorAIO.Champions.Ryze
                 /// </summary>
                 if (Targets.Minions.Any())
                 {
-                    if (Targets.Minions.Count(m => m.Distance(Targets.Minions[0]) < 200f) >= 3)
-                    {
-                        Vars.E.CastOnUnit(Targets.Minions[0]);
-                    }
+                    Vars.E.CastOnUnit(Targets.Minions[0]);
                 }
 
                 /// <summary>
