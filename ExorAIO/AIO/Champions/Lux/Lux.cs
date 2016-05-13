@@ -16,7 +16,7 @@ namespace ExorAIO.Champions.Lux
         /// <summary>
         ///     Defines the missile object for the E.
         /// </summary>
-        public static GameObject EMissile;
+        public static GameObject EMissile = null;
 
         /// <summary>
         ///     Loads Lux.
@@ -45,39 +45,27 @@ namespace ExorAIO.Champions.Lux
         }
 
         /// <summary>
-        ///     Called when an object gets created by the game.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
-        public static void OnCreate(GameObject obj, EventArgs args)
-        {
-            if (obj.IsValid &&
-                obj.Name.Equals("LuxLightstrike_tar_"))
-            {
-                EMissile = obj;
-            }
-        }
-
-        /// <summary>
-        ///     Called when an object gets deleted by the game.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
-        public static void OnDelete(GameObject obj, EventArgs args)
-        {
-            if (obj.IsValid &&
-                obj.Name.Contains("LuxLightstrike_tar_"))
-            {
-                EMissile = null;
-            }
-        }
-
-        /// <summary>
         ///     Fired when the game is updated.
         /// </summary>
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void OnUpdate(EventArgs args)
         {
+            GameObject.OnCreate += delegate(GameObject obj, EventArgs args2)
+            {
+                if (obj.Name.Contains("Lux_Base_E_tar"))
+                {
+                    EMissile = obj;
+                }
+            };
+
+            GameObject.OnDelete += delegate(GameObject obj, EventArgs args2)
+            {
+                if (obj.Name.Contains("Lux_Base_E_tar"))
+                {
+                    EMissile = null;
+                }
+            };
+
             if (GameObjects.Player.IsDead)
             {
                 return;

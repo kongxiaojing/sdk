@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Lux
                     ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["harass"]) &&
                 Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue)
             {
-                Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition);
+                Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).UnitPosition);
             }
         }
     }

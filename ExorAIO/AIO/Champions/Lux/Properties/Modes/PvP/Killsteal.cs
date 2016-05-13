@@ -51,7 +51,7 @@ namespace ExorAIO.Champions.Lux
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
-                    if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => Targets.Minions.Contains(c)) <= 1)
+                    if (Vars.Q.GetPrediction(target).CollisionObjects.Count(c => Targets.Minions.Contains(c)) <= 1)
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                         return;

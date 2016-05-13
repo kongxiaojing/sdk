@@ -1,4 +1,5 @@
 using LeagueSharp;
+using LeagueSharp.SDK;
 
 namespace ExorAIO.Champions.Lux
 {
@@ -13,6 +14,7 @@ namespace ExorAIO.Champions.Lux
         public static void Initialize()
         {
             Game.OnUpdate += Lux.OnUpdate;
+            Events.OnGapCloser += Lux.OnGapCloser;
         }
     }
 }
