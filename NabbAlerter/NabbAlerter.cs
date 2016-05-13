@@ -40,6 +40,12 @@ namespace NabbAlerter
                 return;
             }
 
+            if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
+                Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
+            {
+                return;
+            }
+
             if (sender == null)
             {
                 return;
