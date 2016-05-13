@@ -105,7 +105,7 @@ namespace ExorAIO.Champions.Anivia
                     /// </summary>
                     default:
 
-                        if (Vars.Menu["spells"]["q"]["combo"].GetValue<MenuSliderButton>().BValue)
+                        if (Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
                         {
                             return;
                         }
@@ -155,7 +155,7 @@ namespace ExorAIO.Champions.Anivia
                     /// </summary>
                     default:
 
-                        if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().BValue)
+                        if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
                         {
                             return;
                         }
