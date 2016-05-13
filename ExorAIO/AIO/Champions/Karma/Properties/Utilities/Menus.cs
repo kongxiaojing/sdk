@@ -47,9 +47,10 @@ namespace ExorAIO.Champions.Karma
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
+                    Vars.EMenu.Add(new MenuBool("combo",     "Combo",   true));
+                    Vars.EMenu.Add(new MenuBool("logical",   "Logical", true));
                     Vars.EMenu.Add(new MenuBool("gapcloser", "Logical Anti-Gapcloser E", true));
                     Vars.EMenu.Add(new MenuSliderButton("engager", "Logical AoE E / If Allies >= x", 2, 2, 6, true));
-                    Vars.EMenu.Add(new MenuBool("logical", "Logical", true));
                     {
                         /// <summary>
                         ///     Sets the whitelist menu for the E.
@@ -90,7 +91,6 @@ namespace ExorAIO.Champions.Karma
                 Vars.DrawingsMenu.Add(new MenuBool("q", "Q Range"));
                 Vars.DrawingsMenu.Add(new MenuBool("w", "W Range"));
                 Vars.DrawingsMenu.Add(new MenuBool("e", "E Range"));
-                Vars.DrawingsMenu.Add(new MenuBool("r", "R Range"));
             }
             Vars.Menu.Add(Vars.DrawingsMenu);
         }

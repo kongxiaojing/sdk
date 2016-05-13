@@ -26,6 +26,17 @@ namespace ExorAIO.Champions.Karma
             }
 
             /// <summary>
+            ///     The E Combo Logic.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                !Targets.Target.IsValidTarget(Vars.Q.Range) &&
+                Targets.Target.IsValidTarget(Vars.Q.Range+200f) &&
+                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+            {
+                Vars.E.Cast();
+            }
+            
+            /// <summary>
             ///     The W Combo Logic.
             /// </summary>
             if (Vars.W.IsReady() &&

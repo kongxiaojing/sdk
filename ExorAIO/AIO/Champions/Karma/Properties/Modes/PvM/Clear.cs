@@ -47,14 +47,14 @@ namespace ExorAIO.Champions.Karma
                 /// <summary>
                 ///     The LaneClear Q Logic.
                 /// </summary>
-                else if (Vars.Q.GetCircularFarmLocation(Targets.Minions, Vars.Q.Width).MinionsHit >= 2)
+                else if (Vars.Q.GetCircularFarmLocation(Targets.Minions, 125f).MinionsHit >= 3)
                 {
                     if (Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
                     {
                         Vars.R.Cast();
                     }
 
-                    Vars.Q.Cast(Vars.Q.GetCircularFarmLocation(Targets.Minions, Vars.Q.Width).Position);
+                    Vars.Q.Cast(Vars.Q.GetCircularFarmLocation(Targets.Minions, 125f).Position);
                 }
             }
 

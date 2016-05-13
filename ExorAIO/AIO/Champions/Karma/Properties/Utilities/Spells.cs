@@ -15,12 +15,12 @@ namespace ExorAIO.Champions.Karma
         /// </summary>
         public static void Initialize()
         {
-            Vars.Q = new Spell(SpellSlot.Q, GameObjects.Player.HasBuff("KarmaMantra") ? 1150f : 950f);
+            Vars.Q = new Spell(SpellSlot.Q, 950f);
             Vars.W = new Spell(SpellSlot.W, 675f);
             Vars.E = new Spell(SpellSlot.E, 800f);
             Vars.R = new Spell(SpellSlot.R);
 
-            Vars.Q.SetSkillshot(0.25f, GameObjects.Player.HasBuff("KarmaMantra") ? 80f : 60f, 1700f, true, SkillshotType.SkillshotLine);
+            Vars.Q.SetSkillshot(0.25f, 80f, 1700f, true, SkillshotType.SkillshotLine);
         }
     }
 }

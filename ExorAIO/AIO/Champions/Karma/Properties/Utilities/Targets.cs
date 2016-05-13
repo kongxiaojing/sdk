@@ -15,7 +15,7 @@ namespace ExorAIO.Champions.Karma
         /// <summary>
         ///     The main hero target.
         /// </summary>
-        public static Obj_AI_Hero Target => Variables.TargetSelector.GetTarget(Vars.Q.Range, DamageType.Magical);
+        public static Obj_AI_Hero Target => Variables.TargetSelector.GetTarget(Vars.Q.Range+200f, DamageType.Magical);
 
         /// <summary>
         ///     The minions target.

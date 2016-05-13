@@ -102,7 +102,8 @@ namespace ExorAIO.Champions.Karma
                 return;
             }
 
-            if (args.Target as Obj_AI_Hero == null ||
+            if (sender.IsAlly ||
+                args.Target as Obj_AI_Hero == null ||
                 !(args.Target as Obj_AI_Hero).IsAlly)
             {
                 return;
