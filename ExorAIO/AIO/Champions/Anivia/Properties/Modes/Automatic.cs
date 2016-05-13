@@ -85,7 +85,7 @@ namespace ExorAIO.Champions.Anivia
                     /// </summary>
                     case OrbwalkingMode.LaneClear:
 
-                        if (Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
+                        if (!Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
                         {
                             return;
                         }
@@ -105,7 +105,7 @@ namespace ExorAIO.Champions.Anivia
                     /// </summary>
                     default:
 
-                        if (Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
+                        if (!Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
                         {
                             return;
                         }
@@ -134,7 +134,7 @@ namespace ExorAIO.Champions.Anivia
                     /// </summary>
                     case OrbwalkingMode.LaneClear:
 
-                        if (Vars.Menu["spells"]["r"]["clear"].GetValue<MenuSliderButton>().BValue)
+                        if (!Vars.Menu["spells"]["r"]["clear"].GetValue<MenuSliderButton>().BValue)
                         {
                             return;
                         }
@@ -155,7 +155,7 @@ namespace ExorAIO.Champions.Anivia
                     /// </summary>
                     default:
 
-                        if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
+                        if (!Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
                         {
                             return;
                         }
