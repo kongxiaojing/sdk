@@ -4,6 +4,7 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Jhin
 {
@@ -31,6 +32,14 @@ namespace ExorAIO.Champions.Jhin
                     ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
                 Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
+                if (GameObjects.EnemyHeroes.Any(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.W.Range-100f)))
+                {
+                    return;
+                }
+
                 /// <summary>
                 ///     The LaneClear W Logic.
                 /// </summary>

@@ -48,7 +48,8 @@ namespace ExorAIO.Champions.Jhin
                 Vars.R.Cast(Game.CursorPos);
             }
 
-            if (Invulnerable.Check(Targets.Target))
+            if (Targets.Target.IsValidTarget() &&
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }
