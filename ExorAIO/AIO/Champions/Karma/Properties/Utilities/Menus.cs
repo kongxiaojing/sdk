@@ -47,7 +47,6 @@ namespace ExorAIO.Champions.Karma
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("combo",     "Combo",   true));
                     Vars.EMenu.Add(new MenuBool("logical",   "Logical", true));
                     Vars.EMenu.Add(new MenuBool("gapcloser", "Logical Anti-Gapcloser E", true));
                     Vars.EMenu.Add(new MenuSliderButton("engager", "Logical AoE E / If Allies >= x", 2, 2, 6, true));

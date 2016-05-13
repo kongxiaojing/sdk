@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Karma
                                     ? (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q, DamageStage.Empowered)
                                     : 0)))
                 {
-                    if (!Vars.Q.GetPrediction(target).CollisionObjects.Any())
+                    if (!Vars.Q.GetPrediction(target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         if (Vars.R.IsReady() &&
                             Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)

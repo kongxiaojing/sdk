@@ -26,17 +26,6 @@ namespace ExorAIO.Champions.Karma
             }
 
             /// <summary>
-            ///     The E Combo Logic.
-            /// </summary>
-            if (Vars.E.IsReady() &&
-                !Targets.Target.IsValidTarget(Vars.Q.Range) &&
-                Targets.Target.IsValidTarget(Vars.Q.Range+200f) &&
-                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
-            {
-                Vars.E.Cast();
-            }
-            
-            /// <summary>
             ///     The W Combo Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
@@ -63,7 +52,7 @@ namespace ExorAIO.Champions.Karma
                 !Invulnerable.Check(Targets.Target, DamageType.Magical) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
+                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {
                     if (Vars.R.IsReady() &&
                         Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
