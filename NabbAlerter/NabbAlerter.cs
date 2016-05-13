@@ -1,4 +1,5 @@
 using LeagueSharp;
+using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
 
@@ -32,7 +33,9 @@ namespace NabbAlerter
         /// <param name="Spell">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
         public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!Vars.Menu["enable"].GetValue<MenuBool>().Value)
+            if (GameObjects.Player.Distance(sender as Obj_AI_Hero) > 
+                    Vars.Menu["enable"].GetValue<MenuSliderButton>().SValue ||
+                !Vars.Menu["enable"].GetValue<MenuSliderButton>().BValue)
             {
                 return;
             }

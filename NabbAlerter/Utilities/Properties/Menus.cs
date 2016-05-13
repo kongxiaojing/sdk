@@ -19,7 +19,7 @@ namespace NabbAlerter
             /// </summary>
             Vars.Menu = new Menu("nabbalerter", "NabbAlerter", true);
             {
-                Vars.Menu.Add(new MenuBool("enable", "Enable", true));
+                Vars.Menu.Add(new MenuSliderButton("enable", "Enable / Only if Range < x", 10000, 2000, 20000, true));
 
                 /// <summary>
                 ///     Checks the enemies.
