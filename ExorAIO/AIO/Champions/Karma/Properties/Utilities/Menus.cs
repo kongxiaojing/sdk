@@ -38,7 +38,7 @@ namespace ExorAIO.Champions.Karma
                 {
                     Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
                     Vars.WMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%",  50, 0, 99, true));
-                    Vars.WMenu.Add(new MenuSliderButton("lifesaver",   "Logical Lifesaver W / If Health < x%", 20, 10, 100, true));
+                    Vars.WMenu.Add(new MenuSliderButton("lifesaver",   "Logical Lifesaver / If Health < x%", 20, 10, 100, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -48,8 +48,8 @@ namespace ExorAIO.Champions.Karma
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("logical",   "Logical", true));
-                    Vars.EMenu.Add(new MenuBool("gapcloser", "Logical Anti-Gapcloser E", true));
-                    Vars.EMenu.Add(new MenuSliderButton("engager", "Logical AoE E / If Allies >= x", 2, 2, 6, true));
+                    Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
+                    Vars.EMenu.Add(new MenuSliderButton("engager", "Logical AoE / If Allies >= x", 2, 2, 6, true));
                     {
                         /// <summary>
                         ///     Sets the whitelist menu for the E.
