@@ -37,11 +37,11 @@ namespace ExorAIO.Champions.Anivia
                 if (GameObjects.Player.Distance(
                         GameObjects.Player.ServerPosition.Extend(
                             Targets.Target.ServerPosition,
-                            GameObjects.Player.Distance(Targets.Target) + 20f)) < Vars.W.Range)
+                            GameObjects.Player.Distance(Targets.Target) + 40f)) < Vars.W.Range)
                 {
                     Vars.W.Cast(
                         GameObjects.Player.ServerPosition.Extend(
-                            Targets.Target.ServerPosition, GameObjects.Player.Distance(Targets.Target) + 20f));
+                            Targets.Target.ServerPosition, GameObjects.Player.Distance(Targets.Target) + 40f));
                 }
             }
 
