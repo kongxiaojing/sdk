@@ -89,6 +89,34 @@ namespace ExorAIO.Champions.Karma
         }
 
         /// <summary>
+        ///     Called when a <see cref="AttackableUnit" /> takes/gives damage.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="AttackableUnitDamageEventArgs" /> instance containing the event data.</param>
+        public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (sender as Obj_AI_Hero == null ||
+                args.Target as Obj_AI_Hero == null)
+            {
+                return;
+            }
+
+            if (!(sender as Obj_AI_Hero).IsEnemy ||
+                !(args.Target as Obj_AI_Hero).IsAlly)
+            {
+                return;
+            }
+
+            if (Vars.E.IsReady() &&
+                (args.Target as Obj_AI_Hero).IsValidTarget(Vars.E.Range, false) &&
+                Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value &&
+                Vars.Menu["spells"]["e"]["whitelist"][(args.Target as Obj_AI_Hero).ChampionName.ToLower()].GetValue<MenuBool>().Value)
+            {
+                Vars.E.CastOnUnit(args.Target as Obj_AI_Hero);
+            }
+        }
+
+        /// <summary>
         ///     Fired on an incoming gapcloser.
         /// </summary>
         /// <param name="sender">The object.</param>

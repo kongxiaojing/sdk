@@ -26,14 +26,14 @@ namespace ExorAIO.Champions.Karma
             }
 
             /// <summary>
-            ///     The E Combo Logic.
+            ///     The W Combo Logic.
             /// </summary>
-            if (Vars.E.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.E.Range) &&
+            if (Vars.W.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.W.Range) &&
                 !Invulnerable.Check(Targets.Target, DamageType.Magical, false) &&
-                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
-                Vars.E.Cast(Targets.Target);
+                Vars.W.CastOnUnit(Targets.Target);
             }
 
             /// <summary>
