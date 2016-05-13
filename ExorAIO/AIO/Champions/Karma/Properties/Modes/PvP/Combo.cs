@@ -44,7 +44,8 @@ namespace ExorAIO.Champions.Karma
                 !Invulnerable.Check(Targets.Target, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().BValue &&
+                if (Vars.R.IsReady() &&
+                    Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().BValue &&
                     Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().SValue >
                         GameObjects.Player.HealthPercent)
                 {
@@ -64,7 +65,8 @@ namespace ExorAIO.Champions.Karma
             {
                 if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
-                    if (Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
+                    if (Vars.R.IsReady() &&
+                        Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
                     {
                         Vars.R.Cast();
                     }

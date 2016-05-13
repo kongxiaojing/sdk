@@ -38,7 +38,8 @@ namespace ExorAIO.Champions.Karma
                 {
                     if (!Vars.Q.GetPrediction(target).CollisionObjects.Any())
                     {
-                        if (Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
+                        if (Vars.R.IsReady() &&
+                            Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
                         {
                             Vars.R.Cast();
                         }

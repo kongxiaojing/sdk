@@ -27,7 +27,8 @@ namespace ExorAIO.Champions.Karma
                     Vars.Menu["spells"]["e"]["engager"].GetValue<MenuSliderButton>().SValue + 1 &&
                 Vars.Menu["spells"]["e"]["engager"].GetValue<MenuSliderButton>().BValue)
             {
-                if (Vars.Menu["spells"]["r"]["empe"].GetValue<MenuBool>().Value)
+                if (Vars.R.IsReady() &&
+                    Vars.Menu["spells"]["r"]["empe"].GetValue<MenuBool>().Value)
                 {
                     Vars.R.Cast();
                 }

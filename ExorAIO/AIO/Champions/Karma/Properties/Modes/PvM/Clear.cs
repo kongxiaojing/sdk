@@ -36,7 +36,8 @@ namespace ExorAIO.Champions.Karma
                 /// </summary>
                 if (Targets.JungleMinions.Any())
                 {
-                    if (Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
+                    if (Vars.R.IsReady() &&
+                        Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
                     {
                         Vars.R.Cast();
                     }
@@ -49,7 +50,8 @@ namespace ExorAIO.Champions.Karma
                 /// </summary>
                 else if (Vars.Q.GetCircularFarmLocation(Targets.Minions, 125f).MinionsHit >= 3)
                 {
-                    if (Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
+                    if (Vars.R.IsReady() &&
+                        Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
                     {
                         Vars.R.Cast();
                     }
@@ -67,8 +69,9 @@ namespace ExorAIO.Champions.Karma
                     ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["jungleclear"]) &&
                 Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
             {
-                if (Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().BValue &&
-                    Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().SValue >
+                if (Vars.R.IsReady() &&
+                    Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().BValue &&
+                    Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().SValue >
                         GameObjects.Player.HealthPercent)
                 {
                     Vars.R.Cast();

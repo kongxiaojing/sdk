@@ -129,7 +129,8 @@ namespace ExorAIO.Champions.Karma
                 GameObjects.Player.Distance(args.End) < 750 &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
-                if (Vars.Menu["spells"]["r"]["empe"].GetValue<MenuBool>().Value &&
+                if (Vars.R.IsReady() &&
+                    Vars.Menu["spells"]["r"]["empe"].GetValue<MenuBool>().Value &&
                     GameObjects.AllyHeroes.Count(a => a.IsValidTarget(600f, false)) >= 2)
                 {
                     Vars.R.Cast();
