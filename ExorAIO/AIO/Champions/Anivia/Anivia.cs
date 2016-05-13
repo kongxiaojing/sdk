@@ -180,9 +180,15 @@ namespace ExorAIO.Champions.Anivia
                 args.Sender.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["interrupter"].GetValue<MenuBool>().Value)
             {
-                Vars.W.Cast(
-                    GameObjects.Player.ServerPosition.Extend(
-                        args.Sender.ServerPosition, GameObjects.Player.Distance(args.Sender)+20f));
+                if (GameObjects.Player.Distance(
+                        GameObjects.Player.ServerPosition.Extend(
+                            args.Sender.ServerPosition,
+                            GameObjects.Player.Distance(args.Sender) + 20f)) < Vars.W.Range)
+                {
+                    Vars.W.Cast(
+                        GameObjects.Player.ServerPosition.Extend(
+                            args.Sender.ServerPosition, GameObjects.Player.Distance(args.Sender) + 20f));
+                }
             }
         }
     }

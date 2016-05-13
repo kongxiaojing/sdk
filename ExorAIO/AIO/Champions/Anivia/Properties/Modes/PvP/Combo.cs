@@ -34,9 +34,15 @@ namespace ExorAIO.Champions.Anivia
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value &&
                 Vars.Menu["spells"]["w"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
-                Vars.W.Cast(
-                    GameObjects.Player.ServerPosition.Extend(
-                        Targets.Target.ServerPosition, GameObjects.Player.Distance(Targets.Target) + 20f));
+                if (GameObjects.Player.Distance(
+                        GameObjects.Player.ServerPosition.Extend(
+                            Targets.Target.ServerPosition,
+                            GameObjects.Player.Distance(Targets.Target) + 20f)) < Vars.W.Range)
+                {
+                    Vars.W.Cast(
+                        GameObjects.Player.ServerPosition.Extend(
+                            Targets.Target.ServerPosition, GameObjects.Player.Distance(Targets.Target) + 20f));
+                }
             }
 
             /// <summary>
