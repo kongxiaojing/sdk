@@ -37,7 +37,8 @@ namespace ExorAIO.Champions.Karma
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
                     Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.WMenu.Add(new MenuSliderButton("lifesaver", "Logical Lifesaver W / If Health < x%", 20, 10, 100, true));
+                    Vars.WMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%",  50, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("lifesaver",   "Logical Lifesaver W / If Health < x%", 20, 10, 100, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -75,7 +76,6 @@ namespace ExorAIO.Champions.Karma
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
                     Vars.RMenu.Add(new MenuBool("empq", "Logical Q Empower", true));
-                    Vars.RMenu.Add(new MenuBool("empw", "Logical W Empower", true));
                     Vars.RMenu.Add(new MenuBool("empe", "Logical E Empower", true));
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);

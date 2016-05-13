@@ -33,6 +33,13 @@ namespace ExorAIO.Champions.Karma
                 !Invulnerable.Check(Targets.Target, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
+                if (Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().BValue &&
+                    Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().SValue >
+                        GameObjects.Player.HealthPercent)
+                {
+                    Vars.R.Cast();
+                }
+
                 Vars.W.CastOnUnit(Targets.Target);
             }
 

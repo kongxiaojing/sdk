@@ -47,7 +47,7 @@ namespace ExorAIO.Champions.Karma
                 /// <summary>
                 ///     The LaneClear Q Logic.
                 /// </summary>
-                else if (Vars.Q.GetCircularFarmLocation(Targets.Minions, Vars.Q.Width).MinionsHit >= 3)
+                else if (Vars.Q.GetCircularFarmLocation(Targets.Minions, Vars.Q.Width).MinionsHit >= 2)
                 {
                     if (Vars.Menu["spells"]["r"]["empq"].GetValue<MenuBool>().Value)
                     {
@@ -56,6 +56,25 @@ namespace ExorAIO.Champions.Karma
 
                     Vars.Q.Cast(Vars.Q.GetCircularFarmLocation(Targets.Minions, Vars.Q.Width).Position);
                 }
+            }
+
+            /// <summary>
+            ///     The W JungleClear Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                Targets.JungleMinions.Any() &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["jungleclear"]) &&
+                Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
+            {
+                if (Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().BValue &&
+                    Vars.Menu["spells"]["w"]["jungleclear"].GetValue<MenuSliderButton>().SValue >
+                        GameObjects.Player.HealthPercent)
+                {
+                    Vars.R.Cast();
+                }
+
+                Vars.W.CastOnUnit(Targets.JungleMinions[0]);
             }
         }
     }

@@ -20,24 +20,6 @@ namespace ExorAIO.Champions.Karma
         public static void Automatic(EventArgs args)
         {
             /// <summary>
-            ///     The W Lifesaver Logic.
-            /// </summary>
-            if (Vars.W.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.W.Range) &&
-                !Invulnerable.Check(Targets.Target, DamageType.Magical, false) &&
-                Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().BValue &&
-                Vars.Menu["spells"]["w"]["lifesaver"].GetValue<MenuSliderButton>().SValue >
-                    GameObjects.Player.HealthPercent)
-            {
-                if (Vars.Menu["spells"]["r"]["empw"].GetValue<MenuBool>().Value)
-                {
-                    Vars.R.Cast();
-                }
-
-                Vars.W.CastOnUnit(Targets.Target);
-            }
-
-            /// <summary>
             ///     The AoE E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&

@@ -95,13 +95,14 @@ namespace ExorAIO.Champions.Karma
         /// <param name="args">The <see cref="AttackableUnitDamageEventArgs" /> instance containing the event data.</param>
         public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender as Obj_AI_Hero == null ||
-                args.Target as Obj_AI_Hero == null)
+            if (sender as Obj_AI_Hero == null &&
+                sender as Obj_AI_Turret == null &&
+                !Targets.JungleMinions.Contains(sender as Obj_AI_Minion))
             {
                 return;
             }
 
-            if (!(sender as Obj_AI_Hero).IsEnemy ||
+            if (args.Target as Obj_AI_Hero == null ||
                 !(args.Target as Obj_AI_Hero).IsAlly)
             {
                 return;
