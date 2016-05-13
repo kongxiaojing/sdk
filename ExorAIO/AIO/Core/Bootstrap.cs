@@ -15,6 +15,7 @@ using ExorAIO.Champions.Jax;
 using ExorAIO.Champions.Jhin;
 using ExorAIO.Champions.Jinx;
 using ExorAIO.Champions.Kalista;
+using ExorAIO.Champions.Karma;
 using ExorAIO.Champions.KogMaw;
 using ExorAIO.Champions.Lucian;
 using ExorAIO.Champions.Lux;
@@ -100,6 +101,9 @@ namespace ExorAIO.Core
                     break;
                 case "Kalista":
                     new Kalista().OnLoad();
+                    break;
+                case "Karma":
+                    new Karma().OnLoad();
                     break;
                 case "KogMaw":
                     new KogMaw().OnLoad();
