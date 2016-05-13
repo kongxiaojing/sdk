@@ -52,6 +52,8 @@ namespace ExorAIO.Champions.Jinx
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         !t.IsValidTarget(Vars.Q.Range) &&
+                        Vars.GetRealHealth(t) >
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W) &&
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
