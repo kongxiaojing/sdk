@@ -83,6 +83,15 @@ namespace ExorAIO.Champions.Karma
             Vars.Menu.Add(Vars.SpellsMenu);
 
             /// <summary>
+            ///     Sets the miscellaneous menu.
+            /// </summary>
+            Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
+            {
+                Vars.MiscMenu.Add(new MenuBool("support", "Support Mode", true));
+            }
+            Vars.Menu.Add(Vars.MiscMenu);
+
+            /// <summary>
             ///     Sets the drawings menu.
             /// </summary>
             Vars.DrawingsMenu = new Menu("drawings", "Drawings");

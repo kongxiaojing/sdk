@@ -51,6 +51,8 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.Q.IsReady() &&
                 (args.Target as Obj_AI_Hero).IsValidTarget(Vars.Q.Range) &&
+                (args.Target as Obj_AI_Hero).Health >
+                    GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.CastOnUnit(args.Target as Obj_AI_Hero);

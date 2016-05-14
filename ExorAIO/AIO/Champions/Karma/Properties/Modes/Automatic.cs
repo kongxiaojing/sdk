@@ -20,9 +20,20 @@ namespace ExorAIO.Champions.Karma
         public static void Automatic(EventArgs args)
         {
             /// <summary>
+            ///     The Support Mode Option.
+            /// </summary>
+            if (Vars.Menu["miscellaneous"]["support"].GetValue<MenuBool>().Value)
+            {
+                Variables.Orbwalker.SetAttackState(
+                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.Hybrid &&
+                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.LaneClear);
+            }
+
+            /// <summary>
             ///     The AoE E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
+                GameObjects.Player.CountEnemyHeroesInRange(2000f) >= 2 &&
                 GameObjects.Player.CountAllyHeroesInRange(600f) >=
                     Vars.Menu["spells"]["e"]["engager"].GetValue<MenuSliderButton>().SValue + 1 &&
                 Vars.Menu["spells"]["e"]["engager"].GetValue<MenuSliderButton>().BValue)

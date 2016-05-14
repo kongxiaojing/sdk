@@ -63,7 +63,7 @@ namespace ExorAIO.Champions.Ryze
                     Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().BValue &&
                     Vars.Menu["miscellaneous"]["stacks"].GetValue<MenuSliderButton>().SValue >
                         GameObjects.Player.GetBuffCount("RyzePassiveStack") &&
-                    GameObjects.Player.ManaPercent >=
+                    GameObjects.Player.ManaPercent >
                         Vars.Menu["miscellaneous"]["stacksmana"].GetValue<MenuSlider>().Value)
                 {
                     Vars.Q.Cast(Game.CursorPos);
