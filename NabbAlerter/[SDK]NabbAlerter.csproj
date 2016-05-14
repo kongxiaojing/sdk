@@ -7,8 +7,8 @@
     <ProjectGuid>{43669FC4-FA02-4A2A-8849-5FCAEE42EDCB}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>[SDKEx]NabbAlerter</RootNamespace>
-    <AssemblyName>[SDKEx]NabbAlerter</AssemblyName>
+    <RootNamespace>[SDK]NabbAlerter</RootNamespace>
+    <AssemblyName>[SDK]NabbAlerter</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PreBuildEvent />

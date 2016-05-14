@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
 using LeagueSharp;
-using LeagueSharp.SDKEx;
-using LeagueSharp.SDKEx.UI;
-using LeagueSharp.SDKEx.Utils;
-using LeagueSharp.SDKEx.Enumerations;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
+using LeagueSharp.SDK.Enumerations;
 
 namespace NabbActivator
 {

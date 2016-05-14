@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("[SDKEx]AsunaCondemn")]
+[assembly: AssemblyTitle("[SDK]AsunaCondemn")]
 [assembly: AssemblyDescription("~Is that the real hi im gosu?~")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("LeagueSharp")]
-[assembly: AssemblyProduct("[SDKEx]AsunaCondemn")]
+[assembly: AssemblyProduct("[SDK]AsunaCondemn")]
 [assembly: AssemblyCopyright("Copyright © Exory 2016-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

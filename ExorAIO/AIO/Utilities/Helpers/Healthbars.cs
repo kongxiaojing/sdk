@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Linq;
 using ExorAIO.Champions.Kalista;
 using LeagueSharp;
-using LeagueSharp.SDKEx;
+using LeagueSharp.SDK;
 using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Utilities

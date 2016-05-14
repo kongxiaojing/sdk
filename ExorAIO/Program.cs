@@ -1,5 +1,5 @@
 ﻿using ExorAIO.Core;
-using LeagueSharp.SDKEx;
+using LeagueSharp.SDK;
 
 namespace ExorAIO
 {

@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Windows.Forms;
 using ExorAIO.Utilities;
-using LeagueSharp.SDKEx;
-using LeagueSharp.SDKEx.Enumerations;
-using LeagueSharp.SDKEx.UI;
-using Menu = LeagueSharp.SDKEx.UI.Menu;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.Enumerations;
+using LeagueSharp.SDK.UI;
+using Menu = LeagueSharp.SDK.UI.Menu;
 
 namespace ExorAIO.Champions.Lucian
 {

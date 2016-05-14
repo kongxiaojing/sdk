@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("[SDKEx]NabbAlerter")]
+[assembly: AssemblyTitle("[SDK]NabbAlerter")]
 [assembly: AssemblyDescription("~Alert to your ❤'s content.~")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("LeagueSharp")]
-[assembly: AssemblyProduct("[SDKEx]NabbAlerter")]
+[assembly: AssemblyProduct("[SDK]NabbAlerter")]
 [assembly: AssemblyCopyright("Copyright © Exory 2016-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,6 +1,6 @@
 using LeagueSharp;
-using LeagueSharp.SDKEx;
-using LeagueSharp.SDKEx.UI;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
 
 namespace ExorAIO.Utilities
 {

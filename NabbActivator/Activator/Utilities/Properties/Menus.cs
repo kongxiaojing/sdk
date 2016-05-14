@@ -1,7 +1,7 @@
 using System.Windows.Forms;
-using LeagueSharp.SDKEx.Enumerations;
-using LeagueSharp.SDKEx.UI;
-using Menu = LeagueSharp.SDKEx.UI.Menu;
+using LeagueSharp.SDK.Enumerations;
+using LeagueSharp.SDK.UI;
+using Menu = LeagueSharp.SDK.UI.Menu;
 
 namespace NabbActivator
 {

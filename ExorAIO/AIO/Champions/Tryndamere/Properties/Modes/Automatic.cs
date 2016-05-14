@@ -1,7 +1,7 @@
 using System;
 using LeagueSharp;
-using LeagueSharp.SDKEx;
-using LeagueSharp.SDKEx.UI;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
 using ExorAIO.Utilities;
 
 namespace ExorAIO.Champions.Tryndamere

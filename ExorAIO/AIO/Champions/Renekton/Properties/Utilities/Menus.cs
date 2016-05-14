@@ -1,5 +1,5 @@
 using ExorAIO.Utilities;
-using LeagueSharp.SDKEx.UI;
+using LeagueSharp.SDK.UI;
 
 namespace ExorAIO.Champions.Renekton
 {

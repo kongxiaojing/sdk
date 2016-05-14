@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using LeagueSharp.SDKEx.UI;
+using LeagueSharp.SDK.UI;
 
 namespace NabbAlerter
 {

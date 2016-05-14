@@ -1,4 +1,4 @@
-﻿using LeagueSharp.SDKEx;
+﻿using LeagueSharp.SDK;
 
 namespace NabbAlerter
 {

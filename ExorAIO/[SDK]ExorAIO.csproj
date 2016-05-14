@@ -7,8 +7,8 @@
     <ProjectGuid>{CFE566E2-FA3C-4508-8844-57C572B2E8F0}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>[SDKEx]ExorAIO</RootNamespace>
-    <AssemblyName>[SDKEx]ExorAIO</AssemblyName>
+    <RootNamespace>[SDK]ExorAIO</RootNamespace>
+    <AssemblyName>[SDK]ExorAIO</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,7 +1,7 @@
 using LeagueSharp;
-using LeagueSharp.SDKEx;
-using LeagueSharp.SDKEx.UI;
-using LeagueSharp.SDKEx.Utils;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace NabbAlerter
 {

@@ -1,6 +1,6 @@
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDKEx.Utils;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Cassiopeia
 {

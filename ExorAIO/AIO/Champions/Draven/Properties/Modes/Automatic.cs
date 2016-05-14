@@ -1,8 +1,8 @@
 using System;
 using ExorAIO.Utilities;
-using LeagueSharp.SDKEx;
-using LeagueSharp.SDKEx.Enumerations;
-using LeagueSharp.SDKEx.UI;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.Enumerations;
+using LeagueSharp.SDK.UI;
 
 namespace ExorAIO.Champions.Draven
 {

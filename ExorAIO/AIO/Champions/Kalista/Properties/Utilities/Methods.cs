@@ -1,5 +1,5 @@
 using LeagueSharp;
-using LeagueSharp.SDKEx;
+using LeagueSharp.SDK;
 
 namespace ExorAIO.Champions.Kalista
 {

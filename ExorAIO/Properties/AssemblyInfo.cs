@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("[SDKEx]ExorAIO")]
+[assembly: AssemblyTitle("[SDK]ExorAIO")]
 [assembly: AssemblyDescription("~The goal comes closer.~ List of Supported Champions: Akali, Amumu, Anivia, Ashe, Caitlyn, Cassiopeia, Corki, Darius, Draven, Dr. Mundo, Evelynn, Ezreal, Graves, Jax, Jhin, Jinx, Kalista, Kog'Maw, Lucian, Lux, Nautilus, Nunu, Olaf, Pantheon, Quinn, Renekton, Ryze, Sivir, Tristana, Tryndamere, Twitch, Udyr, Vayne, Warwick.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("LeagueSharp")]
-[assembly: AssemblyProduct("[SDKEx]ExorAIO")]
+[assembly: AssemblyProduct("[SDK]ExorAIO")]
 [assembly: AssemblyCopyright("Copyright © Exory 2016-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
