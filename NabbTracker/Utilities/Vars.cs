@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using LeagueSharp;
-using LeagueSharp.SDK.UI;
+using LeagueSharp.SDKEx.UI;
 using SharpDX.Direct3D9;
 
 namespace NabbTracker

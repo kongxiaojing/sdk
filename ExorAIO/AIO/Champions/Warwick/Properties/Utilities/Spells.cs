@@ -1,6 +1,6 @@
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK;
+using LeagueSharp.SDKEx;
 
 namespace ExorAIO.Champions.Warwick
 {

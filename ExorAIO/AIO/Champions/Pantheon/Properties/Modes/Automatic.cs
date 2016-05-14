@@ -1,6 +1,6 @@
 using System;
 using ExorAIO.Utilities;
-using LeagueSharp.SDK;
+using LeagueSharp.SDKEx;
 
 namespace ExorAIO.Champions.Pantheon
 {

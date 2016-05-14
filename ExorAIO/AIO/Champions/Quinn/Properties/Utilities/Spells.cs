@@ -1,7 +1,7 @@
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK;
-using LeagueSharp.SDK.Enumerations;
+using LeagueSharp.SDKEx;
+using LeagueSharp.SDKEx.Enumerations;
 
 namespace ExorAIO.Champions.Quinn
 {

@@ -1,6 +1,6 @@
 using System.Linq;
 using LeagueSharp;
-using LeagueSharp.SDK;
+using LeagueSharp.SDKEx;
 
 namespace NabbActivator
 {

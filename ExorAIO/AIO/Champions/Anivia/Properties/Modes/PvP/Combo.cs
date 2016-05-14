@@ -1,9 +1,9 @@
 using System;
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK;
-using LeagueSharp.SDK.UI;
-using LeagueSharp.SDK.Utils;
+using LeagueSharp.SDKEx;
+using LeagueSharp.SDKEx.UI;
+using LeagueSharp.SDKEx.Utils;
 
 namespace ExorAIO.Champions.Anivia
 {
