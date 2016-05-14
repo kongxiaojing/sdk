@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Kalista
                     m =>
                         m.IsValidTarget(Vars.E.Range) &&
                         (m.CharData.BaseSkinName.Equals("Sru_Crab") ||
-                            !GameObjects.JungleSmall.Contains(m)).ToList();
+                            !GameObjects.JungleSmall.Contains(m))).ToList();
 
         /// <summary>
         ///     The valid harassable heroes.
