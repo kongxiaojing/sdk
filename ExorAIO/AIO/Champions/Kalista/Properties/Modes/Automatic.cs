@@ -105,15 +105,15 @@ namespace ExorAIO.Champions.Kalista
                     Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue)
                 {
                     /// <summary>
-                    ///     Check for Mana Manager if in combo mode or the killable minion is only one, else do not use it.
+                    ///     Check for Mana Manager if not in combo mode and the killable minion is only one, else do not use it.
                     /// </summary>
-                    if (Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo ||
+                    if (Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo &&
                         Targets.Minions.Count(
-                        m =>
-                            Bools.IsPerfectRendTarget(m) &&
-                            Vars.GetRealHealth(m) <
-                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
-                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) == 1)
+                            m =>
+                                Bools.IsPerfectRendTarget(m) &&
+                                Vars.GetRealHealth(m) <
+                                    (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
+                                    (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) == 1)
                     {
                         if (GameObjects.Player.ManaPercent <
                                 ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["harass"]))
@@ -123,9 +123,15 @@ namespace ExorAIO.Champions.Kalista
                     }
 
                     /// <summary>
-                    ///     Check for E Whitelist if the harassable target is only one, else do not use the whitelist.
+                    ///     Check for E Whitelist if the harassable target is only one and there is only one killable minion, else do not use the whitelist.
                     /// </summary>
-                    if (GameObjects.EnemyHeroes.Count(t => Bools.IsPerfectRendTarget(t)) == 1)
+                    if (GameObjects.EnemyHeroes.Count(t => Bools.IsPerfectRendTarget(t)) == 1 &&
+                        Targets.Minions.Count(
+                            m =>
+                                Bools.IsPerfectRendTarget(m) &&
+                                Vars.GetRealHealth(m) <
+                                    (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
+                                    (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) == 1)
                     {
                         if (!Vars.Menu["spells"]["e"]["whitelist"][GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
