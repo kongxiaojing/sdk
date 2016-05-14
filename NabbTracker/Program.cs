@@ -1,4 +1,4 @@
-﻿using LeagueSharp.SDK;
+﻿using LeagueSharp.SDKEx;
 
 namespace NabbTracker
 {

@@ -23,7 +23,7 @@ namespace NabbActivator
                     using (var c = new WebClient())
                     {
                         var rawVersion =
-                            c.DownloadString("https://raw.githubusercontent.com/nabbhacker/SDKExoryREPO/master/NabbActivator/Properties/AssemblyInfo.cs");
+                            c.DownloadString("https://raw.githubusercontent.com/nabbhacker/SDKExExoryREPO/master/NabbActivator/Properties/AssemblyInfo.cs");
                         var match =
                             new Regex(
                                 @"\[assembly\: AssemblyVersion\(""(\d{1,})\.(\d{1,})\.(\d{1,})\.(\d{1,})""\)\]")
@@ -36,7 +36,7 @@ namespace NabbActivator
                             if (gitVersion != typeof(Updater).Assembly.GetName().Version)
                             {
                                 Game.PrintChat(
-                                    $"[SDK]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
+                                    $"[SDKEx]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Outdated & newer version available!</font> ({gitVersion})");
                                 return;
                             }
 
@@ -48,7 +48,7 @@ namespace NabbActivator
                             /// <summary>
                             ///     Tells the player the assembly has been loaded.
                             /// </summary>
-                            Game.PrintChat("[SDK]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Loaded!");
+                            Game.PrintChat("[SDKEx]<b><font color='#FF0000'>Nabb</font></b>Activator: <font color='#FF0000'>Ultima</font> - Loaded!");
                         }
                     }
                 }
@@ -56,7 +56,7 @@ namespace NabbActivator
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    Game.PrintChat("<font color=\"#FFF280\">Exception thrown at [SDK]NabbActivator.Updater, make a screenshot of the console and send it to Exory.");
+                    Game.PrintChat("<font color=\"#FFF280\">Exception thrown at [SDKEx]NabbActivator.Updater, make a screenshot of the console and send it to Exory.");
                 }
             });
         }

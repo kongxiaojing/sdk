@@ -1,10 +1,10 @@
 using System;
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK;
-using LeagueSharp.SDK.Enumerations;
-using LeagueSharp.SDK.Utils;
-using LeagueSharp.SDK.UI;
+using LeagueSharp.SDKEx;
+using LeagueSharp.SDKEx.Enumerations;
+using LeagueSharp.SDKEx.Utils;
+using LeagueSharp.SDKEx.UI;
 using LeagueSharp.Data.Enumerations;
 
 namespace ExorAIO.Champions.Lucian

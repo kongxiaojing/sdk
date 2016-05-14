@@ -7,8 +7,8 @@
     <ProjectGuid>{43669FC4-FA02-4A2A-8849-5FCAEE42EDCB}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>[SDK]NabbAlerter</RootNamespace>
-    <AssemblyName>[SDK]NabbAlerter</AssemblyName>
+    <RootNamespace>[SDKEx]NabbAlerter</RootNamespace>
+    <AssemblyName>[SDKEx]NabbAlerter</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PreBuildEvent />
@@ -36,19 +36,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LeagueSharp">
-      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.dll</HintPath>
+      <HintPath>C:\L\System\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Data">
-      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.Data.dll</HintPath>
+      <HintPath>C:\L\System\LeagueSharp.Data.dll</HintPath>
     </Reference>
-    <Reference Include="LeagueSharp.SDK">
-      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.SDK.dll</HintPath>
+    <Reference Include="LeagueSharp.SDKEx">
+      <HintPath>C:\L\System\LeagueSharp.SDKEx.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\Users\utente\Desktop\XD\System\SharpDX.dll</HintPath>
+      <HintPath>C:\L\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
-      <HintPath>C:\Users\utente\Desktop\XD\System\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\L\System\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

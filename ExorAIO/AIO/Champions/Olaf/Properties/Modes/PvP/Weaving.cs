@@ -1,7 +1,7 @@
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK.UI;
-using LeagueSharp.SDK.Utils;
+using LeagueSharp.SDKEx.UI;
+using LeagueSharp.SDKEx.Utils;
 
 namespace ExorAIO.Champions.Olaf
 {

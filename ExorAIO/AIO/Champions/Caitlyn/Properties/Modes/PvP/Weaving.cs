@@ -1,6 +1,6 @@
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK.Utils;
+using LeagueSharp.SDKEx.Utils;
 
 namespace ExorAIO.Champions.Caitlyn
 {

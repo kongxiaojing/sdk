@@ -35,7 +35,7 @@ using ExorAIO.Champions.Vayne;
 using ExorAIO.Champions.Warwick;
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK;
+using LeagueSharp.SDKEx;
 
 namespace ExorAIO.Core
 {
@@ -162,7 +162,7 @@ namespace ExorAIO.Core
             }
 
             Game.PrintChat(
-                $"[SDK]<b><font color='#009aff'>Exor</font></b>AIO: <font color='#009aff'>Ultima</font> - {GameObjects.Player.ChampionName} " + (Vars.IsLoaded
+                $"[SDKEx]<b><font color='#009aff'>Exor</font></b>AIO: <font color='#009aff'>Ultima</font> - {GameObjects.Player.ChampionName} " + (Vars.IsLoaded
                     ? "Loaded." 
                     : "not supported."));
         }

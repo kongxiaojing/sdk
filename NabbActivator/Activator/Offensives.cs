@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using LeagueSharp;
-using LeagueSharp.SDK;
-using LeagueSharp.SDK.UI;
+using LeagueSharp.SDKEx;
+using LeagueSharp.SDKEx.UI;
 
 namespace NabbActivator
 {

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK;
-using LeagueSharp.SDK.Utils;
+using LeagueSharp.SDKEx;
+using LeagueSharp.SDKEx.Utils;
 
 namespace ExorAIO.Champions.Kalista
 {
@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Kalista
                     m =>
                         m.IsValidTarget(Vars.E.Range) &&
                         (m.CharData.BaseSkinName.Equals("Sru_Crab") ||
-                            !GameObjects.JungleSmall.Contains(m)).ToList();
+                            !GameObjects.JungleSmall.Contains(m))).ToList();
 
         /// <summary>
         ///     The valid harassable heroes.

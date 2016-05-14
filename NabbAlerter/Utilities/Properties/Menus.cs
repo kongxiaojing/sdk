@@ -1,9 +1,9 @@
 using System.Windows.Forms;
 using System.Linq;
-using LeagueSharp.SDK.Enumerations;
-using LeagueSharp.SDK;
-using LeagueSharp.SDK.UI;
-using Menu = LeagueSharp.SDK.UI.Menu;
+using LeagueSharp.SDKEx.Enumerations;
+using LeagueSharp.SDKEx;
+using LeagueSharp.SDKEx.UI;
+using Menu = LeagueSharp.SDKEx.UI.Menu;
 
 namespace NabbAlerter
 {

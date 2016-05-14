@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
-using LeagueSharp.SDK;
-using LeagueSharp.SDK.Enumerations;
-using LeagueSharp.SDK.UI;
+using LeagueSharp.SDKEx;
+using LeagueSharp.SDKEx.Enumerations;
+using LeagueSharp.SDKEx.UI;
 
 namespace ExorAIO.Champions.Amumu
 {
