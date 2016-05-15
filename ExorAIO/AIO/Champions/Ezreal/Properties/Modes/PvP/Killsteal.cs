@@ -60,26 +60,25 @@ namespace ExorAIO.Champions.Ezreal
                 }
             }
 
-            DelayAction.Add(1500, () =>
+            /// <summary>
+            ///     The KillSteal R Logic.
+            /// </summary>
+            if (Vars.R.IsReady() &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) == 0 &&
+                Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                /// <summary>
-                ///     The KillSteal R Logic.
-                /// </summary>
-                if (Vars.R.IsReady() &&
-                    GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) == 0 &&
-                    Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.R.Range) &&
+                        Vars.GetRealHealth(t) >
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
-                    foreach (var target in GameObjects.EnemyHeroes.Where(
-                        t =>
-                            !Invulnerable.Check(t) &&
-                            t.IsValidTarget(Vars.R.Range) &&
-                            Vars.GetRealHealth(t) <
-                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
-                    {
-                        Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
-                    }
+                    Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                 }
-            });
+            }
         }
     }
 }

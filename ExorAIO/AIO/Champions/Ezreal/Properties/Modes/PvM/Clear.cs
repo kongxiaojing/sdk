@@ -34,17 +34,30 @@ namespace ExorAIO.Champions.Ezreal
                 /// <summary>
                 ///     The LaneClear Q Logic.
                 /// </summary>
-                if (Items.HasItem(3025) &&
-                    Targets.Minions.Any() &&
-                    Targets.Minions.Count(m => m.Distance(Targets.Minions[0]) < 100f) >= 3)
+                if (Targets.Minions.Any())
                 {
-                    Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Minions[0]).UnitPosition);
+                    if (Items.HasItem(3025) &&
+                        Targets.Minions.Count(m => m.Distance(Targets.Minions[0]) < 100f) >= 2)
+                    {
+                        Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Minions[0]).UnitPosition);
+                    }
+                    else if (Targets.Minions.Any(
+                        m =>
+                            Vars.GetRealHealth(m) <
+                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)))
+                    {
+                        Vars.Q.Cast(Targets.Minions.FirstOrDefault(
+                            m =>
+                                Vars.GetRealHealth(m) <
+                                    (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)));
+                    }
                 }
 
                 /// <summary>
                 ///     The JungleClear Q Logic.
                 /// </summary>
-                else if (Targets.JungleMinions.Any())
+                else if (Targets.JungleMinions.Any() &&
+                    !Targets.JungleMinions.Any(m => m.IsValidTarget(Vars.AARange)))
                 {
                     Vars.Q.Cast(Targets.JungleMinions[0].ServerPosition);
                 }
