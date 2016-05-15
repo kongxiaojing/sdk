@@ -33,15 +33,17 @@ namespace ExorAIO.Champions.Caitlyn
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.Q.Range-100f) &&
-                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
+                        !t.IsValidTarget(Vars.AARange) &&
+                        t.IsValidTarget(Vars.Q.Range-200f) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                     return;
                 }
             }
 
-            if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.Q.Range)))
+            if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.W.Range)))
             {
                 return;
             }
@@ -56,7 +58,8 @@ namespace ExorAIO.Champions.Caitlyn
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
                     Vars.R.CastOnUnit(target);
                 }

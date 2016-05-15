@@ -24,7 +24,8 @@ namespace ExorAIO.Champions.Caitlyn
             ///     The Harass Q Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["manamanager"]) &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["clear"]) &&
                 Vars.Menu["spells"]["q"]["clear"].GetValue<MenuBool>().Value)
             {
                 if (GameObjects.EnemyHeroes.Any(

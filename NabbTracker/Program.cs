@@ -16,7 +16,7 @@ namespace NabbTracker
             /// <summary>
             ///     Loads the Bootstrap.
             /// </summary>
-            Bootstrap.Init(new string[1]);
+            Bootstrap.Init();
 
             Events.OnLoad += (sender, eventArgs) =>
             {
