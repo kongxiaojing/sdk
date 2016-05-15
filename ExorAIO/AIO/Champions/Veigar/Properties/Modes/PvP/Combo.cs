@@ -30,10 +30,11 @@ namespace ExorAIO.Champions.Veigar
             ///     The E Combo Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
+                GameObjects.Player.ManaPercent > 25 &&
                 Targets.Target.IsValidTarget(Vars.E.Range) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
-                Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition);
+                Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition.Extend(Targets.Target.ServerPosition, -Vars.E.Width/2));
             }
 
             /// <summary>
@@ -47,11 +48,9 @@ namespace ExorAIO.Champions.Veigar
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
-                else if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(
-                    c =>
-                        Targets.Minions.Contains(c) &&
-                        c.Health <
-                            (float)GameObjects.Player.GetSpellDamage(c, SpellSlot.Q)) == Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => Targets.Minions.Contains(c)))
+                else if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count() == 1 &&
+                    Vars.Q.GetPrediction(Targets.Target).CollisionObjects.FirstOrDefault().Health <
+                        (float)GameObjects.Player.GetSpellDamage(Vars.Q.GetPrediction(Targets.Target).CollisionObjects.FirstOrDefault(), SpellSlot.Q))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }

@@ -27,7 +27,7 @@ namespace ExorAIO.Champions.Veigar
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
                     Vars.QMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 25, 0, 99, true));
                     Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 25, 0, 99, true));
-                    Vars.QMenu.Add(new MenuSliderButton("lasthit", "LastHit / if Mana >= x%", 25, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("lasthit", "LastHit / if Mana >= x%", 0, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -39,7 +39,7 @@ namespace ExorAIO.Champions.Veigar
                     Vars.WMenu.Add(new MenuBool("logical",   "Logical",   true));
                     Vars.WMenu.Add(new MenuBool("killsteal", "KillSteal", true));
                     Vars.WMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
-                    Vars.WMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 25, 0, 99, true));
+                    Vars.WMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
@@ -60,7 +60,7 @@ namespace ExorAIO.Champions.Veigar
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
-                    Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal"));
+                    Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal", true));
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
             }

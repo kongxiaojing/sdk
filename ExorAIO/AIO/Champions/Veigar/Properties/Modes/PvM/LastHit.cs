@@ -22,6 +22,7 @@ namespace ExorAIO.Champions.Veigar
             ///     The Q LastHit Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
+                Targets.Minions.Any() &&
                 GameObjects.Player.ManaPercent >
                     ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["lasthit"]) &&
                 Vars.Menu["spells"]["q"]["lasthit"].GetValue<MenuSliderButton>().BValue)
@@ -29,7 +30,7 @@ namespace ExorAIO.Champions.Veigar
                 if (Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
                     m =>
                         Vars.GetRealHealth(m) <
-                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).MinionsHit >= 1)
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).MinionsHit <= 2)
                 {
                     Vars.Q.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
                         m =>

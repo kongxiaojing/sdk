@@ -38,11 +38,9 @@ namespace ExorAIO.Champions.Veigar
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
-                else if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(
-                    c =>
-                        Targets.Minions.Contains(c) &&
-                        c.Health <
-                            (float)GameObjects.Player.GetSpellDamage(c, SpellSlot.Q)) == Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => Targets.Minions.Contains(c)))
+                else if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count() == 1 &&
+                    Vars.Q.GetPrediction(Targets.Target).CollisionObjects.FirstOrDefault().Health <
+                        (float)GameObjects.Player.GetSpellDamage(Vars.Q.GetPrediction(Targets.Target).CollisionObjects.FirstOrDefault(), SpellSlot.Q))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
