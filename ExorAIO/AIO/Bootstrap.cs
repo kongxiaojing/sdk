@@ -32,6 +32,7 @@ using ExorAIO.Champions.Tryndamere;
 using ExorAIO.Champions.Twitch;
 using ExorAIO.Champions.Udyr;
 using ExorAIO.Champions.Vayne;
+using ExorAIO.Champions.Veigar;
 using ExorAIO.Champions.Warwick;
 using ExorAIO.Utilities;
 using LeagueSharp;
@@ -152,6 +153,9 @@ namespace ExorAIO.Core
                     break;
                 case "Vayne":
                     new Vayne().OnLoad();
+                    break;
+                case "Veigar":
+                    new Veigar().OnLoad();
                     break;
                 case "Warwick":
                     new Warwick().OnLoad();
