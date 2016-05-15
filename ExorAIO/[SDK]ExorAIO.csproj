@@ -62,10 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExorAIO.cs" />
-    <Compile Include="AIO\Core\Bootstrap.cs" />
-    <Compile Include="AIO\Core\Updater.cs" />
+    <Compile Include="AIO\Bootstrap.cs" />
     <Compile Include="AIO\Utilities\Bools.cs" />
     <Compile Include="AIO\Utilities\Vars.cs" />
     <Compile Include="AIO\Utilities\Helpers\Drawings.cs" />

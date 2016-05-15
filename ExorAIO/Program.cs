@@ -1,6 +1,6 @@
-﻿using ExorAIO.Core;
+﻿using System;
+using ExorAIO.Core;
 using LeagueSharp.SDK;
-using Bootstrap = LeagueSharp.SDK.Bootstrap;
 
 namespace ExorAIO
 {
@@ -12,17 +12,17 @@ namespace ExorAIO
         /// <param name="args">The arguments.</param>
         private static void Main(string[] args)
         {
+            /// <summary>
+            ///     Loads the Bootstrap.
+            /// </summary>
+            LeagueSharp.SDK.Bootstrap.Init(new string[1]);
+
             Events.OnLoad += (sender, eventArgs) =>
             {
                 /// <summary>
                 ///     Loads the Update checker.
                 /// </summary>
                 Updater.Check();
-
-                /// <summary>
-                ///     Loads the Bootstrap.
-                /// </summary>
-                Bootstrap.Init(new string[1]);
             };
         }
     }
