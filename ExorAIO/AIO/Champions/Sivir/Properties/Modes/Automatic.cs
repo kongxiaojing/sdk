@@ -60,70 +60,91 @@ namespace ExorAIO.Champions.Sivir
                 return;
             }
 
-            if (args.Target == null)
-            {
-                return;
-            }
-
-            if (!args.Target.IsMe)
-            {
-                return;
-            }
-
             /// <summary>
-            ///     Block Dragon's AutoAttacks.
+            ///     Special check for Kalista's E.
             /// </summary>
-            if (sender is Obj_AI_Minion &&
-                sender.CharData.BaseSkinName.Equals("SRU_Dragon"))
+            if (args.SData.Name.Equals("KalistaExpungeWrapper"))
             {
-                Vars.E.Cast();
-            }
-
-            if (!sender.IsEnemy ||
-                !(sender as Obj_AI_Hero).IsValidTarget())
-            {
-                return;
-            }
-
-            /// <summary>
-            ///     Special check for the AutoAttacks.
-            /// </summary>
-            if (AutoAttack.IsAutoAttack(args.SData.Name))
-            {
-                if (!args.SData.Name.ToLower().Contains("red") &&
-                    !args.SData.Name.ToLower().Contains("gold") &&
-                    !args.SData.Name.ToLower().Contains("blue"))
+                if (!ObjectManager.Player.HasBuff("KalistaExpungeMarker"))
                 {
-                    if (!sender.IsMelee ||
-                        !sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
+                    return;
+                }
+            }
+            else
+            {
+                if (args.Target == null)
+                {
+                    return;
+                }
+
+                if (!args.Target.IsMe)
+                {
+                    return;
+                }
+
+                /// <summary>
+                ///     Block Dragon's AutoAttacks.
+                /// </summary>
+                if (sender is Obj_AI_Minion)
+                {
+                    if (sender.CharData.BaseSkinName.Equals("SRU_Baron") &&
+                        sender.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
+                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Air") &&
+                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Fire") &&
+                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Earth") &&
+                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Water") &&
+                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Elder"))
+                    {
+                        Vars.E.Cast();
+                    }
+                }
+
+                if (!sender.IsEnemy ||
+                    !(sender as Obj_AI_Hero).IsValidTarget())
+                {
+                    return;
+                }
+
+                /// <summary>
+                ///     Special check for the AutoAttacks.
+                /// </summary>
+                if (AutoAttack.IsAutoAttack(args.SData.Name))
+                {
+                    if (!args.SData.Name.ToLower().Contains("red") &&
+                        !args.SData.Name.ToLower().Contains("gold") &&
+                        !args.SData.Name.ToLower().Contains("blue"))
+                    {
+                        if (!sender.IsMelee ||
+                            !sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
+                        {
+                            return;
+                        }
+                    }
+
+                    Console.WriteLine(args.SData.Name);
+                }
+
+                /// <summary>
+                ///     Special check for the Located AoE skillshots.
+                /// </summary>
+                if (args.SData.TargettingType.Equals(SpellDataTargetType.LocationAoe))
+                {
+                    if (args.SData.Name.Equals("TormentedSoil") ||
+                        args.SData.Name.Equals("MissFortuneScattershot"))
                     {
                         return;
                     }
                 }
 
-                Console.WriteLine(args.SData.Name);
-            }
-
-            /// <summary>
-            ///     Special check for the Located AoE skillshots.
-            /// </summary>
-            if (args.SData.TargettingType.Equals(SpellDataTargetType.LocationAoe))
-            {
-                if (args.SData.Name.Equals("TormentedSoil") ||
-                    args.SData.Name.Equals("MissFortuneScattershot"))
+                /// <summary>
+                ///     Special check for the on target-position AoE spells.
+                /// </summary>
+                if (args.SData.TargettingType.Equals(SpellDataTargetType.SelfAoe))
                 {
-                    return;
-                }
-            }
-
-            /// <summary>
-            ///     Special check for the on target-position AoE spells.
-            /// </summary>
-            if (args.SData.TargettingType.Equals(SpellDataTargetType.SelfAoe))
-            {
-                if (!args.SData.Name.Equals("MockingShout"))
-                {
-                    return;
+                    if (!args.SData.Name.Equals("MockingShout"))
+                    {
+                        return;
+                    }
                 }
             }
 
