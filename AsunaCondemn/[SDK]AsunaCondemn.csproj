@@ -41,8 +41,8 @@
     <Reference Include="LeagueSharp.Data">
       <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.Data.dll</HintPath>
     </Reference>
-    <Reference Include="LeagueSharp.SDK">
-      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.SDK.dll</HintPath>
+    <Reference Include="LeagueSharp.SDKEx">
+      <HintPath>C:\Users\utente\Desktop\XD\System\LeagueSharp.SDKEx.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
       <HintPath>C:\Users\utente\Desktop\XD\System\SharpDX.dll</HintPath>

@@ -1,5 +1,6 @@
 ﻿using ExorAIO.Core;
 using LeagueSharp.SDK;
+using Bootstrap = LeagueSharp.SDK.Bootstrap;
 
 namespace ExorAIO
 {
@@ -13,8 +14,15 @@ namespace ExorAIO
         {
             Events.OnLoad += (sender, eventArgs) =>
             {
+                /// <summary>
+                ///     Loads the Update checker.
+                /// </summary>
                 Updater.Check();
-                AIO.OnLoad();
+
+                /// <summary>
+                ///     Loads the Bootstrap.
+                /// </summary>
+                Bootstrap.Init(new string[1]);
             };
         }
     }

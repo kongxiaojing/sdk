@@ -19,6 +19,11 @@ namespace NabbActivator
                 ///     Loads the Update checker.
                 /// </summary>
                 Updater.Check();
+
+                /// <summary>
+                ///     Loads the Bootstrap.
+                /// </summary>
+                Bootstrap.Init(new string[1]);
             };
         }
     }
