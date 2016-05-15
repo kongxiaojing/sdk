@@ -23,10 +23,10 @@ namespace ExorAIO.Champions.Evelynn
                 /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
-                    Vars.QMenu.Add(new MenuBool("combo",   "Combo",   true));
-                    Vars.QMenu.Add(new MenuBool("harass",  "Harass",  true));
-                    Vars.QMenu.Add(new MenuBool("lasthit", "LastHit", true));
-                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuBool("combo", "Combo", true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("lasthit", "LastHit / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -46,12 +46,12 @@ namespace ExorAIO.Champions.Evelynn
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
                 /// <summary>
-                ///     Sets the menu for the Q.
+                ///     Sets the menu for the R.
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
