@@ -51,7 +51,7 @@ namespace ExorAIO.Champions.Lux
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
-                    if (Vars.Q.GetPrediction(target).CollisionObjects.Count(c => Targets.Minions.Contains(c)) <= 1)
+                    if (Vars.Q.GetPrediction(target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                         return;
@@ -59,27 +59,26 @@ namespace ExorAIO.Champions.Lux
                 }
             }
 
-            DelayAction.Add(!Targets.Target.IsValidTarget(Vars.E.Range)
-                ? 1500
-                : 0, () =>
+            /// <summary>
+            ///     The KillSteal R Logic.
+            /// </summary>
+            if (Vars.R.IsReady() &&
+                Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                /// <summary>
-                ///     The KillSteal R Logic.
-                /// </summary>
-                if (Vars.R.IsReady() &&
-                    Vars.Menu["spells"]["r"]["killsteal"].GetValue<MenuBool>().Value)
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        t.IsValidTarget(Vars.R.Range) &&
+                        !Invulnerable.Check(t, DamageType.Magical) &&
+                        Vars.GetRealHealth(t) <
+                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
-                    foreach (var target in GameObjects.EnemyHeroes.Where(
-                        t =>
-                            t.IsValidTarget(Vars.R.Range) &&
-                            !Invulnerable.Check(t, DamageType.Magical) &&
-                            Vars.GetRealHealth(t) <
-                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
+                    if (Bools.IsImmobile(Targets.Target) ||
+                        !Targets.Target.IsValidTarget(Vars.AARange))
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     }
                 }
-            });
+            }
         }
     }
 }

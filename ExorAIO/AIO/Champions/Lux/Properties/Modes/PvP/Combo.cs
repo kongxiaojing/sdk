@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Lux
                     t =>
                         Bools.IsImmobile(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        Invulnerable.Check(Targets.Target) &&
+                        Bools.IsImmobile(Targets.Target) &&
                         t.HasBuff("luxilluminatingfraulein") &&
                         !Invulnerable.Check(t, DamageType.Magical)))
                 {
@@ -49,16 +49,6 @@ namespace ExorAIO.Champions.Lux
                 return;
             }
             
-            /// <summary>
-            ///     The E Combo Logic.
-            /// </summary>
-            if (Vars.E.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.E.Range) &&
-                GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState != 1 &&
-                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
-            {
-                Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition);
-            }
 
             /// <summary>
             ///     The Q Combo Logic.
@@ -69,10 +59,21 @@ namespace ExorAIO.Champions.Lux
                 !Targets.Target.HasBuff("luxilluminatingfraulein") &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count(c => Targets.Minions.Contains(c)) <= 1)
+                if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
+            }
+
+            /// <summary>
+            ///     The E Combo Logic.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.E.Range) &&
+                GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState != 1 &&
+                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+            {
+                Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition);
             }
         }
     }
