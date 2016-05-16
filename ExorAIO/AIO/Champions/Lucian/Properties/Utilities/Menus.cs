@@ -28,8 +28,8 @@ namespace ExorAIO.Champions.Lucian
                 /// </summary>
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
-                    Vars.QMenu.Add(new MenuBool("combo",       "Combo",       true));
-                    Vars.QMenu.Add(new MenuBool("killsteal",   "KillSteal",   true));
+                    Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
+                    Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
                     Vars.QMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",   50, 0, 99, true));
                     Vars.QMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                     {
@@ -38,10 +38,10 @@ namespace ExorAIO.Champions.Lucian
                         /// </summary>
                         Vars.Q2Menu = new Menu("extended", "Use Extended Q in:", true);
                         {
-                            Vars.Q2Menu.Add(new MenuBool("exkillsteal", "KillSteal",  true));
-                            Vars.Q2Menu.Add(new MenuBool("excombo",     "Combo Mode", true));
-                            Vars.Q2Menu.Add(new MenuSliderButton("mixed",       "Mixed Mode / if Mana >= %",     50, 0, 99, true));
-                            Vars.Q2Menu.Add(new MenuSliderButton("exlaneclear", "LaneClear Mode / if Mana >= %", 50, 0, 99, true));
+                            Vars.Q2Menu.Add(new MenuBool("excombo",     "Combo",     true));
+                            Vars.Q2Menu.Add(new MenuBool("exkillsteal", "KillSteal", true));
+                            Vars.Q2Menu.Add(new MenuSliderButton("mixed",       "Mixed / if Mana >= %",     50, 0, 99, true));
+                            Vars.Q2Menu.Add(new MenuSliderButton("exlaneclear", "LaneClear / if Mana >= %", 50, 0, 99, true));
                         }
                         Vars.QMenu.Add(Vars.Q2Menu);
 

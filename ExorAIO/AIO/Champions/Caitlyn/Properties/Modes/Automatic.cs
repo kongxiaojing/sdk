@@ -28,6 +28,7 @@ namespace ExorAIO.Champions.Caitlyn
             ///     The Automatic Q Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.Q.Range) == 1 &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
@@ -62,6 +63,23 @@ namespace ExorAIO.Champions.Caitlyn
                     {
                         Vars.W.Cast(target.ServerPosition);
                     }
+                }
+            }
+
+            /// <summary>
+            ///     The Semi-Automatic R Management.
+            /// </summary>
+            if (Vars.R.IsReady() &&
+                Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value)
+            {
+                if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.R.Range)) &&
+                    Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
+                {
+                    Vars.R.CastOnUnit(
+                        GameObjects.EnemyHeroes
+                            .Where(t => t.IsValidTarget(Vars.R.Range))
+                            .OrderBy(o => o.Health)
+                            .LastOrDefault());
                 }
             }
         }

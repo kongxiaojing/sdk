@@ -1,5 +1,8 @@
+using System.Windows.Forms;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Enumerations;
+using Menu = LeagueSharp.SDK.UI.Menu;
 
 namespace ExorAIO.Champions.Caitlyn
 {
@@ -54,7 +57,10 @@ namespace ExorAIO.Champions.Caitlyn
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
-                    Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal", true));
+                    Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal",        true));
+                    Vars.RMenu.Add(new MenuBool("bool",      "Semi-Automatic R", true));
+                    Vars.RMenu.Add(
+                        new MenuKeyBind("key", "Key:", Keys.T, KeyBindType.Press));
                 }
                 Vars.SpellsMenu.Add(Vars.RMenu);
             }
