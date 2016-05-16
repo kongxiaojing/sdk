@@ -28,13 +28,26 @@ namespace ExorAIO.Champions.Veigar
             /// <summary>
             ///     The No AA while in Combo option.
             /// </summary>
-            if (Vars.Menu["miscellaneous"]["noaa"].GetValue<MenuBool>().Value)
+            if (Vars.Menu["miscellaneous"]["noaacombo"].GetValue<MenuBool>().Value)
             {
                 Variables.Orbwalker.SetAttackState(
                     Bools.HasSheenBuff() ||
                     GameObjects.Player.ManaPercent < 10 ||
                     Variables.Orbwalker.ActiveMode != OrbwalkingMode.Combo ||
-                    (!Vars.Q.IsReady() && !Vars.W.IsReady() && !Vars.E.IsReady()));
+                    (!Vars.Q.IsReady() &&
+                        !Vars.W.IsReady() &&
+                        !Vars.E.IsReady()));
+            }
+
+            /// <summary>
+            ///     The No AA while in LastHit/LaneClear option.
+            /// </summary>
+            if (Vars.Menu["miscellaneous"]["noaaclear"].GetValue<MenuBool>().Value)
+            {
+                Variables.Orbwalker.SetAttackState(
+                    !Vars.Q.IsReady() ||
+                    (Variables.Orbwalker.ActiveMode != OrbwalkingMode.LastHit &&
+                        Variables.Orbwalker.ActiveMode != OrbwalkingMode.LaneClear));
             }
 
             /// <summary>
