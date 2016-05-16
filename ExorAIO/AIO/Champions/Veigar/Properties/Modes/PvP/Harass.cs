@@ -39,11 +39,23 @@ namespace ExorAIO.Champions.Veigar
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
                 else if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count() == 1 &&
-                    Vars.Q.GetPrediction(Targets.Target).CollisionObjects.FirstOrDefault().Health <
-                        (float)GameObjects.Player.GetSpellDamage(Vars.Q.GetPrediction(Targets.Target).CollisionObjects.FirstOrDefault(), SpellSlot.Q))
+                    Vars.Q.GetPrediction(Targets.Target).CollisionObjects[0].Health <
+                        (float)GameObjects.Player.GetSpellDamage(Vars.Q.GetPrediction(Targets.Target).CollisionObjects[0], SpellSlot.Q))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
+            }
+
+            /// <summary>
+            ///     The W Harass Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.E.Range) &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["harass"]) &&
+                Vars.Menu["spells"]["w"]["harass"].GetValue<MenuSliderButton>().BValue)
+            {
+                Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
             }
         }
     }

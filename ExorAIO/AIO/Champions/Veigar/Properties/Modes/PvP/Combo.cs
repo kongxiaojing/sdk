@@ -34,7 +34,7 @@ namespace ExorAIO.Champions.Veigar
                 Targets.Target.IsValidTarget(Vars.E.Range) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
-                Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition.Extend(Targets.Target.ServerPosition, -Vars.E.Width/2));
+                Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition.Extend(GameObjects.Player.ServerPosition, -Vars.E.Width/2));
             }
 
             /// <summary>
@@ -49,8 +49,8 @@ namespace ExorAIO.Champions.Veigar
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
                 else if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Count() == 1 &&
-                    Vars.Q.GetPrediction(Targets.Target).CollisionObjects.FirstOrDefault().Health <
-                        (float)GameObjects.Player.GetSpellDamage(Vars.Q.GetPrediction(Targets.Target).CollisionObjects.FirstOrDefault(), SpellSlot.Q))
+                    Vars.Q.GetPrediction(Targets.Target).CollisionObjects[0].Health <
+                        (float)GameObjects.Player.GetSpellDamage(Vars.Q.GetPrediction(Targets.Target).CollisionObjects[0], SpellSlot.Q))
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }

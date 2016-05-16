@@ -30,7 +30,7 @@ namespace ExorAIO.Champions.Veigar
                 if (Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
                     m =>
                         Vars.GetRealHealth(m) <
-                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).MinionsHit <= 2)
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).MinionsHit >= 1)
                 {
                     Vars.Q.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
                         m =>
