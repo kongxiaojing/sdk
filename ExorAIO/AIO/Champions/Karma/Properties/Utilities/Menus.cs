@@ -50,7 +50,7 @@ namespace ExorAIO.Champions.Karma
                     Vars.EMenu.Add(new MenuBool("engager",   "Engager"));
                     Vars.EMenu.Add(new MenuBool("logical",   "Logical",        true));
                     Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
-                    Vars.EMenu.Add(new MenuSliderButton("engager", "Logical AoE / If Allies >= x", 2, 2, 6, true));
+                    Vars.EMenu.Add(new MenuSliderButton("aoe", "Logical AoE / If Allies >= x", 3, 2, 6, true));
                     {
                         /// <summary>
                         ///     Sets the whitelist menu for the E.
