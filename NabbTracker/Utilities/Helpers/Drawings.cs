@@ -20,9 +20,9 @@ namespace NabbTracker
             {
                 foreach (var pg in GameObjects.Heroes.Where(
                     e =>
-                        !e.IsMe &&
                         e.IsHPBarRendered &&
-                        (e.IsAlly && Vars.Menu["allies"].GetValue<MenuBool>().Value ||
+                        (e.IsMe && Vars.Menu["me"].GetValue<MenuBool>().Value ||
+                         e.IsAlly && Vars.Menu["allies"].GetValue<MenuBool>().Value ||
                          e.IsEnemy && Vars.Menu["enemies"].GetValue<MenuBool>().Value)))
                 {
                     for (var Spell = 0; Spell < Vars.SpellSlots.Count(); Spell++)
@@ -33,8 +33,11 @@ namespace NabbTracker
                         Vars.DisplayTextFont.DrawText(
                             null,
                             pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 0
-                                ? string.Format("{0:0}", pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time)
-                                : Vars.SpellSlots[Spell].ToString(), Vars.SpellX, Vars.SpellY,
+                                ? string.Format("{0:0}", pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time + 1)
+                                : Vars.SpellSlots[Spell].ToString(),
+
+                            Vars.SpellX,
+                            Vars.SpellY,
 
                             pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).Level < 1
                                 ? Color.Gray
@@ -112,7 +115,7 @@ namespace NabbTracker
                         Vars.DisplayTextFont.DrawText(
                             null,
                             pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time > 0
-                                ? Vars.GetSummonerSpellName + ":" + string.Format("{0:0}", pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time)
+                                ? Vars.GetSummonerSpellName + ":" + string.Format("{0:0}", pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time + 1)
                                 : Vars.GetSummonerSpellName + ": UP ", Vars.SummonerSpellX, Vars.SummonerSpellY,
  
                             pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time > 0

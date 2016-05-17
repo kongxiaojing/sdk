@@ -82,10 +82,14 @@ namespace NabbTracker
         {
             if (SpecialChampions.Contains(target.ChampionName))
             {
-                return 17;
+                return target.IsMe
+                    ? 34
+                    : 17;
             }
             
-            return 10;
+            return target.IsMe
+                ? 55
+                : 10;
         }
 
         /// <summary>
@@ -98,7 +102,9 @@ namespace NabbTracker
                 return 25;
             }
             
-            return 35;
+            return target.IsMe
+                ? 25
+                : 35;
         }
 
         /// <summary>
@@ -124,7 +130,9 @@ namespace NabbTracker
                 return -12;
             }
             
-            return 4;
+            return target.IsMe
+                ? -4
+                : 4;
         }
     }
 }

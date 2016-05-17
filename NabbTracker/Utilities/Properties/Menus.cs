@@ -17,6 +17,7 @@ namespace NabbTracker
             /// </summary>
             Vars.Menu = new Menu("nabbtracker", "NabbTracker", true);
             {
+                Vars.Menu.Add(new MenuBool("me", "Me"));
                 Vars.Menu.Add(new MenuBool("allies", "Allies", true));
                 Vars.Menu.Add(new MenuBool("enemies", "Enemies", true));
 
