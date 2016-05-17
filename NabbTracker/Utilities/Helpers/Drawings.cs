@@ -22,8 +22,8 @@ namespace NabbTracker
                     e =>
                         e.IsHPBarRendered &&
                         (e.IsMe && Vars.Menu["me"].GetValue<MenuBool>().Value ||
-                         e.IsAlly && Vars.Menu["allies"].GetValue<MenuBool>().Value ||
-                         e.IsEnemy && Vars.Menu["enemies"].GetValue<MenuBool>().Value)))
+                            e.IsEnemy && Vars.Menu["enemies"].GetValue<MenuBool>().Value ||
+                            e.IsAlly && !e.IsMe && Vars.Menu["allies"].GetValue<MenuBool>().Value)))
                 {
                     for (var Spell = 0; Spell < Vars.SpellSlots.Count(); Spell++)
                     {
