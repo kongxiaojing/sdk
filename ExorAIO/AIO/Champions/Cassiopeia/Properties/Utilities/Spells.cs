@@ -16,9 +16,9 @@ namespace ExorAIO.Champions.Cassiopeia
         /// </summary>
         public static void Initialize()
         {
-            Vars.Q = new Spell(SpellSlot.Q, 750f);
-            Vars.W = new Spell(SpellSlot.W, 800f);
-            Vars.E = new Spell(SpellSlot.E, Vars.AARange);
+            Vars.Q = new Spell(SpellSlot.Q, 850f);
+            Vars.W = new Spell(SpellSlot.W, 900f);
+            Vars.E = new Spell(SpellSlot.E, 550f);
             Vars.R = new Spell(SpellSlot.R, 800f);
 
             Vars.Q.SetSkillshot(0.75f, 100f, 1000f, false, SkillshotType.SkillshotCircle);

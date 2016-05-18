@@ -17,8 +17,8 @@ namespace ExorAIO.Champions.Anivia
         {
             Vars.Q = new Spell(SpellSlot.Q, 1100f);
             Vars.W = new Spell(SpellSlot.W, 1000f);
-            Vars.E = new Spell(SpellSlot.E, Vars.AARange);
-            Vars.R = new Spell(SpellSlot.R, 685f);
+            Vars.E = new Spell(SpellSlot.E, 600f);
+            Vars.R = new Spell(SpellSlot.R, 750f);
 
             Vars.Q.SetSkillshot(0.25f, 75f, 850f, false, SkillshotType.SkillshotLine);
             Vars.W.SetSkillshot(0f, 100f, float.MaxValue, false, SkillshotType.SkillshotCircle);

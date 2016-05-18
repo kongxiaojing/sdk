@@ -99,7 +99,7 @@ namespace ExorAIO.Champions.Cassiopeia
         {
             if (Vars.W.IsReady() &&
                 args.Sender.IsValidTarget(Vars.W.Range) &&
-                GameObjects.Player.Distance(args.End) > 550 &&
+                GameObjects.Player.Distance(args.End) > 500 &&
                 Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast(args.End);
