@@ -36,13 +36,12 @@ namespace ExorAIO.Champions.Jhin
                     if (Vars.Menu["spells"]["r"]["nearmouse"].GetValue<MenuBool>().Value)
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(Targets.RTargets.OrderBy(t => t.Distance(Game.CursorPos)).FirstOrDefault()).UnitPosition);
-                        return;
                     }
                     else
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(Targets.RTargets.FirstOrDefault()).UnitPosition);
-                        return;
                     }
+                    return;
                 }
 
                 Vars.R.Cast(Game.CursorPos);

@@ -25,8 +25,9 @@ namespace ExorAIO.Champions.Jhin
             =>
                 GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
+                        GameObjects.Player.IsFacing(t) &&
+                        !Invulnerable.Check(t, DamageType.Physical) &&
                         Vars.Menu["spells"]["r"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value).ToList();
 
         /// <summary>
