@@ -38,12 +38,6 @@ namespace NabbAlerter
                 return;
             }
 
-            if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
-                Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
-            {
-                return;
-            }
-
             if (sender == null)
             {
                 return;
@@ -57,7 +51,7 @@ namespace NabbAlerter
             }
 
             if (GameObjects.Player.Distance(sender as Obj_AI_Hero) > 
-                    Vars.Menu["enable"].GetValue<MenuSliderButton>().SValue)
+                Vars.Menu["enable"].GetValue<MenuSliderButton>().SValue)
             {
                 return;
             }
@@ -117,6 +111,12 @@ namespace NabbAlerter
                 /// </summary>
                 DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
                 {
+                    if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
+                        Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
+                    {
+                        return;
+                    }
+
                     /// <summary>
                     ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
                     /// </summary>
@@ -153,6 +153,12 @@ namespace NabbAlerter
                 /// </summary>
                 DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
                 {
+                    if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
+                        Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
+                    {
+                        return;
+                    }
+
                     /// <summary>
                     ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
                     /// </summary>
@@ -193,6 +199,12 @@ namespace NabbAlerter
                 /// </summary>
                 DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
                 {
+                    if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
+                        Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
+                    {
+                        return;
+                    }
+
                     /// <summary>
                     ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
                     /// </summary>
