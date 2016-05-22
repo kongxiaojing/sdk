@@ -43,7 +43,6 @@ namespace ExorAIO.Utilities
                     IsValidStun(target as Obj_AI_Hero) ||
                     IsValidSnare(target as Obj_AI_Hero) ||
                     target.HasBuffOfType(BuffType.Flee) ||
-                    target.HasBuffOfType(BuffType.Sleep) ||
                     target.HasBuffOfType(BuffType.Taunt) ||
                     target.HasBuffOfType(BuffType.Charm) ||
                     target.HasBuffOfType(BuffType.Knockup) ||
