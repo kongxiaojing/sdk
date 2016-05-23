@@ -31,7 +31,8 @@ namespace NabbAlerter
             "quinn",
             "ryze",
             "teemo",
-            "udyr"
+            "udyr",
+			"yasuo"
         };
 
         /// <summary>

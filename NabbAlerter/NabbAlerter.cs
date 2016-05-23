@@ -80,6 +80,15 @@ namespace NabbAlerter
                 }
 
                 /// <summary>
+                ///     Irelia can cast R multiple times, let's just not spam it once she already casted R.
+                /// </summary>
+                if ((sender as Obj_AI_Hero).ChampionName.Equals("Irelia") &&
+                    (sender as Obj_AI_Hero).HasBuff("IreliaTrascendentBladesSpell"))
+                {
+                    return;
+                }
+
+                /// <summary>
                 ///     Jhin can cast R four times, let's just not spam it.
                 /// </summary>
                 if ((sender as Obj_AI_Hero).ChampionName.Equals("Jhin") &&
@@ -93,15 +102,6 @@ namespace NabbAlerter
                 /// </summary>
                 if ((sender as Obj_AI_Hero).ChampionName.Equals("Zed") &&
                     !args.SData.Name.Equals("ZedR"))
-                {
-                    return;
-                }
-
-                /// <summary>
-                ///     Irelia can cast R multiple times, let's just not spam it once she already casted R.
-                /// </summary>
-                if ((sender as Obj_AI_Hero).ChampionName.Equals("Irelia") &&
-                    (sender as Obj_AI_Hero).HasBuff("IreliaTrascendentBladesSpell"))
                 {
                     return;
                 }
