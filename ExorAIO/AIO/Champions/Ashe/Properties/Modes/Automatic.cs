@@ -37,7 +37,7 @@ namespace ExorAIO.Champions.Ashe
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.W.Range)))
                 {
-                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                    if (!Vars.W.GetPrediction(target).CollisionObjects.Any())
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                     }

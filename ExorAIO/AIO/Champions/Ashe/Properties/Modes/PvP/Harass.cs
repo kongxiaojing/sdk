@@ -33,7 +33,7 @@ namespace ExorAIO.Champions.Ashe
                 GameObjects.Player.ManaPercent > ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["manamanager"]) &&
                 Vars.Menu["spells"]["w"]["harass"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
                 }

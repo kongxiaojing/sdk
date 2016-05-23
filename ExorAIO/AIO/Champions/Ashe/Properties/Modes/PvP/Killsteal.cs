@@ -32,7 +32,7 @@ namespace ExorAIO.Champions.Ashe
                         t.IsValidTarget(Vars.W.Range - 100f) &&
                         Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
-                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any())
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                         return;
@@ -53,7 +53,7 @@ namespace ExorAIO.Champions.Ashe
                         !t.IsValidTarget(Vars.W.Range) &&
                         Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
-                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => GameObjects.EnemyHeroes.Contains(c)))
+                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any())
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     }

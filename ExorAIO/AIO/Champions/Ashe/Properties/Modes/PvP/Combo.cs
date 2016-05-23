@@ -49,7 +49,7 @@ namespace ExorAIO.Champions.Ashe
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => c is Obj_AI_Minion))
+                if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
                 }
@@ -63,14 +63,17 @@ namespace ExorAIO.Champions.Ashe
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
                 Vars.Menu["spells"]["r"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
-                if (Vars.E.IsReady() &&
-                    !Targets.Target.IsValidTarget(Vars.W.Range) &&
-                    Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
+				if (!Vars.R.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
-                    Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).UnitPosition);
-                }
+					if (Vars.E.IsReady() &&
+						!Targets.Target.IsValidTarget(Vars.W.Range) &&
+						Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
+					{
+						Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).UnitPosition);
+					}
 
-                Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
+					Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
+				}
             }
         }
     }
