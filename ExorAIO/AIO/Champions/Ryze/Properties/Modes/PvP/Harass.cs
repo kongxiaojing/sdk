@@ -38,6 +38,18 @@ namespace ExorAIO.Champions.Ryze
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
             }
+
+            /// <summary>
+            ///     The E Harass Logic.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                Targets.Target.IsValidTarget(Vars.E.Range) &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["harass"]) &&
+                Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue)
+            {
+                Vars.E.CastOnUnit(Targets.Target);
+            }
         }
     }
 }

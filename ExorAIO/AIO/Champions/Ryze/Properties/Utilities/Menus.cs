@@ -49,7 +49,8 @@ namespace ExorAIO.Champions.Ryze
                 {
                     Vars.EMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.EMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 25, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("harass", "Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("clear",  "Clear / if Mana >= x%",  25, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 
@@ -71,9 +72,9 @@ namespace ExorAIO.Champions.Ryze
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
                 Vars.MiscMenu.Add(new MenuBool("noaa", "Don't AA in Combo", true));
-                Vars.MiscMenu.Add(new MenuSliderButton("tear",        "Stack Tear / if Mana >= x%",        75, 1, 95,   true));
-                Vars.MiscMenu.Add(new MenuSliderButton("stacks",      "Keep Passive Stacks:",               1, 1, 4,    true));
-                Vars.MiscMenu.Add(new MenuSliderButton("stacksmana",  "Keep Passive Stacks If Mana >= x%",  50, 1, 99,  true));
+                Vars.MiscMenu.Add(new MenuSliderButton("tear",       "Stack Tear / if Mana >= x%",        75, 1, 95, true));
+                Vars.MiscMenu.Add(new MenuSliderButton("stacks",     "Keep Passive Stacks:",               1, 1,  4, true));
+                Vars.MiscMenu.Add(new MenuSliderButton("stacksmana", "Keep Passive Stacks If Mana >= x%", 50, 1, 99, true));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

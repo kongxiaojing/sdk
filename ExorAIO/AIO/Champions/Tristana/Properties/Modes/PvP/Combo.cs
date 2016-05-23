@@ -1,5 +1,6 @@
 using System;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -18,7 +19,7 @@ namespace ExorAIO.Champions.Tristana
         public static void Combo(EventArgs args)
         {
             if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget() ||
+                !(Variables.Orbwalker.GetTarget() as Obj_AI_Hero).IsValidTarget() ||
                 Invulnerable.Check(Targets.Target))
             {
                 return;
@@ -28,11 +29,11 @@ namespace ExorAIO.Champions.Tristana
             ///     The E Combo Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.E.Range) &&
+                (Variables.Orbwalker.GetTarget() as Obj_AI_Hero).IsValidTarget(Vars.E.Range) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value &&
                 Vars.Menu["spells"]["e"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
-                Vars.E.CastOnUnit(Targets.Target);
+                Vars.E.CastOnUnit(Variables.Orbwalker.GetTarget() as Obj_AI_Hero);
             }
         }
     }
