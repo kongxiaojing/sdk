@@ -19,7 +19,7 @@ namespace ExorAIO.Champions.Nautilus
         public static void Combo(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                Invulnerable.Check(Targets.Target) ||
+                Bools.IsImmobile(Targets.Target) ||
                 Invulnerable.Check(Targets.Target))
             {
                 return;
