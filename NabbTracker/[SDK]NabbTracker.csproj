@@ -61,8 +61,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="NabbTracker.cs" />
     <Compile Include="Updater.cs" />
-    <Compile Include="Utilities\Helpers\Drawings.cs" />
+    <Compile Include="Trackers\SpellTracker.cs" />
+    <Compile Include="Trackers\ExpTracker.cs" />
     <Compile Include="Utilities\Properties\Menus.cs" />
+	<Compile Include="Utilities\ColorConvert.cs" />
     <Compile Include="Utilities\Vars.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,16 @@ namespace NabbTracker
     internal class Vars
     {
         /// <summary>
+        ///     Gets the Color.
+        /// </summary>
+        public static SharpDX.Color SDXColor = SharpDX.Color.Black;
+
+        /// <summary>
+        ///     Gets the Color.
+        /// </summary>
+        public static System.Drawing.Color SDColor = System.Drawing.Color.Black;
+
+        /// <summary>
         ///     Gets the SummonerSpell name.
         /// </summary>
         public static string GetSummonerSpellName;
@@ -26,7 +36,7 @@ namespace NabbTracker
         public static SpellSlot[] SummonerSpellSlots = {SpellSlot.Summoner1, SpellSlot.Summoner2};
 
         /// <summary>
-        ///     A list of the names of the champions who have a different healthbar.
+        ///     A list of the names of the champions who have a different healthbar type.
         /// </summary>
         public static readonly List<string> SpecialChampions = new List<string> {"Annie", "Jhin"};
 
@@ -36,9 +46,24 @@ namespace NabbTracker
         public static Menu Menu { internal get; set; }
 
         /// <summary>
+        ///     The SpellTracker Menu.
+        /// </summary>
+        public static Menu SpellTrackerMenu { internal get; set; }
+
+        /// <summary>
+        ///     The ExpTracker Menu.
+        /// </summary>
+        public static Menu ExpTrackerMenu { internal get; set; }
+
+        /// <summary>
         ///     The Miscellaneous Menu.
         /// </summary>
         public static Menu MiscMenu { internal get; set; }
+
+        /// <summary>
+        ///     The Colorblind Menu.
+        /// </summary>
+        public static Menu ColorblindMenu { internal get; set; }
 
         /// <summary>
         ///     The Text fcnt.
@@ -74,6 +99,44 @@ namespace NabbTracker
         ///     The SummonerSpells Healthbar Y coordinate.
         /// </summary>
         public static int SummonerSpellY { internal get; set; }
+
+        /// <summary>
+        ///     The Exp Healthbars X coordinate.
+        /// </summary>
+        public static int ExpX { internal get; set; }
+
+        /// <summary>
+        ///     The Exp Healthbars Y coordinate.
+        /// </summary>
+        public static int ExpY { internal get; set; }
+
+        /// <summary>
+        ///     The Exp Healthbars X coordinate adjustment.
+        /// </summary>
+        public static int ExpXAdjustment(Obj_AI_Hero target)
+        {
+            if (SpecialChampions.Contains(target.ChampionName))
+            {
+                return 77;
+            }
+            
+            return 85;
+        }
+
+        /// <summary>
+        ///     The Spells Healthbars Y coordinate adjustment.
+        /// </summary>
+        public static int ExpYAdjustment(Obj_AI_Hero target)
+        {
+            if (SpecialChampions.Contains(target.ChampionName))
+            {
+                return 25;
+            }
+            
+            return target.IsMe
+                ? 21
+                : 35;
+        }
 
         /// <summary>
         ///     The Spells Healthbars X coordinate adjustment.

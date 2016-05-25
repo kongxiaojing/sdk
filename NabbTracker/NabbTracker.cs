@@ -16,9 +16,14 @@ namespace NabbTracker
             Menus.Initialize();
 
             /// <summary>
-            ///     Initialize the drawings.
+            ///     Initialize the SpellTracker.
             /// </summary>
-            Drawings.Initialize();
+            SpellTracker.Initialize();
+
+            /// <summary>
+            ///     Initialize the ExpTracker.
+            /// </summary>
+            ExpTracker.Initialize();
         }
     }
 }

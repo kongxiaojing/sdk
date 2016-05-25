@@ -17,16 +17,50 @@ namespace NabbTracker
             /// </summary>
             Vars.Menu = new Menu("nabbtracker", "NabbTracker", true);
             {
-                Vars.Menu.Add(new MenuBool("me", "Me"));
-                Vars.Menu.Add(new MenuBool("allies", "Allies", true));
-                Vars.Menu.Add(new MenuBool("enemies", "Enemies", true));
+				/// <summary>
+                ///     Sets the menu for the SpellTracker.
+                /// </summary>
+                Vars.SpellTrackerMenu = new Menu("spelltracker", "Spell Tracker");
+                {
+					Vars.SpellTrackerMenu.Add(new MenuBool("me", "Me"));
+					Vars.SpellTrackerMenu.Add(new MenuBool("allies", "Allies", true));
+					Vars.SpellTrackerMenu.Add(new MenuBool("enemies", "Enemies", true));
+				}
+				Vars.Menu.Add(Vars.SpellTrackerMenu);
+
+                /// <summary>
+                ///     Sets the menu for the ExpTracker.
+                /// </summary>
+                Vars.ExpTrackerMenu = new Menu("exptracker", "Experience Tracker");
+                {
+					Vars.ExpTrackerMenu.Add(new MenuBool("me", "Me"));
+					Vars.ExpTrackerMenu.Add(new MenuBool("allies", "Allies", true));
+					Vars.ExpTrackerMenu.Add(new MenuBool("enemies", "Enemies", true));
+				}
+				Vars.Menu.Add(Vars.ExpTrackerMenu);
 
                 /// <summary>
                 ///     The miscellaneous Menu.
                 /// </summary>
                 Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous", true);
                 {
-                    Vars.MiscMenu.Add(new MenuBool("colorblind", "Colorblind Mode"));
+					/// <summary>
+					///     The Colorblind Menu.
+					/// </summary>
+                    Vars.ColorblindMenu = new Menu("colorblind", "Colorblind Menu");
+					{
+						Vars.ColorblindMenu.Add(new MenuSeparator("separator", "Select your colorblind mode."));
+						Vars.ColorblindMenu.Add(new MenuList<string>("mode", "Colorblind Mode",
+							new[]
+							{
+								"Normal",
+								"Deuteranopia",
+								"Protanopia",
+								"Tritanopia",
+								"Achromatopsia"
+							}));
+					}
+					Vars.MiscMenu.Add(Vars.ColorblindMenu);
                 }
                 Vars.Menu.Add(Vars.MiscMenu);
             }

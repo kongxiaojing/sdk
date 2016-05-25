@@ -9,7 +9,7 @@ namespace NabbTracker
     /// <summary>
     ///     The drawings class.
     /// </summary>
-    internal class Drawings
+    internal class SpellTracker
     {
         /// <summary>
         ///     Loads the range drawings.
@@ -18,46 +18,45 @@ namespace NabbTracker
         {
             Drawing.OnDraw += delegate
             {
-                foreach (var pg in GameObjects.Heroes.Where(
+                foreach (var unit in GameObjects.Heroes.Where(
                     e =>
                         e.IsHPBarRendered &&
-                        (e.IsMe && Vars.Menu["me"].GetValue<MenuBool>().Value ||
-                            e.IsEnemy && Vars.Menu["enemies"].GetValue<MenuBool>().Value ||
-                            e.IsAlly && !e.IsMe && Vars.Menu["allies"].GetValue<MenuBool>().Value)))
+                        (e.IsMe && Vars.Menu["spelltracker"]["me"].GetValue<MenuBool>().Value ||
+                            e.IsEnemy && Vars.Menu["spelltracker"]["enemies"].GetValue<MenuBool>().Value ||
+                            e.IsAlly && !e.IsMe && Vars.Menu["spelltracker"]["allies"].GetValue<MenuBool>().Value)))
                 {
                     for (var Spell = 0; Spell < Vars.SpellSlots.Count(); Spell++)
                     {
-                        Vars.SpellX = (int)pg.HPBarPosition.X + Vars.SpellXAdjustment(pg) + Spell*25;
-                        Vars.SpellY = (int)pg.HPBarPosition.Y + Vars.SpellYAdjustment(pg);
+                        Vars.SpellX = (int)unit.HPBarPosition.X + Vars.SpellXAdjustment(unit) + Spell*25;
+                        Vars.SpellY = (int)unit.HPBarPosition.Y + Vars.SpellYAdjustment(unit);
 
                         Vars.DisplayTextFont.DrawText(
                             null,
-                            pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 0
-                                ? string.Format("{0:0}", pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time + 1)
+                            unit.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 0
+                                ? string.Format("{0:0}", unit.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time + 1)
                                 : Vars.SpellSlots[Spell].ToString(),
 
                             Vars.SpellX,
                             Vars.SpellY,
 
-                            pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).Level < 1
-                                ? Color.Gray
-                                : pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).SData.ManaCostArray.MaxOrDefault(value => value) > pg.Mana
-                                    ? Color.Cyan
-                                    : pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 0 &&
-                                      pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time <= 4
-                                        ? (Vars.Menu["miscellaneous"]["colorblind"].GetValue<MenuBool>().Value 
-                                            ? Color.FromBgra(0xFFF6F9C8)
-                                            : Color.Yellow)
-                                        : pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 4
-                                            ? Color.Red
-                                            : (Vars.Menu["miscellaneous"]["colorblind"].GetValue<MenuBool>().Value 
-                                                ? Color.FromBgra(0xFFB1AF27)
-                                                : Color.LightGreen)
+                            unit.Spellbook.GetSpell(Vars.SpellSlots[Spell]).Level < 1
+                                ? Colors.Convert(Color.Gray)
+                                
+							: unit.Spellbook.GetSpell(Vars.SpellSlots[Spell]).SData.ManaCostArray.MaxOrDefault(value => value) > unit.Mana
+                                ? Colors.Convert(Color.Cyan)
+
+							: unit.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 0 &&
+                              unit.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time <= 4
+                                ? Colors.Convert(Color.Yellow)
+
+                            : unit.Spellbook.GetSpell(Vars.SpellSlots[Spell]).CooldownExpires - Game.Time > 4
+                                ? Colors.Convert(Color.Red)
+								: Colors.Convert(Color.LightGreen)
                         );
 
-                        for (var DrawSpellLevel = 0; DrawSpellLevel <= pg.Spellbook.GetSpell(Vars.SpellSlots[Spell]).Level - 1; DrawSpellLevel++)
+                        for (var level = 0; level <= unit.Spellbook.GetSpell(Vars.SpellSlots[Spell]).Level - 1; level++)
                         {
-                            Vars.SpellLevelX = Vars.SpellX + DrawSpellLevel*3 - 4;
+                            Vars.SpellLevelX = Vars.SpellX + level*3 - 4;
                             Vars.SpellLevelY = Vars.SpellY + 4;
 
                             Vars.DisplayTextFont.DrawText(null, ".", Vars.SpellLevelX, Vars.SpellLevelY, Color.White);
@@ -66,10 +65,10 @@ namespace NabbTracker
 
                     for (var SummonerSpell = 0; SummonerSpell < Vars.SummonerSpellSlots.Count(); SummonerSpell++)
                     {
-                        Vars.SummonerSpellX = (int)pg.HPBarPosition.X + Vars.SummonerSpellXAdjustment(pg) + SummonerSpell*88;
-                        Vars.SummonerSpellY = (int)pg.HPBarPosition.Y + Vars.SummonerSpellYAdjustment(pg);
+                        Vars.SummonerSpellX = (int)unit.HPBarPosition.X + Vars.SummonerSpellXAdjustment(unit) + SummonerSpell*88;
+                        Vars.SummonerSpellY = (int)unit.HPBarPosition.Y + Vars.SummonerSpellYAdjustment(unit);
 
-                        switch (pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).Name.ToLower())
+                        switch (unit.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).Name.ToLower())
                         {
                             case "summonerflash":
                                 Vars.GetSummonerSpellName = "Flash";
@@ -114,13 +113,13 @@ namespace NabbTracker
 
                         Vars.DisplayTextFont.DrawText(
                             null,
-                            pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time > 0
-                                ? Vars.GetSummonerSpellName + ":" + string.Format("{0:0}", pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time + 1)
+                            unit.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time > 0
+                                ? Vars.GetSummonerSpellName + ":" + string.Format("{0:0}", unit.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time + 1)
                                 : Vars.GetSummonerSpellName + ": UP ", Vars.SummonerSpellX, Vars.SummonerSpellY,
  
-                            pg.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time > 0
-                                ? Color.Red 
-                                : Color.Yellow);
+                            unit.Spellbook.GetSpell(Vars.SummonerSpellSlots[SummonerSpell]).CooldownExpires - Game.Time > 0
+                                ? Colors.Convert(Color.Red)
+                                : Colors.Convert(Color.Yellow));
                     }
                 }
             };
