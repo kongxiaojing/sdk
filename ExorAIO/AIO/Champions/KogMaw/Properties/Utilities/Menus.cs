@@ -60,7 +60,7 @@ namespace ExorAIO.Champions.KogMaw
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
-                    Vars.RMenu.Add(new MenuSliderButton("combo",     "Combo / if Stacks <= x",     2, 1, 10, true));
+                    Vars.RMenu.Add(new MenuSliderButton("combo",     "Combo / if Stacks <= x",     1, 1, 10, true));
                     Vars.RMenu.Add(new MenuSliderButton("logical",   "Logical / if Stacks <= x",   2, 1, 10, true));
                     Vars.RMenu.Add(new MenuSliderButton("killsteal", "KillSteal / if Stacks <= x", 3, 1, 10, true));
                     {   

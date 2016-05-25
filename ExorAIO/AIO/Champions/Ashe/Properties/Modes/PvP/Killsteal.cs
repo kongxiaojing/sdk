@@ -30,9 +30,10 @@ namespace ExorAIO.Champions.Ashe
                         !Invulnerable.Check(t) &&
                         !t.IsValidTarget(Vars.AARange) &&
                         t.IsValidTarget(Vars.W.Range - 100f) &&
-                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
+                        Vars.GetRealHealth(t) <
+							(float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
-                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any())
+                    if (!Vars.W.GetPrediction(target).CollisionObjects.Any())
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                         return;
@@ -48,10 +49,11 @@ namespace ExorAIO.Champions.Ashe
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         !t.IsValidTarget(Vars.W.Range) &&
-                        Vars.GetRealHealth(t) < (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
+						!Invulnerable.Check(t, DamageType.Magical, false) &&
+                        Vars.GetRealHealth(t) <
+							(float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
                     if (!Vars.R.GetPrediction(target).CollisionObjects.Any())
                     {

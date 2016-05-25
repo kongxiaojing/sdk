@@ -36,8 +36,7 @@ namespace ExorAIO.Champions.Ashe
                 Vars.Q.Cast();
             }
 
-            if (Invulnerable.Check(Targets.Target) ||
-                Targets.Target.IsValidTarget(Vars.AARange))
+            if (Targets.Target.IsValidTarget(Vars.AARange + 20))
             {
                 return;
             }
@@ -46,6 +45,7 @@ namespace ExorAIO.Champions.Ashe
             ///     The W Combo Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
+				!Invulnerable.Check(Targets.Target) &&
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
@@ -60,13 +60,13 @@ namespace ExorAIO.Champions.Ashe
             ///     The E -> R Combo Logics.
             /// </summary>
             if (Vars.R.IsReady() &&
+				!Invulnerable.Check(Targets.Target, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
                 Vars.Menu["spells"]["r"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
 				if (!Vars.R.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
 					if (Vars.E.IsReady() &&
-						!Targets.Target.IsValidTarget(Vars.W.Range) &&
 						Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
 					{
 						Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).UnitPosition);

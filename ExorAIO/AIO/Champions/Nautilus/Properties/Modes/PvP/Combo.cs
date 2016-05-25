@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
@@ -20,7 +21,7 @@ namespace ExorAIO.Champions.Nautilus
         {
             if (!Targets.Target.IsValidTarget() ||
                 Bools.IsImmobile(Targets.Target) ||
-                Invulnerable.Check(Targets.Target))
+                Invulnerable.Check(Targets.Target, DamageType.Magical, false))
             {
                 return;
             }

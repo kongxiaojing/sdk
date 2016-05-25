@@ -27,9 +27,9 @@ namespace ExorAIO.Champions.Nautilus
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
+                        !Invulnerable.Check(t, DamageType.Magical, false) &&
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
@@ -49,9 +49,9 @@ namespace ExorAIO.Champions.Nautilus
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
                         !t.IsValidTarget(Vars.AARange) &&
+                        !Invulnerable.Check(t, DamageType.Magical, false) &&
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
