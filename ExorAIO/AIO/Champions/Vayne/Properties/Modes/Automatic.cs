@@ -57,7 +57,7 @@ namespace ExorAIO.Champions.Vayne
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         t.IsValidTarget(Vars.E.Range) &&
-                        !Invulnerable.Check(t, DamageType.Physical, false) &&
+                        !Invulnerable.Check(t, DamageType.True, false) &&
                         !t.IsValidTarget(GameObjects.Player.BoundingRadius) &&
                         Vars.Menu["spells"]["e"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
