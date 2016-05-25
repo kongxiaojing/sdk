@@ -70,9 +70,7 @@ namespace NabbActivator
                    target.HasBuffOfType(BuffType.Charm) ||
                    target.HasBuffOfType(BuffType.Taunt) ||
                    target.HasBuffOfType(BuffType.Polymorph) ||
-                   GameObjects.Player.HasBuff("ThreshQ") ||
-                   (GameObjects.Player.HealthPercent < 40 &&
-                    GameObjects.Player.HasBuff("SummonerDot"))
+                   GameObjects.Player.HasBuff("ThreshQ"))
                 );
         }
 
