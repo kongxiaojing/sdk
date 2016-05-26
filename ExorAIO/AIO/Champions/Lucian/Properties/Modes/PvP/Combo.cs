@@ -30,7 +30,7 @@ namespace ExorAIO.Champions.Lucian
                 Vars.Menu["spells"]["e"]["engager"].GetValue<MenuBool>().Value)
             {
                 if (GameObjects.Player.ServerPosition
-                        .Extend(Game.CursorPos, Vars.E.Range - Vars.AARange).CountEnemyHeroesInRange(1000f) < 2 &&
+                        .Extend(Game.CursorPos, Vars.E.Range - Vars.AARange).CountEnemyHeroesInRange(1000f) < 3 &&
                     Targets.Target
                         .Distance(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange)) < Vars.AARange)
                 {

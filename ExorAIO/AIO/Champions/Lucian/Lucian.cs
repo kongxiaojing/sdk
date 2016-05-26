@@ -57,7 +57,8 @@ namespace ExorAIO.Champions.Lucian
             Logics.Automatic(args);
 
             if (GameObjects.Player.IsWindingUp ||
-                GameObjects.Player.HasBuff("LucianR"))
+                GameObjects.Player.HasBuff("LucianR") ||
+				GameObjects.Player.HasBuff("LucianPassiveBuff"))
             {
                 return;
             }
