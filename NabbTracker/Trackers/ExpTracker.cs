@@ -62,9 +62,12 @@ namespace NabbTracker
 
 					Vars.DisplayTextFont.DrawText(
 						null,
-						expPercent > 0
+						expPercent > 0 ||
 							? expPercent.ToString()
-							: "0",
+							: unit.Level == 18
+								? "100"
+								: "0",
+							
 						Vars.ExpX - 13,
 						Vars.ExpY + 17,
 						Colors.Convert(SharpDX.Color.Yellow)
