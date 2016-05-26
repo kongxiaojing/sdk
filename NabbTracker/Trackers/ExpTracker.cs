@@ -40,9 +40,9 @@ namespace NabbTracker
 					var expPercent = (int)(actualExp/neededExp * 100);
 
 					Drawing.DrawLine(
-						Vars.ExpX - 77,
+						Vars.ExpX - 76,
 						Vars.ExpY + 20,
-						Vars.ExpX + 55,
+						Vars.ExpX + 56,
 						Vars.ExpY + 20,
 						7,
 						Colors.Convert(System.Drawing.Color.Purple)
@@ -51,9 +51,9 @@ namespace NabbTracker
 					if (expPercent > 0)
 					{
 						Drawing.DrawLine(
-							Vars.ExpX - 77,
+							Vars.ExpX - 76,
 							Vars.ExpY + 20,
-							Vars.ExpX - 77 + (float)(1.32 * expPercent),
+							Vars.ExpX - 76 + (float)(1.32 * expPercent),
 							Vars.ExpY + 20,
 							7,
 							Colors.Convert(System.Drawing.Color.Red)
@@ -65,7 +65,7 @@ namespace NabbTracker
 						expPercent > 0
 							? expPercent.ToString()
 							: "0",
-						Vars.ExpX - 12,
+						Vars.ExpX - 13,
 						Vars.ExpY + 17,
 						Colors.Convert(SharpDX.Color.Yellow)
 					);

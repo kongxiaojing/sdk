@@ -130,12 +130,12 @@ namespace NabbTracker
         {
             if (SpecialChampions.Contains(target.ChampionName))
             {
-                return 25;
+                return -38;
             }
             
             return target.IsMe
-                ? 21
-                : 35;
+                ? -30
+                : -22;
         }
 
         /// <summary>

@@ -23,12 +23,7 @@ namespace NabbTracker
                 /// <summary>
                 ///     Loads the Update checker.
                 /// </summary>
-                //Updater.Check();
-
-				/// <summary>
-				///     Loads the assembly.
-				/// </summary>
-				Tracker.OnLoad();
+                Updater.Check();
             };
         }
     }
