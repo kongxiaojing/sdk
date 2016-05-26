@@ -131,7 +131,7 @@ namespace ExorAIO.Champions.Lucian
                     ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["jungleclear"]) &&
                 Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
             {
-                Vars.E.Cast(Game.CursorPos);
+                Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 50));
 				return;
             }
 

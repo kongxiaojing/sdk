@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -44,6 +45,10 @@ namespace ExorAIO.Champions.Lucian
                     Targets.Target.IsValidTarget(Vars.R.Range) &&
                     Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
                 {
+					if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any())
+					{
+						Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
+					}
                     Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
                 }
                 else if (GameObjects.Player.HasBuff("LucianR") &&
