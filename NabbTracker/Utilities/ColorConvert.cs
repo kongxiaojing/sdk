@@ -6,350 +6,77 @@ using System.Drawing;
 
 namespace NabbTracker
 {
-    /// <summary>
-    ///     The Color convert class,
+	/// <summary>
+	///     The Color convert class,
 	///		Converts a SharpDX.Color or a System.Drawing.Color type into the same color as seen by a colorblind person
 	///		for each type of colorblindness, using the 'FromBgra' function.
 	/// 	https://github.com/sharpdx/SharpDX/blob/master/Source/SharpDX.Mathematics/Color.Palette.cs
-    /// </summary>
-    internal class Colors
+	/// </summary>
+	internal class Colors
 	{
-		/// <summary>
-		///     The convert class.
-		/// </summary>
+		public static int SDXColor(SharpDX.Color color)
+		{
+			if (color == SharpDX.Color.Gray)       return 0;
+			if (color == SharpDX.Color.Yellow)     return 1;
+			if (color == SharpDX.Color.Red)        return 2;
+			if (color == SharpDX.Color.Cyan)       return 3;
+			if (color == SharpDX.Color.LightGreen) return 4;
+			if (color == SharpDX.Color.Purple)     return 5;
+
+			return -1;
+		}
+
+		public static int SDColor(System.Drawing.Color color)
+		{
+			if (color == System.Drawing.Color.Gray)       return 0;
+			if (color == System.Drawing.Color.Yellow)     return 1;
+			if (color == System.Drawing.Color.Red)        return 2;
+			if (color == System.Drawing.Color.Cyan)       return 3;
+			if (color == System.Drawing.Color.LightGreen) return 4;
+			if (color == System.Drawing.Color.Purple)     return 5;
+
+			return -1;
+		}
+
 		public static SharpDX.Color Convert(SharpDX.Color color)
 		{
-			/// <summary>
-			///     The yellow color.
-			/// </summary>
-			if (color == SharpDX.Color.Gray)
+			var sdxConvert = new uint[6, 5] 
 			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF7F7F81);
-						break;
-					case 2: //Protanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF807E82);
-						break;
-					case 3: //Tritanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF808080);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF7F7F7F);
-						break;
-					default:
-						Vars.SDXColor = SharpDX.Color.Gray;
-						break;
-				}
-				
-				return Vars.SDXColor;
-			}
+				{ 0xFF7F7F81, 0xFF807E82, 0xFF808080, 0xFF7F7F7F, 0xFF808080 }, // gray
+				{ 0xFFFFE802, 0xFFFFF205, 0xFFFFD6D0, 0xFFE1E1E1, 0xFFFFFF00 }, // yellow
+				{ 0xFF6D5600, 0xFF332802, 0xFFF70500, 0xFF4C4C4C, 0xFFFF0000 }, // red
+				{ 0xFF91A8FF, 0xFFCCD3FF, 0xFF07F9FF, 0xFFB2B2B2, 0xFF00FFFF }, // cyan
+				{ 0xFFD3C594, 0xFFEDD893, 0xFF9ADCE2, 0xFFC7C7C7, 0xFF90EE90 }, // lightgreen
+				{ 0xFF23377D, 0xFF011981, 0xFF71170F, 0xFF343434, 0xFF800080 }  // purple
+			};
 
-			/// <summary>
-			///     The yellow color.
-			/// </summary>
-			if (color == SharpDX.Color.Yellow)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFFFE802);
-						break;
-					case 2: //Protanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFFFF205);
-						break;
-					case 3: //Tritanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFFFD6D0);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFE1E1E1);
-						break;
-					default:
-						Vars.SDXColor = SharpDX.Color.Yellow;
-						break;
-				}
-
-				return Vars.SDXColor;
-			}
-
-			/// <summary>
-			///     The red color.
-			/// </summary>
-			if (color == SharpDX.Color.Red)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF6D5600);
-						break;
-					case 2: //Protanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF332802);
-						break;
-					case 3: //Tritanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFF70500);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF4C4C4C);
-						break;
-					default:
-						Vars.SDXColor = SharpDX.Color.Red;
-						break;
-				}
-
-				return Vars.SDXColor;
-			}
-
-			/// <summary>
-			///     The cyan color.
-			/// </summary>
-			if (color == SharpDX.Color.Cyan)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF91A8FF);
-						break;
-					case 2: //Protanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFCCD3FF);
-						break;
-					case 3: //Tritanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF07F9FF);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFB2B2B2);
-						break;
-					default:
-						Vars.SDXColor = SharpDX.Color.Cyan;
-						break;
-				}
-				
-				return Vars.SDXColor;
-			}
-
-			/// <summary>
-			///     The lightgreen color.
-			/// </summary>
-			if (color == SharpDX.Color.LightGreen)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFD3C594);
-						break;
-					case 2: //Protanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFEDD893);
-						break;
-					case 3: //Tritanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF9ADCE2);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFFC7C7C7);
-						break;
-					default:
-						Vars.SDXColor = SharpDX.Color.LightGreen;
-						break;
-				}
-
-				return Vars.SDXColor;
-			}
-
-			/// <summary>
-			///     The purple color.
-			/// </summary>
-			if (color == SharpDX.Color.Purple)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF23377D);
-						break;
-					case 2: //Protanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF011981);
-						break;
-					case 3: //Tritanopia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF71170F);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDXColor = SharpDX.Color.FromBgra(0xFF343434);
-						break;
-					default:
-						Vars.SDXColor = SharpDX.Color.Purple;
-						break;
-				}
-				
-				return Vars.SDXColor;
-			}
+			Vars.SDXColor = 
+				SharpDX.Color.FromBgra(
+					sdxConvert[SDXColor(color),
+					Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index]
+				);
 
 			return Vars.SDXColor;
 		}
 
-		/// <summary>
-		///     The convert class.
-		/// </summary>
 		public static System.Drawing.Color Convert(System.Drawing.Color color)
 		{
-			/// <summary>
-			///     The yellow color.
-			/// </summary>
-			if (color == System.Drawing.Color.Gray)
+			var sdConvert = new int[6, 5, 3]
 			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(127, 127, 129);
-						break;
-					case 2: //Protanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(128, 126, 130);
-						break;
-					case 3: //Tritanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(128, 128, 128);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDColor = System.Drawing.Color.FromArgb(127, 127, 127);
-						break;
-					default:
-						Vars.SDColor = System.Drawing.Color.Gray;
-						break;
-				}
+				{ { 127, 127, 129 }, { 128, 126, 130 }, { 128, 128, 128 }, { 127, 127, 127 }, { 128, 128, 128 } }, // gray
+				{ { 255, 232, 2 },   { 255, 242, 5 },   { 255, 214, 208 }, { 225, 225, 225 }, { 255, 255, 0 }   }, // yellow
+				{ { 109, 86, 0 },    { 51, 40, 2 },     { 247, 5, 0 },     { 76, 76, 76 },    { 255, 0, 0 }     }, // red
+				{ { 145, 168, 255 }, { 204, 211, 255 }, { 7, 249, 255 },   { 178, 178, 178 }, { 0, 255, 255 }   }, // cyan
+				{ { 211, 197, 148 }, { 237, 216, 147 }, { 154, 220, 226 }, { 199, 199, 199 }, { 102, 255, 0 }   }, // lightgreen
+				{ { 35, 55, 125 },   { 1, 19, 81 },     { 71, 17, 15 },    { 34, 34, 34 },    { 143, 0, 255 }   }  // purple
+			};
 
-				return Vars.SDColor;
-			}
-
-			/// <summary>
-			///     The yellow color.
-			/// </summary>
-			if (color == System.Drawing.Color.Yellow)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(255, 232, 2);
-						break;
-					case 2: //Protanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(255, 242, 5);
-						break;
-					case 3: //Tritanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(255, 214, 208);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDColor = System.Drawing.Color.FromArgb(225, 225, 225);
-						break;
-					default:
-						Vars.SDColor = System.Drawing.Color.Yellow;
-						break;
-				}
-
-				return Vars.SDColor;
-			}
-
-			/// <summary>
-			///     The red color.
-			/// </summary>
-			if (color == System.Drawing.Color.Red)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(109, 86, 0);
-						break;
-					case 2: //Protanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(51, 40, 2);
-						break;
-					case 3: //Tritanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(247, 5, 0);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDColor = System.Drawing.Color.FromArgb(76, 76, 76);
-						break;
-					default:
-						Vars.SDColor = System.Drawing.Color.Red;
-						break;
-				}
-
-				return Vars.SDColor;
-			}
-
-			/// <summary>
-			///     The cyan color.
-			/// </summary>
-			if (color == System.Drawing.Color.Cyan)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(145, 168, 255);
-						break;
-					case 2: //Protanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(204, 211, 255);
-						break;
-					case 3: //Tritanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(7, 249, 255);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDColor = System.Drawing.Color.FromArgb(178, 178, 178);
-						break;
-					default:
-						Vars.SDColor = System.Drawing.Color.Cyan;
-						break;
-				}
-
-				return Vars.SDColor;
-			}
-
-			/// <summary>
-			///     The lightgreen color.
-			/// </summary>
-			if (color == System.Drawing.Color.LightGreen)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(211, 197, 148);
-						break;
-					case 2: //Protanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(237, 216, 147);
-						break;
-					case 3: //Tritanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(154, 220, 226);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDColor = System.Drawing.Color.FromArgb(199, 199, 199);
-						break;
-					default:
-						Vars.SDColor = System.Drawing.Color.LightGreen;
-						break;
-				}
-
-				return Vars.SDColor;
-			}
-
-			/// <summary>
-			///     The purple color.
-			/// </summary>
-			if (color == System.Drawing.Color.Purple)
-			{
-				switch (Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index)
-				{
-					case 1: //Deuteranopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(35, 55, 125);
-						break;
-					case 2: //Protanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(1, 19, 81);
-						break;
-					case 3: //Tritanopia
-						Vars.SDColor = System.Drawing.Color.FromArgb(71, 17, 15);
-						break;
-					case 4: //Achromatopsia
-						Vars.SDColor = System.Drawing.Color.FromArgb(34, 34, 34);
-						break;
-					default:
-						Vars.SDColor = System.Drawing.Color.Purple;
-						break;
-				}
-
-				return Vars.SDColor;
-			}
+			Vars.SDColor = System.Drawing.Color.FromArgb
+				(
+					sdConvert[SDColor(color), Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index, 0],
+					sdConvert[SDColor(color), Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index, 1],
+					sdConvert[SDColor(color), Vars.Menu["miscellaneous"]["colorblind"]["mode"].GetValue<MenuList>().Index, 2]
+				);
 
 			return Vars.SDColor;
 		}
