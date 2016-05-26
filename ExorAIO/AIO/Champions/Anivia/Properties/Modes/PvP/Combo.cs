@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -37,11 +38,11 @@ namespace ExorAIO.Champions.Anivia
                 if (GameObjects.Player.Distance(
                         GameObjects.Player.ServerPosition.Extend(
                             Targets.Target.ServerPosition,
-                            GameObjects.Player.Distance(Targets.Target) + 40f)) < Vars.W.Range)
+                            GameObjects.Player.Distance(Targets.Target) + Targets.Target.BoundingRadius)) < Vars.W.Range)
                 {
                     Vars.W.Cast(
                         GameObjects.Player.ServerPosition.Extend(
-                            Targets.Target.ServerPosition, GameObjects.Player.Distance(Targets.Target) + 40f));
+                            Targets.Target.ServerPosition, GameObjects.Player.Distance(Targets.Target) + Targets.Target.BoundingRadius));
                 }
             }
 
@@ -49,12 +50,16 @@ namespace ExorAIO.Champions.Anivia
             ///     The E Combo Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Targets.Target.HasBuff("chilled") &&
-                Targets.Target.IsValidTarget(Vars.R.Range) &&
-                Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
-            {
-                Vars.E.CastOnUnit(Targets.Target);
-            }
+				Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
+			{
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+					t =>
+						t.HasBuff("chilled") &&
+						t.IsValidTarget(Vars.E.Range)))
+				{
+					Vars.E.CastOnUnit(target);
+				}
+			}
 
             /// <summary>
             ///     The R Combo Logic.
