@@ -53,7 +53,9 @@ namespace NabbTracker
 						Drawing.DrawLine(
 							Vars.ExpX - 76,
 							Vars.ExpY + 20,
-							Vars.ExpX - 76 + (float)(1.32 * expPercent),
+							unit.Level < 18
+								? Vars.ExpX - 76 + (float)(1.32 * expPercent)
+								: 56,
 							Vars.ExpY + 20,
 							7,
 							Colors.Convert(System.Drawing.Color.Red)
@@ -62,7 +64,7 @@ namespace NabbTracker
 
 					Vars.DisplayTextFont.DrawText(
 						null,
-						expPercent > 0 ||
+						expPercent > 0
 							? expPercent.ToString()
 							: unit.Level == 18
 								? "100"
