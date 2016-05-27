@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Sivir
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range)))
                 {
-                    Vars.Q.Cast(Targets.Target.ServerPosition);
+                    Vars.Q.Cast(target.ServerPosition);
                 }
             }
         }
@@ -83,14 +83,22 @@ namespace ExorAIO.Champions.Sivir
                 if ((sender as Obj_AI_Hero).ChampionName.Equals("Gangplank"))
 				{
 					if (AutoAttack.IsAutoAttack(args.SData.Name) ||
-						args.SData.Name.Equals("GangplankQProceed") ||
-						args.SData.Name.Equals("GangplankEBarrelFuseMissile"))
+						args.SData.Name.Equals("GangplankQProceed"))
 					{
-						if ((args.Target as Obj_AI_Minion).Health > 1 ||
-							GameObjects.Player.Distance(args.Target) > 650 ||
-							!(args.Target as Obj_AI_Minion).CharData.BaseSkinName.Equals("gangplankbarrel"))
+						if ((args.Target as Obj_AI_Minion).Health == 1 &&
+							(args.Target as Obj_AI_Minion).CharData.BaseSkinName.Equals("gangplankbarrel"))
 						{
-							return;
+							if (GameObjects.Player.Distance(args.Target) < 450)
+							{
+								Vars.E.Cast();
+							}
+						}
+					}
+					else if (args.SData.Name.Equals("GangplankEBarrelFuseMissile"))
+					{
+						if (GameObjects.Player.Distance(args.End) < 450)
+						{
+							Vars.E.Cast();
 						}
 					}
 				}
@@ -133,9 +141,9 @@ namespace ExorAIO.Champions.Sivir
 					}
 					else
 					{
-						if (!sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
+						if (sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
 						{
-							return;
+							Vars.E.Cast();
 						}
 					}
                 }
@@ -173,14 +181,22 @@ namespace ExorAIO.Champions.Sivir
                 /// <summary>
                 ///     If the sender is Zed and the processed arg is a Targetted spell (His Ultimate), delay the shieldcasting by 200ms.
                 /// </summary>
-                DelayAction.Add(200, () =>
-                {
-                    Vars.E.Cast();
-                });
+                DelayAction.Add(200,
+				() =>
+					{
+						Vars.E.Cast();
+					}
+				);
             }
             else
             {
-                Vars.E.Cast();
+                DelayAction.Add(
+					Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value,
+				() =>
+					{
+						Vars.E.Cast();
+					}
+				);
             }
         }
     }

@@ -36,7 +36,7 @@ namespace ExorAIO.Champions.Sivir
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("combo",     "Combo",     true));
+                    Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
                     Vars.WMenu.Add(new MenuSliderButton("clear",     "Clear / if Mana >= x%",     50, 0, 99, true));
                     Vars.WMenu.Add(new MenuSliderButton("buildings", "Buildings / if Mana >= x%", 50, 0, 99, true));
                 }
@@ -47,7 +47,35 @@ namespace ExorAIO.Champions.Sivir
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
+					Vars.EMenu.Add(new MenuSeparator("separator", "It has to be used in conjunction with Evade, else it will not shield Skillshots"));
+					Vars.EMenu.Add(new MenuSeparator("separator2", "It it meant to shield what Evade doesn't support, like targetted spells, AoE, etc."));
                     Vars.EMenu.Add(new MenuBool("logical", "Logical", true));
+					Vars.EMenu.Add(new MenuSlider("delay", "E Delay (ms)", 0, 0, 250));
+					/*
+					{
+                        /// <summary>
+                        ///     Sets the menu for the E Whitelist.
+                        /// </summary>
+                        Vars.WhiteListMenu = new Menu("whitelist", "Shield: Whitelist Menu", true);
+                        {
+                            foreach (var target in GameObjects.EnemyHeroes)
+                            {
+								Vars.ListMenu = new Menu(target.ChampionName.ToLower(), $"{target.ChampionName}'s Spells", true);
+								{
+									foreach (var spell in target.Spells)
+									{
+										Vars.ListMenu.Add(
+											new MenuBool(
+												spell.Name.ToLower(),
+												$"Shield: {spell.Name}",
+												true));
+									}
+								}
+                            }
+                        }
+                        Vars.EMenu.Add(Vars.WhiteListMenu);
+                    }
+					*/
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
             }
