@@ -35,16 +35,12 @@ namespace ExorAIO.Champions.Kalista
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
                 {
-                    if (!Vars.Q.GetPrediction(target).CollisionObjects.Any())
-                    {
-                        Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
-                    }
-                    else if (Vars.Q.GetPrediction(target).CollisionObjects.Count(
+                    if (!Vars.Q.GetPrediction(target).CollisionObjects.Any() ||
+						Vars.Q.GetPrediction(target).CollisionObjects.Count(
                         c =>
                             Targets.Minions.Contains(c) &&
                             c.Health <
-                                (float)GameObjects.Player.GetSpellDamage(c, SpellSlot.E) +
-                                (float)GameObjects.Player.GetSpellDamage(c, SpellSlot.E, DamageStage.Buff)) == Vars.Q.GetPrediction(target).CollisionObjects.Count(c => Targets.Minions.Contains(c)))
+                                (float)GameObjects.Player.GetSpellDamage(c, SpellSlot.Q)) == Vars.Q.GetPrediction(target).CollisionObjects.Count(c => Targets.Minions.Contains(c)))
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
                     }

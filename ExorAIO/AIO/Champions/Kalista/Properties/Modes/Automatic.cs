@@ -96,13 +96,13 @@ namespace ExorAIO.Champions.Kalista
                 ///     The E Minion Harass Logic.
                 /// </summary>
                 if (GameObjects.EnemyHeroes.Any(t => Bools.IsPerfectRendTarget(t)) &&
+                    Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue &&
                     Targets.Minions.Any(
-                    m =>
-                        Bools.IsPerfectRendTarget(m) &&
-                        Vars.GetRealHealth(m) <
-                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
-                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) &&
-                    Vars.Menu["spells"]["e"]["harass"].GetValue<MenuSliderButton>().BValue)
+						m =>
+							Bools.IsPerfectRendTarget(m) &&
+							Vars.GetRealHealth(m) <
+								(float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
+								(float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)))
                 {
                     /// <summary>
                     ///     Check for Mana Manager if not in combo mode and the killable minion is only one, else do not use it.

@@ -37,12 +37,12 @@ namespace ExorAIO.Champions.Kalista
                 /// </summary>
                 if (Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
                     m =>
-                        Vars.GetRealHealth(m) <
+                        m.Health <
                             (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).MinionsHit >= 3)
                 {
                     Vars.Q.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
                         m =>
-                            Vars.GetRealHealth(m) <
+                            m.Health <
                                 (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).Position);
                 }
 
@@ -68,7 +68,7 @@ namespace ExorAIO.Champions.Kalista
                         Bools.IsPerfectRendTarget(m) &&
                         Vars.GetRealHealth(m) <
                             (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
-                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) >= 3)
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) >= 2)
                 {
                     Vars.E.Cast();
                 }
