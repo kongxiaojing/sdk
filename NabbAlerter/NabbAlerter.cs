@@ -98,6 +98,15 @@ namespace NabbAlerter
                 }
 
                 /// <summary>
+                ///     Shaco can cast R multiple times to move his clone, let's just not spam it once he already casted R.
+                /// </summary>
+                if ((sender as Obj_AI_Hero).ChampionName.Equals("Shaco") &&
+                    !args.SData.Name.Equals("HallucinateFull"))
+                {
+                    return;
+                }
+
+                /// <summary>
                 ///     Zed can cast R two times, let's just not spam it.
                 /// </summary>
                 if ((sender as Obj_AI_Hero).ChampionName.Equals("Zed") &&
