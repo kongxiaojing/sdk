@@ -48,7 +48,7 @@ namespace ExorAIO.Champions.Corki
                 {
                     Vars.RMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.RMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.RMenu.Add(new MenuBool("logical",   "Logical",   true));
+                    Vars.RMenu.Add(new MenuSliderButton("logical",    "Logical / if Mana >= x%",    50, 0, 99, true));
                     Vars.RMenu.Add(new MenuSliderButton("clear",      "Clear / if Mana >= x%",      50, 0, 99, true));
                     Vars.RMenu.Add(new MenuSliderButton("autoharass", "AutoHarass / if Mana >= x%", 50, 0, 99));
                     {

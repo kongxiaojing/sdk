@@ -36,13 +36,15 @@ namespace ExorAIO.Champions.Tryndamere
             /// <summary>
             ///     The Lifesaver R Logic.
             /// </summary>
-            if (Vars.R.IsReady() &&
-                !Vars.Q.IsReady() &&
-                GameObjects.Player.CountEnemyHeroesInRange(700f) > 0 &&
-                Health.GetPrediction(GameObjects.Player, (int)(250 + Game.Ping/2f)) <= GameObjects.Player.MaxHealth/5 &&
+            else if (Vars.R.IsReady() &&
+                GameObjects.Player.CountEnemyHeroesInRange(1500f) > 0 &&
                 Vars.Menu["spells"]["r"]["lifesaver"].GetValue<MenuBool>().Value)
             {
-                Vars.R.Cast();
+				if (GameObjects.Player.HealthPercent < 17 ||
+					Health.GetPrediction(GameObjects.Player, (int)(250 + Game.Ping/2f)) <= GameObjects.Player.MaxHealth/6)
+				{
+					Vars.R.Cast();
+				}
             }
         }
     }
