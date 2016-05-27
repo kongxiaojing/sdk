@@ -46,7 +46,7 @@ namespace ExorAIO.Champions.Warwick
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.Q.Range) &&
+                        t.IsValidTarget(Vars.R.Range) &&
                         t.Health <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
