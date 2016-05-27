@@ -77,6 +77,24 @@ namespace ExorAIO.Champions.Sivir
                     return;
                 }
 
+                /// <summary>
+                ///     Block Gangplank's Barrels.
+                /// </summary>
+                if ((sender as Obj_AI_Hero).ChampionName.Equals("Gangplank"))
+				{
+					if (AutoAttack.IsAutoAttack(args.SData.Name) ||
+						args.SData.Name.Equals("GangplankQProceed") ||
+						args.SData.Name.Equals("GangplankEBarrelFuseMissile"))
+					{
+						if ((args.Target as Obj_AI_Minion).Health > 1 ||
+							GameObjects.Player.Distance(args.Target) > 650 ||
+							!(args.Target as Obj_AI_Minion).CharData.BaseSkinName.Equals("gangplankbarrel"))
+						{
+							return;
+						}
+					}
+				}
+
                 if (!args.Target.IsMe)
                 {
                     return;
@@ -87,15 +105,11 @@ namespace ExorAIO.Champions.Sivir
                 /// </summary>
                 if (sender is Obj_AI_Minion)
                 {
-                    if (sender.CharData.BaseSkinName.Equals("SRU_Baron") &&
-                        sender.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
-                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Air") &&
-                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Fire") &&
-                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Earth") &&
-                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Water") &&
-                        sender.CharData.BaseSkinName.Equals("SRU_Dragon_Elder"))
+                    if (!sender.CharData.BaseSkinName.Equals("SRU_Baron") &&
+                        !sender.CharData.BaseSkinName.Contains("SRU_Dragon") &&
+						!sender.CharData.BaseSkinName.Equals("SRU_RiftHerald"))
                     {
-                        Vars.E.Cast();
+                        return;
                     }
                 }
 
@@ -110,18 +124,20 @@ namespace ExorAIO.Champions.Sivir
                 /// </summary>
                 if (AutoAttack.IsAutoAttack(args.SData.Name))
                 {
-                    if (!args.SData.Name.ToLower().Contains("red") &&
-                        !args.SData.Name.ToLower().Contains("gold") &&
-                        !args.SData.Name.ToLower().Contains("blue"))
-                    {
-                        if (!sender.IsMelee ||
-                            !sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
-                        {
-                            return;
-                        }
-                    }
-
-                    Console.WriteLine(args.SData.Name);
+					if (!sender.IsMelee)
+					{
+						if (!args.SData.Name.Contains("Card"))
+						{
+							return;
+						}
+					}
+					else
+					{
+						if (!sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
+						{
+							return;
+						}
+					}
                 }
 
                 /// <summary>
@@ -129,7 +145,9 @@ namespace ExorAIO.Champions.Sivir
                 /// </summary>
                 if (args.SData.TargettingType.Equals(SpellDataTargetType.LocationAoe))
                 {
-                    if (args.SData.Name.Equals("TormentedSoil") ||
+                    if (args.SData.Name.Equals("GangplankE") ||
+						args.SData.Name.Equals("TrundleCircle") ||
+						args.SData.Name.Equals("TormentedSoil") ||
                         args.SData.Name.Equals("MissFortuneScattershot"))
                     {
                         return;
