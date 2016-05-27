@@ -69,10 +69,10 @@ namespace ExorAIO.Champions.Kalista
                 foreach (var loc in Vars.Locations.Where(
                     l =>
                         GameObjects.Player.Distance(l) < Vars.W.Range &&
-                        !ObjectManager.Get<Obj_AI_Base>().Any(
+                        !ObjectManager.Get<Obj_AI_Minion>().Any(
                             m =>
-                                m.Distance(l) < 2000f &&
-                                m.CharData.BaseSkinName.Contains("RobotBuddy"))))
+                                m.Distance(l) < 1000f &&
+                                m.CharData.BaseSkinName.Equals("kalistaspawn"))))
                 {
                     Vars.W.Cast(loc);
                 }
@@ -146,7 +146,7 @@ namespace ExorAIO.Champions.Kalista
                     /// </summary>
                     foreach (var target in GameObjects.EnemyHeroes.Where(t => Bools.IsPerfectRendTarget(t)))
                     {
-                        if (Invulnerable.Check(target, DamageType.Physical))
+                        if (Invulnerable.Check(target, DamageType.True, false))
                         {
                             return;
                         }
