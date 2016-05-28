@@ -21,7 +21,7 @@ namespace ExorAIO.Champions.Caitlyn
         public static void Combo(EventArgs args)
         {
             if (Bools.HasSheenBuff() ||
-				GameObjects.Player.Mana < Vars.W.Instance.ManaCost + Vars.Q.Instance.ManaCost)
+				GameObjects.Player.Mana < Vars.E.Instance.ManaCost + Vars.Q.Instance.ManaCost)
             {
                 return;
             }
@@ -30,7 +30,6 @@ namespace ExorAIO.Champions.Caitlyn
             ///     The E Combo Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in
@@ -44,6 +43,12 @@ namespace ExorAIO.Champions.Caitlyn
 						Vars.E.GetPrediction(target).Hitchance >= HitChance.High)
                     {
                         Vars.E.Cast(Vars.E.GetPrediction(target).UnitPosition);
+
+						if (Vars.Q.IsReady() &&
+							Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
+						{
+							Vars.Q.Cast(target.ServerPosition);
+						}
                     }
                 }
             }
