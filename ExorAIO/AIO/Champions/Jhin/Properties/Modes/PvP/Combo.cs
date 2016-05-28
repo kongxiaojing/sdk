@@ -19,11 +19,6 @@ namespace ExorAIO.Champions.Jhin
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
-            if (Bools.HasSheenBuff())
-            {
-                return;
-            }
-
             /// <summary>
             ///     The R Combo Logic.
             /// </summary>
@@ -41,13 +36,15 @@ namespace ExorAIO.Champions.Jhin
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(Targets.RTargets.FirstOrDefault()).UnitPosition);
                     }
-                    return;
                 }
-
-                Vars.R.Cast(Game.CursorPos);
+				else
+				{
+					Vars.R.Cast(Game.CursorPos);
+				}
             }
 
-            if (!Targets.Target.IsValidTarget() ||
+            if (Bools.HasSheenBuff() ||
+				!Targets.Target.IsValidTarget() ||
                 Invulnerable.Check(Targets.Target))
             {
                 return;

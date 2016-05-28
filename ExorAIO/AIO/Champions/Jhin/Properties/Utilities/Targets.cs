@@ -27,7 +27,7 @@ namespace ExorAIO.Champions.Jhin
                     t =>
                         t.IsValidTarget(Vars.R.Range) &&
                         GameObjects.Player.IsFacing(t) &&
-                        !Invulnerable.Check(t, DamageType.Physical) &&
+                        !Invulnerable.Check(t, DamageType.True, false) &&
                         Vars.Menu["spells"]["r"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value).ToList();
 
         /// <summary>
