@@ -21,8 +21,7 @@ namespace ExorAIO.Champions.Caitlyn
         public static void Combo(EventArgs args)
         {
             if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget() ||
-                Invulnerable.Check(Targets.Target))
+				GameObjects.Player.Mana - Vars.W.Instance.ManaCost < Vars.Q.Instance.ManaCost)
             {
                 return;
             }
@@ -32,7 +31,6 @@ namespace ExorAIO.Champions.Caitlyn
             /// </summary>
             if (Vars.E.IsReady() &&
                 Vars.Q.IsReady() &&
-                GameObjects.Player.ManaPercent >= 20 &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in

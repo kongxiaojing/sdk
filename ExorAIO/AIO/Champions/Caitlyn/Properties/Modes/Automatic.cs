@@ -28,7 +28,7 @@ namespace ExorAIO.Champions.Caitlyn
             ///     The Automatic Q Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.CountEnemyHeroesInRange(Vars.Q.Range) == 1 &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) < 2 &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
@@ -39,7 +39,7 @@ namespace ExorAIO.Champions.Caitlyn
                     if (target.HasBuff("caitlynyordletrapdebuff") ||
                         target.HasBuff("caitlynyordletrapinternal"))
                     {
-                        Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
+                        Vars.Q.Cast(target.ServerPosition);
                     }
                 }
             }
@@ -53,13 +53,13 @@ namespace ExorAIO.Champions.Caitlyn
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         Bools.IsImmobile(t) &&
-                        !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.W.Range)))
+                        t.IsValidTarget(Vars.W.Range) &&
+						!Invulnerable.Check(t, DamageType.Magical, false)))
                 {
-                    if (!GameObjects.Minions.Any(
+                    if (!ObjectManager.Get<Obj_AI_Minion>().Any(
                         m =>
                             m.Distance(target.ServerPosition) < 100f &&
-                            m.CharData.BaseSkinName.Contains("Cupcake")))
+                            m.CharData.BaseSkinName.Equals("Caitlyntrap")))
                     {
                         Vars.W.Cast(target.ServerPosition);
                     }
