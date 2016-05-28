@@ -87,7 +87,8 @@ namespace ExorAIO.Champions.Sivir
                 /// <summary>
                 ///     Block Gangplank's Barrels.
                 /// </summary>
-                if ((sender as Obj_AI_Hero).ChampionName.Equals("Gangplank"))
+                if ((sender as Obj_AI_Hero) != null &&
+                    (sender as Obj_AI_Hero).ChampionName.Equals("Gangplank"))
 				{
 					if (AutoAttack.IsAutoAttack(args.SData.Name) ||
 						args.SData.Name.Equals("GangplankQProceed"))
@@ -161,8 +162,9 @@ namespace ExorAIO.Champions.Sivir
                 if (args.SData.TargettingType.Equals(SpellDataTargetType.LocationAoe))
                 {
                     if (args.SData.Name.Equals("GangplankE") ||
-						args.SData.Name.Equals("TrundleCircle") ||
-						args.SData.Name.Equals("TormentedSoil") ||
+                        args.SData.Name.Equals("TrundleCircle") ||
+                        args.SData.Name.Equals("TormentedSoil") ||
+                        args.SData.Name.Equals("SwainDecrepify") ||
                         args.SData.Name.Equals("MissFortuneScattershot"))
                     {
                         return;

@@ -48,7 +48,7 @@ namespace ExorAIO.Champions.Sivir
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
 					Vars.EMenu.Add(new MenuSeparator("separator", "It has to be used in conjunction with Evade, else it will not shield Skillshots"));
-					Vars.EMenu.Add(new MenuSeparator("separator2", "It it meant to shield what Evade doesn't support, like targetted spells, AoE, etc."));
+					Vars.EMenu.Add(new MenuSeparator("separator2", "It is meant to shield what Evade doesn't support, like targetted spells, AoE, etc."));
                     Vars.EMenu.Add(new MenuBool("logical", "Logical", true));
 					Vars.EMenu.Add(new MenuSlider("delay", "E Delay (ms)", 0, 0, 250));
 					/*

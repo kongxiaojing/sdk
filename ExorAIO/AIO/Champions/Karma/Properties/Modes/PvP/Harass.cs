@@ -29,7 +29,7 @@ namespace ExorAIO.Champions.Karma
             ///     The Q Harass Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.Q.Range) &&
+                Targets.Target.IsValidTarget(Vars.Q.Range-100f) &&
                 GameObjects.Player.ManaPercent >
                     ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["harass"]) &&
                 Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue)

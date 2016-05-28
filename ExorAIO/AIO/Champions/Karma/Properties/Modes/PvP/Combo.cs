@@ -60,7 +60,7 @@ namespace ExorAIO.Champions.Karma
             ///     The Q Combo Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.Q.Range) &&
+                Targets.Target.IsValidTarget(Vars.Q.Range-100f) &&
                 !Invulnerable.Check(Targets.Target, DamageType.Magical) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
