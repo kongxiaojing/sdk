@@ -85,16 +85,17 @@ namespace ExorAIO.Champions.Anivia
                     /// </summary>
                     case OrbwalkingMode.LaneClear:
 
-                        if (!Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
+                        if (Anivia.QMissile.Position.CountEnemyHeroesInRange(Vars.Q.Width*2-5f) > 0)
+                        {
+                            Vars.Q.Cast();
+                        }
+						
+						if (!Vars.Menu["spells"]["q"]["clear"].GetValue<MenuSliderButton>().BValue)
                         {
                             return;
                         }
 
-                        if (Anivia.QMissile.Position.CountEnemyHeroesInRange(Vars.Q.Width*2-10f) > 0)
-                        {
-                            Vars.Q.Cast();
-                        }
-                        else if (Targets.QMinions.Count() >= 2)
+                        if (Targets.QMinions.Count() >= 2)
                         {
                             Vars.Q.Cast();
                         }
@@ -110,7 +111,7 @@ namespace ExorAIO.Champions.Anivia
                             return;
                         }
 
-                        if (Anivia.QMissile.Position.CountEnemyHeroesInRange(Vars.Q.Width*2-10f) > 0)
+                        if (Anivia.QMissile.Position.CountEnemyHeroesInRange(Vars.Q.Width*2-5f) > 0)
                         {
                             Vars.Q.Cast();
                         }
@@ -139,12 +140,9 @@ namespace ExorAIO.Champions.Anivia
                             return;
                         }
 
-                        if (GameObjects.Player.ManaPercent <
+                        if (!Targets.RMinions.Any() ||
+							GameObjects.Player.ManaPercent <
                                 ManaManager.GetNeededMana(Vars.R.Slot, Vars.Menu["spells"]["r"]["clear"]))
-                        {
-                            Vars.R.Cast();
-                        }
-                        if (!Targets.RMinions.Any())
                         {
                             Vars.R.Cast();
                         }
