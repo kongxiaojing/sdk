@@ -33,12 +33,17 @@ namespace ExorAIO.Champions.Caitlyn
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.Q.Range-200f) &&
-                        Vars.GetRealHealth(t) <
-                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)))
+                        t.IsValidTarget(Vars.Q.Range-200f)))
                 {
-                    Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
-                    return;
+					if (Vars.GetRealHealth(target) <
+                            (float)GameObjects.Player.GetSpellDamage(target, SpellSlot.Q) * 
+								(!Vars.Q.GetPrediction(target).CollisionObjects.Any()
+									? 1
+									: 0.67))
+					{
+                        Vars.Q.Cast(Vars.Q.GetPrediction(target).UnitPosition);
+                        return;
+                    }
                 }
             }
 

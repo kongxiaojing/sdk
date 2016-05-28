@@ -33,12 +33,10 @@ namespace ExorAIO.Utilities
             }
             else if (target is Obj_AI_Hero)
             {
-                return 
-                    target.HasBuff("pantheon_grandskyfall_jump") ||
+                return
                     target.HasBuff("rebirth") ||
                     target.HasBuff("zhonyasringshield") ||
-                    target.MoveSpeed < 50 ||
-                    (target as Obj_AI_Hero).IsRecalling() ||
+                    target.MoveSpeed < 150 ||
                     (target as Obj_AI_Hero).IsCastingInterruptableSpell() ||
                     IsValidStun(target as Obj_AI_Hero) ||
                     IsValidSnare(target as Obj_AI_Hero) ||

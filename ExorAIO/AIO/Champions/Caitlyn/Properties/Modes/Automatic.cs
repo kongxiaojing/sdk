@@ -30,16 +30,16 @@ namespace ExorAIO.Champions.Caitlyn
             if (Vars.W.IsReady() &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
+                foreach (var target in ObjectManager.Get<Obj_AI_Base>().Where(
                     t =>
                         Bools.IsImmobile(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
-						!Invulnerable.Check(t, DamageType.Magical, false)))
+						!Invulnerable.Check(t as Obj_AI_Hero, DamageType.Magical, false)))
                 {
                     if (!ObjectManager.Get<Obj_AI_Minion>().Any(
                         m =>
                             m.Distance(target.ServerPosition) < 100f &&
-                            m.CharData.BaseSkinName.Equals("Caitlyntrap")))
+                            m.CharData.BaseSkinName.Equals("caitlyntrap")))
                     {
                         Vars.W.Cast(target.ServerPosition);
                     }
@@ -55,6 +55,7 @@ namespace ExorAIO.Champions.Caitlyn
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
+                        Bools.IsImmobile(t) &&
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range) &&
                         t.HasBuff("caitlynyordletrapinternal")))

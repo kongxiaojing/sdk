@@ -45,7 +45,7 @@ namespace ExorAIO.Champions.Caitlyn
                         Vars.E.Cast(Vars.E.GetPrediction(target).UnitPosition);
 
 						if (Vars.Q.IsReady() &&
-							Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
+							Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
 						{
 							Vars.Q.Cast(target.ServerPosition);
 						}

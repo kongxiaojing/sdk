@@ -103,7 +103,7 @@ namespace ExorAIO.Champions.Caitlyn
 				if (!ObjectManager.Get<Obj_AI_Minion>().Any(
 					m =>
 						m.Distance(args.End) < 100f &&
-						m.CharData.BaseSkinName.Equals("Caitlyntrap")))
+						m.CharData.BaseSkinName.Equals("caitlyntrap")))
 				{
 					Vars.W.Cast(args.End);
 					return;
