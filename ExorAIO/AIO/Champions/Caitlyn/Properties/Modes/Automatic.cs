@@ -25,26 +25,6 @@ namespace ExorAIO.Champions.Caitlyn
             }
 
             /// <summary>
-            ///     The Automatic Q Logic.
-            /// </summary>
-            if (Vars.Q.IsReady() &&
-                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) < 2 &&
-                Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
-            {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.Q.Range)))
-                {
-                    if (target.HasBuff("caitlynyordletrapdebuff") ||
-                        target.HasBuff("caitlynyordletrapinternal"))
-                    {
-                        Vars.Q.Cast(target.ServerPosition);
-                    }
-                }
-            }
-
-            /// <summary>
             ///     The Automatic W Logic. 
             /// </summary>
             if (Vars.W.IsReady() &&
@@ -62,6 +42,26 @@ namespace ExorAIO.Champions.Caitlyn
                             m.CharData.BaseSkinName.Equals("Caitlyntrap")))
                     {
                         Vars.W.Cast(target.ServerPosition);
+                    }
+                }
+            }
+
+            /// <summary>
+            ///     The Automatic Q Logic.
+            /// </summary>
+            if (Vars.Q.IsReady() &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) < 2 &&
+                Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
+            {
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.Q.Range)))
+                {
+                    if (target.HasBuff("caitlynyordletrapdebuff") ||
+                        target.HasBuff("caitlynyordletrapinternal"))
+                    {
+                        Vars.Q.Cast(target.ServerPosition);
                     }
                 }
             }
