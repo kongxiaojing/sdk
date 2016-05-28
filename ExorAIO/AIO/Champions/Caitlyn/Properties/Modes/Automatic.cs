@@ -56,13 +56,10 @@ namespace ExorAIO.Champions.Caitlyn
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.Q.Range)))
+                        t.IsValidTarget(Vars.Q.Range) &&
+                        t.HasBuff("caitlynyordletrapinternal")))
                 {
-                    if (target.HasBuff("caitlynyordletrapdebuff") ||
-                        target.HasBuff("caitlynyordletrapinternal"))
-                    {
-                        Vars.Q.Cast(target.ServerPosition);
-                    }
+                    Vars.Q.Cast(target.ServerPosition);
                 }
             }
 
