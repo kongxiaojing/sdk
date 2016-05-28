@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -99,8 +100,14 @@ namespace ExorAIO.Champions.Caitlyn
                 !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
             {
-                Vars.W.Cast(args.End);
-                return;
+				if (!ObjectManager.Get<Obj_AI_Minion>().Any(
+					m =>
+						m.Distance(args.End) < 100f &&
+						m.CharData.BaseSkinName.Equals("Caitlyntrap")))
+				{
+					Vars.W.Cast(args.End);
+					return;
+				}
             }
 
             if (Vars.E.IsReady() &&
