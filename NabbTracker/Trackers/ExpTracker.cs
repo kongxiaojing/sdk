@@ -39,45 +39,42 @@ namespace NabbTracker
 
 					var expPercent = (int)(actualExp/neededExp * 100);
 
-					Drawing.DrawLine(
-						Vars.ExpX - 76,
-						Vars.ExpY + 20,
-						Vars.ExpX + 56,
-						Vars.ExpY + 20,
-						7,
-						Colors.Convert(System.Drawing.Color.Purple)
-					);
-
-					if (expPercent > 0)
-					{
+                    if (unit.Level < 18 || (GameObjects.Player.HasBuff("AwesomeBuff") && unit.Level < 30))
+                    {
 						Drawing.DrawLine(
 							Vars.ExpX - 76,
 							Vars.ExpY + 20,
-
-							unit.Level < 18
-								? Vars.ExpX - 76 + (float)(1.32 * expPercent)
-								: Vars.ExpX + 56,
-
+							Vars.ExpX + 56,
 							Vars.ExpY + 20,
 							7,
-							Colors.Convert(System.Drawing.Color.Red)
+							Colors.Convert(System.Drawing.Color.Purple)
 						);
-					}
 
-					Vars.DisplayTextFont.DrawText(
-						null,
+                        if (expPercent > 0)
+                        {
+                            Drawing.DrawLine(
+                                Vars.ExpX - 76,
+                                Vars.ExpY + 20,
+                                Vars.ExpX - 76 + (float)(1.32 * expPercent),
+                                Vars.ExpY + 20,
+                                7,
+                                Colors.Convert(System.Drawing.Color.Red)
+                            );
+                        }
 
-						unit.Level == 18
-							? "100"
-							: expPercent > 0
-								? expPercent.ToString()
-								: "0",
-							
-						Vars.ExpX - 13,
-						Vars.ExpY + 17,
-						Colors.Convert(SharpDX.Color.Yellow)
-					);
-				}
+                        Vars.DisplayTextFont.DrawText(
+                            null,
+
+                            expPercent > 0
+                                ? $"{expPercent.ToString()}%"
+                                : "0%",
+
+                            Vars.ExpX - 13,
+                            Vars.ExpY + 17,
+                            Colors.Convert(SharpDX.Color.Yellow)
+                        );
+                    }
+                }
             };
         }
     }
