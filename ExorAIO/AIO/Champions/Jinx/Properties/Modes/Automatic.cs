@@ -77,10 +77,10 @@ namespace ExorAIO.Champions.Jinx
                             ///     Enable if:
                             ///     No hero in PowPow Range but 1 or more heroes in FishBones range. (Range Logic).
                             /// </summary>
-                            if (!GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range) &&
+                            if (!GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.PowPow.Range)) &&
                                 GameObjects.EnemyHeroes.Any(t2 => t2.IsValidTarget(Variables.Orbwalker.ActiveMode == OrbwalkingMode.Hybrid
                                     ? Vars.Q.Range
-                                    : Vars.W.Range))))
+                                    : Vars.W.Range)))
                             {
                                 Console.WriteLine("ExorAIO: Jinx - Combo/Hybrid - Enabled for Range Check.");
                                 Vars.Q.Cast();
