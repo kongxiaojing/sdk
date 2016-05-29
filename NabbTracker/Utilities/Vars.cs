@@ -130,12 +130,18 @@ namespace NabbTracker
         {
             if (SpecialChampions.Contains(target.ChampionName))
             {
-                return -38;
+                return Vars.Menu["miscellaneous"]["name"].GetValue<MenuBool>().Value
+                    ? -47
+                    : -38;
             }
             
             return target.IsMe
-                ? -30
-                : -22;
+                ? Vars.Menu["miscellaneous"]["name"].GetValue<MenuBool>().Value
+                    ? -40
+                    : -30
+                : Vars.Menu["miscellaneous"]["name"].GetValue<MenuBool>().Value
+                    ? -33
+                    : -22;
         }
 
         /// <summary>
