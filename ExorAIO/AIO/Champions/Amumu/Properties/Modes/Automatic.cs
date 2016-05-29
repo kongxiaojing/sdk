@@ -78,7 +78,7 @@ namespace ExorAIO.Champions.Amumu
                         case OrbwalkingMode.LaneClear:
 
                             if (GameObjects.Player.ManaPercent <
-                                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["logical"]) &&
+                                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["logical"]) ||
                                 (Targets.Minions.Count() < 2 && !Targets.JungleMinions.Any()))
                             {
                                 Vars.W.Cast();
@@ -89,6 +89,7 @@ namespace ExorAIO.Champions.Amumu
                         ///     The Default Disable Logic.
                         /// </summary>
                         default:
+
                             if (!GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.W.Range)))
                             {
                                 Vars.W.Cast();
