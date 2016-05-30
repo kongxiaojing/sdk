@@ -63,7 +63,19 @@ namespace ExorAIO.Utilities
             new JungleHpBarOffset { BaseSkinName = "SRU_Razorbeak", Width = 74, Height = 2, XOffset = 1, YOffset = 7 },
             new JungleHpBarOffset { BaseSkinName = "SRU_Murkwolf", Width = 74, Height = 2, XOffset = 1, YOffset = 7 }
         };
-        
+
+        /// <summary>
+        ///     The jungle HP bar offset list.
+        /// </summary>
+        internal static readonly string[] JungleList =
+        {
+            "SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Water",
+            "SRU_Dragon_Earth", "SRU_Dragon_Elder", "SRU_Baron",
+            "SRU_RiftHerald", "SRU_Red", "SRU_Blue",
+            "SRU_Gromp", "Sru_Crab", "SRU_Krug",
+            "SRU_Razorbeak", "SRU_Murkwolf"
+        };
+
         /// <summary>
         ///     The args End.
         /// </summary>

@@ -21,11 +21,9 @@ namespace ExorAIO.Utilities
             {
                 ObjectManager.Get<Obj_AI_Base>().Where(
                     h =>
-                        !h.IsMe &&
-                        h.IsValid() &&
                         Bools.IsPerfectRendTarget(h) &&
-                        !h.CharData.BaseSkinName.Contains("Mini") &&
-                        !h.CharData.BaseSkinName.Contains("Minion")).ForEach(unit =>
+                        ((h is Obj_AI_Hero) && h.IsEnemy) ||
+                        Vars.JungleList.Contains(h.CharData.BaseSkinName)).ForEach(unit =>
                     {
                         /// <summary>
                         ///     Defines what HPBar Offsets it should display.
@@ -51,13 +49,27 @@ namespace ExorAIO.Utilities
                                      (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E, DamageStage.Buff))) / unit.MaxHealth * 100) / 100)
                                 : 0);
 
-                        Drawing.DrawLine(drawStartXPos, barPos.Y, drawEndXPos, barPos.Y, height, Vars.GetRealHealth(unit) <
-                            (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E) +
-                            (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E, DamageStage.Buff)
-                                ? Color.Blue 
-                                : Color.Orange);
+                        Drawing.DrawLine(
+                            drawStartXPos,
+                            barPos.Y,
+                            drawEndXPos,
+                            barPos.Y,
+                            height,
+                            Vars.GetRealHealth(unit) <
+                                (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E) +
+                                (float)GameObjects.Player.GetSpellDamage(unit, SpellSlot.E, DamageStage.Buff)
+                                    ? Color.Blue 
+                                    : Color.Orange
+                        );
 
-                        Drawing.DrawLine(drawStartXPos, barPos.Y, drawStartXPos, barPos.Y + height + 1, 1, Color.Lime);
+                        Drawing.DrawLine(
+                            drawStartXPos,
+                            barPos.Y,
+                            drawStartXPos,
+                            barPos.Y + height + 1,
+                            1,
+                            Color.Lime
+                        );
                     }
                 );
             };

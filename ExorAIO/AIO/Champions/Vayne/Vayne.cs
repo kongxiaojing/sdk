@@ -129,9 +129,10 @@ namespace ExorAIO.Champions.Vayne
             ///     The Anti-GapCloser E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
+                args.Sender.IsMelee &&
                 args.IsDirectedToPlayer &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.CastOnUnit(args.Sender);
@@ -147,7 +148,7 @@ namespace ExorAIO.Champions.Vayne
         {
             if (Vars.E.IsReady() &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                !Invulnerable.Check(args.Sender, DamageType.Physical, false) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["e"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.E.CastOnUnit(args.Sender);
