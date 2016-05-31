@@ -19,8 +19,28 @@ namespace ExorAIO.Champions.Jinx
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
+            /// <summary>
+            ///     The R Combo Logic.
+            /// </summary>
+            if (Vars.R.IsReady() &&
+                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
+            {
+                if (GameObjects.EnemyHeroes.Count(
+                    t =>
+                        t.HealthPercent < 50 &&
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.R.Range)) >= 2)
+                {
+                    Vars.R.CastIfWillHit(
+                        GameObjects.EnemyHeroes.Where(
+                        t =>
+                            t.HealthPercent < 50 &&
+                            !Invulnerable.Check(t) &&
+                            t.IsValidTarget(Vars.R.Range)).First(), 2);
+                }
+            }
+
             if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget() ||
                 Invulnerable.Check(Targets.Target))
             {
                 return;
@@ -54,21 +74,6 @@ namespace ExorAIO.Champions.Jinx
                 if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
-                }
-            }
-
-            /// <summary>
-            ///     The R Combo Logic.
-            /// </summary>
-            if (Vars.R.IsReady() &&
-                Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
-            {
-                if (GameObjects.EnemyHeroes.Count(
-                    t =>
-                        t.HealthPercent < 50 &&
-                        t.IsValidTarget(Vars.R.Range)) >= 2)
-                {
-                    Vars.R.CastIfWillHit(Targets.Target, 2);
                 }
             }
         }
