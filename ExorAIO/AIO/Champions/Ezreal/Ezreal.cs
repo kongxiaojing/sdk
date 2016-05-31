@@ -128,23 +128,14 @@ namespace ExorAIO.Champions.Ezreal
         /// <param name="args">The <see cref="Obj_AI_BaseBuffAddEventArgs" /> instance containing the event data.</param>
         public static void OnBuffAdd(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
         {
-            if (sender.IsMe &&
-                Vars.E.IsReady() &&
+            if (Vars.E.IsReady() &&
+                sender is Obj_AI_Hero &&
                 Vars.Menu["spells"]["e"]["antigrab"].GetValue<MenuBool>().Value)
             {
-                if (args.Buff.Name.Equals("ThreshQ"))
+                if (args.Buff.Name.Equals("ThreshQ") ||
+                    args.Buff.Name.Equals("rocketgrab2"))
                 {
-                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(
-                        GameObjects.EnemyHeroes.Find(
-                        t =>
-                            t.ChampionName.Equals("Thresh")).ServerPosition, -Vars.E.Range));
-                }
-                else if (args.Buff.Name.Equals("rocketgrab2"))
-                {
-                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(
-                        GameObjects.EnemyHeroes.Find(
-                        t =>
-                            t.ChampionName.Equals("Blitzcrank")).ServerPosition, -Vars.E.Range));
+                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(sender.ServerPosition, -Vars.E.Range));
                 }
             }
         }
@@ -158,10 +149,8 @@ namespace ExorAIO.Champions.Ezreal
         {
             if (Vars.E.IsReady() &&
                 args.Sender.IsMelee &&
+                args.IsDirectedToPlayer &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                args.SkillType == GapcloserType.Targeted &&
-                GameObjects.Player.Distance(args.End) <
-                    args.Sender.GetRealAutoAttackRange(args.Sender) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, -Vars.E.Range));
