@@ -42,7 +42,8 @@ namespace ExorAIO.Champions.Sivir
         }
 
         /// <summary>
-        ///     Called while processing Spelaneclearlearast operations.
+        ///     Called while processing Spellcasting operations.
+        ///     Port this berbb :^)
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="args">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
