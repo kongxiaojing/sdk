@@ -28,6 +28,7 @@ namespace NabbAlerter
             "khazix",
             "kogmaw",
             "leblanc",
+            "maokai",
             "quinn",
             "ryze",
             "teemo",
@@ -71,7 +72,7 @@ namespace NabbAlerter
                     str = "aurelion";
                     break;
                 case "cassiopeia":
-                    str = "cassio";
+                    str = "cass";
                     break;
                 case "caitlyn":
                     str = "cait";
@@ -89,7 +90,7 @@ namespace NabbAlerter
                     str = "ez";
                     break;
                 case "fiddlesticks":
-                    str = "fiddle";
+                    str = "fid";
                     break;
                 case "hecarim":
                     str = "heca";
@@ -104,13 +105,13 @@ namespace NabbAlerter
                     str = "j4";
                     break;
                 case "kalista":
-                    str = "kali";
+                    str = "kal";
                     break;
                 case "katarina":
-                    str = "kata";
+                    str = "kat";
                     break;
                 case "kassadin":
-                    str = "kassa";
+                    str = "kass";
                     break;
                 case "leblanc":
                     str = "lb";
