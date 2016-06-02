@@ -56,6 +56,15 @@ namespace NabbActivator
                                     ? Color.Blue 
                                     : Color.Orange
                             );
+
+                            Drawing.DrawLine(
+                                drawEndXPos,
+                                barPos.Y,
+                                drawEndXPos,
+                                barPos.Y + mobOffset.Height + 1,
+                                1,
+                                Color.Lime
+                            );
                         }
                     );
                 }
