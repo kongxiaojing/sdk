@@ -73,8 +73,9 @@ namespace ExorAIO.Champions.Veigar
             /// </summary>
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
-                Vars.MiscMenu.Add(new MenuBool("noaacombo", "Don't AA in Combo"));
-                Vars.MiscMenu.Add(new MenuBool("noaaclear", "Don't AA in LastHit/LaneClear"));
+                Vars.MiscMenu.Add(new MenuBool("support",   "Support Mode (Doesn't attack in Hybrid/LaneClear Mode)"));
+                Vars.MiscMenu.Add(new MenuBool("noaacombo", "Don't AA in Combo (Doesn't attack in Combo Mode if any Spell is ready)"));
+                Vars.MiscMenu.Add(new MenuBool("qfarmmode", "Only LastHit with Q while farming (Doesn't Attack In LastHit/LaneClear if Q is ready)", true));
                 Vars.MiscMenu.Add(new MenuSliderButton("tear", "Stack Tear / if Mana >= x%", 80, 0, 95, true));
             }
             Vars.Menu.Add(Vars.MiscMenu);

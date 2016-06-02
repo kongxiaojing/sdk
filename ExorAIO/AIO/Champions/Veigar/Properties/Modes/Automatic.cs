@@ -26,6 +26,16 @@ namespace ExorAIO.Champions.Veigar
             }
 
             /// <summary>
+            ///     The Support Mode Option.
+            /// </summary>
+            if (Vars.Menu["miscellaneous"]["support"].GetValue<MenuBool>().Value)
+            {
+                Variables.Orbwalker.SetAttackState(
+                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.Hybrid &&
+                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.LaneClear);
+            }
+
+            /// <summary>
             ///     The No AA while in Combo option.
             /// </summary>
             if (Vars.Menu["miscellaneous"]["noaacombo"].GetValue<MenuBool>().Value)
@@ -42,7 +52,7 @@ namespace ExorAIO.Champions.Veigar
             /// <summary>
             ///     The No AA while in LastHit/LaneClear option.
             /// </summary>
-            if (Vars.Menu["miscellaneous"]["noaaclear"].GetValue<MenuBool>().Value)
+            if (Vars.Menu["miscellaneous"]["qfarmmode"].GetValue<MenuBool>().Value)
             {
                 Variables.Orbwalker.SetAttackState(
                     !Vars.Q.IsReady() ||
