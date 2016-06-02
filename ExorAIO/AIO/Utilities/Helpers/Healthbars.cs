@@ -21,6 +21,7 @@ namespace ExorAIO.Utilities
             {
                 ObjectManager.Get<Obj_AI_Base>().Where(
                     h =>
+                        h.IsValidTarget() &&
                         Bools.IsPerfectRendTarget(h) &&
                         Targets.JungleMinions.Contains(h) ||
                         GameObjects.EnemyHeroes.Contains(h)).ForEach(unit =>
