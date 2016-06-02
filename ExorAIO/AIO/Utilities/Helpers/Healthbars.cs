@@ -22,8 +22,8 @@ namespace ExorAIO.Utilities
                 ObjectManager.Get<Obj_AI_Base>().Where(
                     h =>
                         Bools.IsPerfectRendTarget(h) &&
-                        ((h is Obj_AI_Hero) && h.IsEnemy) ||
-                        Vars.JungleList.Contains(h.CharData.BaseSkinName)).ForEach(unit =>
+                        Targets.JungleMinions.Contains(h) ||
+                        GameObjects.EnemyHeroes.Contains(h)).ForEach(unit =>
                     {
                         /// <summary>
                         ///     Defines what HPBar Offsets it should display.
@@ -32,7 +32,7 @@ namespace ExorAIO.Utilities
 
                         var width = (int)(unit is Obj_AI_Minion ? mobOffset.Width : Vars.Width);
                         var height = (int)(unit is Obj_AI_Minion ? mobOffset.Height : Vars.Height);
-                        var xOffset = (int)(unit is Obj_AI_Minion ? mobOffset.XOffset: Vars.XOffset);
+                        var xOffset = (int)(unit is Obj_AI_Minion ? mobOffset.XOffset : Vars.XOffset);
                         var yOffset = (int)(unit is Obj_AI_Minion ? mobOffset.YOffset : Vars.YOffset);
 
                         var barPos = unit.HPBarPosition;

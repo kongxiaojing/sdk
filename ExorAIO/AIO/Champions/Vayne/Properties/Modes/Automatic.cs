@@ -51,7 +51,6 @@ namespace ExorAIO.Champions.Vayne
             ///     The Automatic E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                !GameObjects.Player.IsDashing() &&
                 Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
@@ -63,11 +62,18 @@ namespace ExorAIO.Champions.Vayne
                 {
                     for (var i = 1; i < 10; i++)
                     {
-                        if ((target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
-                            (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                        if (!target.IsDashing())
+                        {
+                            if (!(target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() ||
+                                !(target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
+                            {
+                                return;
+                            }
+                        }
+
+                        if ((Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
                             (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
 
-                            (target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall() &&
                             (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall() &&
                             (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
                         {
