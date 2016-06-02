@@ -113,7 +113,7 @@ namespace NabbActivator
             if (SpellSlots.GetSmiteSlot().IsReady() &&
                 SpellSlots.GetSmiteSlot() != SpellSlot.Unknown)
             {
-                if (Vars.Menu["keys"]["smite"].GetValue<MenuKeyBind>().Active)
+                if (!Vars.Menu["keys"]["smite"].GetValue<MenuKeyBind>().Active)
                 {
                     return;
                 }

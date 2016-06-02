@@ -16,14 +16,20 @@ namespace NabbActivator
         /// </summary>
         public static void Initialize()
         {
-            if (SpellSlots.GetSmiteSlot().IsReady() &&
-                SpellSlots.GetSmiteSlot() != SpellSlot.Unknown &&
-                Vars.Menu["smite"]["drawings"]["damage"].GetValue<MenuBool>().Value)
+            Drawing.OnDraw += delegate
             {
-                Drawing.OnDraw += delegate
+                if (SpellSlots.GetSmiteSlot().IsReady() &&
+                    SpellSlots.GetSmiteSlot() != SpellSlot.Unknown)
                 {
-                    Targets.JungleMinions.ForEach(
-                        unit =>
+                    if (!Vars.Menu["smite"]["drawings"]["damage"].GetValue<MenuBool>().Value)
+                    {
+                        return;
+                    }
+
+                    GameObjects.Jungle.Where(
+                    m =>
+                        m.IsValidTarget() &&
+                        !GameObjects.JungleSmall.Contains(m)).ToList().ForEach(unit =>
                         {
                             /// <summary>
                             ///     Defines what HPBar Offsets it should display.
@@ -33,13 +39,12 @@ namespace NabbActivator
                             var barPos = unit.HPBarPosition;
                             {
                                 barPos.X += mobOffset.XOffset;
-                                barPos.Y += mobOffset.XOffset;
+                                barPos.Y += mobOffset.YOffset;
                             }
 
-                            var drawEndXPos = barPos.X + mobOffset.Width * (unit.HealthPercent / 100);
-                            var drawStartXPos = barPos.X + (unit.Health > Vars.GetSmiteDamage
-                                ? mobOffset.Width * (((unit.Health - Vars.GetSmiteDamage) / unit.MaxHealth * 100) / 100)
-                                : 0);
+                            var drawStartXPos = barPos.X;
+                            var drawEndXPos =
+                                barPos.X + mobOffset.Width * (Vars.GetSmiteDamage / unit.MaxHealth * 100) / 100;
 
                             Drawing.DrawLine(
                                 drawStartXPos,
@@ -51,19 +56,10 @@ namespace NabbActivator
                                     ? Color.Blue 
                                     : Color.Orange
                             );
-
-                            Drawing.DrawLine(
-                                drawStartXPos,
-                                barPos.Y,
-                                drawStartXPos,
-                                barPos.Y + mobOffset.Height + 1,
-                                1,
-                                Color.Lime
-                            );
                         }
                     );
-                };
-            }
+                }
+            };
         }
     }
 }

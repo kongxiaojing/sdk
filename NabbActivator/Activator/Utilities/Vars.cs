@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
@@ -60,22 +61,22 @@ namespace NabbActivator
         /// <summary>
         ///     Gets the ignite damage.
         /// </summary>
-        public static int GetIgniteDamage = 50 + 20 * GameObjects.Player.Level;
+        public static int GetIgniteDamage => 50 + 20 * GameObjects.Player.Level;
 
         /// <summary>
         ///     Gets the normal smite's damage.
         /// </summary>
-        public static int GetSmiteDamage = 370 + 20 * GameObjects.Player.Level;
+        public static int GetSmiteDamage => GameObjects.Player.GetBuffCount(GameObjects.Player.Buffs.Where(s => s.Name.ToLower().Contains("smitedamagetracker")).First().Name);
 
         /// <summary>
         ///     Gets the chilling smite's damage.
         /// </summary>
-        public static int GetChillingSmiteDamage = 20 + 8 * GameObjects.Player.Level;
+        public static int GetChillingSmiteDamage => 20 + 8 * GameObjects.Player.Level;
 
         /// <summary>
         ///     Gets the challenging smite's damage.
         /// </summary>
-        public static int GetChallengingSmiteDamage = 54 + 6 * GameObjects.Player.Level;
+        public static int GetChallengingSmiteDamage => 54 + 6 * GameObjects.Player.Level;
 
         /// <summary>
         ///     Gets the Delay.
