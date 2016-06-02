@@ -19,7 +19,7 @@ namespace NabbActivator
         {
             if (!Targets.Target.IsValidTarget() ||
                 !Vars.Menu["offensives"].GetValue<MenuBool>().Value ||
-                !Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
+                !Vars.Menu["keys"]["combo"].GetValue<MenuKeyBind>().Active)
             {
                 return;
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 //using System.Linq;
 using LeagueSharp;
+using LeagueSharp.SDK;
 
 namespace NabbActivator
 {
@@ -33,6 +34,11 @@ namespace NabbActivator
             ///     Initializes the resetters.
             /// </summary>
             Resetters.Initialize();
+
+            /// <summary>
+            ///     Initializes the healthbars.
+            /// </summary>
+            Healthbars.Initialize();
         }
 
         /// <summary>
@@ -42,19 +48,28 @@ namespace NabbActivator
         public static void OnUpdate(EventArgs args)
         {
             /*
+            foreach (var enemy in GameObjects.EnemyHeroes.Where(
+                t =>
+                    t.CharData.BaseSkinName.Equals("Galio")))
+            {
+                foreach (var buff in enemy.Buffs.Where(b => b.Name != "galiorunicskin" && b.Name != "RegenerationPotion"))
+                {
+                    Console.WriteLine($"{enemy.CharData.BaseSkinName}: {buff.Name}");
+                }
+            }
+
+
             if (Targets.Target != null)
             {
                 foreach (var buff in Targets.Target.Buffs.Where(b => b.Caster.IsMe))
                 {
-                    Console.WriteLine(buff.Name);
+                    Console.WriteLine($"{Targets.Target.ChampionName}: {buff.Name}");
                 }
             }
-            */
 
-            /*
-            foreach (var buff in ObjectManager.Player.Buffs.Where(b => b.Caster.IsMe))
+            foreach (var buff in GameObjects.Player.Buffs.Where(b => b.Caster.IsMe && b.Name != "isninja"))
             {
-                Console.WriteLine(buff.Name);
+                Console.WriteLine($"{GameObjects.Player.ChampionName}: {buff.Name}");
             }
             */
 
@@ -105,6 +120,16 @@ namespace NabbActivator
             ///     Loads the resetter-items logics.
             /// </summary>
             Activator.Resetters(sender, args);
+        }
+
+        /// <summary>
+        ///     Called on do-cast.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The args.</param>
+        public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+
         }
     }
 }

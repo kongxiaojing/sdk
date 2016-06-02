@@ -23,7 +23,7 @@ namespace NabbActivator
                 return;
             }
 
-            if (!Vars.Menu["consumables"].GetValue<MenuBool>().Value)
+            if (!Vars.Menu["potions"].GetValue<MenuBool>().Value)
             {
                 return;
             }

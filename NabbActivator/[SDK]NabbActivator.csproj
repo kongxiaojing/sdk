@@ -64,6 +64,7 @@
     <Compile Include="Updater.cs" />
     <Compile Include="Activator\Utilities\Helpers\Managers.cs" />
     <Compile Include="Activator\Utilities\Helpers\Spellslots.cs" />
+    <Compile Include="Activator\Utilities\Helpers\Healthbars.cs" />
     <Compile Include="Activator\Utilities\Properties\Menus.cs" />
     <Compile Include="Activator\Utilities\Properties\Methods.cs" />
     <Compile Include="Activator\Utilities\Properties\Resetters.cs" />

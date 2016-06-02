@@ -113,10 +113,15 @@ namespace NabbActivator
             if (SpellSlots.GetSmiteSlot().IsReady() &&
                 SpellSlots.GetSmiteSlot() != SpellSlot.Unknown)
             {
+                if (Vars.Menu["keys"]["smite"].GetValue<MenuKeyBind>().Active)
+                {
+                    return;
+                }
+
                 /// <summary>
                 ///     The Killsteal Smite Logic.
                 /// </summary>
-                if (Vars.Menu["smite"]["combo"].GetValue<MenuBool>().Value)
+                if (Vars.Menu["smite"]["misc"]["combo"].GetValue<MenuBool>().Value)
                 {
                     if (Variables.Orbwalker.GetTarget() as Obj_AI_Hero != null) 
                     {
@@ -127,12 +132,12 @@ namespace NabbActivator
                 /// <summary>
                 ///     The Killsteal Smite Logic.
                 /// </summary>
-                if (Vars.Menu["smite"]["killsteal"].GetValue<MenuBool>().Value)
+                if (Vars.Menu["smite"]["misc"]["killsteal"].GetValue<MenuBool>().Value)
                 {
                     if (GameObjects.Player.HasBuff("smitedamagetrackerstalker") ||
                         GameObjects.Player.HasBuff("smitedamagetrackerskirmisher"))
                     {
-                        if (Vars.Menu["smite"]["stacks"].GetValue<MenuBool>().Value)
+                        if (Vars.Menu["smite"]["misc"]["stacks"].GetValue<MenuBool>().Value)
                         {
                             if (GameObjects.Player.Spellbook.GetSpell(SpellSlots.GetSmiteSlot()).Ammo == 1)
                             {
@@ -165,31 +170,23 @@ namespace NabbActivator
                         m.Health < GameObjects.Player.GetBuffCount(
                             GameObjects.Player.Buffs.FirstOrDefault(b => b.Name.ToLower().Contains("smitedamagetracker")).Name)))
                 {
-                    if (Vars.Menu["smite"]["limit"].GetValue<MenuBool>().Value)
+                    if (Vars.Menu["smite"]["misc"]["limit"].GetValue<MenuBool>().Value)
                     {
                         if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
                             !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Air") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Fire") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Earth") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Water") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Elder"))
+                            !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
                         {
                             return;
                         }
                     }
 
-                    if (Vars.Menu["smite"]["stacks"].GetValue<MenuBool>().Value)
+                    if (Vars.Menu["smite"]["misc"]["stacks"].GetValue<MenuBool>().Value)
                     {
                         if (GameObjects.Player.Spellbook.GetSpell(SpellSlots.GetSmiteSlot()).Ammo == 1)
                         {
                             if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
                                 !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Air") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Fire") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Earth") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Water") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_Dragon_Elder"))
+                                !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
                             {
                                 return;
                             }

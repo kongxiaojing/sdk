@@ -20,40 +20,63 @@ namespace NabbActivator
             /// </summary>
             Vars.Menu = new Menu("activator", "NabbActivator", true);
             {
-                Vars.Menu.Add(new MenuBool("offensives",  "Offensives",           true));
-                Vars.Menu.Add(new MenuBool("defensives",  "Defensives",           true));
-                Vars.Menu.Add(new MenuBool("spells",      "Spells",               true));
-                Vars.Menu.Add(new MenuBool("cleansers",   "Cleansers",            true));
-                Vars.Menu.Add(new MenuBool("consumables", "Potions",              true));
-                Vars.Menu.Add(new MenuBool("resetters",   "Tiamat/Hydra/Titanic", true));
-                Vars.Menu.Add(new MenuBool("randomizer",  "Humanizer"));
-                Vars.Menu.Add(
-                    new MenuKeyBind("combokey", "Combo:", Keys.Space, KeyBindType.Press));
-                Vars.Menu.Add(
-                    new MenuKeyBind("laneclearkey", "LaneClear:", Keys.V, KeyBindType.Press));
+                /// <summary>
+                ///     Sets the smite menu.
+                /// </summary>
+                Vars.SmiteMenu = new Menu("smite", "Smite Menu");
+                {
+                    /// <summary>
+                    ///     Sets the smite options menu.
+                    /// </summary>
+                    Vars.SmiteMiscMenu = new Menu("misc", "Smite Options");
+                    {
+                        Vars.SmiteMiscMenu.Add(new MenuBool("combo",     "Combo",                                true));
+                        Vars.SmiteMiscMenu.Add(new MenuBool("killsteal", "KillSteal",                            true));
+                        Vars.SmiteMiscMenu.Add(new MenuBool("stacks",    "Keep 1 Stack for Dragon/Baron/Herald", true));
+                        Vars.SmiteMiscMenu.Add(new MenuBool("limit",     "Only on Dragon/Baron/Herald"));
+                    }
+                    Vars.SmiteMenu.Add(Vars.SmiteMiscMenu);
 
+                    /// <summary>
+                    ///     Sets the drawings menu.
+                    /// </summary>
+                    Vars.DrawingsMenu = new Menu("drawings", "Drawings");
+                    {
+                        Vars.DrawingsMenu.Add(new MenuBool("damage", "Smite Damage"));
+                    }
+                    Vars.SmiteMenu.Add(Vars.DrawingsMenu);
+                }
+                Vars.Menu.Add(Vars.SmiteMenu);
 
                 /// <summary>
-                ///     Sets consumable sliders menu.
+                ///     Sets the consumable sliders menu.
                 /// </summary>
-                Vars.SliderMenu = new Menu("consumablesmenu", "Consumables Menu");
+                Vars.SliderMenu = new Menu("consumables", "Consumables Menu");
                 {
-                    Vars.SliderMenu.Add(new MenuSlider("healthslider", "Consumables: Health < x%", 50, 0, 100));
-                    Vars.SliderMenu.Add(new MenuSlider("manaslider",   "Consumables: Mana < x%",   50, 0, 100));
+                    Vars.SliderMenu.Add(new MenuSlider("health", "Consumables: Health < x%", 50, 0, 100));
+                    Vars.SliderMenu.Add(new MenuSlider("mana",   "Consumables: Mana < x%",   50, 0, 100));
                 }
                 Vars.Menu.Add(Vars.SliderMenu);
 
                 /// <summary>
-                ///     Sets smite menu.
+                ///     Sets the keys menu.
                 /// </summary>
-                Vars.SmiteMenu = new Menu("smite", "Smite Menu");
+                Vars.KeysMenu = new Menu("keys", "Keybinds Menu");
                 {
-                    Vars.SmiteMenu.Add(new MenuBool("combo",     "Combo",                                true));
-                    Vars.SmiteMenu.Add(new MenuBool("killsteal", "KillSteal",                            true));
-                    Vars.SmiteMenu.Add(new MenuBool("limit",     "Only on Dragon/Baron/Herald"               ));
-                    Vars.SmiteMenu.Add(new MenuBool("stacks",    "Keep 1 Stack for Dragon/Baron/Herald", true));
+                    Vars.KeysMenu.Add(new MenuSeparator("separator", "The following will only work if Enabled."));
+                    Vars.KeysMenu.Add(new MenuKeyBind("combo",     "Combo:",          Keys.Space, KeyBindType.Press));
+                    Vars.KeysMenu.Add(new MenuKeyBind("laneclear", "LaneClear:",      Keys.V,     KeyBindType.Press));
+                    Vars.KeysMenu.Add(new MenuKeyBind("smite",     "Smite (Toggle):", Keys.Y,     KeyBindType.Toggle));
                 }
-                Vars.Menu.Add(Vars.SmiteMenu);
+                Vars.Menu.Add(Vars.KeysMenu);
+
+                Vars.Menu.Add(new MenuBool("offensives", "Offensives",           true));
+                Vars.Menu.Add(new MenuBool("defensives", "Defensives",           true));
+                Vars.Menu.Add(new MenuBool("spells",     "Spells",               true));
+                Vars.Menu.Add(new MenuBool("cleansers",  "Cleansers",            true));
+                Vars.Menu.Add(new MenuBool("potions",    "Potions",              true));
+                Vars.Menu.Add(new MenuBool("resetters",  "Tiamat/Hydra/Titanic", true));
+                Vars.Menu.Add(new MenuBool("randomizer", "Humanizer"));
             }
             Vars.Menu.Attach();
         }
