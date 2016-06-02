@@ -17,6 +17,7 @@ namespace ExorAIO.Champions.Lux
 		    GameObject.OnCreate += Lux.OnCreate;
             GameObject.OnDelete += Lux.OnDelete;
             Events.OnGapCloser += Lux.OnGapCloser;
+            Obj_AI_Base.OnProcessSpellCast += Lux.OnProcessSpellCast;
         }
     }
 }

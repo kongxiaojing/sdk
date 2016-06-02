@@ -40,6 +40,7 @@ namespace ExorAIO.Champions.Lux
             ///     The E Missile Manager.
             /// </summary>
             if (Vars.E.IsReady() &&
+                Lux.EMissile != null &&
                 GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState != 1)
             {
                 switch (Variables.Orbwalker.ActiveMode)
@@ -49,17 +50,14 @@ namespace ExorAIO.Champions.Lux
                     /// </summary>
                     case OrbwalkingMode.Combo:
 
-                        if (!Vars.R.IsReady() &&
-                            Lux.EMissile != null)
+                        foreach (var target in GameObjects.EnemyHeroes.Where(
+                            t =>
+                                !Bools.IsImmobile(t) &&
+                                !t.HasBuff("luxilluminatingfraulein") &&
+                                t.Distance(Lux.EMissile.Position) < Vars.E.Width-10f))
                         {
-                            foreach (var target in GameObjects.EnemyHeroes.Where(
-                                t =>
-                                    !t.HasBuff("luxilluminatingfraulein") &&
-                                    t.Distance(Lux.EMissile.Position) < Vars.W.Width-10f))
-                            {
-                                Vars.E.Cast();
-                                break;
-                            }
+                            Vars.E.Cast();
+                            break;
                         }
                         break;
 
@@ -67,14 +65,11 @@ namespace ExorAIO.Champions.Lux
                     ///     The E Clear Logic.
                     /// </summary>
                     case OrbwalkingMode.LaneClear:
-                        
-                        if (Lux.EMissile != null)
+
+                        if (Targets.EMinions.Any() &&
+                            Targets.EMinions.Count() >= 3)
                         {
-                            if (Targets.EMinions.Any() &&
-                                Targets.EMinions.Count() >= 3)
-                            {
-                                Vars.E.Cast();
-                            }
+                            Vars.E.Cast();
                         }
                         break;
 
@@ -95,32 +90,9 @@ namespace ExorAIO.Champions.Lux
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.Q.Range)))
                 {
-                    if (Vars.Q.GetPrediction(target).CollisionObjects.Count(c => Targets.Minions.Contains(c)) <= 1)
+                    if (!Vars.Q.GetPrediction(target).CollisionObjects.Any())
                     {
                         Vars.Q.Cast(target.ServerPosition);
-                    }
-                }
-            }
-
-            /// <summary>
-            ///     The Automatic W Logic.
-            /// </summary>
-            if (Vars.W.IsReady() &&
-                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
-            {
-                foreach (var ally in GameObjects.AllyHeroes.Where(
-                    a =>
-                        a.CountEnemyHeroesInRange(1000f) > 0 &&
-                        a.IsValidTarget(Vars.W.Range, false) &&
-                        Health.GetPrediction(a, (int) (1000f + Game.Ping/2f)) <= a.MaxHealth/2))
-                {
-                    if (Vars.Menu["spells"]["w"]["whitelist"][ally.ChampionName.ToLower()].GetValue<MenuBool>().Value)
-                    {
-                        Vars.W.Cast(Vars.W.GetPrediction(ally).UnitPosition);
-                    }
-                    else if (Vars.W.GetPrediction(ally).CollisionObjects.Count(c => GameObjects.AllyHeroes.Contains(c)) >= 2)
-                    {
-                        Vars.W.Cast(Vars.W.GetPrediction(ally).UnitPosition);
                     }
                 }
             }

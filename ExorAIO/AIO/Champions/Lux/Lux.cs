@@ -131,6 +131,36 @@ namespace ExorAIO.Champions.Lux
         }
 
         /// <summary>
+        ///     Called when a <see cref="AttackableUnit" /> takes/gives damage.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="AttackableUnitDamageEventArgs" /> instance containing the event data.</param>
+        public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (sender as Obj_AI_Hero == null &&
+                sender as Obj_AI_Turret == null &&
+                !Targets.JungleMinions.Contains(sender as Obj_AI_Minion))
+            {
+                return;
+            }
+
+            if (sender.IsAlly ||
+                args.Target as Obj_AI_Hero == null ||
+                !(args.Target as Obj_AI_Hero).IsAlly)
+            {
+                return;
+            }
+
+            if (Vars.W.IsReady() &&
+                (args.Target as Obj_AI_Hero).IsValidTarget(Vars.W.Range, false) &&
+                Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value &&
+                Vars.Menu["spells"]["w"]["whitelist"][(args.Target as Obj_AI_Hero).ChampionName.ToLower()].GetValue<MenuBool>().Value)
+            {
+                Vars.W.Cast(Vars.W.GetPrediction(args.Target as Obj_AI_Hero).UnitPosition);
+            }
+        }
+
+        /// <summary>
         ///     Fired on an incoming gapcloser.
         /// </summary>
         /// <param name="sender">The object.</param>

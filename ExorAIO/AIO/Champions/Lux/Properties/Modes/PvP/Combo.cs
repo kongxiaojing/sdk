@@ -19,24 +19,17 @@ namespace ExorAIO.Champions.Lux
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
-            if (Bools.HasSheenBuff())
-            {
-                return;
-            }
-
             /// <summary>
             ///     The R Combo Logic.
             /// </summary>
             if (Vars.R.IsReady() &&
-                !Vars.Q.IsReady() &&
-                GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState != 1 &&
+                GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1 &&
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         Bools.IsImmobile(t) &&
                         t.IsValidTarget(Vars.R.Range) &&
-                        Bools.IsImmobile(Targets.Target) &&
                         t.HasBuff("luxilluminatingfraulein") &&
                         !Invulnerable.Check(t, DamageType.Magical)))
                 {
@@ -44,11 +37,11 @@ namespace ExorAIO.Champions.Lux
                 }
             }
             
-            if (!Targets.Target.IsValidTarget())
+            if (Bools.HasSheenBuff() ||
+                !Targets.Target.IsValidTarget())
             {
                 return;
             }
-            
 
             /// <summary>
             ///     The Q Combo Logic.
@@ -59,7 +52,7 @@ namespace ExorAIO.Champions.Lux
                 !Targets.Target.HasBuff("luxilluminatingfraulein") &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
@@ -70,7 +63,7 @@ namespace ExorAIO.Champions.Lux
             /// </summary>
             if (Vars.E.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.E.Range) &&
-                GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState != 1 &&
+                GameObjects.Player.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1 &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition);

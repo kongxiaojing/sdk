@@ -19,7 +19,8 @@ namespace ExorAIO.Champions.Tristana
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Clear(EventArgs args)
         {
-            if (Bools.HasSheenBuff())
+            if (Bools.HasSheenBuff() ||
+                !(Variables.Orbwalker.GetTarget() as Obj_AI_Minion).IsValidTarget())
             {
                 return;
             }
@@ -48,7 +49,7 @@ namespace ExorAIO.Champions.Tristana
                         ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["jungleclear"]) &&
                     Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
                 {
-                    Vars.E.CastOnUnit(Targets.JungleMinions[0]);
+                    Vars.E.CastOnUnit(Variables.Orbwalker.GetTarget() as Obj_AI_Minion);
                 }
 
                 /// <summary>
@@ -85,9 +86,9 @@ namespace ExorAIO.Champions.Tristana
                                 ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["laneclear"]) &&
                             Vars.Menu["spells"]["e"]["laneclear"].GetValue<MenuSliderButton>().BValue)
                         {
-                            if (Targets.Minions.Count(m => m.Distance(Targets.Minions[0]) < 150f) >= 3)
+                            if (Targets.Minions.Count(m => m.Distance(Variables.Orbwalker.GetTarget() as Obj_AI_Minion) < 150f) >= 3)
                             {
-                                Vars.E.CastOnUnit(Targets.Minions[0]);
+                                Vars.E.CastOnUnit(Variables.Orbwalker.GetTarget() as Obj_AI_Minion);
                             }
                         }
                     }
