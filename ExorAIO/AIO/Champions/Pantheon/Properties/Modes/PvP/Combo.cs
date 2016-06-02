@@ -18,7 +18,9 @@ namespace ExorAIO.Champions.Pantheon
         public static void Combo(EventArgs args)
         {
             if (!Targets.Target.IsValidTarget() ||
-                Invulnerable.Check(Targets.Target))
+                Invulnerable.Check(Targets.Target) ||
+                GameObjects.Player.HasBuff("pantheonesound") ||
+                GameObjects.Player.HasBuff("pantheonpassiveshield"))
             {
                 return;
             }
@@ -36,8 +38,6 @@ namespace ExorAIO.Champions.Pantheon
             /// </summary>
             if (Vars.Q.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
-                !GameObjects.Player.HasBuff("pantheonesound") &&
-                !GameObjects.Player.HasBuff("pantheonpassiveshield") &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.CastOnUnit(Targets.Target);
@@ -48,11 +48,9 @@ namespace ExorAIO.Champions.Pantheon
             /// </summary>
             if (Vars.W.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
-                !GameObjects.Player.HasBuff("pantheonesound") &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
                 if (!Targets.Target.IsValidTarget(Vars.AARange) ||
-                    !GameObjects.Player.HasBuff("pantheonpassiveshield") &&
                     GameObjects.Player.GetBuffCount("pantheonpassivecounter") < 3)
                 {
                     Vars.W.CastOnUnit(Targets.Target);
@@ -64,7 +62,6 @@ namespace ExorAIO.Champions.Pantheon
             /// </summary>
             if (Vars.E.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.E.Range) &&
-                !GameObjects.Player.HasBuff("pantheonpassiveshield") &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(Targets.Target.ServerPosition);
