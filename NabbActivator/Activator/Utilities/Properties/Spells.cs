@@ -14,7 +14,7 @@ namespace NabbActivator
         public static void Initialize()
         {
             Vars.W = new Spell(SpellSlot.W);
-            Vars.Smite = new Spell(SpellSlots.GetSmiteSlot(), 500f);
+            Vars.Smite = new Spell(SpellSlots.GetSmiteSlot(), 500f + GameObjects.Player.BoundingRadius);
         }
     }
 }

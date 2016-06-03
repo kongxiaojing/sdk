@@ -59,9 +59,9 @@ namespace NabbActivator
                             );
 
                             Drawing.DrawLine(
-                                drawEndXPos,
+                                drawEndXPos + 1,
                                 barPos.Y,
-                                drawEndXPos,
+                                drawEndXPos + 1,
                                 barPos.Y + mobOffset.Height + 1,
                                 2,
                                 Color.Lime
