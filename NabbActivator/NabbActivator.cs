@@ -36,9 +36,14 @@ namespace NabbActivator
             Resetters.Initialize();
 
             /// <summary>
-            ///     Initializes the healthbars.
+            ///     Initializes the drawings.
             /// </summary>
             Drawings.Initialize();
+
+            /// <summary>
+            ///     Initializes the healthbars.
+            /// </summary>
+            Healthbars.Initialize();
         }
 
         /// <summary>

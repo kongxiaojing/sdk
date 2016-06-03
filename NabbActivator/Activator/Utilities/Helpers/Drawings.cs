@@ -9,7 +9,7 @@ namespace NabbActivator
     /// <summary>
     ///     The drawings class.
     /// </summary>
-    internal partial class Drawings
+    internal class Drawings
     {
         /// <summary>
         ///     Loads the drawings.
@@ -22,7 +22,7 @@ namespace NabbActivator
                 ///     Loads the Smite drawing.
                 /// </summary>
                 if (Vars.Smite.IsReady() &&
-                    Vars.Smite != SpellSlot.Unknown &&
+                    Vars.Smite.Slot != SpellSlot.Unknown &&
                     Vars.Menu["keys"]["smite"].GetValue<MenuKeyBind>().Active)
                 {
                     if (Vars.Menu["smite"]["drawings"]["range"].GetValue<MenuBool>().Value)

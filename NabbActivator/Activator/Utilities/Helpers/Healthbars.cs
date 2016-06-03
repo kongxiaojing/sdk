@@ -9,7 +9,7 @@ namespace NabbActivator
     /// <summary>
     ///     The drawings class.
     /// </summary>
-    internal partial class Drawings
+    internal class Healthbars
     {
         /// <summary>
         ///     Loads the drawings.
