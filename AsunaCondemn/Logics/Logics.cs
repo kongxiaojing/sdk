@@ -19,11 +19,6 @@ namespace AsunaCondemn
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Automatic(EventArgs args)
         {
-            if (ObjectManager.Player.IsDashing())
-            {
-                return;
-            }
-
             /// <summary>
             ///     The fixed Condem Logic Kappa.
             /// </summary>
@@ -33,21 +28,28 @@ namespace AsunaCondemn
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
-                        !Invulnerable.Check(t) &&
-                        !GameObjects.Player.IsDashing() &&
-                        !t.IsValidTarget(ObjectManager.Player.BoundingRadius) &&
-                        ObjectManager.Player.Distance(ObjectManager.Player.ServerPosition.Extend(t.ServerPosition, Vars.Flash.Range)) >
-                            ObjectManager.Player.Distance(t) + t.BoundingRadius))
+                        t.IsValidTarget(Vars.E.Range) &&
+                        !Invulnerable.Check(t, DamageType.Magical, false) &&
+                        !t.IsValidTarget(GameObjects.Player.BoundingRadius) &&
+                        GameObjects.Player.Distance(GameObjects.Player.ServerPosition.Extend(t.ServerPosition, Vars.Flash.Range)) >
+                            GameObjects.Player.Distance(t) + t.BoundingRadius))
                 {
                     for (var i = 1; i < 10; i++)
                     {
-                        if ((target.ServerPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*42).IsWall() &&
-                            (target.ServerPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*44).IsWall() &&
-                            (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*42).IsWall() &&
-                            (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition)*i*44).IsWall())
+                        if (!target.IsDashing())
+                        {
+                            if (!(target.ServerPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() ||
+                                !(target.ServerPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
+                            {
+                                return;
+                            }
+                        }
+
+                        if ((Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                            (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
                         {
                             Vars.E.CastOnUnit(target);
-                            Vars.Flash.Cast(ObjectManager.Player.ServerPosition.Extend(target.ServerPosition, Vars.Flash.Range));
+                            Vars.Flash.Cast(GameObjects.Player.ServerPosition.Extend(target.ServerPosition, Vars.Flash.Range));
                         }
                     }
                 }
