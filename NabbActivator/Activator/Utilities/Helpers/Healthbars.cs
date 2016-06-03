@@ -1,15 +1,15 @@
 using System.Linq;
+using System.Drawing;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
-using System.Drawing;
 
 namespace NabbActivator
 {
     /// <summary>
     ///     The drawings class.
     /// </summary>
-    internal class Healthbars
+    internal partial class Drawings
     {
         /// <summary>
         ///     Loads the drawings.
@@ -18,8 +18,8 @@ namespace NabbActivator
         {
             Drawing.OnDraw += delegate
             {
-                if (SpellSlots.GetSmiteSlot().IsReady() &&
-                    SpellSlots.GetSmiteSlot() != SpellSlot.Unknown)
+                if (Vars.Smite.IsReady() &&
+                    Vars.Smite.Slot != SpellSlot.Unknown)
                 {
                     if (!Vars.Menu["smite"]["drawings"]["damage"].GetValue<MenuBool>().Value)
                     {
@@ -29,7 +29,8 @@ namespace NabbActivator
                     GameObjects.Jungle.Where(
                     m =>
                         m.IsValidTarget() &&
-                        !GameObjects.JungleSmall.Contains(m)).ToList().ForEach(unit =>
+                        !GameObjects.JungleSmall.Contains(m) &&
+                        Vars.Menu["smite"]["whitelist"][m.CharData.BaseSkinName.ToLower()].GetValue<MenuBool>().Value).ToList().ForEach(unit =>
                         {
                             /// <summary>
                             ///     Defines what HPBar Offsets it should display.
@@ -62,7 +63,7 @@ namespace NabbActivator
                                 barPos.Y,
                                 drawEndXPos,
                                 barPos.Y + mobOffset.Height + 1,
-                                1,
+                                2,
                                 Color.Lime
                             );
                         }

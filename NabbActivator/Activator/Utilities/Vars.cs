@@ -91,6 +91,11 @@ namespace NabbActivator
         public static Spell W { internal get; set; }
 
         /// <summary>
+        ///     Gets or sets the Smite Spell.
+        /// </summary>
+        public static Spell Smite { internal get; set; }
+
+        /// <summary>
         ///     Gets or sets the assembly menu.
         /// </summary>
         public static Menu Menu { internal get; set; }
@@ -109,6 +114,11 @@ namespace NabbActivator
         ///     Gets or sets the smite miscellaneous menu.
         /// </summary>
         public static Menu SmiteMiscMenu { internal get; set; }
+
+        /// <summary>
+        ///     Gets or sets the smite whitelist menu.
+        /// </summary>
+        public static Menu SmiteWhiteListMenu { internal get; set; }
 
         /// <summary>
         ///     Gets or sets the drawings menu.

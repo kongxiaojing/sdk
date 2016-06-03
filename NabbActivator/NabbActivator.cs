@@ -38,7 +38,7 @@ namespace NabbActivator
             /// <summary>
             ///     Initializes the healthbars.
             /// </summary>
-            Healthbars.Initialize();
+            Drawings.Initialize();
         }
 
         /// <summary>
@@ -129,7 +129,12 @@ namespace NabbActivator
         /// <param name="args">The args.</param>
         public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-
+            /*
+            if (sender.IsMe)
+            {
+                Console.WriteLine(args.SData.Name);
+            }
+            */
         }
     }
 }

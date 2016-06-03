@@ -1,4 +1,6 @@
+using System.Linq;
 using System.Windows.Forms;
+using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
 using Menu = LeagueSharp.SDK.UI.Menu;
@@ -28,7 +30,7 @@ namespace NabbActivator
                     /// <summary>
                     ///     Sets the smite options menu.
                     /// </summary>
-                    Vars.SmiteMiscMenu = new Menu("misc", "Smite Options");
+                    Vars.SmiteMiscMenu = new Menu("misc", "Miscellaneous");
                     {
                         Vars.SmiteMiscMenu.Add(new MenuBool("combo",     "Combo",                                true));
                         Vars.SmiteMiscMenu.Add(new MenuBool("killsteal", "KillSteal",                            true));
@@ -38,10 +40,28 @@ namespace NabbActivator
                     Vars.SmiteMenu.Add(Vars.SmiteMiscMenu);
 
                     /// <summary>
+                    ///     Sets the smite whitelist menu.
+                    /// </summary>
+                    Vars.SmiteWhiteListMenu = new Menu("whitelist", "Whitelist");
+                    {
+                        foreach (var m in GameObjects.Jungle.Where(m => !GameObjects.JungleSmall.Contains(m)))
+                        {
+                            Vars.SmiteWhiteListMenu.Add(
+                                new MenuBool(
+                                    m.CharData.BaseSkinName.ToLower(),
+                                    $"Use against: {m.CharData.BaseSkinName}",
+                                true)
+                            );
+                        }
+                    }
+                    Vars.SmiteMenu.Add(Vars.SmiteWhiteListMenu);
+
+                    /// <summary>
                     ///     Sets the drawings menu.
                     /// </summary>
                     Vars.DrawingsMenu = new Menu("drawings", "Drawings");
                     {
+                        Vars.DrawingsMenu.Add(new MenuBool("range",  "Smite Range"));
                         Vars.DrawingsMenu.Add(new MenuBool("damage", "Smite Damage"));
                     }
                     Vars.SmiteMenu.Add(Vars.DrawingsMenu);
