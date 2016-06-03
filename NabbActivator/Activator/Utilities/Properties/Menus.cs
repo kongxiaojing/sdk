@@ -39,30 +39,35 @@ namespace NabbActivator
                     }
                     Vars.SmiteMenu.Add(Vars.SmiteMiscMenu);
 
+                    /*
                     /// <summary>
                     ///     Sets the smite whitelist menu.
                     /// </summary>
                     Vars.SmiteWhiteListMenu = new Menu("whitelist", "Whitelist");
                     {
-                        foreach (var m in GameObjects.Jungle.Where(m => !GameObjects.JungleSmall.Contains(m)))
+                        foreach (var minion in GameObjects.Jungle.Where(
+                            m =>
+                                !GameObjects.JungleSmall.Contains(m) &&
+                                !m.CharData.BaseSkinName.Equals("sru_camprespawnmarker")))
                         {
                             Vars.SmiteWhiteListMenu.Add(
                                 new MenuBool(
-                                    m.CharData.BaseSkinName.ToLower(),
-                                    $"Use against: {m.CharData.BaseSkinName}",
+                                    minion.CharData.BaseSkinName.ToLower(),
+                                    $"Use against: {minion.CharData.BaseSkinName}",
                                 true)
                             );
                         }
                     }
                     Vars.SmiteMenu.Add(Vars.SmiteWhiteListMenu);
+                    */
 
                     /// <summary>
                     ///     Sets the drawings menu.
                     /// </summary>
                     Vars.DrawingsMenu = new Menu("drawings", "Drawings");
                     {
-                        Vars.DrawingsMenu.Add(new MenuBool("range",  "Smite Range"));
-                        Vars.DrawingsMenu.Add(new MenuBool("damage", "Smite Damage"));
+                        Vars.DrawingsMenu.Add(new MenuBool("range",  "Smite Range",  true));
+                        Vars.DrawingsMenu.Add(new MenuBool("damage", "Smite Damage", true));
                     }
                     Vars.SmiteMenu.Add(Vars.DrawingsMenu);
                 }

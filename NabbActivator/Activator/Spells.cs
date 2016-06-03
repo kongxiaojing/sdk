@@ -145,7 +145,7 @@ namespace NabbActivator
                             }
                         }
 
-                        foreach (var target in GameObjects.EnemyHeroes.Where(t => t.IsValidTarget(500f)))
+                        foreach (var target in GameObjects.EnemyHeroes.Where(t => t.IsValidTarget(Vars.Smite.Range)))
                         {
                             if (Vars.GetChallengingSmiteDamage > target.Health &&
                                 GameObjects.Player.HasBuff("smitedamagetrackerstalker"))
@@ -166,8 +166,8 @@ namespace NabbActivator
                 /// </summary>
                 foreach (var minion in Targets.JungleMinions.Where(
                     m =>
-                        m.IsValidTarget(500f) &&
-                        Vars.Menu["smite"]["whitelist"][m.CharData.BaseSkinName.ToLower()].GetValue<MenuBool>().Value))
+                        m.IsValidTarget(Vars.Smite.Range)))
+                        //Vars.Menu["smite"]["whitelist"][m.CharData.BaseSkinName.ToLower()].GetValue<MenuBool>().Value))
                 {
                     if (minion.Health > GameObjects.Player.GetBuffCount(GameObjects.Player.Buffs.FirstOrDefault(
                         b =>
