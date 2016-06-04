@@ -29,8 +29,8 @@ namespace ExorAIO.Champions.Jhin
             /// </summary>
             if (Vars.W.IsReady() &&
                 GameObjects.Player.ManaPercent >
-                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["clear"]) &&
-                Vars.Menu["spells"]["w"]["clear"].GetValue<MenuSliderButton>().BValue)
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["laneclear"]) &&
+                Vars.Menu["spells"]["w"]["laneclear"].GetValue<MenuSliderButton>().BValue)
             {
                 if (GameObjects.EnemyHeroes.Any(
                     t =>
@@ -46,14 +46,6 @@ namespace ExorAIO.Champions.Jhin
                 if (Vars.W.GetLineFarmLocation(Targets.Minions, Vars.W.Width).MinionsHit >= 4)
                 {
                     Vars.W.Cast(Vars.W.GetLineFarmLocation(Targets.Minions, Vars.W.Width).Position);
-                }
-
-                /// <summary>
-                ///     The JungleClear W Logic.
-                /// </summary>
-                else if (Targets.JungleMinions.Any())
-                {
-                    Vars.W.Cast(Targets.JungleMinions[0].ServerPosition);
                 }
             }
 
