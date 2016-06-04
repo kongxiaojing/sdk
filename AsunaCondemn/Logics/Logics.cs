@@ -36,20 +36,17 @@ namespace AsunaCondemn
                 {
                     for (var i = 1; i < 10; i++)
                     {
-                        if (!target.IsDashing())
-                        {
-                            if (!(target.ServerPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() ||
-                                !(target.ServerPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
-                            {
-                                return;
-                            }
-                        }
+                        if ((!GameObjects.Player.IsDashing()
+                                ? (target.ServerPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall()
+                                : true) &&
+                            (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
 
-                        if ((Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                            (!GameObjects.Player.IsDashing()
+                                ? (target.ServerPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall()
+                                : true) &&
                             (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
                         {
                             Vars.E.CastOnUnit(target);
-                            Vars.Flash.Cast(GameObjects.Player.ServerPosition.Extend(target.ServerPosition, Vars.Flash.Range));
                         }
                     }
                 }
