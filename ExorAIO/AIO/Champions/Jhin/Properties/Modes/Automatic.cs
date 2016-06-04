@@ -79,6 +79,7 @@ namespace ExorAIO.Champions.Jhin
                         !Invulnerable.Check(t) &&
                         t.HasBuff("jhinespotteddebuff") &&
                         t.IsValidTarget(Vars.W.Range-150f) &&
+                        !t.IsValidTarget(Vars.AARange+50f) &&
                         !Vars.W.GetPrediction(t).CollisionObjects.Any(
                             c =>
                                 !c.HasBuff("jhinespotteddebuff") &&
@@ -103,8 +104,7 @@ namespace ExorAIO.Champions.Jhin
                             !GameObjects.Player.IsFacing(target) &&
                             !GameObjects.EnemyHeroes.Any(
                                 t =>
-                                    t.IsValidTarget(Vars.Q.Range+50f)) &&
-                            GameObjects.Player.Distance(Vars.W.GetPrediction(target).UnitPosition) > Vars.Q.Range)
+                                    t.IsValidTarget(Vars.Q.Range+50f)))
                         {
                             Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                         }
@@ -124,7 +124,9 @@ namespace ExorAIO.Champions.Jhin
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range)))
                 {
-                    Vars.E.Cast(target.ServerPosition);
+                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(
+                        target.ServerPosition,
+                        GameObjects.Player.Distance(target) + target.BoundingRadius*2));
                 }
             }
         }
