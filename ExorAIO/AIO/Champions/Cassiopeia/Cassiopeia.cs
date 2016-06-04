@@ -108,7 +108,7 @@ namespace ExorAIO.Champions.Cassiopeia
                 args.Sender.IsFacing(GameObjects.Player) &&
                 Vars.Menu["spells"]["r"]["gapcloser"].GetValue<MenuBool>().Value)
             {
-                Vars.R.Cast(args.End);
+                Vars.R.Cast(args.Start);
             }
 
             if (Vars.W.IsReady() &&

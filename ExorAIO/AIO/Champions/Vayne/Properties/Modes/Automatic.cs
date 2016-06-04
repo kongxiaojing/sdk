@@ -62,18 +62,15 @@ namespace ExorAIO.Champions.Vayne
                 {
                     for (var i = 1; i < 10; i++)
                     {
-                        if (!target.IsDashing())
-                        {
-                            if (!(target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() ||
-                                !(target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
-                            {
-                                return;
-                            }
-                        }
-
-                        if ((Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                        if ((!GameObjects.Player.IsDashing()
+                                ? (target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall()
+                                : true) &&
+                            (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
                             (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
 
+                            (!GameObjects.Player.IsDashing()
+                                ? (target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall()
+                                : true) &&
                             (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall() &&
                             (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
                         {
