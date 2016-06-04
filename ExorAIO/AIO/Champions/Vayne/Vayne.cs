@@ -5,6 +5,7 @@ using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using SharpDX;
 
 namespace ExorAIO.Champions.Vayne
 {
@@ -125,17 +126,41 @@ namespace ExorAIO.Champions.Vayne
         /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
-            /// <summary>
-            ///     The Anti-GapCloser E Logic.
-            /// </summary>
             if (Vars.E.IsReady() &&
-                args.Sender.IsMelee &&
-                args.IsDirectedToPlayer &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
-                Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false))
             {
-                Vars.E.CastOnUnit(args.Sender);
+                /// <summary>
+                ///     The Anti-GapCloser E Logic.
+                /// </summary>
+                if (args.Sender.IsMelee)
+                {
+                    if (args.IsDirectedToPlayer &&
+                        Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
+                    {
+                        Vars.E.CastOnUnit(args.Sender);
+                    }
+                }
+
+                /// <summary>
+                ///     The Dash-Condemn Prediction Logic.
+                /// </summary>
+                else
+                {
+                    if (GameObjects.Player.Distance(args.End) > GameObjects.Player.BoundingRadius &&
+                        Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value &&
+                        Vars.Menu["spells"]["e"]["whitelist"][args.Sender.ChampionName.ToLower()].GetValue<MenuBool>().Value)
+                    {
+                        for (var i = 1; i < 10; i++)
+                        {
+                            if ((args.End + Vector3.Normalize(args.End - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                                (args.End + Vector3.Normalize(args.End - GameObjects.Player.ServerPosition) * i * 44).IsWall())
+                            {
+                                Vars.E.CastOnUnit(args.Sender);
+                            }
+                        }
+                    }
+                }
             }
         }
 

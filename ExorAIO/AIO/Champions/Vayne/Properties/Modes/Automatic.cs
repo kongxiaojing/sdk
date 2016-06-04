@@ -55,6 +55,7 @@ namespace ExorAIO.Champions.Vayne
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
+                        !t.IsDashing() &&
                         t.IsValidTarget(Vars.E.Range) &&
                         !Invulnerable.Check(t, DamageType.Magical, false) &&
                         !t.IsValidTarget(GameObjects.Player.BoundingRadius) &&
@@ -62,41 +63,17 @@ namespace ExorAIO.Champions.Vayne
                 {
                     for (var i = 1; i < 10; i++)
                     {
-                        if ((!GameObjects.Player.IsDashing()
-                                ? (target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall()
-                                : true) &&
+                        if ((target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
                             (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
                             (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
 
-                            (!GameObjects.Player.IsDashing()
-                                ? (target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall()
-                                : true) &&
+                            (target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall() &&
                             (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall() &&
                             (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
                         {
                             Vars.E.CastOnUnit(target);
                         }
                     }
-                }
-            }
-
-            /// <summary>
-            ///     The Automatic R -> Q Logic.
-            /// </summary>
-            if (Vars.Q.IsReady() &&
-                Vars.R.IsReady())
-            {
-                if (GameObjects.Player.HasBuff("summonerexhaust") ||
-                    GameObjects.Player.HasBuffOfType(BuffType.Blind))
-                {
-                    Vars.R.Cast();
-
-                    DelayAction.Add(GameObjects.Player.HasBuff("summonerexhaust") 
-                        ? 1500 
-                        : 500, () =>
-                    {
-                        Vars.Q.Cast(Game.CursorPos);
-                    });
                 }
             }
         }
