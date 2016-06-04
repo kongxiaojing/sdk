@@ -39,9 +39,10 @@ namespace ExorAIO.Champions.Vayne
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
                     Vars.EMenu.Add(new MenuSeparator("condemn", "ExorCondemn: 95% Accuracy, 100% Walls and Buildings taken into account."));
-                    Vars.EMenu.Add(new MenuBool("logical",     "Logical", true));
+                    Vars.EMenu.Add(new MenuBool("logical",     "Logical",                  true));
+                    Vars.EMenu.Add(new MenuBool("dashpred",    "Dash-Prediction"));
                     Vars.EMenu.Add(new MenuBool("gapcloser",   "Anti-Gapcloser"));
-                    Vars.EMenu.Add(new MenuBool("interrupter", "Interrupt Enemy Channels"));
+                    Vars.EMenu.Add(new MenuBool("interrupter", "Interrupt Enemy Channels", true));
                     Vars.EMenu.Add(new MenuBool("killsteal",   "KillSteal"));
                     {
                         /// <summary>

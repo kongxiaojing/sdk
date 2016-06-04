@@ -148,7 +148,7 @@ namespace ExorAIO.Champions.Vayne
                 else
                 {
                     if (GameObjects.Player.Distance(args.End) > GameObjects.Player.BoundingRadius &&
-                        Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value &&
+                        Vars.Menu["spells"]["e"]["dashpred"].GetValue<MenuBool>().Value &&
                         Vars.Menu["spells"]["e"]["whitelist"][args.Sender.ChampionName.ToLower()].GetValue<MenuBool>().Value)
                     {
                         for (var i = 1; i < 10; i++)
@@ -156,6 +156,7 @@ namespace ExorAIO.Champions.Vayne
                             if ((args.End + Vector3.Normalize(args.End - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
                                 (args.End + Vector3.Normalize(args.End - GameObjects.Player.ServerPosition) * i * 44).IsWall())
                             {
+                                Console.WriteLine("DASHPREDICTION CONDEMN!!1!11");
                                 Vars.E.CastOnUnit(args.Sender);
                             }
                         }
