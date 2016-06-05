@@ -34,8 +34,8 @@ namespace ExorAIO.Champions.Tristana
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("antigrab", "Anti-Grab", true));
-                    Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser"));
+                    Vars.WMenu.Add(new MenuBool("antigrab", "Anti-Grab", true));
+                    Vars.WMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser"));
                 }
                 Vars.SpellsMenu.Add(Vars.WMenu);
 
