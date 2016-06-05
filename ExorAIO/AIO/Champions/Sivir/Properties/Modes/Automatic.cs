@@ -78,7 +78,9 @@ namespace ExorAIO.Champions.Sivir
                     return;
                 }
 
-                if (args.SData.Name.Equals("HextechGunblade") ||
+                if (args.SData.Name.Equals("KatarinaE") ||
+                    args.SData.Name.Equals("SummonerDot") ||
+                    args.SData.Name.Equals("HextechGunblade") ||
                     args.SData.Name.Equals("BilgewaterCutlass") ||
                     args.SData.Name.Equals("ItemSwordOfFeastAndFamine"))
                 {
