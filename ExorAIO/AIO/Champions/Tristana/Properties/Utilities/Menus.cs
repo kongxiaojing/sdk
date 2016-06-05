@@ -30,6 +30,16 @@ namespace ExorAIO.Champions.Tristana
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
                 /// <summary>
+                ///     Sets the menu for the W.
+                /// </summary>
+                Vars.WMenu = new Menu("w", "Use W to:");
+                {
+                    Vars.EMenu.Add(new MenuBool("antigrab", "Anti-Grab", true));
+                    Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser"));
+                }
+                Vars.SpellsMenu.Add(Vars.WMenu);
+
+                /// <summary>
                 ///     Sets the menu for the E.
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");

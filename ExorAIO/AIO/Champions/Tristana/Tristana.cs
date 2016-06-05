@@ -106,5 +106,22 @@ namespace ExorAIO.Champions.Tristana
                 }
             }
         }
+
+        /// <summary>
+        ///     Fired on an incoming gapcloser.
+        /// </summary>
+        /// <param name="sender">The object.</param>
+        /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
+        public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
+        {
+            if (Vars.W.IsReady() &&
+                args.Sender.IsMelee &&
+                args.IsDirectedToPlayer &&
+                args.Sender.IsValidTarget(Vars.W.Range) &&
+                Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
+            {
+                Vars.W.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, -Vars.W.Range));
+            }
+        }
     }
 }

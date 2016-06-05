@@ -1,4 +1,5 @@
 using LeagueSharp;
+using LeagueSharp.SDK;
 
 namespace ExorAIO.Champions.Tristana
 {
@@ -13,6 +14,8 @@ namespace ExorAIO.Champions.Tristana
         public static void Initialize()
         {
             Game.OnUpdate += Tristana.OnUpdate;
+            Events.OnGapCloser += Tristana.OnGapCloser;
+            Obj_AI_Base.OnBuffAdd += Tristana.OnBuffAdd;
         }
     }
 }
