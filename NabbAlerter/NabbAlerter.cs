@@ -1,3 +1,4 @@
+using System.Linq;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
@@ -71,48 +72,24 @@ namespace NabbAlerter
                 Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["ultimate"].GetValue<MenuBool>().Value)
             {
                 /// <summary>
-                ///     Annie can cast R multiple times to move tibbers, let's just not spam it once she already casted R.
+                ///     Exceptions check.
                 /// </summary>
-                if ((sender as Obj_AI_Hero).ChampionName.Equals("Annie") &&
-                    !args.SData.Name.Equals("InfernalGuardian"))
+                if (Vars.ExChampions.Contains((sender as Obj_AI_Hero).ChampionName))
                 {
-                    return;
-                }
-
-                /// <summary>
-                ///     Irelia can cast R multiple times, let's just not spam it once she already casted R.
-                /// </summary>
-                if ((sender as Obj_AI_Hero).ChampionName.Equals("Irelia") &&
-                    (sender as Obj_AI_Hero).HasBuff("IreliaTrascendentBladesSpell"))
-                {
-                    return;
-                }
-
-                /// <summary>
-                ///     Jhin can cast R four times, let's just not spam it.
-                /// </summary>
-                if ((sender as Obj_AI_Hero).ChampionName.Equals("Jhin") &&
-                    !args.SData.Name.Equals("JhinR"))
-                {
-                    return;
-                }
-
-                /// <summary>
-                ///     Shaco can cast R multiple times to move his clone, let's just not spam it once he already casted R.
-                /// </summary>
-                if ((sender as Obj_AI_Hero).ChampionName.Equals("Shaco") &&
-                    !args.SData.Name.Equals("HallucinateFull"))
-                {
-                    return;
-                }
-
-                /// <summary>
-                ///     Zed can cast R two times, let's just not spam it.
-                /// </summary>
-                if ((sender as Obj_AI_Hero).ChampionName.Equals("Zed") &&
-                    !args.SData.Name.Equals("ZedR"))
-                {
-                    return;
+                    foreach (var s in Vars.RealSpells)
+                    {
+                        if (!(sender as Obj_AI_Hero).Buffs.Any(b => b.Name.Equals(s)))
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            if ((sender as Obj_AI_Hero).GetBuffCount(Vars.RealSpells.First(r => r.Equals(args.SData.Name))) > 1)
+                            {
+                                return;
+                            }
+                        }
+                    }
                 }
 
                 /// <summary>

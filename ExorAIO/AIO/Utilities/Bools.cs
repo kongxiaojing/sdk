@@ -17,7 +17,7 @@ namespace ExorAIO.Utilities
         /// </summary>
         public static bool HasSheenBuff()
             =>
-                GameObjects.Player.HasBuff("Sheen") ||
+                GameObjects.Player.HasBuff("sheen") ||
                 GameObjects.Player.HasBuff("LichBane") ||
                 GameObjects.Player.HasBuff("ItemFrozenFist");
 
