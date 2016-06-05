@@ -28,8 +28,7 @@ namespace ExorAIO.Champions.Ezreal
                 /// <summary>
                 ///     The R Combo Logic.
                 /// </summary>
-                if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
-                    !Vars.Menu["spells"]["r"]["aoe"].GetValue<MenuSliderButton>().BValue)
+                if (Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value)
                 {
                     foreach (var target in GameObjects.EnemyHeroes.Where(
                         t =>
@@ -42,26 +41,22 @@ namespace ExorAIO.Champions.Ezreal
                     }
                 }
 
+                if (!Targets.Target.IsValidTarget())
+                {
+                    return;
+                }
+
                 /// <summary>
                 ///     The Automatic R Logic.
                 /// </summary>
                 if (Vars.Menu["spells"]["r"]["logical"].GetValue<MenuBool>().Value)
                 {
-                    if (!Targets.Target.IsValidTarget() &&
-                        Bools.IsImmobile(Targets.Target) &&
+                    if (Bools.IsImmobile(Targets.Target) &&
                         !Invulnerable.Check(Targets.Target))
                     {
                         Vars.R.Cast(Targets.Target.ServerPosition);
                         return;
                     }
-                }
-
-                /// <summary>
-                ///     The AoE R Logic.
-                /// </summary>
-                if (Vars.Menu["spells"]["r"]["aoe"].GetValue<MenuSliderButton>().BValue)
-                {
-                    Vars.R.CastIfWillHit(Targets.Target, Vars.Menu["spells"]["r"]["aoe"].GetValue<MenuSliderButton>().SValue);
                 }
             }
 

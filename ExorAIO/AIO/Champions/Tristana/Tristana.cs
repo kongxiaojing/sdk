@@ -1,7 +1,9 @@
 using System;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
+using LeagueSharp.SDK.UI;
 
 namespace ExorAIO.Champions.Tristana
 {
@@ -82,6 +84,26 @@ namespace ExorAIO.Champions.Tristana
 
                 default:
                     break;
+            }
+        }
+
+        /// <summary>
+        ///     Fired when a buff is added.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="Obj_AI_BaseBuffAddEventArgs" /> instance containing the event data.</param>
+        public static void OnBuffAdd(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
+        {
+            if (sender.IsMe &&
+                Vars.W.IsReady() &&
+                args.Buff.Caster as Obj_AI_Hero != null &&
+                Vars.Menu["spells"]["w"]["antigrab"].GetValue<MenuBool>().Value)
+            {
+                if (args.Buff.Name.Equals("ThreshQ") ||
+                    args.Buff.Name.Equals("rocketgrab2"))
+                {
+                    Vars.W.Cast(GameObjects.Player.ServerPosition.Extend((args.Buff.Caster as Obj_AI_Hero).ServerPosition, -Vars.W.Range));
+                }
             }
         }
     }

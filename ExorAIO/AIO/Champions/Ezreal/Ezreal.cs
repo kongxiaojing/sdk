@@ -130,12 +130,13 @@ namespace ExorAIO.Champions.Ezreal
         {
             if (sender.IsMe &&
                 Vars.E.IsReady() &&
+                args.Buff.Caster as Obj_AI_Hero != null &&
                 Vars.Menu["spells"]["e"]["antigrab"].GetValue<MenuBool>().Value)
             {
                 if (args.Buff.Name.Equals("ThreshQ") ||
                     args.Buff.Name.Equals("rocketgrab2"))
                 {
-                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(sender.ServerPosition, -Vars.E.Range));
+                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend((args.Buff.Caster as Obj_AI_Hero).ServerPosition, -Vars.E.Range));
                 }
             }
         }
