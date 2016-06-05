@@ -113,9 +113,13 @@ namespace ExorAIO.Champions.Caitlyn
             if (Vars.E.IsReady() &&
                 args.IsDirectedToPlayer &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
-                Vars.E.Cast(args.Sender.ServerPosition);
+                if (!Vars.E.GetPrediction(args.Sender).CollisionObjects.Any())
+                {
+                    Vars.E.Cast(args.Sender.ServerPosition);
+                }
             }
         }
     }

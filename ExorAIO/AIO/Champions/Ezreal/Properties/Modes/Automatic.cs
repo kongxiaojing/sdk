@@ -90,6 +90,14 @@ namespace ExorAIO.Champions.Ezreal
                     break;
 
                 default:
+                    if (!GameObjects.Jungle.Contains(Variables.Orbwalker.GetTarget()) &&
+                        Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
+                        Variables.Orbwalker.GetTarget() as Obj_AI_Hero == null &&
+                        Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
+                        Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+                    {
+                        return;
+                    }
                     break;
             }
 

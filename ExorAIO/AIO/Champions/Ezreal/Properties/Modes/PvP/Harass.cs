@@ -35,7 +35,7 @@ namespace ExorAIO.Champions.Ezreal
                 Vars.Menu["spells"]["q"]["harass"].GetValue<MenuSliderButton>().BValue &&
                 Vars.Menu["spells"]["q"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                     return;
@@ -51,7 +51,7 @@ namespace ExorAIO.Champions.Ezreal
                     ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["harass"]) &&
                 Vars.Menu["spells"]["w"]["harass"].GetValue<MenuSliderButton>().BValue)
             {
-                Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
+                Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
             }
         }
     }

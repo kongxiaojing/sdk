@@ -128,8 +128,8 @@ namespace ExorAIO.Champions.Ezreal
         /// <param name="args">The <see cref="Obj_AI_BaseBuffAddEventArgs" /> instance containing the event data.</param>
         public static void OnBuffAdd(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
         {
-            if (Vars.E.IsReady() &&
-                sender is Obj_AI_Hero &&
+            if (sender.IsMe &&
+                Vars.E.IsReady() &&
                 Vars.Menu["spells"]["e"]["antigrab"].GetValue<MenuBool>().Value)
             {
                 if (args.Buff.Name.Equals("ThreshQ") ||

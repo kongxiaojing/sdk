@@ -30,7 +30,7 @@ namespace ExorAIO.Champions.Ezreal
             if (Vars.Q.IsReady() &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(args.Target as Obj_AI_Hero).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                if (!Vars.Q.GetPrediction(args.Target as Obj_AI_Hero).CollisionObjects.Any())
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(args.Target as Obj_AI_Hero).UnitPosition);
                     return;
