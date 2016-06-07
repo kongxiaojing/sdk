@@ -1,4 +1,5 @@
 using LeagueSharp;
+using LeagueSharp.SDK;
 
 namespace AsunaCondemn
 {
@@ -13,6 +14,7 @@ namespace AsunaCondemn
         public static void Initialize()
         {
             Game.OnUpdate += Condem.OnUpdate;
+            Events.OnGapCloser += Condem.OnGapCloser;
         }
     }
 }

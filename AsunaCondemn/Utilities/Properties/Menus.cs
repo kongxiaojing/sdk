@@ -20,12 +20,15 @@ namespace AsunaCondemn
             /// </summary>
             Vars.Menu = new Menu("asunacondemn", "AsunaCondemn", true);
             {
+                Vars.Menu.Add(new MenuBool("enable",     "Enable", true));
+                Vars.Menu.Add(new MenuKeyBind("keybind", "Execute:", Keys.Space, KeyBindType.Press));
+
                 /// <summary>
                 ///     Sets the spells menu.
                 /// </summary>
-                Vars.EMenu = new Menu("e", "Use E to:");
+                Vars.EMenu = new Menu("features", "Features Menu:");
                 {
-                    Vars.EMenu.Add(new MenuKeyBind("logical", "Execute:", Keys.Space, KeyBindType.Press));
+                    Vars.EMenu.Add(new MenuBool("dashpred", "Enable Dash-Prediction", true));
                 }
                 Vars.Menu.Add(Vars.EMenu);
 

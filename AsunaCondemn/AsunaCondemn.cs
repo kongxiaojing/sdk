@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Linq;
 using LeagueSharp;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
+using SharpDX;
 
 namespace AsunaCondemn
 {
@@ -45,10 +50,77 @@ namespace AsunaCondemn
                 return;
             }
 
+            if (!Vars.Menu["enable"].GetValue<MenuBool>().Value ||
+                !Vars.Menu["keybind"].GetValue<MenuKeyBind>().Active)
+            {
+                return;
+            }
+
             /// <summary>
-            ///     Initializes the Automatic actions.
+            ///     The fixed Condem Logic Kappa.
             /// </summary>
-            Logics.Automatic(args);
+            if (Vars.E.IsReady() &&
+                Vars.Flash.IsReady())
+            {
+                foreach (var target in GameObjects.EnemyHeroes.Where(
+                    t =>
+                        !t.IsDashing() &&
+                        t.IsValidTarget(Vars.E.Range) &&
+                        !Invulnerable.Check(t, DamageType.Magical, false) &&
+                        !t.IsValidTarget(GameObjects.Player.BoundingRadius) &&
+                        GameObjects.Player.Distance(GameObjects.Player.ServerPosition.Extend(t.ServerPosition, Vars.Flash.Range)) >
+                            GameObjects.Player.Distance(t) + t.BoundingRadius &&
+                        Vars.Menu["features"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                {
+                    for (var i = 1; i < 10; i++)
+                    {
+                        if ((target.ServerPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                            (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                            (target.ServerPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall() &&
+                            (Vars.E.GetPrediction(target).UnitPosition - Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
+                        {
+                            Vars.E.CastOnUnit(target);
+                            Vars.Flash.Cast(GameObjects.Player.ServerPosition.Extend(target.ServerPosition, Vars.Flash.Range));
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Fired on an incoming gapcloser.
+        /// </summary>
+        /// <param name="sender">The object.</param>
+        /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
+        public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
+        {
+            if (!Vars.Menu["enable"].GetValue<MenuBool>().Value ||
+                !Vars.Menu["keybind"].GetValue<MenuKeyBind>().Active)
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     The Dash-Condemn Prediction Logic.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                Vars.Flash.IsReady() &&
+                args.Sender.IsValidTarget(Vars.E.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
+                GameObjects.Player.Distance(args.End) > GameObjects.Player.BoundingRadius &&
+                Vars.Menu["features"]["dashpred"].GetValue<MenuBool>().Value &&
+                Vars.Menu["features"]["whitelist"][args.Sender.ChampionName.ToLower()].GetValue<MenuBool>().Value)
+            {
+                for (var i = 1; i < 10; i++)
+                {
+                    if ((args.End - Vector3.Normalize(args.End - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                        (args.End - Vector3.Normalize(args.End - GameObjects.Player.ServerPosition) * i * 44).IsWall())
+                    {
+                        Vars.E.CastOnUnit(args.Sender);
+                        Vars.Flash.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, Vars.Flash.Range));
+                    }
+                }
+            }
         }
     }
 }
