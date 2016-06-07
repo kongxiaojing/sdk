@@ -27,10 +27,9 @@ namespace NabbActivator
                     }
 
                     GameObjects.Jungle.Where(
-                    m =>
-                        m.IsValidTarget() &&
-                        !GameObjects.JungleSmall.Contains(m)).ToList().ForEach(unit =>
-                        //Vars.Menu["smite"]["whitelist"][m.CharData.BaseSkinName.ToLower()].GetValue<MenuBool>().Value).ToList().ForEach(unit =>
+                        m =>
+                            m.IsValidTarget() &&
+                            !GameObjects.JungleSmall.Contains(m)).ToList().ForEach(unit =>
                         {
                             /// <summary>
                             ///     Defines what HPBar Offsets it should display.
