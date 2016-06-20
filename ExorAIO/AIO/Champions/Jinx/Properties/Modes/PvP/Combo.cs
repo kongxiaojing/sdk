@@ -41,6 +41,7 @@ namespace ExorAIO.Champions.Jinx
             }
 
             if (Bools.HasSheenBuff() ||
+                !Targets.Target.IsValidTarget() ||
                 Invulnerable.Check(Targets.Target))
             {
                 return;
