@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
 using Menu = LeagueSharp.SDK.UI.Menu;
@@ -31,6 +32,22 @@ namespace AsunaCondemn
                     Vars.EMenu.Add(new MenuBool("dashpred", "Enable Dash-Prediction", true));
                 }
                 Vars.Menu.Add(Vars.EMenu);
+
+				/// <summary>
+				///     Sets the menu for the Whitelist.
+				/// </summary>
+				Vars.WhiteListMenu = new Menu("whitelist", "Whitelist Menu");
+				{
+					foreach (var target in GameObjects.EnemyHeroes)
+					{
+						Vars.WhiteListMenu.Add(
+							new MenuBool(
+								target.ChampionName.ToLower(),
+								$"Use against: {target.ChampionName}",
+								true));
+					}
+				}
+				Vars.Menu.Add(Vars.WhiteListMenu);
 
                 /// <summary>
                 ///     Sets the drawings menu.

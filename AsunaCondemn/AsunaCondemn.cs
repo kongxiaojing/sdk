@@ -60,7 +60,8 @@ namespace AsunaCondemn
             ///     The fixed Condem Logic Kappa.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Vars.Flash.IsReady())
+                Vars.Flash.IsReady() &&
+				!GameObjects.Player.IsDashing())
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
@@ -70,7 +71,7 @@ namespace AsunaCondemn
                         !t.IsValidTarget(GameObjects.Player.BoundingRadius) &&
                         GameObjects.Player.Distance(GameObjects.Player.ServerPosition.Extend(t.ServerPosition, Vars.Flash.Range)) >
                             GameObjects.Player.Distance(t) + t.BoundingRadius &&
-                        Vars.Menu["features"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                        Vars.Menu["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
                     for (var i = 1; i < 10; i++)
                     {
@@ -95,7 +96,8 @@ namespace AsunaCondemn
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (!Vars.Menu["enable"].GetValue<MenuBool>().Value ||
-                !Vars.Menu["keybind"].GetValue<MenuKeyBind>().Active)
+                !Vars.Menu["keybind"].GetValue<MenuKeyBind>().Active ||
+				!Vars.Menu["features"]["dashpred"].GetValue<MenuBool>().Value)
             {
                 return;
             }
@@ -105,10 +107,11 @@ namespace AsunaCondemn
             /// </summary>
             if (Vars.E.IsReady() &&
                 Vars.Flash.IsReady() &&
+				!GameObjects.Player.IsDashing() &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
                 !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
-                GameObjects.Player.Distance(args.End) > GameObjects.Player.BoundingRadius &&
-                Vars.Menu["features"]["dashpred"].GetValue<MenuBool>().Value &&
+                GameObjects.Player.Distance(args.End) >
+					GameObjects.Player.BoundingRadius &&
                 Vars.Menu["features"]["whitelist"][args.Sender.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
                 for (var i = 1; i < 10; i++)

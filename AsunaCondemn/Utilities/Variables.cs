@@ -31,6 +31,11 @@ namespace AsunaCondemn
         public static Menu EMenu { internal get; set; }
 
         /// <summary>
+        ///     Gets or sets the WhiteList menu.
+        /// </summary>
+        public static Menu WhiteListMenu { internal get; set; }
+
+        /// <summary>
         ///     Gets or sets the Drawings menu.
         /// </summary>
         public static Menu DrawingsMenu { internal get; set; }
