@@ -35,7 +35,7 @@ namespace ExorAIO.Champions.Caitlyn
                 foreach (var target in
                     GameObjects.EnemyHeroes.Where(
                         t =>
-                            t.IsValidTarget(550f) &&
+                            t.IsValidTarget(700f) &&
                             !Invulnerable.Check(t) &&
                             !t.HasBuff("caitlynyordletrapinternal")))
                 {
@@ -43,12 +43,6 @@ namespace ExorAIO.Champions.Caitlyn
 						Vars.E.GetPrediction(target).Hitchance >= HitChance.Medium)
                     {
                         Vars.E.Cast(Vars.E.GetPrediction(target).UnitPosition);
-
-						if (Vars.Q.IsReady() &&
-							Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
-						{
-							Vars.Q.Cast(target.ServerPosition);
-						}
                     }
                 }
             }

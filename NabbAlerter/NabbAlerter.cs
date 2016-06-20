@@ -39,7 +39,7 @@ namespace NabbAlerter
                 return;
             }
 
-            if ((sender as Obj_AI_Hero).IsValidTarget() ||
+            if (!(sender as Obj_AI_Hero).IsValidTarget() ||
                 !(sender as Obj_AI_Hero).IsEnemy)
             {
                 return;

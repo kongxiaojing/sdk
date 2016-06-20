@@ -14,7 +14,9 @@ namespace ExorAIO.Champions.Caitlyn
         public static void Initialize()
         {
             Game.OnUpdate += Caitlyn.OnUpdate;
+            Obj_AI_Base.OnDoCast += Caitlyn.OnDoCast;
             Events.OnGapCloser += Caitlyn.OnGapCloser;
+            Events.OnInterruptableTarget += Caitlyn.OnInterruptableTarget;
         }
     }
 }

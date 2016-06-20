@@ -70,12 +70,18 @@ namespace ExorAIO.Champions.Caitlyn
             if (Vars.R.IsReady() &&
                 Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value)
             {
-                if (GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.R.Range)) &&
+                if (GameObjects.EnemyHeroes.Any(
+                    t =>
+                        !Invulnerable.Check(t) &&
+                        t.IsValidTarget(Vars.R.Range)) &&
                     Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
                 {
                     Vars.R.CastOnUnit(
                         GameObjects.EnemyHeroes
-                            .Where(t => t.IsValidTarget(Vars.R.Range))
+                            .Where(
+                                t =>
+                                    !Invulnerable.Check(t) &&
+                                    t.IsValidTarget(Vars.R.Range))
                             .OrderBy(o => o.Health)
                             .LastOrDefault());
                 }

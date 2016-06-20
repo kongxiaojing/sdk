@@ -1,6 +1,4 @@
-using ExorAIO.Utilities;
 using LeagueSharp;
-using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Caitlyn
 {
@@ -14,9 +12,6 @@ namespace ExorAIO.Champions.Caitlyn
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="args">The args.</param>
-        public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
-        {
-            if (!(args.Target is Obj_AI_Hero) || Invulnerable.Check(args.Target as Obj_AI_Hero)) {}
-        }
+        public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args) {}
     }
 }

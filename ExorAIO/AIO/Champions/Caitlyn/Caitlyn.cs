@@ -89,12 +89,60 @@ namespace ExorAIO.Champions.Caitlyn
         }
 
         /// <summary>
+        ///     Called on do-cast.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The args.</param>
+        public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (sender.IsMe &&
+                Variables.Orbwalker.ActiveMode == OrbwalkingMode.Combo)
+            {
+                switch (args.SData.Name)
+                {
+                    case "CaitlynEntrapment":
+                    case "CaitlynEntrapmentMissile":
+                        if (Vars.W.IsReady() &&
+                            Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
+                        {
+                            Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
+                        }
+                        break;
+
+                    case "CaitlynYordleTrap":
+                        if (Vars.Q.IsReady() &&
+                            Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
+                        {
+                            Vars.Q.Cast(Targets.Target.ServerPosition);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Fired on an incoming gapcloser.
         /// </summary>
         /// <param name="sender">The object.</param>
         /// <param name="args">The <see cref="Events.GapCloserEventArgs" /> instance containing the event data.</param>
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
+            if (Vars.E.IsReady() &&
+                args.IsDirectedToPlayer &&
+                args.Sender.IsValidTarget(Vars.E.Range) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
+                Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
+            {
+                if (!Vars.E.GetPrediction(args.Sender).CollisionObjects.Any())
+                {
+                    Vars.E.Cast(args.Sender.ServerPosition);
+                    return;
+                }
+            }
+
             if (Vars.W.IsReady() &&
                 args.Sender.IsValidTarget(Vars.W.Range) &&
                 !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
@@ -106,20 +154,44 @@ namespace ExorAIO.Champions.Caitlyn
 						m.CharData.BaseSkinName.Equals("caitlyntrap")))
 				{
 					Vars.W.Cast(args.End);
-					return;
 				}
+            }
+        }
+
+        /// <summary>
+        ///     Called on interruptable spell.
+        /// </summary>
+        /// <param name="sender">The object.</param>
+        /// <param name="args">The <see cref="Events.InterruptableTargetEventArgs" /> instance containing the event data.</param>
+        public static void OnInterruptableTarget(object sender, Events.InterruptableTargetEventArgs args)
+        {
+            if (Invulnerable.Check(args.Sender, DamageType.Magical, false))
+            {
+                return;
             }
 
             if (Vars.E.IsReady() &&
-                args.IsDirectedToPlayer &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
-                Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["e"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 if (!Vars.E.GetPrediction(args.Sender).CollisionObjects.Any())
                 {
-                    Vars.E.Cast(args.Sender.ServerPosition);
+                    Vars.E.Cast(Vars.E.GetPrediction(args.Sender).UnitPosition);
+                    return;
                 }
+            }
+
+            if (Vars.W.IsReady() &&
+                args.Sender.IsValidTarget(Vars.W.Range) &&
+                Vars.Menu["spells"]["w"]["interrupter"].GetValue<MenuBool>().Value)
+            {
+				if (!ObjectManager.Get<Obj_AI_Minion>().Any(
+					m =>
+                        m.CharData.BaseSkinName.Equals("caitlyntrap") &&
+						m.Distance(Vars.W.GetPrediction(args.Sender).CastPosition) < 100f))
+				{
+                    Vars.W.Cast(Vars.W.GetPrediction(args.Sender).CastPosition);
+				}
             }
         }
     }

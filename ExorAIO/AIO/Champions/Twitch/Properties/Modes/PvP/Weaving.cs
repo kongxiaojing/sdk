@@ -19,7 +19,7 @@ namespace ExorAIO.Champions.Twitch
         public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (!(args.Target is Obj_AI_Hero) ||
-                Invulnerable.Check(args.Target as Obj_AI_Hero, DamageType.Physical))
+                Invulnerable.Check(args.Target as Obj_AI_Hero))
             {
                 return;
             }
