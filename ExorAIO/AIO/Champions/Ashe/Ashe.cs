@@ -79,6 +79,7 @@ namespace ExorAIO.Champions.Ashe
 
                 case OrbwalkingMode.LaneClear:
                     Logics.Clear(args);
+                    Logics.BuildingClear(args);
                     break;
 
                 default:

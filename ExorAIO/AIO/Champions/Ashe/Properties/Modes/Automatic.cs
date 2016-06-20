@@ -69,6 +69,27 @@ namespace ExorAIO.Champions.Ashe
                     }
                 }
             }
+
+            /// <summary>
+            ///     The E -> R Combo Logics.
+            /// </summary>
+            if (Vars.R.IsReady() &&
+                Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value &&
+                Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active &&
+				!Invulnerable.Check(Targets.Target, DamageType.Magical, false) &&
+                Vars.Menu["spells"]["r"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
+            {
+				if (!Vars.R.GetPrediction(Targets.Target).CollisionObjects.Any())
+                {
+					if (Vars.E.IsReady() &&
+						Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
+					{
+						Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).UnitPosition);
+					}
+
+					Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
+				}
+            }
         }
     }
 }

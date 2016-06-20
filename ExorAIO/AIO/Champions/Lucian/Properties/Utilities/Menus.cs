@@ -101,6 +101,10 @@ namespace ExorAIO.Champions.Lucian
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
+                    Vars.RMenu.Add(new MenuSeparator("separator", "How does it work:"));
+                    Vars.RMenu.Add(new MenuSeparator("separator2", "Keep the button pressed until you want to stop the ultimate."));
+                    Vars.RMenu.Add(new MenuSeparator("separator3", "You don't have to press both Spacebar and the Semi-Automatic button while doing this,"));
+                    Vars.RMenu.Add(new MenuSeparator("separator4", "since ExorLucian automatically orbwalks while channelling his R, so just press the button."));
                     Vars.RMenu.Add(new MenuBool("bool", "Semi-Automatic R", true));
                     Vars.RMenu.Add(
                         new MenuKeyBind("key", "Key:", Keys.T, KeyBindType.Press));

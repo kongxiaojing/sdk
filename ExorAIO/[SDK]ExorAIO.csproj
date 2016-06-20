@@ -69,7 +69,6 @@
     <Compile Include="AIO\Utilities\Bools.cs" />
     <Compile Include="AIO\Utilities\Vars.cs" />
     <Compile Include="AIO\Utilities\Helpers\Drawings.cs" />
-    <Compile Include="AIO\Utilities\Helpers\Healthbars.cs" />
     <Compile Include="AIO\Utilities\Helpers\ManaManager.cs" />
     <Compile Include="AIO\Utilities\Helpers\Geometry.cs" />
     <Compile Include="AIO\Champions\Akali\Akali.cs" />
@@ -276,6 +275,7 @@
     <Compile Include="AIO\Champions\Kalista\Properties\Utilities\Methods.cs" />
     <Compile Include="AIO\Champions\Kalista\Properties\Utilities\Spells.cs" />
     <Compile Include="AIO\Champions\Kalista\Properties\Utilities\Targets.cs" />
+    <Compile Include="AIO\Champions\Kalista\Properties\Utilities\Healthbars.cs" />
     <Compile Include="AIO\Champions\Karma\Karma.cs" />
     <Compile Include="AIO\Champions\Karma\Properties\Modes\Automatic.cs" />
     <Compile Include="AIO\Champions\Karma\Properties\Modes\PvM\Clear.cs" />

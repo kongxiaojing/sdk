@@ -29,13 +29,11 @@ namespace ExorAIO.Champions.Veigar
             {
                 if (Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
                     m =>
-                        Vars.GetRealHealth(m) <
-                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).MinionsHit >= 1)
+                        m.Health < (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).MinionsHit == 1)
                 {
                     Vars.Q.Cast(Vars.Q.GetLineFarmLocation(Targets.Minions.Where(
                         m =>
-                            Vars.GetRealHealth(m) <
-                                (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).Position);
+                            m.Health < (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).ToList(), Vars.Q.Width).Position);
                 }
             }
         }

@@ -21,3 +21,4 @@ C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\ExorAIO\bin\Debug\normnfkd.nlp
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\ExorAIO\obj\x86\Debug\[SDK]ExorAIO.csprojResolveAssemblyReference.cache
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\ExorAIO\obj\x86\Debug\[SDK]ExorAIO.exe
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\ExorAIO\obj\x86\Debug\[SDK]ExorAIO.pdb
+C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\ExorAIO\bin\Debug\LeagueSharp.Sandbox.pdb

@@ -13,6 +13,7 @@ namespace ExorAIO.Champions.Twitch
         public static void Initialize()
         {
             Game.OnUpdate += Twitch.OnUpdate;
+            Obj_AI_Base.OnDoCast += Twitch.OnDoCast;
             Spellbook.OnCastSpell += Twitch.OnCastSpell;
         }
     }

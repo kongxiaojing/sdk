@@ -48,9 +48,9 @@ namespace ExorAIO.Champions.Kalista
                     Vars.EMenu.Add(new MenuBool("killsteal",   "KillSteal",      true));
                     Vars.EMenu.Add(new MenuBool("junglesteal", "JungleSteal",    true));
                     Vars.EMenu.Add(new MenuBool("ondeath",     "Before Death",   true));
-                    Vars.EMenu.Add(new MenuSliderButton("harass",      "Minion Harass / if Mana >= x%", 50, 0, 99, true));
-                    Vars.EMenu.Add(new MenuSliderButton("farmhelper",  "FarmHelper / if Mana >= x%",    50, 0, 99, true));
-                    Vars.EMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",     50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("harass",     "Minion Harass / if Mana >= x%", 50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("farmhelper", "FarmHelper / if Mana >= x%",    50, 0, 99, true));
+                    Vars.EMenu.Add(new MenuSliderButton("laneclear",  "LaneClear / if Mana >= x%",     50, 0, 99, true));
                     {
                         /// <summary>
                         ///     Sets the menu for the E Whitelist.

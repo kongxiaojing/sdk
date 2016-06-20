@@ -1,5 +1,8 @@
 using ExorAIO.Utilities;
 using LeagueSharp;
+using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Twitch
 {
@@ -13,6 +16,24 @@ namespace ExorAIO.Champions.Twitch
         /// </summary>
         /// <param name="(sender as Obj_AI_Hero)">The (sender as Obj_AI_Hero).</param>
         /// <param name="args">The args.</param>
-        public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args) {}
+        public static void Weaving(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (!(args.Target is Obj_AI_Hero) ||
+                Invulnerable.Check(args.Target as Obj_AI_Hero, DamageType.Physical))
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     The Q Combo Logic.
+            /// </summary>
+            if (Vars.Q.IsReady() &&
+                (args.Target as Obj_AI_Hero).Health <
+                    GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero) &&
+                Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
+            {
+                Vars.Q.Cast();
+            }
+        }
     }
 }

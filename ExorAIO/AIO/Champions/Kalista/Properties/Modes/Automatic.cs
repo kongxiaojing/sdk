@@ -100,7 +100,7 @@ namespace ExorAIO.Champions.Kalista
                     Targets.Minions.Any(
 						m =>
 							Bools.IsPerfectRendTarget(m) &&
-							Vars.GetRealHealth(m) <
+							m.Health <
 								(float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
 								(float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)))
                 {
@@ -111,7 +111,7 @@ namespace ExorAIO.Champions.Kalista
                         Targets.Minions.Count(
                             m =>
                                 Bools.IsPerfectRendTarget(m) &&
-                                Vars.GetRealHealth(m) <
+                                m.Health <
                                     (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
                                     (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) == 1)
                     {
@@ -129,7 +129,7 @@ namespace ExorAIO.Champions.Kalista
                         Targets.Minions.Count(
                             m =>
                                 Bools.IsPerfectRendTarget(m) &&
-                                Vars.GetRealHealth(m) <
+                                m.Health <
                                     (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
                                     (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) == 1)
                     {
@@ -163,7 +163,7 @@ namespace ExorAIO.Champions.Kalista
                     foreach (var minion in Targets.JungleMinions.Where(
                         m =>
                             Bools.IsPerfectRendTarget(m) &&
-                            Vars.GetRealHealth(m) <
+                            m.Health <
                                 (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
                                 (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)))
                     {

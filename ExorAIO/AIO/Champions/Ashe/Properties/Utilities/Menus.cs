@@ -1,6 +1,9 @@
+using System.Windows.Forms;
 using ExorAIO.Utilities;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Enumerations;
+using Menu = LeagueSharp.SDK.UI.Menu;
 
 namespace ExorAIO.Champions.Ashe
 {
@@ -25,7 +28,8 @@ namespace ExorAIO.Champions.Ashe
                 Vars.QMenu = new Menu("q", "Use Q to:");
                 {
                     Vars.QMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.QMenu.Add(new MenuSliderButton("clear", "Clear / if Mana >= x%", 50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("clear",     "Clear / if Mana >= x%",     50, 0, 99, true));
+                    Vars.QMenu.Add(new MenuSliderButton("buildings", "Buildings / If Mana >= x%", 50, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.QMenu);
 
@@ -57,10 +61,12 @@ namespace ExorAIO.Champions.Ashe
                 /// </summary>
                 Vars.RMenu = new Menu("r", "Use R to:");
                 {
-                    Vars.RMenu.Add(new MenuBool("combo",       "Combo",                    true));
                     Vars.RMenu.Add(new MenuBool("killsteal",   "KillSteal",                true));
                     Vars.RMenu.Add(new MenuBool("gapcloser",   "Anti-Gapcloser",           true));
                     Vars.RMenu.Add(new MenuBool("interrupter", "Interrupt Enemy Channels", true));
+                    Vars.RMenu.Add(new MenuBool("bool",        "Semi-Automatic R",         true));
+                    Vars.RMenu.Add(
+                        new MenuKeyBind("key", "Key:", Keys.T, KeyBindType.Press));
                     {
                         /// <summary>
                         ///     Sets the menu for the R Whitelist.

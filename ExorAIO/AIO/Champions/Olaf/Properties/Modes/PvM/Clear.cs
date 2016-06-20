@@ -143,7 +143,7 @@ namespace ExorAIO.Champions.Olaf
             /// </summary>
             if (Vars.W.IsReady() &&
                 GameObjects.Player.ManaPercent >
-                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["buildings"]) &&
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["buildings"]) &&
                 Vars.Menu["spells"]["w"]["buildings"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.W.Cast();

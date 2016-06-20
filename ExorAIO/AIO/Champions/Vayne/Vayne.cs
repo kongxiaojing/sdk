@@ -147,7 +147,9 @@ namespace ExorAIO.Champions.Vayne
                 /// </summary>
                 else
                 {
-                    if (GameObjects.Player.Distance(args.End) > GameObjects.Player.BoundingRadius &&
+                    if (!GameObjects.Player.IsDashing() &&
+                        GameObjects.Player.Distance(args.End) >
+                            GameObjects.Player.BoundingRadius &&
                         Vars.Menu["spells"]["e"]["dashpred"].GetValue<MenuBool>().Value &&
                         Vars.Menu["spells"]["e"]["whitelist"][args.Sender.ChampionName.ToLower()].GetValue<MenuBool>().Value)
                     {

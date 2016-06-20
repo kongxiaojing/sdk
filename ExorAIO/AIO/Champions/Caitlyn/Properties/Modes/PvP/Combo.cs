@@ -40,7 +40,7 @@ namespace ExorAIO.Champions.Caitlyn
                             !t.HasBuff("caitlynyordletrapinternal")))
                 {
                     if (!Vars.E.GetPrediction(target).CollisionObjects.Any() &&
-						Vars.E.GetPrediction(target).Hitchance >= HitChance.High)
+						Vars.E.GetPrediction(target).Hitchance >= HitChance.Medium)
                     {
                         Vars.E.Cast(Vars.E.GetPrediction(target).UnitPosition);
 

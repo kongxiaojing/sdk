@@ -35,7 +35,7 @@ namespace ExorAIO.Champions.Twitch
                 /// </summary>
                 if (Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
                 {
-                    foreach (var target in GameObjects.EnemyHeroes.Where(
+                    if (GameObjects.EnemyHeroes.Any(
                         t =>
                             !Invulnerable.Check(t) &&
                             t.IsValidTarget(Vars.E.Range) &&
@@ -50,10 +50,10 @@ namespace ExorAIO.Champions.Twitch
                 /// </summary>
                 if (Vars.Menu["spells"]["e"]["junglesteal"].GetValue<MenuBool>().Value)
                 {
-                    foreach (var minion in Targets.JungleMinions.Where(
+                    if (Targets.JungleMinions.Any(
                         m =>
                             m.IsValidTarget(Vars.E.Range) &&
-                            Vars.GetRealHealth(m) <
+                            m.Health <
                                 (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
                                 (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)))
                     {

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 
@@ -61,6 +62,32 @@ namespace ExorAIO.Champions.Ashe
                 {
                     Vars.W.Cast(Targets.JungleMinions[0].ServerPosition);
                 }
+            }
+        }
+
+        /// <summary>
+        ///     Fired when the game is updated.
+        /// </summary>
+        /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
+        public static void BuildingClear(EventArgs args)
+        {
+            if (Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
+                Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
+                Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     The Q BuildingClear Logic.
+            /// </summary>
+            if (Vars.Q.IsReady() &&
+                GameObjects.Player.HasBuff("AsheQCastReady") &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.Q.Slot, Vars.Menu["spells"]["q"]["buildings"]) &&
+                Vars.Menu["spells"]["q"]["buildings"].GetValue<MenuSliderButton>().BValue)
+            {
+                Vars.Q.Cast();
             }
         }
     }

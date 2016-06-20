@@ -51,6 +51,7 @@ namespace ExorAIO.Champions.Vayne
             ///     The Automatic E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
+                !GameObjects.Player.IsDashing() &&
                 Vars.Menu["spells"]["e"]["logical"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(

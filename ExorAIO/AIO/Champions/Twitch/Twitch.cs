@@ -4,6 +4,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
+using LeagueSharp.SDK.Utils;
 
 namespace ExorAIO.Champions.Twitch
 {
@@ -83,6 +84,36 @@ namespace ExorAIO.Champions.Twitch
 
                 default:
                     break;
+            }
+        }
+
+        /// <summary>
+        ///     Called on do-cast.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The args.</param>
+        public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        {
+            if (sender.IsMe &&
+                AutoAttack.IsAutoAttack(args.SData.Name))
+            {
+                /// <summary>
+                ///     Initializes the orbwalkingmodes.
+                /// </summary>
+                switch (Variables.Orbwalker.ActiveMode)
+                {
+                    case OrbwalkingMode.Combo:
+                        Logics.Weaving(sender, args);
+                        break;
+
+                    case OrbwalkingMode.LaneClear:
+                        Logics.JungleClear(sender, args);
+                        Logics.BuildingClear(sender, args);
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
 

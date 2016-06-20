@@ -18,21 +18,8 @@ namespace ExorAIO.Champions.Twitch
         public static void Combo(EventArgs args)
         {
             if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget())
-            {
-                return;
-            }
-
-            /// <summary>
-            ///     The Q Combo Logic.
-            /// </summary>
-            if (Vars.Q.IsReady() &&
-                Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
-            {
-                Vars.Q.Cast();
-            }
-
-            if (Invulnerable.Check(Targets.Target))
+                !Targets.Target.IsValidTarget() ||
+                Invulnerable.Check(Targets.Target))
             {
                 return;
             }

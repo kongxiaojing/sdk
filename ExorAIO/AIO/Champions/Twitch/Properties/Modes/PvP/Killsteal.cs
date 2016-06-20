@@ -26,7 +26,7 @@ namespace ExorAIO.Champions.Twitch
             if (Vars.E.IsReady() &&
                 Vars.Menu["spells"]["e"]["killsteal"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
+                if (GameObjects.EnemyHeroes.Any(
                     t =>
                         !Invulnerable.Check(t) &&
                         t.IsValidTarget(Vars.E.Range) &&
