@@ -20,3 +20,4 @@ C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\NabbTracker\bin\Debug\normnfkd.nlp
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\NabbTracker\obj\x86\Debug\[SDK]NabbTracker.exe
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\NabbTracker\obj\x86\Debug\[SDK]NabbTracker.pdb
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\NabbTracker\obj\x86\Debug\[SDK]NabbTracker.csprojResolveAssemblyReference.cache
+C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\NabbTracker\bin\Debug\LeagueSharp.Sandbox.pdb

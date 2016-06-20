@@ -39,14 +39,8 @@ namespace NabbAlerter
                 return;
             }
 
-            if (sender == null)
-            {
-                return;
-            }
-
-            if (sender.IsMe ||
-                !sender.IsEnemy ||
-                !(sender is Obj_AI_Hero))
+            if ((sender as Obj_AI_Hero).IsValidTarget() ||
+                !(sender as Obj_AI_Hero).IsEnemy)
             {
                 return;
             }
@@ -65,158 +59,167 @@ namespace NabbAlerter
                 return;
             }
 
-            /// <summary>
-            ///     The Ultimate (R).
-            /// </summary>
-            if (args.Slot == SpellSlot.R &&
-                Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["ultimate"].GetValue<MenuBool>().Value)
+            switch (args.Slot)
             {
-                /// <summary>
-                ///     Exceptions check.
-                /// </summary>
-                if (Vars.ExChampions.Contains((sender as Obj_AI_Hero).ChampionName))
-                {
-                    foreach (var s in Vars.RealSpells)
+                case SpellSlot.R:
+                    /// <summary>
+                    ///     The Ultimate (R).
+                    /// </summary>
+                    if (Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["ultimate"].GetValue<MenuBool>().Value)
                     {
-                        if (!(sender as Obj_AI_Hero).Buffs.Any(b => b.Name.Equals(s)))
+                        /// <summary>
+                        ///     Exceptions check.
+                        /// </summary>
+                        if (Vars.ExChampions.Contains((sender as Obj_AI_Hero).ChampionName))
                         {
-                            return;
+                            foreach (var s in Vars.RealSpells)
+                            {
+                                if (!(sender as Obj_AI_Hero).Buffs.Any(b => b.Name.Equals(s)))
+                                {
+                                    return;
+                                }
+                                else
+                                {
+                                    if ((sender as Obj_AI_Hero).GetBuffCount(Vars.RealSpells.First(r => r.Equals(args.SData.Name))) > 1)
+                                    {
+                                        return;
+                                    }
+                                }
+                            }
                         }
-                        else
+
+                        /// <summary>
+                        ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
+                        /// </summary>
+                        DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
                         {
-                            if ((sender as Obj_AI_Hero).GetBuffCount(Vars.RealSpells.First(r => r.Equals(args.SData.Name))) > 1)
+                            if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
+                                Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
                             {
                                 return;
                             }
-                        }
-                    }
-                }
 
-                /// <summary>
-                ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
-                /// </summary>
-                DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
-                {
-                    if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
-                        Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
-                    {
-                        return;
-                    }
+                            /// <summary>
+                            ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
+                            /// </summary>
+                            switch (WeightedRandom.Next(1, 4))
+                            {
+                                case 1:
+                                    Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no ulti");
+                                    break;
 
+                                case 2:
+                                    Game.Say($"no ult {Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
+                                    break;
+
+                                case 3:
+                                    Game.Say($"ult {Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
+                                    break;
+
+                                default:
+                                    Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} ult");
+                                    break;
+                            }
+                        });
+                    }
+                    break;
+
+                case SpellSlot.Summoner1:
                     /// <summary>
-                    ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
+                    ///     The First SummonerSpell.
                     /// </summary>
-                    switch (WeightedRandom.Next(1, 4))
+                    if (Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower()) != null &&
+                        Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["sum1"].GetValue<MenuBool>().Value)
                     {
-                        case 1:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no ulti");
-                            break;
+                        /// <summary>
+                        ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
+                        /// </summary>
+                        DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
+                        {
+                            if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
+                                Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
+                            {
+                                return;
+                            }
 
-                        case 2:
-                            Game.Say($"no ult {Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
-                            break;
+                            /// <summary>
+                            ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
+                            /// </summary>
+                            switch (WeightedRandom.Next(1, 4))
+                            {
+                                case 1:
+                                    Game.Say($"no {Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())} " +
+                                             $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
+                                    break;
 
-                        case 3:
-                            Game.Say($"ult {Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
-                            break;
+                                case 2:
+                                    Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no " +
+                                             $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())}");
+                                    break;
 
-                        default:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} ult");
-                            break;
+                                case 3:
+                                    Game.Say($"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())} " +
+                                             $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
+                                    break;
+
+                                default:
+                                    Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} " +
+                                             $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())}");
+                                    break;
+                            }
+                        });
                     }
-                });
-            }
+                    break;
 
-            /// <summary>
-            ///     The First SummonerSpell.
-            /// </summary>
-            if (args.Slot == SpellSlot.Summoner1 &&
-                Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower()) != null &&
-                Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["sum1"].GetValue<MenuBool>().Value)
-            {
-                /// <summary>
-                ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
-                /// </summary>
-                DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
-                {
-                    if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
-                        Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
-                    {
-                        return;
-                    }
-
+                case SpellSlot.Summoner2:
                     /// <summary>
-                    ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
+                    ///     The Second SummonerSpell.
                     /// </summary>
-                    switch (WeightedRandom.Next(1, 4))
+                    if (Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower()) != null &&
+                        Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["sum2"].GetValue<MenuBool>().Value)
                     {
-                        case 1:
-                            Game.Say($"no {Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())} " +
-                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
-                            break;
+                        /// <summary>
+                        ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
+                        /// </summary>
+                        DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
+                        {
+                            if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
+                                Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
+                            {
+                                return;
+                            }
 
-                        case 2:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no " +
-                                     $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())}");
-                            break;
+                            /// <summary>
+                            ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
+                            /// </summary>
+                            switch (WeightedRandom.Next(1, 4))
+                            {
+                                case 1:
+                                    Game.Say($"no {Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())} " +
+                                             $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
+                                    break;
 
-                        case 3:
-                            Game.Say($"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())} " +
-                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
-                            break;
+                                case 2:
+                                    Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no " +
+                                             $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())}");
+                                    break;
 
-                        default:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} " +
-                                     $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[4].Name.ToLower())}");
-                            break;
+                                case 3:
+                                    Game.Say($"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())} " +
+                                             $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
+                                    break;
+
+                                default:
+                                    Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} " +
+                                             $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())}");
+                                    break;
+                            }
+                        });
                     }
-                });
-            }
+                    break;
 
-            /// <summary>
-            ///     The Second SummonerSpell.
-            /// </summary>
-            if (args.Slot == SpellSlot.Summoner2 &&
-                Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower()) != null &&
-                Vars.Menu[(sender as Obj_AI_Hero).ChampionName.ToLower()]["sum2"].GetValue<MenuBool>().Value)
-            {
-                /// <summary>
-                ///     Let's delay the alert by 5-10 seconds since we're not Sean Wrona.
-                /// </summary>
-                DelayAction.Add(WeightedRandom.Next(5000, 10000), () =>
-                {
-                    if (Vars.Menu["nocombo"].GetValue<MenuBool>().Value &&
-                        Vars.Menu["combokey"].GetValue<MenuKeyBind>().Active)
-                    {
-                        return;
-                    }
-
-                    /// <summary>
-                    ///     Then we randomize the whole output (Structure/Names/SpellNames) to make it seem totally legit.
-                    /// </summary>
-                    switch (WeightedRandom.Next(1, 4))
-                    {
-                        case 1:
-                            Game.Say($"no {Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())} " +
-                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
-                            break;
-
-                        case 2:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} no " +
-                                     $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())}");
-                            break;
-
-                        case 3:
-                            Game.Say($"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())} " +
-                                     $"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())}");
-                            break;
-
-                        default:
-                            Game.Say($"{Vars.GetHumanName((sender as Obj_AI_Hero).ChampionName.ToLower())} " +
-                                     $"{Vars.GetHumanSpellName((sender as Obj_AI_Hero).Spellbook.Spells[5].Name.ToLower())}");
-                            break;
-                    }
-                });
+                default:
+                    break;
             }
         }
     }

@@ -20,3 +20,4 @@ C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\AsunaCondemn\bin\Debug\normnfkd.nlp
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\AsunaCondemn\obj\x86\Debug\[SDK]AsunaCondemn.exe
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\AsunaCondemn\obj\x86\Debug\[SDK]AsunaCondemn.pdb
 C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\AsunaCondemn\obj\x86\Debug\[SDK]AsunaCondemn.csprojResolveAssemblyReference.cache
+C:\Users\utente\Desktop\XD\[SDK]ExoryREPO\AsunaCondemn\bin\Debug\LeagueSharp.Sandbox.pdb
