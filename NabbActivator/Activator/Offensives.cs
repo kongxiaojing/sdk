@@ -47,7 +47,7 @@ namespace NabbActivator
             ///     The Entropy Logic.
             /// </summary>     
             if (Items.CanUseItem(3184) &&
-                GameObjects.Player.IsWindingUp)
+                GameObjects.Player.Spellbook.IsAutoAttacking)
             {
                 Items.UseItem(3184);
             }
@@ -81,7 +81,7 @@ namespace NabbActivator
             /// </summary>
             if (Items.CanUseItem(3142))
             {
-                if (GameObjects.Player.IsWindingUp ||
+                if (GameObjects.Player.Spellbook.IsAutoAttacking ||
                     GameObjects.Player.IsCastingInterruptableSpell())
                 {
                     Items.UseItem(3142);
@@ -94,7 +94,7 @@ namespace NabbActivator
             if (Items.CanUseItem(3030) &&
                 Targets.Target.IsValidTarget(800f))
             {
-                Items.UseItem(3030, Movement.GetPrediction(Targets.Target, 0.5f).UnitPosition);
+                Items.UseItem(3030, Targets.Target.ServerPosition);
             }
             
             /// <summary>

@@ -58,7 +58,7 @@ namespace NabbActivator
                         Items.UseItem(3060, super);
                     }
                 }
-                else if (GameObjects.AllyMinions.Any(m => m.GetMinionType() == MinionTypes.Siege))
+                else
                 {
                     foreach (var siege in GameObjects.AllyMinions.Where(
                         m =>
@@ -78,7 +78,8 @@ namespace NabbActivator
                 foreach (var ally in GameObjects.AllyHeroes.Where(
                     a =>
                         a.IsValidTarget(500f, false) &&
-                        Health.GetPrediction(a, (int)(250 + Game.Ping/2f)) <= a.MaxHealth/4))
+                        Health.GetPrediction(a,
+							(int)(250 + Game.Ping/2f)) <= a.MaxHealth/4))
                 {
                     Items.UseItem(3401, ally);
                     return;
@@ -94,7 +95,8 @@ namespace NabbActivator
                 if (GameObjects.AllyHeroes.Count(
                     a =>
                         a.IsValidTarget(600f, false) &&
-                        Health.GetPrediction(a, (int)(250 + Game.Ping/2f)) <= a.MaxHealth/1.5) >= 3)
+                        Health.GetPrediction(a,
+							(int)(250 + Game.Ping/2f)) <= a.MaxHealth/1.5) >= 3)
                 {
                     Items.UseItem(3190);
                     return;
@@ -106,7 +108,8 @@ namespace NabbActivator
             /// </summary>
             if (Items.CanUseItem(3157))
             {
-                if (Health.GetPrediction(ObjectManager.Player, (int)(250 + Game.Ping/2f)) <= ObjectManager.Player.MaxHealth/4)
+                if (Health.GetPrediction(GameObjects.Player,
+						(int)(250 + Game.Ping/2f)) <= GameObjects.Player.MaxHealth/4)
                 {
                     Items.UseItem(3157);
                     return;
@@ -118,7 +121,8 @@ namespace NabbActivator
             /// </summary>
             if (Items.CanUseItem(3090))
             {
-                if (Health.GetPrediction(ObjectManager.Player, (int)(250 + Game.Ping/2f)) <= ObjectManager.Player.MaxHealth/4)
+                if (Health.GetPrediction(GameObjects.Player,
+						(int)(250 + Game.Ping/2f)) <= GameObjects.Player.MaxHealth/4)
                 {
                     Items.UseItem(3090);
                     return;
@@ -130,7 +134,8 @@ namespace NabbActivator
             /// </summary>
             if (Items.CanUseItem(3040))
             {
-                if (Health.GetPrediction(ObjectManager.Player, (int)(250 + Game.Ping/2f)) <= ObjectManager.Player.MaxHealth/4)
+                if (Health.GetPrediction(GameObjects.Player,
+						(int)(250 + Game.Ping/2f)) <= GameObjects.Player.MaxHealth/4)
                 {
                     Items.UseItem(3040);
                     return;
@@ -158,7 +163,8 @@ namespace NabbActivator
                     t =>
                         t.IsValidTarget(2000f) &&
                         t.CountEnemyHeroesInRange(1500f) <=
-                            ObjectManager.Player.CountAllyHeroesInRange(1500f) + t.CountAllyHeroesInRange(1500f) - 1) > 1)
+                            GameObjects.Player.CountAllyHeroesInRange(1500f) +
+							t.CountAllyHeroesInRange(1500f) - 1) > 1)
                 {
                     Items.UseItem(3059);
                     return;
@@ -170,13 +176,13 @@ namespace NabbActivator
             /// </summary>
             if (Items.CanUseItem(3800))
             {
-                if (!ObjectManager.Player.HasBuff("ItemRighteousGlory"))
+                if (!GameObjects.Player.HasBuff("ItemRighteousGlory"))
                 {
                     if (GameObjects.EnemyHeroes.Count(
                         t =>
                             t.IsValidTarget(2000f) &&
                             t.CountEnemyHeroesInRange(1500f) <=
-                                ObjectManager.Player.CountAllyHeroesInRange(1500f) + t.CountAllyHeroesInRange(1500f) - 1) > 1)
+                                GameObjects.Player.CountAllyHeroesInRange(1500f) + t.CountAllyHeroesInRange(1500f) - 1) > 1)
                     {
                         Items.UseItem(3800);
                         return;
@@ -184,7 +190,7 @@ namespace NabbActivator
                 }
                 else
                 {
-                    if (ObjectManager.Player.CountEnemyHeroesInRange(450f) >= 2)
+                    if (GameObjects.Player.CountEnemyHeroesInRange(450f) >= 2)
                     {
                         Items.UseItem(3800);
                     }
@@ -197,7 +203,7 @@ namespace NabbActivator
             /// </summary>
             if (Items.CanUseItem(3143))
             {
-                if (ObjectManager.Player.CountEnemyHeroesInRange(500f) >= 2)
+                if (GameObjects.Player.CountEnemyHeroesInRange(500f) >= 2)
                 {
                     Items.UseItem(3143);
                 }
