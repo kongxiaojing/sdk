@@ -49,37 +49,80 @@ namespace ExorAIO.Champions.Sivir
         /// <param name="args">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
         public static void AutoShield(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Invulnerable.Check(GameObjects.Player, DamageType.True, false))
-            {
-                return;
-            }
-
             if (sender.IsMe ||
-                sender == null ||
-                !sender.IsValid)
+                Invulnerable.Check(GameObjects.Player, DamageType.True, false))
             {
                 return;
             }
 
             /// <summary>
-            ///     Special check for Kalista's E.
+            ///     Block Traps.
             /// </summary>
-            if (args.SData.Name.Equals("KalistaExpungeWrapper"))
+            if (ObjectManager.Get<Obj_AI_Minion>().Any(
+                m =>
+                    m.Distance(GameObjects.Player) < 175 &&
+                    m.CharData.BaseSkinName.Equals("caitlyntrap")))
             {
-                if (!ObjectManager.Player.HasBuff("KalistaExpungeMarker"))
+                Vars.E.Cast();
+                return;
+            }
+
+            if (args.Target == null ||
+                !sender.IsValidTarget())
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     Block Dragon's AutoAttacks.
+            /// </summary>
+            if (args.Target.IsMe &&
+                sender is Obj_AI_Minion)
+            {
+                if (sender.CharData.BaseSkinName.Equals("SRU_Baron") ||
+                    sender.CharData.BaseSkinName.Contains("SRU_Dragon") ||
+                    sender.CharData.BaseSkinName.Equals("SRU_RiftHerald"))
                 {
-                    return;
+                    Vars.E.Cast();
                 }
             }
-            else
+            else if (sender.IsEnemy &&
+                sender is Obj_AI_Hero)
             {
-                if (args.Target == null)
+                /// <summary>
+                ///     Block Gangplank's Barrels.
+                /// </summary>
+                if ((sender as Obj_AI_Hero).ChampionName.Equals("Gangplank"))
+                {
+                    if (AutoAttack.IsAutoAttack(args.SData.Name) ||
+                        args.SData.Name.Equals("GangplankQProceed"))
+                    {
+                        if ((args.Target as Obj_AI_Minion).Health == 1 &&
+                            (args.Target as Obj_AI_Minion).CharData.BaseSkinName.Equals("gangplankbarrel"))
+                        {
+                            if (GameObjects.Player.Distance(args.Target) < 450)
+                            {
+                                Vars.E.Cast();
+                            }
+                        }
+                    }
+                    else if (args.SData.Name.Equals("GangplankEBarrelFuseMissile"))
+                    {
+                        if (GameObjects.Player.Distance(args.End) < 450)
+                        {
+                            Vars.E.Cast();
+                        }
+                    }
+                }
+
+                if (!args.Target.IsMe)
                 {
                     return;
                 }
-
+                
                 if (args.SData.Name.Equals("KatarinaE") ||
                     args.SData.Name.Equals("SummonerDot") ||
+                    args.SData.Name.Equals("TalonCutthroat") ||
                     args.SData.Name.Equals("HextechGunblade") ||
                     args.SData.Name.Equals("BilgewaterCutlass") ||
                     args.SData.Name.Equals("ItemSwordOfFeastAndFamine"))
@@ -87,135 +130,65 @@ namespace ExorAIO.Champions.Sivir
                     return;
                 }
 
-                /// <summary>
-                ///     Block Gangplank's Barrels.
-                /// </summary>
-                if ((sender as Obj_AI_Hero) != null &&
-                    (sender as Obj_AI_Hero).ChampionName.Equals("Gangplank"))
-				{
-					if (AutoAttack.IsAutoAttack(args.SData.Name) ||
-						args.SData.Name.Equals("GangplankQProceed"))
-					{
-						if ((args.Target as Obj_AI_Minion).Health == 1 &&
-							(args.Target as Obj_AI_Minion).CharData.BaseSkinName.Equals("gangplankbarrel"))
-						{
-							if (GameObjects.Player.Distance(args.Target) < 450)
-							{
-								Vars.E.Cast();
-							}
-						}
-					}
-					else if (args.SData.Name.Equals("GangplankEBarrelFuseMissile"))
-					{
-						if (GameObjects.Player.Distance(args.End) < 450)
-						{
-							Vars.E.Cast();
-						}
-					}
-				}
-
-                if (!args.Target.IsMe)
+                switch (args.SData.TargettingType)
                 {
-                    return;
-                }
+                    /// <summary>
+                    ///     Special check for the AutoAttacks.
+                    /// </summary>
+                    case SpellDataTargetType.Unit:
+                    case SpellDataTargetType.Self:
+                    case SpellDataTargetType.LocationAoe:
 
-                /// <summary>
-                ///     Block Dragon's AutoAttacks.
-                /// </summary>
-                if (sender is Obj_AI_Minion)
-                {
-                    if (!sender.CharData.BaseSkinName.Equals("SRU_Baron") &&
-                        !sender.CharData.BaseSkinName.Contains("SRU_Dragon") &&
-						!sender.CharData.BaseSkinName.Equals("SRU_RiftHerald"))
-                    {
-                        return;
-                    }
-                }
+                        if (args.SData.Name.Equals("GangplankE") ||
+                            args.SData.Name.Equals("TrundleCircle") ||
+                            args.SData.Name.Equals("TormentedSoil") ||
+                            args.SData.Name.Equals("SwainDecrepify") ||
+                            args.SData.Name.Equals("MissFortuneScattershot") ||
+                            args.SData.Name.Equals("OrianaDissonanceCommand"))
+                        {
+                            break;
+                        }
 
-                if (!sender.IsEnemy ||
-                    !(sender as Obj_AI_Hero).IsValidTarget())
-                {
-                    return;
-                }
+                        if (AutoAttack.IsAutoAttack(args.SData.Name))
+                        {
+                            if (!sender.IsMelee)
+                            {
+                                if (args.SData.Name.Contains("Card"))
+                                {
+                                    Vars.E.Cast();
+                                }
+                            }
+                            else
+                            {
+                                if (args.SData.Name.Equals("PowerFistAttack") ||
+                                    sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
+                                {
+                                    Vars.E.Cast();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            DelayAction.Add(
+                                sender.CharData.BaseSkinName.Equals("Zed")
+                                    ? 200
+                                    : sender.CharData.BaseSkinName.Equals("Caitlyn")
+                                        ? 1000
+                                        : sender.CharData.BaseSkinName.Equals("Nocturne") &&
+                                          args.SData.Name.Equals("NocturneUnspeakableHorror")
+                                            ? 500
+                                            : Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value,
+                            () =>
+                                {
+                                    Vars.E.Cast();
+                                }
+                            );
+                        }
+                        break;
 
-                /// <summary>
-                ///     Special check for the AutoAttacks.
-                /// </summary>
-                if (AutoAttack.IsAutoAttack(args.SData.Name))
-                {
-					if (!sender.IsMelee)
-					{
-						if (!args.SData.Name.Contains("Card"))
-						{
-							return;
-						}
-					}
-					else
-					{
-						if (sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
-						{
-							Vars.E.Cast();
-						}
-					}
+                    default:
+                        break;
                 }
-
-                /// <summary>
-                ///     Special check for the Located AoE skillshots.
-                /// </summary>
-                if (args.SData.TargettingType.Equals(SpellDataTargetType.LocationAoe))
-                {
-                    if (args.SData.Name.Equals("GangplankE") ||
-                        args.SData.Name.Equals("TrundleCircle") ||
-                        args.SData.Name.Equals("TormentedSoil") ||
-                        args.SData.Name.Equals("SwainDecrepify") ||
-                        args.SData.Name.Equals("MissFortuneScattershot"))
-                    {
-                        return;
-                    }
-                }
-
-                /// <summary>
-                ///     Special check for the on target-position AoE spells.
-                /// </summary>
-                if (args.SData.TargettingType.Equals(SpellDataTargetType.SelfAoe))
-                {
-                    if (!args.SData.Name.Equals("MockingShout"))
-                    {
-                        return;
-                    }
-                }
-            }
-
-            if (args.Target.IsMe &&
-                args.SData.TargettingType.Equals(SpellDataTargetType.Self))
-            {
-                /// <summary>
-                ///     If the sender is Zed and the processed arg is a Targetted spell (His Ultimate), delay the shieldcasting by 200ms.
-                /// </summary>
-                DelayAction.Add(
-                    sender.CharData.BaseSkinName.Equals("Zed")
-                        ? 200
-                        : sender.CharData.BaseSkinName.Equals("Caitlyn")
-                            ? 1000
-                            : sender.CharData.BaseSkinName.Equals("Nocturne") &&
-                              args.SData.Name.Equals("NocturneUnspeakableHorror")
-                                ? 500
-                                : Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value,
-                () =>
-					{
-						Vars.E.Cast();
-					}
-				);
-            }
-            else
-            {
-                DelayAction.Add(
-					Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value,
-				() =>
-					{
-						Vars.E.Cast();
-					}
-				);
             }
         }
     }
