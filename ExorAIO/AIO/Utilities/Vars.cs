@@ -87,6 +87,11 @@ namespace ExorAIO.Utilities
         /// </summary>
         public static SectorPoly JhinCone { internal get; set; } = new SectorPoly(GameObjects.Player.ServerPosition, Vars.End, 45, -4050, 1);
 
+        /// <returns>
+        ///     The Jhin's shot count.
+        /// </returns>
+        public static int ShotsCount { get; internal set; }
+
         /// <summary>
         ///     Gets or sets the Q Spell.
         /// </summary>
