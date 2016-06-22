@@ -46,8 +46,9 @@ namespace ExorAIO.Champions.Olaf
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:", true);
                 {
-                    Vars.EMenu.Add(new MenuBool("combo", "Combo", true));
-                    Vars.EMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Health >= x%", 25, 0, 99, true));
+                    Vars.EMenu.Add(new MenuBool("combo",   "Combo",   true));
+                    Vars.EMenu.Add(new MenuBool("lasthit", "LastHit", true));
+                    Vars.EMenu.Add(new MenuSliderButton("clear", "Clear / if Health >= x%", 25, 0, 99, true));
                 }
                 Vars.SpellsMenu.Add(Vars.EMenu);
 

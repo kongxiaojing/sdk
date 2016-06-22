@@ -50,7 +50,10 @@ namespace ExorAIO.Champions.Olaf
                     /// <summary>
                     ///     The Aggressive LaneClear Q Logic.
                     /// </summary>
-                    if (GameObjects.EnemyHeroes.Any(t => !Invulnerable.Check(t) && t.IsValidTarget(Vars.Q.Range)))
+                    if (GameObjects.EnemyHeroes.Any(
+                        t =>
+                            !Invulnerable.Check(t) &&
+                            t.IsValidTarget(Vars.Q.Range)))
                     {
                         if (Vars.Q.GetLineFarmLocation(Targets.Minions).MinionsHit >= 3 &&
                             !new Geometry.Rectangle(
@@ -97,6 +100,26 @@ namespace ExorAIO.Champions.Olaf
             {
                 Vars.W.Cast();
             }
+
+            /// <summary>
+            ///     The E LaneClear Logics.
+            /// </summary>
+            if (Vars.E.IsReady() &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
+            {
+                foreach (var minion in Targets.Minions.Any(
+                    m =>
+                        m.IsValidTarget(Vars.E.Range) &&
+                        Vars.GetRealHealth(m) <
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E)))
+                {
+                    if (minion.GetMinionType() == MinionTypes.Siege ||
+                        minion.GetMinionType() == MinionTypes.Super)
+                    {
+                        Vars.E.CastOnUnit(minion);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -117,8 +140,8 @@ namespace ExorAIO.Champions.Olaf
             /// </summary>
             if (Vars.E.IsReady() &&
                 GameObjects.Player.HealthPercent >
-                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["jungleclear"]) &&
-                Vars.Menu["spells"]["e"]["jungleclear"].GetValue<MenuSliderButton>().BValue)
+                    ManaManager.GetNeededMana(Vars.E.Slot, Vars.Menu["spells"]["e"]["clear"]) &&
+                Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
                 Vars.E.CastOnUnit(Targets.JungleMinions[0]);
             }
@@ -131,9 +154,9 @@ namespace ExorAIO.Champions.Olaf
         /// <param name="args">The args.</param>
         public static void BuildingClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
-                Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
-                Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+            if (!(Variables.Orbwalker.GetTarget() is Obj_HQ) &&
+                !(Variables.Orbwalker.GetTarget() is Obj_AI_Turret) &&
+                !(Variables.Orbwalker.GetTarget() is Obj_BarracksDampener))
             {
                 return;
             }

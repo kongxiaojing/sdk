@@ -102,7 +102,7 @@ namespace ExorAIO.Champions.Tristana
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void BuildingClear(EventArgs args)
         {
-            if (Variables.Orbwalker.GetTarget() as Obj_AI_Turret == null)
+            if (!(Variables.Orbwalker.GetTarget() is Obj_AI_Turret))
             {
                 return;
             }

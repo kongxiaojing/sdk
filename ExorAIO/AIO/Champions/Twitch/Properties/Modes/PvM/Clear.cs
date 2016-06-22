@@ -103,9 +103,9 @@ namespace ExorAIO.Champions.Twitch
         /// <param name="args">The args.</param>
         public static void BuildingClear(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
-                Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
-                Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+            if (!(Variables.Orbwalker.GetTarget() is Obj_HQ) &&
+                !(Variables.Orbwalker.GetTarget() is Obj_AI_Turret) &&
+                !(Variables.Orbwalker.GetTarget() is Obj_BarracksDampener))
             {
                 return;
             }
