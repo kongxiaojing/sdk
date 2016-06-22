@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.SDK.Enumerations;
 using SharpDX;
 using Geometry = ExorAIO.Utilities.Geometry;
 
@@ -107,7 +108,7 @@ namespace ExorAIO.Champions.Olaf
             if (Vars.E.IsReady() &&
                 Vars.Menu["spells"]["e"]["clear"].GetValue<MenuSliderButton>().BValue)
             {
-                foreach (var minion in Targets.Minions.Any(
+                foreach (var minion in Targets.Minions.Where(
                     m =>
                         m.IsValidTarget(Vars.E.Range) &&
                         Vars.GetRealHealth(m) <

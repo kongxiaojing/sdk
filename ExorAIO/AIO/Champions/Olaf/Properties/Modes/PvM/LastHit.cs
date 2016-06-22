@@ -5,6 +5,7 @@ using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.SDK.Enumerations;
 
 namespace ExorAIO.Champions.Olaf
 {
@@ -23,7 +24,7 @@ namespace ExorAIO.Champions.Olaf
             ///     The E LastHit Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                Vars.Menu["spells"]["e"]["lasthit"].GetValue<MenuBool>().BValue)
+                Vars.Menu["spells"]["e"]["lasthit"].GetValue<MenuBool>().Value)
             {
                 foreach (var minion in Targets.Minions.Where(
                     m =>
