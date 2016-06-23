@@ -112,7 +112,7 @@ namespace AsunaCondemn
                 !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 GameObjects.Player.Distance(args.End) >
 					GameObjects.Player.BoundingRadius &&
-                Vars.Menu["features"]["whitelist"][args.Sender.ChampionName.ToLower()].GetValue<MenuBool>().Value)
+                Vars.Menu["whitelist"][args.Sender.ChampionName.ToLower()].GetValue<MenuBool>().Value)
             {
                 for (var i = 1; i < 10; i++)
                 {
