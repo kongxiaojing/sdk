@@ -94,33 +94,27 @@ namespace ExorAIO.Champions.Kalista
         }
 
         /// <summary>
-        ///     Triggers when there is a valid unkillable minion around.
+        ///     Called on orbwalker action.
         /// </summary>
         /// <param name="sender">The object.</param>
         /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
-        public static void OnOrbwalkerAction(object sender, OrbwalkingActionArgs args)
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
         {
             switch (args.Type)
             {
                 case OrbwalkingType.NonKillableMinion:
-                    OnNonKillableMinion(args);
+                    if (Vars.E.IsReady() &&
+                        Bools.IsPerfectRendTarget(args.Target as Obj_AI_Minion) &&
+                        Vars.GetRealHealth(args.Target as Obj_AI_Minion) <
+                            (float)GameObjects.Player.GetSpellDamage(args.Target as Obj_AI_Minion, SpellSlot.E) +
+                            (float)GameObjects.Player.GetSpellDamage(args.Target as Obj_AI_Minion, SpellSlot.E, DamageStage.Buff))
+                    {
+                        Vars.E.Cast();
+                    }
                     break;
-            }
-        }
 
-        /// <summary>
-        ///     Triggers when there is a valid unkillable minion around.
-        /// </summary>
-        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
-        public static void OnNonKillableMinion(OrbwalkingActionArgs args)
-        {
-            if (Vars.E.IsReady() &&
-                Bools.IsPerfectRendTarget(args.Target as Obj_AI_Minion) &&
-                (args.Target as Obj_AI_Minion).Health <
-                    (float)GameObjects.Player.GetSpellDamage(args.Target as Obj_AI_Minion, SpellSlot.E) +
-                    (float)GameObjects.Player.GetSpellDamage(args.Target as Obj_AI_Minion, SpellSlot.E, DamageStage.Buff))
-            {
-                Vars.E.Cast();
+                default:
+                    break;
             }
         }
     }

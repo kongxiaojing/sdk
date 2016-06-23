@@ -56,6 +56,15 @@ namespace ExorAIO.Champions.Twitch
             Vars.Menu.Add(Vars.SpellsMenu);
 
             /// <summary>
+            ///     Sets the miscellaneous menu.
+            /// </summary>
+            Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
+            {
+                Vars.MiscMenu.Add(new MenuSlider("stealthtime", "Stay in stealth-mode for at least x (ms) [1000 ms = 1 second]", 0, 0, 8000));
+            }
+            Vars.Menu.Add(Vars.MiscMenu);
+
+            /// <summary>
             ///     Sets the drawings menu.
             /// </summary>
             Vars.DrawingsMenu = new Menu("drawings", "Drawings");

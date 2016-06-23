@@ -17,6 +17,7 @@ namespace ExorAIO.Champions.Vayne
             Obj_AI_Base.OnDoCast += Vayne.OnDoCast;
             Events.OnGapCloser += Vayne.OnGapCloser;
             Events.OnInterruptableTarget += Vayne.OnInterruptableTarget;
+            Variables.Orbwalker.OnAction += Vayne.OnAction;
         }
     }
 }

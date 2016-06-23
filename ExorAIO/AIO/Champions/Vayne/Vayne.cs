@@ -182,5 +182,32 @@ namespace ExorAIO.Champions.Vayne
                 Vars.E.CastOnUnit(args.Sender);
             }
         }
+
+        /// <summary>
+        ///     Called on orbwalker action.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
+        {
+            switch (args.Type)
+            {
+                case OrbwalkingType.BeforeAttack:
+                    if (!GameObjects.Player.IsUnderEnemyTurret() &&
+                        GameObjects.Player.GetBuff("vaynetumblefade") != null)
+                    {
+                        if (GameObjects.Player.GetBuff("vaynetumblefade").EndTime - Game.Time >
+                            GameObjects.Player.GetBuff("vaynetumblefade").EndTime - GameObjects.Player.GetBuff("vaynetumblefade").StartTime -
+                            Vars.Menu["miscellaneous"]["stealthtime"].GetValue<MenuSlider>().Value)
+                        {
+                            args.Process = false;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }

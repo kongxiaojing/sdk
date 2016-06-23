@@ -14,7 +14,7 @@ namespace ExorAIO.Champions.Kalista
         public static void Initialize()
         {
             Game.OnUpdate += Kalista.OnUpdate;
-            Variables.Orbwalker.OnAction += Kalista.OnOrbwalkerAction;
+            Variables.Orbwalker.OnAction += Kalista.OnAction;
         }
     }
 }
