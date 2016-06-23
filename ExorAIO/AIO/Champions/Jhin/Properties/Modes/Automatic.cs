@@ -26,23 +26,8 @@ namespace ExorAIO.Champions.Jhin
             Variables.Orbwalker.SetAttackState(!Vars.R.Instance.Name.Equals("JhinRShot"));
             Variables.Orbwalker.SetMovementState(!Vars.R.Instance.Name.Equals("JhinRShot"));
 
-            if (GameObjects.Player.IsRecalling())
-            {
-                return;
-            }
-
-            /*
-            /// <summary>
-            ///     The Automatic R Logic.
-            /// </summary>
-            if (!Targets.Target.IsValidTarget() &&
+            if (GameObjects.Player.IsRecalling() ||
                 Vars.R.Instance.Name.Equals("JhinRShot"))
-            {
-                GameObjects.Player.IssueOrder(GameObjectOrder.MoveTo, GameObjects.Player.ServerPosition);
-            }
-            */
-
-            if (Vars.R.Instance.Name.Equals("JhinRShot"))
             {
                 return;
             }

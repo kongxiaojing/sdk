@@ -80,17 +80,17 @@ namespace ExorAIO.Utilities
         /// <summary>
         ///     The args End.
         /// </summary>
-        public static Vector3 End { internal get; set; } = Vector3.Zero;
-
-        /// <summary>
-        ///     The args End.
-        /// </summary>
-        public static SectorPoly JhinCone { internal get; set; } = new SectorPoly(GameObjects.Player.ServerPosition, Vars.End, 45, -4050, 1);
+        public static Vector3 End { get; set; } = Vector3.Zero;
 
         /// <returns>
         ///     The Jhin's shot count.
         /// </returns>
         public static int ShotsCount { get; internal set; }
+
+        /// <summary>
+        ///     The args End.
+        /// </summary>
+        public static SectorPoly Cone => new SectorPoly(GameObjects.Player.ServerPosition, Vars.End, 45, -4050, 1);
 
         /// <summary>
         ///     Gets or sets the Q Spell.

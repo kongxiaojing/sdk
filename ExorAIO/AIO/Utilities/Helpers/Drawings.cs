@@ -1,8 +1,11 @@
+using System.Linq;
 using System.Drawing;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using SharpDX;
+using Color = System.Drawing.Color;
 
 namespace ExorAIO.Utilities
 {
@@ -18,6 +21,12 @@ namespace ExorAIO.Utilities
         {
             Drawing.OnDraw += delegate
             {
+                if (Vars.End != Vector3.Zero &&
+                    Vars.R.Instance.Name.Equals("JhinRShot"))
+                {
+                    Vars.Cone.Draw(GameObjects.EnemyHeroes.Any(t => Vars.Cone.IsInside(t)) ? Color.Green : Color.Red, 1);
+                }
+
                 /// <summary>
                 ///     Loads the Q drawing,
                 ///     Loads the Extended Q drawing.
