@@ -55,7 +55,7 @@ namespace ExorAIO.Champions.Ezreal
                         t =>
                             t.IsValidTarget(2000f) &&
                             Bools.IsImmobile(Targets.Target) &&
-                            !Invulnerable.Check(Targets.Target)
+                            !Invulnerable.Check(Targets.Target) &&
                             Vars.Menu["spells"]["r"]["whitelist2"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
