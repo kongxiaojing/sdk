@@ -43,8 +43,7 @@ namespace ExorAIO.Champions.Vayne
             {
                 Variables.Orbwalker.SetAttackState(
                     !GameObjects.Player.HasBuff("summonerexhaust") ||
-                    !GameObjects.Player.HasBuffOfType(BuffType.Blind) ||
-                    !Vars.Menu["miscellaneous"]["stealth"].GetValue<MenuBool>().Value);
+                    !GameObjects.Player.HasBuffOfType(BuffType.Blind));
             }
 
             /// <summary>
