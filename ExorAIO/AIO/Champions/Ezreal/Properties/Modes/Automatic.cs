@@ -36,12 +36,14 @@ namespace ExorAIO.Champions.Ezreal
                 foreach (var minion in Targets.Minions.Where(
                     m =>
                         !m.IsValidTarget(Vars.AARange) &&
-                        Vars.GetRealHealth(m) > GameObjects.Player.GetAutoAttackDamage(m) &&
-                        Vars.GetRealHealth(m) < (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).OrderBy(
-                            o =>
-                                o.MaxHealth))
+                        Vars.GetRealHealth(m) >
+                            GameObjects.Player.GetAutoAttackDamage(m) &&
+                        Vars.GetRealHealth(m) <
+                            (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.Q)).OrderBy(
+                                o =>
+                                    o.MaxHealth))
                 {
-                    if (!Vars.Q.GetPrediction(minion).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                    if (!Vars.Q.GetPrediction(minion).CollisionObjects.Any())
                     {
                         Vars.Q.Cast(Vars.Q.GetPrediction(minion).UnitPosition);
                     }
@@ -63,7 +65,8 @@ namespace ExorAIO.Champions.Ezreal
                 Vars.Q.Cast(Game.CursorPos);
             }
 
-            if (GameObjects.Player.TotalMagicalDamage > GameObjects.Player.TotalAttackDamage)
+            if (GameObjects.Player.TotalAttackDamage <
+                GameObjects.Player.TotalMagicalDamage)
             {
                 return;
             }
@@ -74,16 +77,16 @@ namespace ExorAIO.Champions.Ezreal
             switch (Variables.Orbwalker.ActiveMode)
             {
                 case OrbwalkingMode.Combo:
-                    if (Variables.Orbwalker.GetTarget() as Obj_AI_Hero == null)
+                    if (!(Variables.Orbwalker.GetTarget() is Obj_AI_Hero))
                     {
                         return;
                     }
                     break;
 
                 case OrbwalkingMode.LaneClear:
-                    if (Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
-                        Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
-                        Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+                    if (!(Variables.Orbwalker.GetTarget() is Obj_HQ) &&
+                        !(Variables.Orbwalker.GetTarget() is Obj_AI_Turret) &&
+                        !(Variables.Orbwalker.GetTarget() is Obj_BarracksDampener))
                     {
                         return;
                     }
@@ -91,10 +94,10 @@ namespace ExorAIO.Champions.Ezreal
 
                 default:
                     if (!GameObjects.Jungle.Contains(Variables.Orbwalker.GetTarget()) &&
-                        Variables.Orbwalker.GetTarget() as Obj_HQ == null &&
-                        Variables.Orbwalker.GetTarget() as Obj_AI_Hero == null &&
-                        Variables.Orbwalker.GetTarget() as Obj_AI_Turret  == null &&
-                        Variables.Orbwalker.GetTarget() as Obj_BarracksDampener == null)
+                        !(Variables.Orbwalker.GetTarget() is Obj_HQ) &&
+                        !(Variables.Orbwalker.GetTarget() is Obj_AI_Hero) &&
+                        !(Variables.Orbwalker.GetTarget() is Obj_AI_Turret) &&
+                        !(Variables.Orbwalker.GetTarget() is Obj_BarracksDampener))
                     {
                         return;
                     }

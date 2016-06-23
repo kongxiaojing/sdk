@@ -55,7 +55,6 @@ namespace ExorAIO.Champions.KogMaw
             if (Vars.E.IsReady() &&
                 !Vars.W.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.E.Range - 100f) &&
-                !GameObjects.Player.HasBuff("KogMawBioArcaneBarrage") &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).UnitPosition);

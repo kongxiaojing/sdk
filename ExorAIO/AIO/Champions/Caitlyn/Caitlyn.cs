@@ -95,25 +95,35 @@ namespace ExorAIO.Champions.Caitlyn
         /// <param name="args">The args.</param>
         public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender.IsMe &&
-                Variables.Orbwalker.ActiveMode == OrbwalkingMode.Combo)
+            if (sender.IsMe)
             {
-                switch (args.SData.Name)
+                /// <summary>
+                ///     Initializes the orbwalkingmodes.
+                /// </summary>
+                switch (Variables.Orbwalker.ActiveMode)
                 {
-                    case "CaitlynEntrapment":
-                    case "CaitlynEntrapmentMissile":
-                        if (Vars.W.IsReady() &&
-                            Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
+                    case OrbwalkingMode.Combo:
+                        switch (args.SData.Name)
                         {
-                            Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
-                        }
-                        break;
+                            case "CaitlynEntrapment":
+                            case "CaitlynEntrapmentMissile":
+                                if (Vars.W.IsReady() &&
+                                    Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
+                                {
+                                    Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).CastPosition);
+                                }
+                                break;
 
-                    case "CaitlynYordleTrap":
-                        if (Vars.Q.IsReady() &&
-                            Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
-                        {
-                            Vars.Q.Cast(Targets.Target.ServerPosition);
+                            case "CaitlynYordleTrap":
+                                if (Vars.Q.IsReady() &&
+                                    Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
+                                {
+                                    Vars.Q.Cast(Targets.Target.ServerPosition);
+                                }
+                                break;
+
+                            default:
+                                break;
                         }
                         break;
 

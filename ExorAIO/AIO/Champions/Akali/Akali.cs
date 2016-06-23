@@ -2,6 +2,7 @@ using System;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
+using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.Utils;
 
@@ -93,8 +94,7 @@ namespace ExorAIO.Champions.Akali
         /// <param name="args">The args.</param>
         public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender.IsMe &&
-                AutoAttack.IsAutoAttack(args.SData.Name))
+            if (sender.IsMe)
             {
                 /// <summary>
                 ///     Initializes the orbwalkingmodes.
@@ -102,8 +102,35 @@ namespace ExorAIO.Champions.Akali
                 switch (Variables.Orbwalker.ActiveMode)
                 {
                     case OrbwalkingMode.Combo:
-                        Logics.Weaving(sender, args);
-                        break;
+                        if (AutoAttack.IsAutoAttack(args.SData.Name))
+                        {
+                            Logics.Weaving(sender, args);
+                            break;
+                        }
+                        else
+                        {
+                            switch (args.SData.Name)
+                            {
+                                case "AkaliMota":
+                                    if (Vars.R.IsReady() &&
+                                        Targets.Target.IsValidTarget(Vars.R.Range) &&
+                                        !Targets.Target.IsValidTarget(Vars.AARange) &&
+                                        Vars.Menu["spells"]["r"]["combo"].GetValue<MenuBool>().Value &&
+                                        Vars.Menu["spells"]["r"]["whitelist"][Targets.Target.ChampionName.ToLower()].GetValue<MenuBool>().Value)
+                                    {
+                                        if (!Targets.Target.IsUnderEnemyTurret() ||
+                                            !Vars.Menu["miscellaneous"]["safe"].GetValue<MenuBool>().Value)
+                                        {
+                                            Vars.R.CastOnUnit(Targets.Target);
+                                        }
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            break;
+                        }
 
                     case OrbwalkingMode.LaneClear:
                         Logics.JungleClear(sender, args);
