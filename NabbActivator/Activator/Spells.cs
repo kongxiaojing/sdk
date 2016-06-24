@@ -127,6 +127,46 @@ namespace NabbActivator
                 }
 
                 /// <summary>
+                ///     The Jungle Smite Logic.
+                /// </summary>
+                foreach (var minion in Targets.JungleMinions.Where(
+                    m =>
+                        m.IsValidTarget(Vars.Smite.Range)))
+                {
+                    if (minion.Health > GameObjects.Player.GetBuffCount(GameObjects.Player.Buffs.FirstOrDefault(
+                        b =>
+                            b.Name.ToLower().Contains("smitedamagetracker")).Name))
+                    {
+                        return;
+                    }
+
+                    if (Vars.Menu["smite"]["misc"]["limit"].GetValue<MenuBool>().Value)
+                    {
+                        if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
+                            !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
+                            !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
+                        {
+                            return;
+                        }
+                    }
+
+                    if (Vars.Menu["smite"]["misc"]["stacks"].GetValue<MenuBool>().Value)
+                    {
+                        if (GameObjects.Player.Spellbook.GetSpell(Vars.Smite.Slot).Ammo == 1)
+                        {
+                            if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
+                                !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
+                                !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
+                            {
+                                return;
+                            }
+                        }
+                    }
+
+                    Vars.Smite.CastOnUnit(minion);
+                }
+
+                /// <summary>
                 ///     The Combo Smite Logic.
                 /// </summary>
                 if (Vars.Menu["smite"]["misc"]["combo"].GetValue<MenuBool>().Value)
@@ -167,47 +207,6 @@ namespace NabbActivator
                             }
                         }
                     }
-                }
-
-                /// <summary>
-                ///     The Jungle Smite Logic.
-                /// </summary>
-                foreach (var minion in Targets.JungleMinions.Where(
-                    m =>
-                        m.IsValidTarget(Vars.Smite.Range)))
-                        //Vars.Menu["smite"]["whitelist"][m.CharData.BaseSkinName.ToLower()].GetValue<MenuBool>().Value))
-                {
-                    if (minion.Health > GameObjects.Player.GetBuffCount(GameObjects.Player.Buffs.FirstOrDefault(
-                        b =>
-                            b.Name.ToLower().Contains("smitedamagetracker")).Name))
-                    {
-                        return;
-                    }
-
-                    if (Vars.Menu["smite"]["misc"]["limit"].GetValue<MenuBool>().Value)
-                    {
-                        if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
-                            !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
-                        {
-                            return;
-                        }
-                    }
-
-                    if (Vars.Menu["smite"]["misc"]["stacks"].GetValue<MenuBool>().Value)
-                    {
-                        if (GameObjects.Player.Spellbook.GetSpell(Vars.Smite.Slot).Ammo == 1)
-                        {
-                            if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
-                                !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
-                            {
-                                return;
-                            }
-                        }
-                    }
-
-                    Vars.Smite.CastOnUnit(minion);
                 }
             }
 
