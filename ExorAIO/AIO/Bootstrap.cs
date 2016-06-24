@@ -19,6 +19,7 @@ using ExorAIO.Champions.Karma;
 using ExorAIO.Champions.KogMaw;
 using ExorAIO.Champions.Lucian;
 using ExorAIO.Champions.Lux;
+using ExorAIO.Champions.MissFortune;
 using ExorAIO.Champions.Nautilus;
 using ExorAIO.Champions.Nunu;
 using ExorAIO.Champions.Olaf;
@@ -114,6 +115,9 @@ namespace ExorAIO.Core
                     break;
                 case "Lux":
                     new Lux().OnLoad();
+                    break;
+                case "MissFortune":
+                    new MissFortune().OnLoad();
                     break;
                 case "Nautilus":
                     new Nautilus().OnLoad();

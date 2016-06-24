@@ -8,7 +8,7 @@ using LeagueSharp.SDK.Utils;
 using SharpDX;
 using Geometry = ExorAIO.Utilities.Geometry;
 
-namespace ExorAIO.Champions.Lucian
+namespace ExorAIO.Champions.MissFortune
 {
     /// <summary>
     ///     The logics class.
@@ -65,10 +65,10 @@ namespace ExorAIO.Champions.Lucian
                         in from minion
                         in Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range))
 
-                        let polygon = new Geometry.Rectangle(
-                            GameObjects.Player.ServerPosition,
-                            GameObjects.Player.ServerPosition.Extend(minion.ServerPosition, Vars.Q2.Range-50f),
-                            Vars.Q2.Width)
+                        let polygon = new Geometry.Sector(
+                            (Vector2)minion.ServerPosition,
+                            (Vector2)minion.ServerPosition.Extend(GameObjects.Player.ServerPosition, -(Vars.Q2.Range - Vars.Q.Range)),
+                            40f * (float)Math.PI / 180f, 450f)
 
                         where !polygon.IsOutside(
                             (Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
@@ -77,7 +77,7 @@ namespace ExorAIO.Champions.Lucian
                                 !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
                                 Vars.GetRealHealth(t) <
-                                    (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q))).UnitPosition)
+                                    (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q))).CastPosition)
 
                         select minion)
                     {
@@ -94,10 +94,10 @@ namespace ExorAIO.Champions.Lucian
                                 !Invulnerable.Check(t) &&
                                 t.IsValidTarget(Vars.Q.Range))
 
-                        let polygon = new Geometry.Rectangle(
-                            GameObjects.Player.ServerPosition,
-                            GameObjects.Player.ServerPosition.Extend(target.ServerPosition, Vars.Q2.Range-50f),
-                            Vars.Q2.Width)
+                        let polygon = new Geometry.Sector(
+                            (Vector2)target.ServerPosition,
+                            (Vector2)target.ServerPosition.Extend(GameObjects.Player.ServerPosition, -(Vars.Q2.Range - Vars.Q.Range)),
+                            40f * (float)Math.PI / 180f, 450f)
 
                         where !polygon.IsOutside(
                             (Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
@@ -106,32 +106,11 @@ namespace ExorAIO.Champions.Lucian
                                 !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
                                 Vars.GetRealHealth(t) <
-                                    (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q))).UnitPosition)
+                                    (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q))).CastPosition)
 
                         select target)
                     {
                         Vars.Q.CastOnUnit(target);
-                    }
-                }
-            }
-
-            /// <summary>
-            ///     The KillSteal W Logic.
-            /// </summary>
-            if (Vars.W.IsReady() &&
-                Vars.Menu["spells"]["w"]["killsteal"].GetValue<MenuBool>().Value)
-            {
-                foreach (var target in GameObjects.EnemyHeroes.Where(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.W.Range) &&
-                        !t.IsValidTarget(Vars.Q.Range) &&
-                        Vars.GetRealHealth(t) <
-                            (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
-                {
-                    if (!Vars.W.GetPrediction(target).CollisionObjects.Any())
-                    {
-                        Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                     }
                 }
             }

@@ -29,6 +29,16 @@ namespace ExorAIO.Utilities
     /// </summary>
     public static class Geometry
     {
+        /// <summary>
+        /// Converts a Vector3 to Vector2
+        /// </summary>
+        /// <param name="v">The v.</param>
+        /// <returns></returns>
+        public static Vector2 To2D(this Vector3 v)
+        {
+            return new Vector2(v.X, v.Y);
+        }
+
         private const int CircleLineSegmentN = 22;
 
         public static bool IsOutside(this Vector3 point, Polygon poly)
@@ -186,6 +196,7 @@ namespace ExorAIO.Utilities
                     Util.DrawLineInWorld(Points[i].ToVector3(), Points[nextIndex].ToVector3(), width, color);
                 }
             }
+            
         }
 
         /// <summary>
@@ -310,33 +321,103 @@ namespace ExorAIO.Utilities
             }
         }
 
-        public class Sector
+        /// <summary>
+        /// Represnets a sector polygon.
+        /// </summary>
+        public class Sector : Polygon
         {
+            /// <summary>
+            /// The angle
+            /// </summary>
             public float Angle;
+
+            /// <summary>
+            /// The center
+            /// </summary>
             public Vector2 Center;
+
+            /// <summary>
+            /// The direction
+            /// </summary>
             public Vector2 Direction;
+
+            /// <summary>
+            /// The radius
+            /// </summary>
             public float Radius;
 
-            public Sector(Vector2 center, Vector2 direction, float angle, float radius)
+            /// <summary>
+            /// The quality
+            /// </summary>
+            private readonly int _quality;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Polygon.Sector"/> class.
+            /// </summary>
+            /// <param name="center">The center.</param>
+            /// <param name="direction">The direction.</param>
+            /// <param name="angle">The angle.</param>
+            /// <param name="radius">The radius.</param>
+            /// <param name="quality">The quality.</param>
+            public Sector(Vector3 center, Vector3 direction, float angle, float radius, int quality = 20)
+                : this(center.To2D(), direction.To2D(), angle, radius, quality) {}
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Polygon.Sector"/> class.
+            /// </summary>
+            /// <param name="center">The center.</param>
+            /// <param name="direction">The direction.</param>
+            /// <param name="angle">The angle.</param>
+            /// <param name="radius">The radius.</param>
+            /// <param name="quality">The quality.</param>
+            public Sector(Vector2 center, Vector2 direction, float angle, float radius, int quality = 20)
             {
                 Center = center;
-                Direction = direction;
+                Direction = (direction - center).Normalized();
                 Angle = angle;
                 Radius = radius;
+                _quality = quality;
+                UpdatePolygon();
             }
 
-            public Polygon ToPolygon(int offset = 0)
+            /// <summary>
+            /// Updates the polygon.
+            /// </summary>
+            /// <param name="offset">The offset.</param>
+            public void UpdatePolygon(int offset = 0)
             {
-                var result = new Polygon();
-                var outRadius = (Radius + offset) / (float) Math.Cos(2 * Math.PI / CircleLineSegmentN);
-                result.Add(Center);
-                var Side1 = Direction.Rotated(-Angle * 0.5f);
-                for (var i = 0; i <= CircleLineSegmentN; i++)
+                Points.Clear();
+                var outRadius = (Radius + offset) / (float)Math.Cos(2 * Math.PI / _quality);
+                Points.Add(Center);
+                var side1 = Direction.Rotated(-Angle * 0.5f);
+                for (var i = 0; i <= _quality; i++)
                 {
-                    var cDirection = Side1.Rotated(i * Angle / CircleLineSegmentN).Normalized();
-                    result.Add(new Vector2(Center.X + outRadius * cDirection.X, Center.Y + outRadius * cDirection.Y));
+                    var cDirection = side1.Rotated(i * Angle / _quality).Normalized();
+                    Points.Add(new Vector2(Center.X + outRadius * cDirection.X, Center.Y + outRadius * cDirection.Y));
                 }
-                return result;
+            }
+
+
+            /// <summary>
+            /// Rotates Line by angle/radian
+            /// </summary>
+            /// <param name="point1"></param>
+            /// <param name="point2"></param>
+            /// <param name="value"></param>
+            /// <param name="radian">True for radian values, false for degree</param>
+            /// <returns></returns>
+            public Vector2 RotateLineFromPoint(Vector2 point1, Vector2 point2, float value, bool radian = true)
+            {
+                var angle = !radian ? value * Math.PI / 180 : value;
+                var line = Vector2.Subtract(point2, point1);
+
+                var newline = new Vector2
+                {
+                    X = (float)(line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)),
+                    Y = (float)(line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))
+                };
+
+                return Vector2.Add(newline, point1);
             }
         }
     }

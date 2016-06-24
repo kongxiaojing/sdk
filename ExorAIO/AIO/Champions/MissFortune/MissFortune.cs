@@ -3,19 +3,18 @@ using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
-using LeagueSharp.SDK.Utils;
 using LeagueSharp.SDK.UI;
-using LeagueSharp.Data.Enumerations;
+using LeagueSharp.SDK.Utils;
 
-namespace ExorAIO.Champions.Lucian
+namespace ExorAIO.Champions.MissFortune
 {
     /// <summary>
     ///     The champion class.
     /// </summary>
-    internal class Lucian
+    internal class MissFortune
     {
         /// <summary>
-        ///     Loads Lucian.
+        ///     Loads Miss Fortune.
         /// </summary>
         public void OnLoad()
         {
@@ -38,6 +37,11 @@ namespace ExorAIO.Champions.Lucian
             ///     Initializes the drawings.
             /// </summary>
             Drawings.Initialize();
+
+            /// <summary>
+            ///     Initializes the cone drawings.
+            /// </summary>
+            ConeDrawings.Initialize();
         }
 
         /// <summary>
@@ -56,12 +60,11 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             Logics.Automatic(args);
 
-            if (GameObjects.Player.HasBuff("LucianR") ||
-				GameObjects.Player.HasBuff("LucianPassiveBuff"))
+            if (GameObjects.Player.HasBuff("missfortunebulletsound"))
             {
                 return;
             }
-            
+
             /// <summary>
             ///     Initializes the Killsteal events.
             /// </summary>
@@ -81,12 +84,12 @@ namespace ExorAIO.Champions.Lucian
                     Logics.Combo(args);
                     break;
 
-                case OrbwalkingMode.LaneClear:
-                    Logics.Clear(args);
-                    break;
-
                 case OrbwalkingMode.Hybrid:
                     Logics.Harass(args);
+                    break;
+
+                case OrbwalkingMode.LaneClear:
+                    Logics.Clear(args);
                     break;
 
                 default:
@@ -102,7 +105,6 @@ namespace ExorAIO.Champions.Lucian
         public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (sender.IsMe &&
-                !GameObjects.Player.HasBuff("LucianR") &&
                 AutoAttack.IsAutoAttack(args.SData.Name))
             {
                 /// <summary>
@@ -126,24 +128,6 @@ namespace ExorAIO.Champions.Lucian
         }
 
         /// <summary>
-        ///     Celled on animation trigger.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="GameObjectPlayAnimationEventArgs" /> instance containing the event data.</param>
-        public static void OnPlayAnimation(Obj_AI_Base sender, GameObjectPlayAnimationEventArgs args)
-        {
-            if (sender.IsMe &&
-                Variables.Orbwalker.ActiveMode != OrbwalkingMode.None)
-            {
-                if (args.Animation.Equals("Spell1") ||
-                    args.Animation.Equals("Spell2"))
-                {
-                    GameObjects.Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
-                }
-            }
-        }
-
-        /// <summary>
         ///     Fired on an incoming gapcloser.
         /// </summary>
         /// <param name="sender">The object.</param>
@@ -151,14 +135,11 @@ namespace ExorAIO.Champions.Lucian
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (Vars.E.IsReady() &&
-                args.Sender.IsMelee &&
                 args.Sender.IsValidTarget(Vars.E.Range) &&
-                args.SkillType == GapcloserType.Targeted &&
-                GameObjects.Player.Distance(args.End) <
-                    args.Sender.GetRealAutoAttackRange(args.Sender) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
-                Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, -(Vars.E.Range - Vars.AARange)));
+                Vars.E.Cast(args.End);
             }
         }
     }
