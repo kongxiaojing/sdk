@@ -33,7 +33,7 @@ namespace ExorAIO.Champions.Jinx
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.W)))
                 {
-                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                    if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any())
                     {
                         Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                         return;
@@ -57,7 +57,7 @@ namespace ExorAIO.Champions.Jinx
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {
-                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any(c => c is Obj_AI_Hero))
+                    if (!Vars.R.GetPrediction(target).CollisionObjects.Any())
                     {
                         Vars.R.Cast(Vars.R.GetPrediction(target).UnitPosition);
                     }

@@ -35,7 +35,7 @@ namespace ExorAIO.Champions.Jinx
                     ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["harass"]) &&
                 Vars.Menu["spells"]["w"]["harass"].GetValue<MenuSliderButton>().BValue)
             {
-                if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                if (!Vars.W.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
                 }
