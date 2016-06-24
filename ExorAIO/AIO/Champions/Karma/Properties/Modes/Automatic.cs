@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -19,10 +20,18 @@ namespace ExorAIO.Champions.Karma
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Automatic(EventArgs args)
         {
+            if (GameObjects.Player.IsRecalling())
+            {
+                return;
+            }
+
             /// <summary>
             ///     The Support Mode Option.
             /// </summary>
-            if (Vars.Menu["miscellaneous"]["support"].GetValue<MenuBool>().Value)
+            if (Variables.Orbwalker.GetTarget() != null &&
+                Variables.Orbwalker.GetTarget() is Obj_AI_Minion &&
+                GameObjects.AllyHeroes.Any(a => a.Distance(GameObjects.Player) < 2500) &&
+                Vars.Menu["miscellaneous"]["support"].GetValue<MenuBool>().Value)
             {
                 Variables.Orbwalker.SetAttackState(
                     Variables.Orbwalker.ActiveMode != OrbwalkingMode.Hybrid &&

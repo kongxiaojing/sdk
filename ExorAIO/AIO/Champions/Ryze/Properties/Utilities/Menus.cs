@@ -75,6 +75,8 @@ namespace ExorAIO.Champions.Ryze
                 Vars.MiscMenu.Add(new MenuSliderButton("tear",   "Stack Tear / if Mana >= x%", 75, 1, 95, true));
                 Vars.MiscMenu.Add(new MenuSliderButton("stacks", "Keep Passive Stacks:",        1, 1,  4, true));
                 Vars.MiscMenu.Add(new MenuSlider("stacksmana", "Keep Passive Stacks If Mana >= x%", 50, 1, 99));
+                Vars.MiscMenu.Add(new MenuSeparator("separator", "The Support mode doesn't attack or throw spells to minions if there are allies nearby."));
+                Vars.MiscMenu.Add(new MenuBool("support",   "Support Mode"));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

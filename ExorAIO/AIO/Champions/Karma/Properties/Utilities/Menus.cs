@@ -88,7 +88,8 @@ namespace ExorAIO.Champions.Karma
             /// </summary>
             Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
             {
-                Vars.MiscMenu.Add(new MenuBool("support", "Support Mode", true));
+                Vars.MiscMenu.Add(new MenuSeparator("separator", "The Support mode doesn't attack or throw spells to minions if there are allies nearby."));
+                Vars.MiscMenu.Add(new MenuBool("support",   "Support Mode"));
             }
             Vars.Menu.Add(Vars.MiscMenu);
 

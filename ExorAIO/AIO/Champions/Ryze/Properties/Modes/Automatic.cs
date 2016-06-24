@@ -25,6 +25,19 @@ namespace ExorAIO.Champions.Ryze
             }
 
             /// <summary>
+            ///     The Support Mode Option.
+            /// </summary>
+            if (Variables.Orbwalker.GetTarget() != null &&
+                Variables.Orbwalker.GetTarget() is Obj_AI_Minion &&
+                GameObjects.AllyHeroes.Any(a => a.Distance(GameObjects.Player) < 2500) &&
+                Vars.Menu["miscellaneous"]["support"].GetValue<MenuBool>().Value)
+            {
+                Variables.Orbwalker.SetAttackState(
+                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.Hybrid &&
+                    Variables.Orbwalker.ActiveMode != OrbwalkingMode.LaneClear);
+            }
+
+            /// <summary>
             ///     The No AA while in Combo option.
             /// </summary>
             if (Vars.Menu["miscellaneous"]["noaa"].GetValue<MenuBool>().Value)
