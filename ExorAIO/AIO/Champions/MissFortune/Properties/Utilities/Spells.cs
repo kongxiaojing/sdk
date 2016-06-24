@@ -22,6 +22,7 @@ namespace ExorAIO.Champions.MissFortune
             Vars.E = new Spell(SpellSlot.E, 1000f);
             Vars.R = new Spell(SpellSlot.R, 1400f);
 
+            Vars.Q.SetTargetted(0.25f, 1400f);
             Vars.E.SetSkillshot(0.5f, 200f, 1600f, false, SkillshotType.SkillshotCircle);
         }
     }

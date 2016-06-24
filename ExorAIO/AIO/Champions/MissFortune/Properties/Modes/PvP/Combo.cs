@@ -79,15 +79,31 @@ namespace ExorAIO.Champions.MissFortune
                     let polygon = new Geometry.Sector(
                         (Vector2)minion.ServerPosition,
                         (Vector2)minion.ServerPosition.Extend(GameObjects.Player.ServerPosition, -(Vars.Q2.Range - Vars.Q.Range)),
-                        40f * (float)Math.PI / 180f, 450f)
+                        40f * (float)Math.PI / 180f,
+                        -(Vars.Q2.Range - Vars.Q.Range))
 
-                    where !polygon.IsOutside(
-                        (Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                    where
+                        !polygon.IsOutside((Vector2)GameObjects.EnemyHeroes.FirstOrDefault(
                         t =>
                             !Invulnerable.Check(t) &&
                             !t.IsValidTarget(Vars.Q.Range) &&
-                            t.IsValidTarget(Vars.Q2.Range-50f))).CastPosition)
-
+                            t.IsValidTarget(Vars.Q2.Range-50f) &&
+                            Vars.GetRealHealth(t) <
+                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)).ServerPosition) &&
+                        !polygon.IsOutside((Vector2)Movement.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                        t =>
+                            !Invulnerable.Check(t) &&
+                            !t.IsValidTarget(Vars.Q.Range) &&
+                            t.IsValidTarget(Vars.Q2.Range-50f) &&
+                            Vars.GetRealHealth(t) <
+                                (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)),
+                                GameObjects.Player.ServerPosition.Distance(GameObjects.EnemyHeroes.FirstOrDefault(
+                                t =>
+                                    !Invulnerable.Check(t) &&
+                                    !t.IsValidTarget(Vars.Q.Range) &&
+                                    t.IsValidTarget(Vars.Q2.Range-50f) &&
+                                    Vars.GetRealHealth(t) <
+                                        (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.Q)).ServerPosition) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
                     select minion)
                 {
                     Vars.Q.CastOnUnit(minion);
