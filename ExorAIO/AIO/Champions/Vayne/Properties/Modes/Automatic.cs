@@ -20,6 +20,11 @@ namespace ExorAIO.Champions.Vayne
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Automatic(EventArgs args)
         {
+            if (GameObjects.Player.IsRecalling())
+            {
+                return;
+            }
+
             /// <summary>
             ///     The Focus Logic (W Stacks).
             /// </summary>
@@ -31,18 +36,13 @@ namespace ExorAIO.Champions.Vayne
                 Variables.Orbwalker.ForceTarget = target;
             }
 
-            if (GameObjects.Player.IsRecalling())
-            {
-                return;
-            }
-
             /// <summary>
             ///     The Automatic Stealth Logic.
             /// </summary>
             if (GameObjects.Player.HasBuff("vaynetumblefade"))
             {
                 Variables.Orbwalker.SetAttackState(
-                    !GameObjects.Player.HasBuff("summonerexhaust") ||
+                    !GameObjects.Player.HasBuff("summonerexhaust") &&
                     !GameObjects.Player.HasBuffOfType(BuffType.Blind));
             }
 
