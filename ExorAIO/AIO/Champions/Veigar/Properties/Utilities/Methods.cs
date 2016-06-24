@@ -16,6 +16,7 @@ namespace ExorAIO.Champions.Veigar
             Game.OnUpdate += Veigar.OnUpdate;
             Events.OnGapCloser += Veigar.OnGapCloser;
             Events.OnInterruptableTarget += Veigar.OnInterruptableTarget;
+            Variables.Orbwalker.OnAction += Veigar.OnAction;
         }
     }
 }

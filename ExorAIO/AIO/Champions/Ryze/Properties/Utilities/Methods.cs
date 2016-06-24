@@ -15,6 +15,7 @@ namespace ExorAIO.Champions.Ryze
         {
             Game.OnUpdate += Ryze.OnUpdate;
             Events.OnGapCloser += Ryze.OnGapCloser;
+            Variables.Orbwalker.OnAction += Ryze.OnAction;
         }
     }
 }

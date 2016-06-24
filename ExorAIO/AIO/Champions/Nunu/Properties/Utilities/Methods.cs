@@ -1,4 +1,5 @@
 using LeagueSharp;
+using LeagueSharp.SDK;
 
 namespace ExorAIO.Champions.Nunu
 {
@@ -13,6 +14,7 @@ namespace ExorAIO.Champions.Nunu
         public static void Initialize()
         {
             Game.OnUpdate += Nunu.OnUpdate;
+            Variables.Orbwalker.OnAction += Nunu.OnAction;
         }
     }
 }

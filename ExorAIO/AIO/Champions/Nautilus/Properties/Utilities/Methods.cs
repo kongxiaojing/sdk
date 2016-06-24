@@ -1,4 +1,5 @@
 using LeagueSharp;
+using LeagueSharp.SDK;
 
 namespace ExorAIO.Champions.Nautilus
 {
@@ -14,6 +15,7 @@ namespace ExorAIO.Champions.Nautilus
         {
             Game.OnUpdate += Nautilus.OnUpdate;
             Obj_AI_Base.OnDoCast += Nautilus.OnDoCast;
+            Variables.Orbwalker.OnAction += Nautilus.OnAction;
         }
     }
 }

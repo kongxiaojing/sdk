@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -174,6 +175,40 @@ namespace ExorAIO.Champions.Lux
                 Vars.Menu["spells"]["q"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.Cast(args.Sender.ServerPosition);
+            }
+        }
+
+        /// <summary>
+        ///     Called on orbwalker action.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
+        {
+            switch (args.Type)
+            {
+                case OrbwalkingType.BeforeAttack:
+                    switch (Variables.Orbwalker.ActiveMode)
+                    {
+                        case OrbwalkingMode.LastHit:
+                        case OrbwalkingMode.LaneClear:
+                            if (Vars.Menu["miscellaneous"]["support"].GetValue<MenuBool>().Value)
+                            {
+                                if (Variables.Orbwalker.GetTarget() is Obj_AI_Minion &&
+                                    GameObjects.AllyHeroes.Any(a => a.Distance(GameObjects.Player) < 2500))
+                                {
+                                    args.Process = false;
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }

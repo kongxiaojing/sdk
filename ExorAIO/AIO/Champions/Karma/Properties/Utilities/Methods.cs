@@ -16,6 +16,7 @@ namespace ExorAIO.Champions.Karma
             Game.OnUpdate += Karma.OnUpdate;
             Events.OnGapCloser += Karma.OnGapCloser;
             Obj_AI_Base.OnProcessSpellCast += Karma.OnProcessSpellCast;
+            Variables.Orbwalker.OnAction += Karma.OnAction;
         }
     }
 }
