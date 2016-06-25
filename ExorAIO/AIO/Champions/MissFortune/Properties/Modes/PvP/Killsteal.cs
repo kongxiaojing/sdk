@@ -75,7 +75,8 @@ namespace ExorAIO.Champions.MissFortune
                                 !Invulnerable.Check(t) &&
                                 !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                (t.NetworkId == Vars.PassiveTarget.NetworkId ||
+                                ((Vars.PassiveTarget.IsValidTarget() &&
+                                    t.NetworkId == Vars.PassiveTarget.NetworkId) ||
                                     !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))).ServerPosition) &&
 
                             !polygon.IsOutside((Vector2)Movement.GetPrediction(
@@ -84,7 +85,8 @@ namespace ExorAIO.Champions.MissFortune
                                     !Invulnerable.Check(t) &&
                                     !t.IsValidTarget(Vars.Q.Range) &&
                                     t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    (t.NetworkId == Vars.PassiveTarget.NetworkId ||
+                                    ((Vars.PassiveTarget.IsValidTarget() &&
+                                        t.NetworkId == Vars.PassiveTarget.NetworkId) ||
                                         !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))),
 
                                 GameObjects.Player.Distance(GameObjects.EnemyHeroes.FirstOrDefault(
@@ -92,7 +94,8 @@ namespace ExorAIO.Champions.MissFortune
                                     !Invulnerable.Check(t) &&
                                     !t.IsValidTarget(Vars.Q.Range) &&
                                     t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    (t.NetworkId == Vars.PassiveTarget.NetworkId ||
+                                    ((Vars.PassiveTarget.IsValidTarget() &&
+                                        t.NetworkId == Vars.PassiveTarget.NetworkId) ||
                                         !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))).ServerPosition) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
 
                         select minion)
@@ -119,7 +122,8 @@ namespace ExorAIO.Champions.MissFortune
                                 !Invulnerable.Check(t) &&
                                 !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                (t.NetworkId == Vars.PassiveTarget.NetworkId ||
+                                ((Vars.PassiveTarget.IsValidTarget() &&
+                                    t.NetworkId == Vars.PassiveTarget.NetworkId) ||
                                     !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))).ServerPosition) &&
 
                             !polygon.IsOutside((Vector2)Movement.GetPrediction(
@@ -128,7 +132,8 @@ namespace ExorAIO.Champions.MissFortune
                                     !Invulnerable.Check(t) &&
                                     !t.IsValidTarget(Vars.Q.Range) &&
                                     t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    (t.NetworkId == Vars.PassiveTarget.NetworkId ||
+                                    ((Vars.PassiveTarget.IsValidTarget() &&
+                                        t.NetworkId == Vars.PassiveTarget.NetworkId) ||
                                         !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))),
 
                                 GameObjects.Player.Distance(GameObjects.EnemyHeroes.FirstOrDefault(
@@ -136,7 +141,8 @@ namespace ExorAIO.Champions.MissFortune
                                     !Invulnerable.Check(t) &&
                                     !t.IsValidTarget(Vars.Q.Range) &&
                                     t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    (t.NetworkId == Vars.PassiveTarget.NetworkId ||
+                                    ((Vars.PassiveTarget.IsValidTarget() &&
+                                        t.NetworkId == Vars.PassiveTarget.NetworkId) ||
                                         !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))).ServerPosition) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
 
                         select target)
