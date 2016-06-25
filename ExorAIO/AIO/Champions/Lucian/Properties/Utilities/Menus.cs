@@ -91,7 +91,16 @@ namespace ExorAIO.Champions.Lucian
                 /// </summary>
                 Vars.EMenu = new Menu("e", "Use E to:");
                 {
-                    Vars.EMenu.Add(new MenuBool("combo",     "Combo",          true));
+                    Vars.EMenu.Add(new MenuSeparator("esep", "E Modes:"));
+                    Vars.EMenu.Add(new MenuSeparator("esep1", "[KEEP IN MIND THAT, NO MATTER THE MODE, THE DASH WILL BE DIRECTED TOWARDS YOUR MOUSE]"));
+                    Vars.EMenu.Add(new MenuSeparator("esep2", "Exory: The Logic you have always used, with smart Short & Long dash."));
+                    Vars.EMenu.Add(new MenuSeparator("esep3", "Normal: This Logic will make you always dash at the maximum distance."));
+                    Vars.EMenu.Add(new MenuList<string>("mode", "E Mode",
+                        new[]
+                        {
+                            "Exory",
+                            "Normal"
+                        }));
                     Vars.EMenu.Add(new MenuBool("engager",   "Engager",        true));
                     Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
                     Vars.EMenu.Add(new MenuSliderButton("buildings",   "Buildings / if Mana >= x%",   50, 0, 99, true));
