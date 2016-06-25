@@ -132,8 +132,8 @@ namespace ExorAIO.Champions.MissFortune
                 {
                     switch (args.SData.Name)
                     {
-                        case "MissFortuneQ":
-                        case "MissFortuneQMissile":
+                        case "MissFortuneRicochetShot":
+                        //case "MissFortuneRicochetShotMissile":
                             Vars.PassiveTarget = args.Target as AttackableUnit;
                             break;
 
