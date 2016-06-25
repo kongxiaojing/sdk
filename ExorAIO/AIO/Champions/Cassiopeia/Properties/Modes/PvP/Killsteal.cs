@@ -47,7 +47,7 @@ namespace ExorAIO.Champions.Cassiopeia
                 foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.R.Range) &&
+                        t.IsValidTarget(Vars.R.Range-100f) &&
                         Vars.GetRealHealth(t) <
                             (float)GameObjects.Player.GetSpellDamage(t, SpellSlot.R)))
                 {

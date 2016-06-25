@@ -44,7 +44,7 @@ namespace ExorAIO.Champions.Cassiopeia
             =>
                 GameObjects.EnemyHeroes.Where(
                     t =>
-                        t.IsValidTarget(Vars.R.Range - 30f) &&
+                        t.IsValidTarget(Vars.R.Range-100f) &&
                         t.IsFacing(GameObjects.Player)).ToList();
     }
 }

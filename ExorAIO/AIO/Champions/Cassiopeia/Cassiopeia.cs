@@ -1,5 +1,6 @@
 using System;
 using ExorAIO.Utilities;
+using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
@@ -98,7 +99,7 @@ namespace ExorAIO.Champions.Cassiopeia
         public static void OnGapCloser(object sender, Events.GapCloserEventArgs args)
         {
             if (!args.Sender.IsMelee ||
-                Invulnerable.Check(args.Sender))
+                Invulnerable.Check(args.Sender, DamageType.Magical))
             {
                 return;
             }
@@ -129,9 +130,9 @@ namespace ExorAIO.Champions.Cassiopeia
         public static void OnInterruptableTarget(object sender, Events.InterruptableTargetEventArgs args)
         {
             if (Vars.R.IsReady() &&
-                !Invulnerable.Check(args.Sender) &&
                 args.Sender.IsValidTarget(Vars.R.Range) &&
                 args.Sender.IsFacing(GameObjects.Player) &&
+                !Invulnerable.Check(args.Sender, DamageType.Magical) &&
                 Vars.Menu["spells"]["r"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.R.Cast(args.Sender.ServerPosition);
