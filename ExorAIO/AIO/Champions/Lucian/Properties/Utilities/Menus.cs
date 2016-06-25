@@ -95,11 +95,13 @@ namespace ExorAIO.Champions.Lucian
                     Vars.EMenu.Add(new MenuSeparator("esep1", "[KEEP IN MIND THAT, NO MATTER THE MODE, THE DASH WILL BE DIRECTED TOWARDS YOUR MOUSE]"));
                     Vars.EMenu.Add(new MenuSeparator("esep2", "Exory: The Logic you have always used, with smart Short & Long dash."));
                     Vars.EMenu.Add(new MenuSeparator("esep3", "Normal: This Logic will make you always dash at the maximum distance."));
+                    Vars.EMenu.Add(new MenuSeparator("esep4", "None: This Logic will prevent the assembly from using E automatically in combo."));
                     Vars.EMenu.Add(new MenuList<string>("mode", "E Mode",
                         new[]
                         {
                             "Exory",
-                            "Normal"
+                            "Normal",
+                            "None"
                         }));
                     Vars.EMenu.Add(new MenuBool("engager",   "Engager",        true));
                     Vars.EMenu.Add(new MenuBool("gapcloser", "Anti-Gapcloser", true));
