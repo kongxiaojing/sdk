@@ -33,15 +33,12 @@ namespace ExorAIO.Champions.Lucian
                 if (!GameObjects.Player.IsUnderEnemyTurret() ||
                     (args.Target as Obj_AI_Hero).Health < GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero)*2)
                 {
-                    if ((args.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2 ||
-                        GameObjects.Player.Distance(Game.CursorPos) < Vars.AARange)
-                    {
-                        Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 50));
-                    }
-                    else
-                    {
-                        Vars.E.Cast(Game.CursorPos);
-                    }
+                    Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos,
+                        (GameObjects.Player.Distance(Game.CursorPos) < Vars.AARange ||
+                        (args.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2) &&
+                        Vars.Menu["spells"]["e"]["mode"].GetValue<MenuList>().Index == 0
+                            ? 50
+                            : Vars.E.Range - Vars.AARange));
                     return;
                 }
             }

@@ -89,10 +89,7 @@ namespace ExorAIO.Champions.Lucian
                     /// </summary>
                     foreach (var target
                         in from target
-                        in GameObjects.EnemyHeroes.Where(
-                            t =>
-                                !Invulnerable.Check(t) &&
-                                t.IsValidTarget(Vars.Q.Range))
+                        in GameObjects.EnemyHeroes.Where(t => t.IsValidTarget(Vars.Q.Range))
 
                         let polygon = new Geometry.Rectangle(
                             GameObjects.Player.ServerPosition,

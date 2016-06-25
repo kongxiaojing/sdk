@@ -104,25 +104,42 @@ namespace ExorAIO.Champions.MissFortune
         /// <param name="args">The args.</param>
         public static void OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender.IsMe &&
-                AutoAttack.IsAutoAttack(args.SData.Name))
+            if (sender.IsMe)
             {
-                /// <summary>
-                ///     Initializes the orbwalkingmodes.
-                /// </summary>
-                switch (Variables.Orbwalker.ActiveMode)
+                if (AutoAttack.IsAutoAttack(args.SData.Name))
                 {
-                    case OrbwalkingMode.Combo:
-                        Logics.Weaving(sender, args);
-                        break;
+                    /// <summary>
+                    ///     Initializes the orbwalkingmodes.
+                    /// </summary>
+                    switch (Variables.Orbwalker.ActiveMode)
+                    {
+                        case OrbwalkingMode.Combo:
+                            Logics.Weaving(sender, args);
+                            break;
 
-                    case OrbwalkingMode.LaneClear:
-                        Logics.JungleClear(sender, args);
-                        Logics.BuildingClear(sender, args);
-                        break;
+                        case OrbwalkingMode.LaneClear:
+                            Logics.JungleClear(sender, args);
+                            Logics.BuildingClear(sender, args);
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
+                    
+                    Vars.PassiveTargetNetworkId = (args.Target as Obj_AI_Base).NetworkId;
+                }
+                else
+                {
+                    switch (args.SData.Name)
+                    {
+                        case "MissFortuneQ":
+                        case "MissFortuneQMissile":
+                            Vars.PassiveTargetNetworkId = (args.Target as Obj_AI_Base).NetworkId;
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
         }

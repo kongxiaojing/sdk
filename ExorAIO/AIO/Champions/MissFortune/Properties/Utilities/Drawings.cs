@@ -40,14 +40,15 @@ namespace ExorAIO.Champions.MissFortune
                         return;
                     }
 
-                    foreach (var minion in Targets.Minions.Where(m => m.IsValidTarget(Vars.Q.Range)))
+                    
+                    foreach (var minion in ObjectManager.Get<Obj_AI_Base>().Where(m => m.IsValidTarget(Vars.Q.Range)))
                     {
                         var polygon = new Geometry.Sector(
                             (Vector2)minion.ServerPosition,
                             (Vector2)minion.ServerPosition.Extend(GameObjects.Player.ServerPosition,
                             -(Vars.Q2.Range - Vars.Q.Range)),
                             40f * (float)Math.PI / 180f,
-                            Vars.Q2.Range - Vars.Q.Range);
+                            (Vars.Q2.Range - Vars.Q.Range)-50f);
 
                         polygon.Draw(
                             !polygon.IsOutside((Vector2)GameObjects.EnemyHeroes.FirstOrDefault(

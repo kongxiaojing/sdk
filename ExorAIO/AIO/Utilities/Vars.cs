@@ -78,6 +78,11 @@ namespace ExorAIO.Utilities
         };
 
         /// <summary>
+        ///     The LastAttacked Target's Network ID.
+        /// </summary>
+        public static int PassiveTargetNetworkId = -1;
+
+        /// <summary>
         ///     The args End.
         /// </summary>
         public static Vector3 End { get; set; } = Vector3.Zero;

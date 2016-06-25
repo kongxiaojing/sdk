@@ -41,8 +41,8 @@ namespace ExorAIO.Champions.Nunu
                 if (GameObjects.Player.HasBuff("AbsoluteZero") &&
                     !Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
                 {
-                    Variables.Orbwalker.Move(Game.CursorPos);
                     Vars.R.Cast();
+                    Variables.Orbwalker.Move(Game.CursorPos);
                 }
             }
 

@@ -56,7 +56,7 @@ namespace ExorAIO.Champions.MissFortune
                         (Vector2)minion.ServerPosition,
                         (Vector2)minion.ServerPosition.Extend(GameObjects.Player.ServerPosition, -(Vars.Q2.Range - Vars.Q.Range)),
                         40f * (float)Math.PI / 180f,
-                        Vars.Q2.Range - Vars.Q.Range)
+                        (Vars.Q2.Range - Vars.Q.Range)-50f)
 
                     where
                         !polygon.IsOutside((Vector2)GameObjects.EnemyHeroes.FirstOrDefault(
@@ -64,19 +64,27 @@ namespace ExorAIO.Champions.MissFortune
                             !Invulnerable.Check(t) &&
                             !t.IsValidTarget(Vars.Q.Range) &&
                             t.IsValidTarget(Vars.Q2.Range-50f) &&
+                            (t.NetworkId == Vars.PassiveTargetNetworkId ||
+                                !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))) &&
                             Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value).ServerPosition) &&
+
                         !polygon.IsOutside((Vector2)Movement.GetPrediction(
                             GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
                                 !Invulnerable.Check(t) &&
                                 !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
+                                (t.NetworkId == Vars.PassiveTargetNetworkId ||
+                                    !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))) &&
                                 Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value),
+
                             GameObjects.Player.Distance(GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
                                 !Invulnerable.Check(t) &&
                                 !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
+                                (t.NetworkId == Vars.PassiveTargetNetworkId ||
+                                    !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))) &&
                                 Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value).ServerPosition) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
 
                     select minion)

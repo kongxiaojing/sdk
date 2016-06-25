@@ -30,7 +30,6 @@ namespace ExorAIO.Champions.MissFortune
                 {
                     Vars.QMenu.Add(new MenuBool("combo",     "Combo",     true));
                     Vars.QMenu.Add(new MenuBool("killsteal", "KillSteal", true));
-                    Vars.QMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",   50, 0, 99, true));
                     Vars.QMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                     {
                         if (GameObjects.EnemyHeroes.Any())
@@ -46,6 +45,7 @@ namespace ExorAIO.Champions.MissFortune
                                 Vars.Q2Menu.Add(new MenuSliderButton("exlaneclear", "LaneClear / if Mana >= %", 50, 0, 99, true));
                                 Vars.Q2Menu.Add(new MenuSeparator("excseparator1", "Miscellaneous Exceptions List:"));
                                 Vars.Q2Menu.Add(new MenuBool("excombokill",     "Combo: Only if Minion Killable"));
+                                Vars.Q2Menu.Add(new MenuBool("exkillstealkill", "KillSteal: Only if Champion Killable"));
                                 Vars.Q2Menu.Add(new MenuBool("mixedkill",       "Mixed: Only if Minion Killable"));
                                 Vars.Q2Menu.Add(new MenuBool("exlaneclearkill", "LaneClear: Only if Minion Killable"));
                             }
@@ -82,7 +82,8 @@ namespace ExorAIO.Champions.MissFortune
                 /// </summary>
                 Vars.WMenu = new Menu("w", "Use W to:");
                 {
-                    Vars.WMenu.Add(new MenuBool("combo", "Combo", true));
+                    Vars.WMenu.Add(new MenuBool("combo",   "Combo",   true));
+                    Vars.WMenu.Add(new MenuBool("engager", "Engager", true));
                     Vars.WMenu.Add(new MenuSliderButton("laneclear",   "LaneClear / if Mana >= x%",   50, 0, 99, true));
                     Vars.WMenu.Add(new MenuSliderButton("jungleclear", "JungleClear / if Mana >= x%", 50, 0, 99, true));
                     Vars.WMenu.Add(new MenuSliderButton("buildings", "Buildings / if Mana >= x%", 50, 0, 99, true));
