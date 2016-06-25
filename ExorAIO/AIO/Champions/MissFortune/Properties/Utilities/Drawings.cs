@@ -28,14 +28,14 @@ namespace ExorAIO.Champions.MissFortune
 
             Drawing.OnDraw += delegate
             {
-                if (Vars.Menu["drawings"]["qc"].GetValue<MenuBool>().Value)
+                if (Vars.Q.IsReady() &&
+                    Vars.Menu["drawings"]["qc"].GetValue<MenuBool>().Value)
                 {
                     if (!GameObjects.EnemyHeroes.Any(
                         t =>
                             !Invulnerable.Check(t) &&
                             !t.IsValidTarget(Vars.Q.Range) &&
-                            t.IsValidTarget(Vars.Q2.Range-50f) &&
-                            Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
+                            t.IsValidTarget(Vars.Q2.Range-50f)))
                     {
                         return;
                     }
@@ -47,14 +47,26 @@ namespace ExorAIO.Champions.MissFortune
                             (Vector2)minion.ServerPosition.Extend(GameObjects.Player.ServerPosition,
                             -(Vars.Q2.Range - Vars.Q.Range)),
                             40f * (float)Math.PI / 180f,
-                            450f);
+                            Vars.Q2.Range - Vars.Q.Range);
 
-                        polygon.Draw(!polygon.IsOutside((Vector2)Vars.Q2.GetPrediction(GameObjects.EnemyHeroes.FirstOrDefault(
+                        polygon.Draw(
+                            !polygon.IsOutside((Vector2)GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
                                 !Invulnerable.Check(t) &&
                                 !t.IsValidTarget(Vars.Q.Range) &&
-                                t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value)).CastPosition)
+                                t.IsValidTarget(Vars.Q2.Range-50f)).ServerPosition) &&
+                            !polygon.IsOutside((Vector2)Movement.GetPrediction(
+                                GameObjects.EnemyHeroes.FirstOrDefault(
+                                t =>
+                                    !Invulnerable.Check(t) &&
+                                    !t.IsValidTarget(Vars.Q.Range) &&
+                                    t.IsValidTarget(Vars.Q2.Range-50f)),
+                                GameObjects.Player.Distance(GameObjects.EnemyHeroes.FirstOrDefault(
+                                t =>
+                                    !Invulnerable.Check(t) &&
+                                    !t.IsValidTarget(Vars.Q.Range) &&
+                                    t.IsValidTarget(Vars.Q2.Range-50f))) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
+
                             ? Color.Green
                             : Color.Red);
                     }
