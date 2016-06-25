@@ -65,7 +65,7 @@ namespace ExorAIO.Champions.MissFortune
                                 !Invulnerable.Check(t) &&
                                 !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                (t.NetworkId == Vars.PassiveTargetNetworkId ||
+                                (t.NetworkId == Vars.PassiveTarget.NetworkId ||
                                     !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))) &&
                                 Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value).ServerPosition) &&
 
@@ -75,7 +75,7 @@ namespace ExorAIO.Champions.MissFortune
                                     !Invulnerable.Check(t) &&
                                     !t.IsValidTarget(Vars.Q.Range) &&
                                     t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    (t.NetworkId == Vars.PassiveTargetNetworkId ||
+                                    (t.NetworkId == Vars.PassiveTarget.NetworkId ||
                                         !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))) &&
                                     Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value),
 
@@ -84,7 +84,7 @@ namespace ExorAIO.Champions.MissFortune
                                     !Invulnerable.Check(t) &&
                                     !t.IsValidTarget(Vars.Q.Range) &&
                                     t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    (t.NetworkId == Vars.PassiveTargetNetworkId ||
+                                    (t.NetworkId == Vars.PassiveTarget.NetworkId ||
                                         !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))) &&
                                     Vars.Menu["spells"]["q"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value).ServerPosition) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
 

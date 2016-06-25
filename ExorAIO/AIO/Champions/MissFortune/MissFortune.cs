@@ -126,7 +126,7 @@ namespace ExorAIO.Champions.MissFortune
                             break;
                     }
                     
-                    Vars.PassiveTargetNetworkId = (args.Target as Obj_AI_Base).NetworkId;
+                    Vars.PassiveTarget = args.Target as AttackableUnit;
                 }
                 else
                 {
@@ -134,7 +134,7 @@ namespace ExorAIO.Champions.MissFortune
                     {
                         case "MissFortuneQ":
                         case "MissFortuneQMissile":
-                            Vars.PassiveTargetNetworkId = (args.Target as Obj_AI_Base).NetworkId;
+                            Vars.PassiveTarget = args.Target as AttackableUnit;
                             break;
 
                         default:

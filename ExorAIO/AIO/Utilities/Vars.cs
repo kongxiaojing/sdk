@@ -78,9 +78,9 @@ namespace ExorAIO.Utilities
         };
 
         /// <summary>
-        ///     The LastAttacked Target's Network ID.
+        ///     The last target.
         /// </summary>
-        public static int PassiveTargetNetworkId = -1;
+        public static AttackableUnit PassiveTarget = null;
 
         /// <summary>
         ///     The args End.

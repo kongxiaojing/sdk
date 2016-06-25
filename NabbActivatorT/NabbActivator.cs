@@ -2,6 +2,7 @@
 //using System.Linq;
 using LeagueSharp;
 using LeagueSharp.SDK;
+using LeagueSharp.SDK.Utils;
 
 namespace NabbActivator
 {
@@ -134,12 +135,10 @@ namespace NabbActivator
         /// <param name="args">The args.</param>
         public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            /*
-            if (sender.IsMe)
+            if (!AutoAttack.IsAutoAttack(args.SData.Name))
             {
-                Console.WriteLine(args.SData.Name);
+                Console.WriteLine($"Name:{args.SData.Name}, Sender:{sender.CharData.BaseSkinName}, Target{args.Target}");
             }
-            */
         }
     }
 }
