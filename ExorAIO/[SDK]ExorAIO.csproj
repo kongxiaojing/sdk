@@ -247,6 +247,7 @@
     <Compile Include="AIO\Champions\Jhin\Properties\Modes\PvP\Harass.cs" />
     <Compile Include="AIO\Champions\Jhin\Properties\Modes\PvP\Killsteal.cs" />
     <Compile Include="AIO\Champions\Jhin\Properties\Modes\PvP\Weaving.cs" />
+    <Compile Include="AIO\Champions\Jhin\Properties\Utilities\Drawings.cs" />
     <Compile Include="AIO\Champions\Jhin\Properties\Utilities\Menus.cs" />
     <Compile Include="AIO\Champions\Jhin\Properties\Utilities\Methods.cs" />
     <Compile Include="AIO\Champions\Jhin\Properties\Utilities\Spells.cs" />
