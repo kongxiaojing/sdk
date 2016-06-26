@@ -28,45 +28,39 @@ namespace ExorAIO.Champions.MissFortune
 
             Drawing.OnDraw += delegate
             {
+                if (Vars.PassiveTarget.IsValidTarget() &&
+                    Vars.Menu["drawings"]["p"].GetValue<MenuBool>().Value)
+                {
+                    Render.Circle.DrawCircle(Vars.PassiveTarget.Position, Vars.PassiveTarget.BoundingRadius, Color.LightGreen, 1);
+                }
+
                 if (Vars.Q.IsReady() &&
                     Vars.Menu["drawings"]["qc"].GetValue<MenuBool>().Value)
                 {
-                    if (!GameObjects.EnemyHeroes.Any(
-                        t =>
-                            !Invulnerable.Check(t) &&
-                            !t.IsValidTarget(Vars.Q.Range) &&
-                            t.IsValidTarget(Vars.Q2.Range-50f)))
-                    {
-                        return;
-                    }
 
-                    
-                    foreach (var minion in ObjectManager.Get<Obj_AI_Base>().Where(m => m.IsValidTarget(Vars.Q.Range)))
+                    foreach (var obj in ObjectManager.Get<Obj_AI_Base>().Where(m => m.IsValidTarget(Vars.Q.Range)))
                     {
                         var polygon = new Geometry.Sector(
-                            (Vector2)minion.ServerPosition,
-                            (Vector2)minion.ServerPosition.Extend(GameObjects.Player.ServerPosition,
+                            (Vector2)obj.ServerPosition,
+                            (Vector2)obj.ServerPosition.Extend(GameObjects.Player.ServerPosition,
                             -(Vars.Q2.Range - Vars.Q.Range)),
                             40f * (float)Math.PI / 180f,
                             (Vars.Q2.Range - Vars.Q.Range)-50f);
 
-                        polygon.Draw(
-                            !polygon.IsOutside((Vector2)GameObjects.EnemyHeroes.FirstOrDefault(
+                        var target = GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
                                 !Invulnerable.Check(t) &&
-                                !t.IsValidTarget(Vars.Q.Range) &&
-                                t.IsValidTarget(Vars.Q2.Range-50f)).ServerPosition) &&
-                            !polygon.IsOutside((Vector2)Movement.GetPrediction(
-                                GameObjects.EnemyHeroes.FirstOrDefault(
-                                t =>
-                                    !Invulnerable.Check(t) &&
-                                    !t.IsValidTarget(Vars.Q.Range) &&
-                                    t.IsValidTarget(Vars.Q2.Range-50f)),
-                                GameObjects.Player.Distance(GameObjects.EnemyHeroes.FirstOrDefault(
-                                t =>
-                                    !Invulnerable.Check(t) &&
-                                    !t.IsValidTarget(Vars.Q.Range) &&
-                                    t.IsValidTarget(Vars.Q2.Range-50f))) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
+                                t.IsValidTarget(Vars.Q2.Range-50f) &&
+                                ((Vars.PassiveTarget.IsValidTarget() &&
+                                    t.NetworkId == Vars.PassiveTarget.NetworkId) ||
+                                    !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))));
+
+                        polygon.Draw(
+                            !polygon.IsOutside((Vector2)target.ServerPosition) &&
+                            !polygon.IsOutside(
+                                (Vector2)Movement.GetPrediction(
+                                    target,
+                                    GameObjects.Player.Distance(target) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
 
                             ? Color.Green
                             : Color.Red);
