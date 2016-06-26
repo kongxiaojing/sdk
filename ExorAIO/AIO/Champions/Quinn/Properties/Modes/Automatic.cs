@@ -18,38 +18,31 @@ namespace ExorAIO.Champions.Quinn
         public static void Automatic(EventArgs args)
         {
             /// <summary>
-            ///     Block Attacks while in R stance.
-            /// </summary>
-            Variables.Orbwalker.SetAttackState(!Vars.R.Instance.Name.Equals("QuinnRFinale"));
-
-            /// <summary>
-            ///     The Focus Logic (Passive Mark).
-            /// </summary>
-            foreach (var target in GameObjects.EnemyHeroes.Where(
-                t =>
-                    t.HasBuff("quinnw") &&
-                    t.IsValidTarget(Vars.AARange)))
-            {
-                Variables.Orbwalker.ForceTarget = target;
-            }
-
-            /// <summary>
             ///     The Automatic W Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
-                GameObjects.Player.ManaPercent > ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["manamanager"]) &&
+                GameObjects.Player.ManaPercent >
+                    ManaManager.GetNeededMana(Vars.W.Slot, Vars.Menu["spells"]["w"]["logical"]) &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var enemy in GameObjects.EnemyHeroes.Where(
+                if (GameObjects.EnemyHeroes.Any(
                     x =>
                         !x.IsDead &&
                         !x.IsVisible &&
-                        x.Distance(GameObjects.Player.ServerPosition) < Vars.W.Range))
+                        Vars.W.Range >
+                            x.Distance(GameObjects.Player.ServerPosition)))
                 {
-                    Vars.W.Cast();
+                    foreach (var enemy in GameObjects.EnemyHeroes.Where(
+                        x =>
+                            !x.IsDead &&
+                            !x.IsVisible &&
+                            Vars.W.Range >
+                                x.Distance(GameObjects.Player.ServerPosition)))
+                    {
+                        Vars.W.Cast();
+                    }
                 }
-
-                if (Vars.Locations.Any(h => GameObjects.Player.Distance(h) < Vars.W.Range))
+                else if (Vars.Locations.Any(h => Vars.W.Range > GameObjects.Player.Distance(h)))
                 {
                     Vars.W.Cast();
                 }

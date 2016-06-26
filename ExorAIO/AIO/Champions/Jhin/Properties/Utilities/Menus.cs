@@ -111,6 +111,7 @@ namespace ExorAIO.Champions.Jhin
                 Vars.DrawingsMenu.Add(new MenuBool("w", "W Range"));
                 Vars.DrawingsMenu.Add(new MenuBool("e", "E Range"));
                 Vars.DrawingsMenu.Add(new MenuBool("r", "R Range"));
+                Vars.DrawingsMenu.Add(new MenuBool("rc", "R Cone"));
             }
             Vars.Menu.Add(Vars.DrawingsMenu);
         }

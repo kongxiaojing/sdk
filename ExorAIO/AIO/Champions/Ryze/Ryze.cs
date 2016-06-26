@@ -117,6 +117,10 @@ namespace ExorAIO.Champions.Ryze
                     switch (Variables.Orbwalker.ActiveMode)
                     {
                         case OrbwalkingMode.Combo:
+
+                            /// <summary>
+                            ///     The 'No AA in Combo' Logic.
+                            /// </summary>
                             if (Vars.Menu["miscellaneous"]["noaacombo"].GetValue<MenuBool>().Value)
                             {
                                 if (Vars.Q.IsReady() ||
@@ -132,9 +136,13 @@ namespace ExorAIO.Champions.Ryze
 
                         case OrbwalkingMode.LastHit:
                         case OrbwalkingMode.LaneClear:
+
+                            /// <summary>
+                            ///     The 'Support Mode' Logic.
+                            /// </summary>
                             if (Vars.Menu["miscellaneous"]["support"].GetValue<MenuBool>().Value)
                             {
-                                if (Variables.Orbwalker.GetTarget() is Obj_AI_Minion &&
+                                if (args.Target is Obj_AI_Minion &&
                                     GameObjects.AllyHeroes.Any(a => a.Distance(GameObjects.Player) < 2500))
                                 {
                                     args.Process = false;

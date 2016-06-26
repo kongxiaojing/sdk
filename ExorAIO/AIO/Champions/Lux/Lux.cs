@@ -188,13 +188,40 @@ namespace ExorAIO.Champions.Lux
             switch (args.Type)
             {
                 case OrbwalkingType.BeforeAttack:
+
+                    /// <summary>
+                    ///     The Target Forcing Logic.
+                    /// </summary>
+                    if (args.Target is Obj_AI_Hero)
+                    {
+                        if (!GameObjects.EnemyHeroes.Any(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.HasBuff("luxilluminatingfraulein")))
+                        {
+                            Variables.Orbwalker.ForceTarget = null;
+                            return;
+                        }
+
+                        args.Process = false;
+                        Variables.Orbwalker.ForceTarget = GameObjects.EnemyHeroes.FirstOrDefault(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.HasBuff("luxilluminatingfraulein"));
+                        return;
+                    }
+                    
                     switch (Variables.Orbwalker.ActiveMode)
                     {
                         case OrbwalkingMode.LastHit:
                         case OrbwalkingMode.LaneClear:
+
+                            /// <summary>
+                            ///     The 'Support Mode' Logic.
+                            /// </summary>
                             if (Vars.Menu["miscellaneous"]["support"].GetValue<MenuBool>().Value)
                             {
-                                if (Variables.Orbwalker.GetTarget() is Obj_AI_Minion &&
+                                if (args.Target is Obj_AI_Minion &&
                                     GameObjects.AllyHeroes.Any(a => a.Distance(GameObjects.Player) < 2500))
                                 {
                                     args.Process = false;

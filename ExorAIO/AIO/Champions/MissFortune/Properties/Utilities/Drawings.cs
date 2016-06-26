@@ -1,13 +1,14 @@
 using System;
 using System.Linq;
-using ExorAIO.Utilities;
+using System.Drawing;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using ExorAIO.Utilities;
 using SharpDX;
-using Geometry = ExorAIO.Utilities.Geometry;
 using Color = System.Drawing.Color;
+using Geometry = ExorAIO.Utilities.Geometry;
 
 namespace ExorAIO.Champions.MissFortune
 {
@@ -28,16 +29,21 @@ namespace ExorAIO.Champions.MissFortune
 
             Drawing.OnDraw += delegate
             {
+                /// <summary>
+                ///     Loads the Passive Target drawing.
+                /// </summary>
                 if (Vars.PassiveTarget.IsValidTarget() &&
                     Vars.Menu["drawings"]["p"].GetValue<MenuBool>().Value)
                 {
                     Render.Circle.DrawCircle(Vars.PassiveTarget.Position, Vars.PassiveTarget.BoundingRadius, Color.LightGreen, 1);
                 }
 
+                /// <summary>
+                ///     Loads the Q Cone drawings.
+                /// </summary>
                 if (Vars.Q.IsReady() &&
                     Vars.Menu["drawings"]["qc"].GetValue<MenuBool>().Value)
                 {
-
                     foreach (var obj in ObjectManager.Get<Obj_AI_Base>().Where(m => m.IsValidTarget(Vars.Q.Range)))
                     {
                         var polygon = new Geometry.Sector(

@@ -51,11 +51,6 @@ namespace ExorAIO.Champions.Pantheon
             }
 
             /// <summary>
-            ///     Initializes the Automatic actions.
-            /// </summary>
-            Logics.Automatic(args);
-
-            /// <summary>
             ///     Initializes the Killsteal events.
             /// </summary>
             Logics.Killsteal(args);
@@ -95,6 +90,32 @@ namespace ExorAIO.Champions.Pantheon
                 Vars.Menu["spells"]["w"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.W.CastOnUnit(args.Sender);
+            }
+        }
+
+        /// <summary>
+        ///     Called on orbwalker action.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
+        {
+            switch (args.Type)
+            {
+                case OrbwalkingType.Movement:
+                case OrbwalkingType.BeforeAttack:
+
+                    /// <summary>
+                    ///     Stop attack and movement commands while channeling E.
+                    /// </summary>
+                    if (GameObjects.Player.HasBuff("pantheonesound"))
+                    {
+                        args.Process = false;
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }

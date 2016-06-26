@@ -209,9 +209,9 @@ namespace ExorAIO.Utilities
         public static float AARange
             =>
                 GameObjects.Player.GetRealAutoAttackRange() +
-                (Items.HasItem(3094) && GameObjects.Player.GetBuffCount("itemstatikshankcharge") == 100
+                GameObjects.Player.GetBuffCount("itemstatikshankcharge") == 100
                     ? GameObjects.Player.GetRealAutoAttackRange() / 100 * 30
-                    : 0f);
+                    : 0f;
 
         /// <summary>
         ///     The jungle HP bar offset.
@@ -250,10 +250,10 @@ namespace ExorAIO.Utilities
                 }
             }
 
-            return target.Health
-                + target.PhysicalShield 
-                + target.HPRegenRate
-                + debuffer;
+            return target.Health +
+                //target.PhysicalShield +
+                target.HPRegenRate +
+                debuffer;
         }
     }
 }

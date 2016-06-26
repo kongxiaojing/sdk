@@ -126,7 +126,7 @@ namespace ExorAIO.Champions.Lucian
         }
 
         /// <summary>
-        ///     Celled on animation trigger.
+        ///     Called on animation trigger.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="args">The <see cref="GameObjectPlayAnimationEventArgs" /> instance containing the event data.</param>
@@ -159,6 +159,27 @@ namespace ExorAIO.Champions.Lucian
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, -(Vars.E.Range - Vars.AARange)));
+            }
+        }
+
+        /// <summary>
+        ///     Called on orbwalker action.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
+        {
+            switch (args.Type)
+            {
+                case OrbwalkingType.BeforeAttack:
+                    if (GameObjects.Player.HasBuff("LucianR"))
+                    {
+                        args.Process = false;
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }

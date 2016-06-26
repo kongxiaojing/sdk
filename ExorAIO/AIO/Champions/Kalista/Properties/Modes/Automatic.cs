@@ -22,17 +22,6 @@ namespace ExorAIO.Champions.Kalista
         public static void Automatic(EventArgs args)
         {
             /// <summary>
-            ///     The Focus Logic (Passive Mark).
-            /// </summary>
-            foreach (var target in GameObjects.EnemyHeroes.Where(
-                t =>
-                    t.IsValidTarget(Vars.AARange) &&
-                    t.HasBuff("kalistacoopstrikemarkally")))
-            {
-                Variables.Orbwalker.ForceTarget = target;
-            }
-
-            /// <summary>
             ///     The Soulbound declaration.
             /// </summary>
             if (Vars.SoulBound == null)
@@ -100,7 +89,7 @@ namespace ExorAIO.Champions.Kalista
                     Targets.Minions.Any(
 						m =>
 							Bools.IsPerfectRendTarget(m) &&
-							m.Health <
+							Vars.GetRealHealth(m) <
 								(float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
 								(float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)))
                 {
@@ -111,7 +100,7 @@ namespace ExorAIO.Champions.Kalista
                         Targets.Minions.Count(
                             m =>
                                 Bools.IsPerfectRendTarget(m) &&
-                                m.Health <
+                                Vars.GetRealHealth(m) <
                                     (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
                                     (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) == 1)
                     {
@@ -129,7 +118,7 @@ namespace ExorAIO.Champions.Kalista
                         Targets.Minions.Count(
                             m =>
                                 Bools.IsPerfectRendTarget(m) &&
-                                m.Health <
+                                Vars.GetRealHealth(m) <
                                     (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E) +
                                     (float)GameObjects.Player.GetSpellDamage(m, SpellSlot.E, DamageStage.Buff)) == 1)
                     {

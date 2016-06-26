@@ -16,6 +16,7 @@ namespace ExorAIO.Champions.MissFortune
             Game.OnUpdate += MissFortune.OnUpdate;
             Obj_AI_Base.OnDoCast += MissFortune.OnDoCast;
             Events.OnGapCloser += MissFortune.OnGapCloser;
+            Variables.Orbwalker.OnAction += MissFortune.OnAction;
         }
     }
 }

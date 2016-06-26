@@ -17,6 +17,7 @@ namespace ExorAIO.Champions.Jhin
             Obj_AI_Base.OnDoCast += Jhin.OnDoCast;
             Events.OnGapCloser += Jhin.OnGapCloser;
             Obj_AI_Base.OnProcessSpellCast += Jhin.OnProcessSpellCast;
+            Variables.Orbwalker.OnAction += Jhin.OnAction;
         }
     }
 }

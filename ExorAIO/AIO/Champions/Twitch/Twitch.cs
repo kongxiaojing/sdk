@@ -143,7 +143,7 @@ namespace ExorAIO.Champions.Twitch
             {
                 case OrbwalkingType.BeforeAttack:
                     if (!GameObjects.Player.IsUnderEnemyTurret() &&
-                        GameObjects.Player.GetBuff("TwitchHideInShadows") != null)
+                        GameObjects.Player.HasBuff("TwitchHideInShadows"))
                     {
                         if (GameObjects.Player.GetBuff("TwitchHideInShadows").EndTime - Game.Time >
                             GameObjects.Player.GetBuff("TwitchHideInShadows").EndTime - GameObjects.Player.GetBuff("TwitchHideInShadows").StartTime -

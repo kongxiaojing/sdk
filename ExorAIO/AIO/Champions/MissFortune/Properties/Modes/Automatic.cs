@@ -19,6 +19,11 @@ namespace ExorAIO.Champions.MissFortune
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Automatic(EventArgs args)
         {
+            if (GameObjects.Player.IsRecalling())
+            {
+                return;
+            }
+
             Variables.Orbwalker.SetAttackState(!GameObjects.Player.HasBuff("missfortunebulletsound"));
             Variables.Orbwalker.SetMovementState(!GameObjects.Player.HasBuff("missfortunebulletsound"));
 

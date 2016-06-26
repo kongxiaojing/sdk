@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -193,15 +194,52 @@ namespace ExorAIO.Champions.Vayne
             switch (args.Type)
             {
                 case OrbwalkingType.BeforeAttack:
+
+                    /// <summary>
+                    ///     The Automatic Stealth Logics.
+                    /// </summary>
                     if (!GameObjects.Player.IsUnderEnemyTurret() &&
-                        GameObjects.Player.GetBuff("vaynetumblefade") != null)
+                        GameObjects.Player.HasBuff("vaynetumblefade"))
                     {
+                        /// <summary>
+                        ///     The Automatic Stealth Logic.
+                        /// </summary>
                         if (GameObjects.Player.GetBuff("vaynetumblefade").EndTime - Game.Time >
                             GameObjects.Player.GetBuff("vaynetumblefade").EndTime - GameObjects.Player.GetBuff("vaynetumblefade").StartTime -
                             Vars.Menu["miscellaneous"]["stealthtime"].GetValue<MenuSlider>().Value/1000)
                         {
                             args.Process = false;
                         }
+
+                        /// <summary>
+                        ///     The Automatic Stealth Logic.
+                        /// </summary>
+                        else if (GameObjects.Player.HasBuff("summonerexhaust") ||
+                            GameObjects.Player.HasBuffOfType(BuffType.Blind))
+                        {
+                            args.Process = false;
+                        }
+                    }
+
+                    /// <summary>
+                    ///     The Target Forcing Logic (W Stacks).
+                    /// </summary>
+                    if (args.Target is Obj_AI_Hero)
+                    {
+                        if (!GameObjects.EnemyHeroes.Any(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.GetBuffCount("vaynesilvereddebuff") == 2))
+                        {
+                            Variables.Orbwalker.ForceTarget = null;
+                            return;
+                        }
+
+                        args.Process = false;
+                        Variables.Orbwalker.ForceTarget = GameObjects.EnemyHeroes.FirstOrDefault(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.GetBuffCount("vaynesilvereddebuff") == 2);
                     }
                     break;
 

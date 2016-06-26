@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -102,7 +103,36 @@ namespace ExorAIO.Champions.Kalista
         {
             switch (args.Type)
             {
+                case OrbwalkingType.BeforeAttack:
+
+                    /// <summary>
+                    ///     The Target Forcing Logic.
+                    /// </summary>
+                    if (args.Target is Obj_AI_Hero)
+                    {
+                        if (!GameObjects.EnemyHeroes.Any(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.HasBuff("kalistacoopstrikemarkally")))
+                        {
+                            Variables.Orbwalker.ForceTarget = null;
+                            return;
+                        }
+
+                        args.Process = false;
+                        Variables.Orbwalker.ForceTarget = GameObjects.EnemyHeroes.FirstOrDefault(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.HasBuff("kalistacoopstrikemarkally"));
+                        return;
+                    }
+                    break;
+
                 case OrbwalkingType.NonKillableMinion:
+
+                    /// <summary>
+                    ///     The E against Non-Killable Minions Logic.
+                    /// </summary>
                     if (Vars.E.IsReady() &&
                         Bools.IsPerfectRendTarget(args.Target as Obj_AI_Minion) &&
                         Vars.GetRealHealth(args.Target as Obj_AI_Minion) <

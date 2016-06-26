@@ -26,17 +26,6 @@ namespace ExorAIO.Champions.Lux
             }
 
             /// <summary>
-            ///     The Focus Logic (Passive Mark).
-            /// </summary>
-            foreach (var target in GameObjects.EnemyHeroes.Where(
-                t =>
-                    t.IsValidTarget(Vars.AARange) &&
-                    t.HasBuff("luxilluminatingfraulein")))
-            {
-                Variables.Orbwalker.ForceTarget = target;
-            }
-
-            /// <summary>
             ///     The E Missile Manager.
             /// </summary>
             if (Vars.E.IsReady() &&

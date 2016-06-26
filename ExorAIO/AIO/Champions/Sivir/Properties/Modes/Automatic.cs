@@ -146,43 +146,37 @@ namespace ExorAIO.Champions.Sivir
                             args.SData.Name.Equals("MissFortuneScattershot") ||
                             args.SData.Name.Equals("OrianaDissonanceCommand"))
                         {
-                            break;
+                            return;
                         }
 
                         if (AutoAttack.IsAutoAttack(args.SData.Name))
                         {
-                            if (!sender.IsMelee)
+                            if ((!sender.IsMelee && args.SData.Name.Contains("Card")) ||
+                                sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
                             {
-                                if (args.SData.Name.Contains("Card"))
-                                {
-                                    Vars.E.Cast();
-                                }
+                                Vars.E.Cast();
                             }
-                            else
-                            {
-                                if (args.SData.Name.Equals("PowerFistAttack") ||
-                                    sender.Buffs.Any(b => AutoAttack.IsAutoAttackReset(args.SData.Name)))
-                                {
-                                    Vars.E.Cast();
-                                }
-                            }
+
+                            return;
                         }
-                        else
+
+                        switch (sender.CharData.BaseSkinName)
                         {
-                            DelayAction.Add(
-                                sender.CharData.BaseSkinName.Equals("Zed")
-                                    ? 200
-                                    : sender.CharData.BaseSkinName.Equals("Caitlyn")
-                                        ? 1000
-                                        : sender.CharData.BaseSkinName.Equals("Nocturne") &&
-                                          args.SData.Name.Equals("NocturneUnspeakableHorror")
-                                            ? 500
-                                            : Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value,
-                            () =>
-                                {
-                                    Vars.E.Cast();
-                                }
-                            );
+                            case "Zed":
+                                DelayAction.Add(200, ()=> { Vars.E.Cast(); });
+                                break;
+
+                            case "Caitlyn":
+                                DelayAction.Add(500, ()=> { Vars.E.Cast(); });
+                                break;
+
+                            case "Nocturne":
+                                DelayAction.Add(750, ()=> { Vars.E.Cast(); });
+                                break;
+
+                            default:
+                                DelayAction.Add(Vars.Menu["spells"]["e"]["delay"].GetValue<MenuSlider>().Value, ()=> { Vars.E.Cast(); });
+                                break;
                         }
                         break;
 

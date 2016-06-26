@@ -18,17 +18,6 @@ namespace ExorAIO.Champions.Tristana
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Automatic(EventArgs args)
         {
-            /// <summary>
-            ///     The Combo Focus Logic (E Charges).
-            /// </summary>
-            foreach (var target in ObjectManager.Get<Obj_AI_Base>().Where(
-                t =>
-                    t.HasBuff("TristanaECharge") &&
-                    t.IsValidTarget(Vars.AARange)))
-            {
-                Variables.Orbwalker.ForceTarget = target;
-            }
-
             if (Bools.HasSheenBuff() ||
                 !(Variables.Orbwalker.GetTarget() as Obj_AI_Base).IsValidTarget())
             {

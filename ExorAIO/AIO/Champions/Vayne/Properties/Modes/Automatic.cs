@@ -26,27 +26,6 @@ namespace ExorAIO.Champions.Vayne
             }
 
             /// <summary>
-            ///     The Focus Logic (W Stacks).
-            /// </summary>
-            foreach (var target in GameObjects.EnemyHeroes.Where(
-                t =>
-                    t.IsValidTarget(Vars.AARange) &&
-                    t.GetBuffCount("vaynesilvereddebuff") == 2))
-            {
-                Variables.Orbwalker.ForceTarget = target;
-            }
-
-            /// <summary>
-            ///     The Automatic Stealth Logic.
-            /// </summary>
-            if (GameObjects.Player.HasBuff("vaynetumblefade"))
-            {
-                Variables.Orbwalker.SetAttackState(
-                    !GameObjects.Player.HasBuff("summonerexhaust") &&
-                    !GameObjects.Player.HasBuffOfType(BuffType.Blind));
-            }
-
-            /// <summary>
             ///     The Automatic E Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
@@ -57,19 +36,21 @@ namespace ExorAIO.Champions.Vayne
                     t =>
                         !t.IsDashing() &&
                         t.IsValidTarget(Vars.E.Range) &&
-                        !Invulnerable.Check(t, DamageType.Magical, false) &&
+                        !Invulnerable.Check(t, DamageType.True, false) &&
                         !t.IsValidTarget(GameObjects.Player.BoundingRadius) &&
                         Vars.Menu["spells"]["e"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
                     for (var i = 1; i < 10; i++)
                     {
-                        if ((target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
-                            (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
-                            (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * (float)(i * 42.5)).IsWall() &&
+                        var vector = Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition);
 
-                            (target.ServerPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall() &&
-                            (Vars.E.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall() &&
-                            (Vars.E2.GetPrediction(target).UnitPosition + Vector3.Normalize(target.ServerPosition - GameObjects.Player.ServerPosition) * i * 44).IsWall())
+                        if ((target.ServerPosition + vector * (float)(i * 42.5)).IsWall() &&
+                            (Vars.E.GetPrediction(target).UnitPosition + vector * (float)(i * 42.5)).IsWall() &&
+                            (Vars.E2.GetPrediction(target).UnitPosition + vector * (float)(i * 42.5)).IsWall() &&
+
+                            (target.ServerPosition + vector * i * 44).IsWall() &&
+                            (Vars.E.GetPrediction(target).UnitPosition + vector * i * 44).IsWall() &&
+                            (Vars.E2.GetPrediction(target).UnitPosition + vector * i * 44).IsWall())
                         {
                             Vars.E.CastOnUnit(target);
                         }

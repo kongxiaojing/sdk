@@ -37,6 +37,11 @@ namespace ExorAIO.Champions.Jhin
             ///     Initializes the drawings.
             /// </summary>
             Drawings.Initialize();
+
+            /// <summary>
+            ///     Initializes the cone drawings.
+            /// </summary>
+            ConeDrawings.Initialize();
         }
 
         /// <summary>
@@ -150,6 +155,28 @@ namespace ExorAIO.Champions.Jhin
                 {
                     Vars.ShotsCount++;
                 }
+            }
+        }
+
+        /// <summary>
+        ///     Called on orbwalker action.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
+        {
+            switch (args.Type)
+            {
+                case OrbwalkingType.Movement:
+                case OrbwalkingType.BeforeAttack:
+                    if (Vars.R.Instance.Name.Equals("JhinRShot"))
+                    {
+                        args.Process = false;
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }

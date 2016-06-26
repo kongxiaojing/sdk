@@ -119,6 +119,15 @@ namespace ExorAIO.Champions.MissFortune
             Vars.Menu.Add(Vars.SpellsMenu);
 
             /// <summary>
+            ///     Sets the miscellaneous menu.
+            /// </summary>
+            Vars.MiscMenu = new Menu("miscellaneous", "Miscellaneous");
+            {
+                Vars.MiscMenu.Add(new MenuBool("passive", "Try to change target for Passive Proc", true));
+            }
+            Vars.Menu.Add(Vars.MiscMenu);
+
+            /// <summary>
             ///     Sets the menu for the drawings.
             /// </summary>
             Vars.DrawingsMenu = new Menu("drawings", "Drawings");

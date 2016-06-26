@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -121,6 +122,44 @@ namespace ExorAIO.Champions.Tristana
                 Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast(GameObjects.Player.ServerPosition.Extend(args.Sender.ServerPosition, -Vars.W.Range));
+            }
+        }
+
+        /// <summary>
+        ///     Called on orbwalker action.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
+        {
+            switch (args.Type)
+            {
+                case OrbwalkingType.BeforeAttack:
+
+                    /// <summary>
+                    ///     The Target Forcing Logic.
+                    /// </summary>
+                    if (args.Target is Obj_AI_Hero)
+                    {
+                        if (!GameObjects.EnemyHeroes.Any(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.HasBuff("TristanaECharge")))
+                        {
+                            Variables.Orbwalker.ForceTarget = null;
+                            return;
+                        }
+
+                        args.Process = false;
+                        Variables.Orbwalker.ForceTarget = GameObjects.EnemyHeroes.FirstOrDefault(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.HasBuff("TristanaECharge"));
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }

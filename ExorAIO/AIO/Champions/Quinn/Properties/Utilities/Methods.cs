@@ -16,6 +16,7 @@ namespace ExorAIO.Champions.Quinn
             Game.OnUpdate += Quinn.OnUpdate;
             Events.OnGapCloser += Quinn.OnGapCloser;
             Events.OnInterruptableTarget += Quinn.OnInterruptableTarget;
+            Variables.Orbwalker.OnAction += Quinn.OnAction;
         }
     }
 }

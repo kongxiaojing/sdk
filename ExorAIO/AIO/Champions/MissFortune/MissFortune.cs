@@ -1,10 +1,13 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.Enumerations;
 using LeagueSharp.SDK.UI;
 using LeagueSharp.SDK.Utils;
+using LeagueSharp.Data;
+using LeagueSharp.Data.DataTypes;
 
 namespace ExorAIO.Champions.MissFortune
 {
@@ -157,6 +160,69 @@ namespace ExorAIO.Champions.MissFortune
                 Vars.Menu["spells"]["e"]["gapcloser"].GetValue<MenuBool>().Value)
             {
                 Vars.E.Cast(args.End);
+            }
+        }
+
+        /// <summary>
+        ///     Called on orbwalker action.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
+        {
+            switch (args.Type)
+            {
+                case OrbwalkingType.Movement:
+
+                    /// <summary>
+                    ///     Stop movement commands while channeling R.
+                    /// </summary>
+                    if (GameObjects.Player.HasBuff("missfortunebulletsound"))
+                    {
+                        args.Process = false;
+                    }
+                    break;
+
+                case OrbwalkingType.BeforeAttack:
+
+                    /// <summary>
+                    ///     Stop attack commands while channeling R.
+                    /// </summary>
+                    if (GameObjects.Player.HasBuff("missfortunebulletsound"))
+                    {
+                        args.Process = false;
+                    }
+
+                    /// <summary>
+                    ///     The Target Switching Logic (Passive Stacks).
+                    /// </summary>
+                    if (args.Target is Obj_AI_Hero &&
+                        args.Target.NetworkId == Vars.PassiveTarget.NetworkId &&
+                        Vars.Menu["miscellaneous"]["passive"].GetValue<MenuBool>().Value)
+                    {
+                        if (Vars.GetRealHealth(args.Target as Obj_AI_Hero) >
+                                GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero) * 3)
+                        {
+                            if (!GameObjects.EnemyHeroes.Any(
+                                t =>
+                                    t.IsValidTarget(Vars.AARange) &&
+                                    t.NetworkId != Vars.PassiveTarget.NetworkId))
+                            {
+                                Variables.Orbwalker.ForceTarget = null;
+                                return;
+                            }
+
+                            args.Process = false;
+                            Variables.Orbwalker.ForceTarget = GameObjects.EnemyHeroes.Where(
+                                t =>
+                                    t.IsValidTarget(Vars.AARange) &&
+                                    t.NetworkId != Vars.PassiveTarget.NetworkId).OrderByDescending(o => Data.Get<ChampionPriorityData>().GetPriority(o.ChampionName)).First();
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }

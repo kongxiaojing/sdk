@@ -16,6 +16,7 @@ namespace ExorAIO.Champions.Tristana
             Game.OnUpdate += Tristana.OnUpdate;
             Events.OnGapCloser += Tristana.OnGapCloser;
             Obj_AI_Base.OnBuffAdd += Tristana.OnBuffAdd;
+            Variables.Orbwalker.OnAction += Tristana.OnAction;
         }
     }
 }

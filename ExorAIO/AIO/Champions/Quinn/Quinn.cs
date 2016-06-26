@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ExorAIO.Utilities;
 using LeagueSharp;
 using LeagueSharp.SDK;
@@ -118,6 +119,52 @@ namespace ExorAIO.Champions.Quinn
                 Vars.Menu["spells"]["e"]["interrupter"].GetValue<MenuBool>().Value)
             {
                 Vars.E.CastOnUnit(args.Sender);
+            }
+        }
+
+        /// <summary>
+        ///     Called on orbwalker action.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="OrbwalkingActionArgs" /> instance containing the event data.</param>
+        public static void OnAction(object sender, OrbwalkingActionArgs args)
+        {
+            switch (args.Type)
+            {
+                case OrbwalkingType.BeforeAttack:
+
+                    /// <summary>
+                    ///     Check for R Instance.
+                    /// </summary>
+                    if (Vars.R.Instance.Name.Equals("QuinnRFinale"))
+                    {
+                        args.Process = false;
+                    }
+
+                    /// <summary>
+                    ///     The Target Forcing Logic.
+                    /// </summary>
+                    if (args.Target is Obj_AI_Hero)
+                    {
+                        if (!GameObjects.EnemyHeroes.Any(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.HasBuff("quinnw")))
+                        {
+                            Variables.Orbwalker.ForceTarget = null;
+                            return;
+                        }
+
+                        args.Process = false;
+                        Variables.Orbwalker.ForceTarget = GameObjects.EnemyHeroes.FirstOrDefault(
+                            t =>
+                                t.IsValidTarget(Vars.AARange) &&
+                                t.HasBuff("quinnw"));
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
     }

@@ -17,6 +17,7 @@ namespace ExorAIO.Champions.Lucian
             Obj_AI_Base.OnDoCast += Lucian.OnDoCast;
             Events.OnGapCloser += Lucian.OnGapCloser;
             Obj_AI_Base.OnPlayAnimation += Lucian.OnPlayAnimation;
+            Variables.Orbwalker.OnAction += Lucian.OnAction;
         }
     }
 }

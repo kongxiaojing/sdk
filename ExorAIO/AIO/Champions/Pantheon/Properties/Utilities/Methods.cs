@@ -15,6 +15,7 @@ namespace ExorAIO.Champions.Pantheon
         {
             Game.OnUpdate += Pantheon.OnUpdate;
             Events.OnInterruptableTarget += Pantheon.OnInterruptableTarget;
+            Variables.Orbwalker.OnAction += Pantheon.OnAction;
         }
     }
 }
