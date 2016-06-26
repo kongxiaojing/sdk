@@ -125,7 +125,8 @@ namespace ExorAIO.Champions.MissFortune
             {
                 Vars.DrawingsMenu.Add(new MenuBool("q", "Q Range"));
                 Vars.DrawingsMenu.Add(new MenuBool("qe", "Q Extended Range"));
-                Vars.DrawingsMenu.Add(new MenuBool("qc", "Q Cone"));
+                Vars.DrawingsMenu.Add(new MenuBool("qc", "Q Extended Cones"));
+                Vars.DrawingsMenu.Add(new MenuBool("p", "Passive Target"));
                 Vars.DrawingsMenu.Add(new MenuBool("e", "E Range"));
                 Vars.DrawingsMenu.Add(new MenuBool("r", "R Range"));
             }

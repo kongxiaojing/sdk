@@ -22,7 +22,7 @@ namespace ExorAIO.Champions.MissFortune
         public static void Killsteal(EventArgs args)
         {
             /// <summary>
-            ///     The Q Killsteal Logic.
+            ///     The Q KillSteal Logic.
             /// </summary>
             if (Vars.Q.IsReady())
             {
@@ -42,17 +42,8 @@ namespace ExorAIO.Champions.MissFortune
                     }
                 }
 
-                if (!GameObjects.EnemyHeroes.Any(
-                    t =>
-                        !Invulnerable.Check(t) &&
-                        !t.IsValidTarget(Vars.Q.Range) &&
-                        t.IsValidTarget(Vars.Q2.Range-50f)))
-                {
-                    return;
-                }
-
                 /// <summary>
-                ///     Extended Q KilLSteal Logic.
+                ///     Extended Q KillSteal Logic.
                 /// </summary>
                 if (Vars.Menu["spells"]["q"]["extended"]["exkillsteal"].GetValue<MenuBool>().Value)
                 {
@@ -69,34 +60,22 @@ namespace ExorAIO.Champions.MissFortune
                             40f * (float)Math.PI / 180f,
                             (Vars.Q2.Range - Vars.Q.Range)-50f)
 
-                        where
-                            !polygon.IsOutside((Vector2)GameObjects.EnemyHeroes.FirstOrDefault(
+                        let target = GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
                                 !Invulnerable.Check(t) &&
-                                !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
                                 ((Vars.PassiveTarget.IsValidTarget() &&
                                     t.NetworkId == Vars.PassiveTarget.NetworkId) ||
-                                    !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))).ServerPosition) &&
+                                    !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))))
 
-                            !polygon.IsOutside((Vector2)Movement.GetPrediction(
-                                GameObjects.EnemyHeroes.FirstOrDefault(
-                                t =>
-                                    !Invulnerable.Check(t) &&
-                                    !t.IsValidTarget(Vars.Q.Range) &&
-                                    t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    ((Vars.PassiveTarget.IsValidTarget() &&
-                                        t.NetworkId == Vars.PassiveTarget.NetworkId) ||
-                                        !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))),
-
-                                GameObjects.Player.Distance(GameObjects.EnemyHeroes.FirstOrDefault(
-                                t =>
-                                    !Invulnerable.Check(t) &&
-                                    !t.IsValidTarget(Vars.Q.Range) &&
-                                    t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    ((Vars.PassiveTarget.IsValidTarget() &&
-                                        t.NetworkId == Vars.PassiveTarget.NetworkId) ||
-                                        !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))).ServerPosition) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
+                        where
+                            target != null
+                        where
+                            !polygon.IsOutside((Vector2)target.ServerPosition) &&
+                            !polygon.IsOutside(
+                                (Vector2)Movement.GetPrediction(
+                                    target,
+                                    GameObjects.Player.Distance(target) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
 
                         select minion)
                     {
@@ -116,34 +95,22 @@ namespace ExorAIO.Champions.MissFortune
                             40f * (float)Math.PI / 180f,
                             (Vars.Q2.Range - Vars.Q.Range)-50f)
 
-                        where
-                            !polygon.IsOutside((Vector2)GameObjects.EnemyHeroes.FirstOrDefault(
+                        let target2 = GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
                                 !Invulnerable.Check(t) &&
-                                !t.IsValidTarget(Vars.Q.Range) &&
                                 t.IsValidTarget(Vars.Q2.Range-50f) &&
                                 ((Vars.PassiveTarget.IsValidTarget() &&
                                     t.NetworkId == Vars.PassiveTarget.NetworkId) ||
-                                    !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))).ServerPosition) &&
+                                    !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition))))
 
-                            !polygon.IsOutside((Vector2)Movement.GetPrediction(
-                                GameObjects.EnemyHeroes.FirstOrDefault(
-                                t =>
-                                    !Invulnerable.Check(t) &&
-                                    !t.IsValidTarget(Vars.Q.Range) &&
-                                    t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    ((Vars.PassiveTarget.IsValidTarget() &&
-                                        t.NetworkId == Vars.PassiveTarget.NetworkId) ||
-                                        !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))),
-
-                                GameObjects.Player.Distance(GameObjects.EnemyHeroes.FirstOrDefault(
-                                t =>
-                                    !Invulnerable.Check(t) &&
-                                    !t.IsValidTarget(Vars.Q.Range) &&
-                                    t.IsValidTarget(Vars.Q2.Range-50f) &&
-                                    ((Vars.PassiveTarget.IsValidTarget() &&
-                                        t.NetworkId == Vars.PassiveTarget.NetworkId) ||
-                                        !Targets.Minions.Any(m => !polygon.IsOutside((Vector2)m.ServerPosition)))).ServerPosition) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
+                        where
+                            target2 != null
+                        where
+                            !polygon.IsOutside((Vector2)target2.ServerPosition) &&
+                            !polygon.IsOutside(
+                                (Vector2)Movement.GetPrediction(
+                                    target2,
+                                    GameObjects.Player.Distance(target) / Vars.Q.Speed + Vars.Q.Delay).UnitPosition)
 
                         select target)
                     {

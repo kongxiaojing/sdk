@@ -36,14 +36,13 @@ namespace ExorAIO.Champions.MissFortune
                 {
                     if (Vars.E.IsReady())
                     {
-                        Vars.E.Cast(Vars.E.GetPrediction(Targets.Target).CastPosition);
+                        Vars.E.Cast(Targets.Target.ServerPosition);
                     }
-                    Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).UnitPosition);
+                    Vars.R.Cast(Targets.Target.ServerPosition);
                 }
                 else if (GameObjects.Player.HasBuff("missfortunebulletsound") &&
                     !Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
                 {
-                    Vars.R.Cast();
                     Variables.Orbwalker.Move(Game.CursorPos);
                 }
             }
