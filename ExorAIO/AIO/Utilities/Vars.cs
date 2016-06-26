@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LeagueSharp;
 using LeagueSharp.SDK;
 using LeagueSharp.SDK.UI;
@@ -95,7 +96,12 @@ namespace ExorAIO.Utilities
         /// <summary>
         ///     The args End.
         /// </summary>
-        public static SectorPoly Cone => new SectorPoly(GameObjects.Player.ServerPosition, Vars.End, 45, -4050, 1);
+        public static Geometry.Sector Cone =>
+            new Geometry.Sector(
+                GameObjects.Player.ServerPosition.Extend(Vars.End, -GameObjects.Player.BoundingRadius*3),
+                Vars.End,
+                55f * (float)Math.PI / 180f,
+                Vars.R.Range);
 
         /// <summary>
         ///     Gets or sets the Q Spell.
