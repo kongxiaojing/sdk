@@ -114,14 +114,6 @@ namespace ExorAIO.Champions.Caitlyn
                                 }
                                 break;
 
-                            case "CaitlynYordleTrap":
-                                if (Vars.Q.IsReady() &&
-                                    Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
-                                {
-                                    Vars.Q.Cast(Targets.Target.ServerPosition);
-                                }
-                                break;
-
                             default:
                                 break;
                         }
@@ -129,6 +121,28 @@ namespace ExorAIO.Champions.Caitlyn
 
                     default:
                         break;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Fired on spell cast.
+        /// </summary>
+        /// <param name="sender">The object.</param>
+        /// <param name="args">The <see cref="SpellbookCastSpellEventArgs" /> instance containing the event data.</param>
+        public static void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
+        {
+            /// <summary>
+            ///     Blocks trap cast if there is another trap nearby.
+            /// </summary>
+            if (args.Slot == SpellSlot.W)
+            {
+                if (ObjectManager.Get<Obj_AI_Minion>().Any(
+                    m =>
+                        m.Distance(args.EndPosition) < 200 &&
+                        m.CharData.BaseSkinName.Equals("caitlyntrap")))
+                {
+                    args.Process = false;
                 }
             }
         }
@@ -158,13 +172,7 @@ namespace ExorAIO.Champions.Caitlyn
                 !Invulnerable.Check(args.Sender, DamageType.Magical, false) &&
                 Vars.Menu["spells"]["w"]["gapcloser"].GetValue<MenuBool>().Value)
             {
-				if (!ObjectManager.Get<Obj_AI_Minion>().Any(
-					m =>
-						m.Distance(args.End) < 100f &&
-						m.CharData.BaseSkinName.Equals("caitlyntrap")))
-				{
-					Vars.W.Cast(args.End);
-				}
+				Vars.W.Cast(args.End);
             }
         }
 
@@ -195,13 +203,7 @@ namespace ExorAIO.Champions.Caitlyn
                 args.Sender.IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["interrupter"].GetValue<MenuBool>().Value)
             {
-				if (!ObjectManager.Get<Obj_AI_Minion>().Any(
-					m =>
-                        m.CharData.BaseSkinName.Equals("caitlyntrap") &&
-						m.Distance(Vars.W.GetPrediction(args.Sender).CastPosition) < 100f))
-				{
-                    Vars.W.Cast(Vars.W.GetPrediction(args.Sender).CastPosition);
-				}
+                Vars.W.Cast(Vars.W.GetPrediction(args.Sender).CastPosition);
             }
         }
     }

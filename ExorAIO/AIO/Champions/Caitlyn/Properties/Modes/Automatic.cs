@@ -30,19 +30,13 @@ namespace ExorAIO.Champions.Caitlyn
             if (Vars.W.IsReady() &&
                 Vars.Menu["spells"]["w"]["logical"].GetValue<MenuBool>().Value)
             {
-                foreach (var target in ObjectManager.Get<Obj_AI_Base>().Where(
+                foreach (var target in GameObjects.EnemyHeroes.Where(
                     t =>
                         Bools.IsImmobile(t) &&
                         t.IsValidTarget(Vars.W.Range) &&
-						!Invulnerable.Check(t as Obj_AI_Hero, DamageType.Magical, false)))
+						!Invulnerable.Check(t, DamageType.Magical, false)))
                 {
-                    if (!ObjectManager.Get<Obj_AI_Minion>().Any(
-                        m =>
-                            m.Distance(target.ServerPosition) < 100f &&
-                            m.CharData.BaseSkinName.Equals("caitlyntrap")))
-                    {
-                        Vars.W.Cast(target.ServerPosition);
-                    }
+                    Vars.W.Cast(target.ServerPosition);
                 }
             }
 
@@ -50,7 +44,7 @@ namespace ExorAIO.Champions.Caitlyn
             ///     The Automatic Q Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) < 2 &&
+                GameObjects.Player.CountEnemyHeroesInRange(Vars.AARange) < 3 &&
                 Vars.Menu["spells"]["q"]["logical"].GetValue<MenuBool>().Value)
             {
                 foreach (var target in GameObjects.EnemyHeroes.Where(
@@ -68,23 +62,22 @@ namespace ExorAIO.Champions.Caitlyn
             ///     The Semi-Automatic R Management.
             /// </summary>
             if (Vars.R.IsReady() &&
-                Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value)
+                Vars.Menu["spells"]["r"]["bool"].GetValue<MenuBool>().Value &&
+                Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
             {
-                if (GameObjects.EnemyHeroes.Any(
+                if (!GameObjects.EnemyHeroes.Any(
                     t =>
                         !Invulnerable.Check(t) &&
-                        t.IsValidTarget(Vars.R.Range)) &&
-                    Vars.Menu["spells"]["r"]["key"].GetValue<MenuKeyBind>().Active)
+                        t.IsValidTarget(Vars.R.Range)))
                 {
-                    Vars.R.CastOnUnit(
-                        GameObjects.EnemyHeroes
-                            .Where(
-                                t =>
-                                    !Invulnerable.Check(t) &&
-                                    t.IsValidTarget(Vars.R.Range))
-                            .OrderBy(o => o.Health)
-                            .FirstOrDefault());
+                    return;
                 }
+
+                Vars.R.CastOnUnit(
+                    GameObjects.EnemyHeroes.OrderBy(o => o.Health).FirstOrDefault(
+                        t =>
+                            !Invulnerable.Check(t) &&
+                            t.IsValidTarget(Vars.R.Range)));
             }
         }
     }

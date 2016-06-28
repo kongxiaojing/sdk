@@ -64,9 +64,8 @@ namespace ExorAIO.Champions.Ezreal
                 }
             }
 
-            if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget() ||
-                Invulnerable.Check(Targets.Target))
+            if (Invulnerable.Check(Targets.Target) ||
+                Targets.Target.IsValidTarget(Vars.AARange))
             {
                 return;
             }
@@ -76,7 +75,6 @@ namespace ExorAIO.Champions.Ezreal
             /// </summary>
             if (Vars.Q.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
-                !Targets.Target.IsValidTarget(Vars.AARange) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
                 if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
@@ -91,19 +89,14 @@ namespace ExorAIO.Champions.Ezreal
             /// </summary>
             if (Vars.W.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.W.Range) &&
-                !Targets.Target.IsValidTarget(Vars.AARange) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (Targets.Target.IsValidTarget(Vars.AARange) &&
-                    GameObjects.Player.CountAllyHeroesInRange(Vars.W.Range) < 2)
+                if (GameObjects.Player.CountAllyHeroesInRange(Vars.W.Range) < 2 ||
+                    GameObjects.Player.TotalAttackDamage <
+                        GameObjects.Player.TotalMagicalDamage)
                 {
                     Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
                 }
-                else if (GameObjects.Player.TotalMagicalDamage > GameObjects.Player.TotalAttackDamage)
-                {
-                    Vars.W.Cast(Vars.W.GetPrediction(Targets.Target).UnitPosition);
-                }
-                return;
             }
         }
     }
