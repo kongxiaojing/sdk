@@ -38,14 +38,8 @@
     <Reference Include="LeagueSharp">
       <HintPath>C:\Users\utente\Desktop\PlaySharp\System\LeagueSharp.dll</HintPath>
     </Reference>
-    <Reference Include="LeagueSharp.Data">
-      <HintPath>C:\Users\utente\Desktop\PlaySharp\System\LeagueSharp.Data.dll</HintPath>
-    </Reference>
     <Reference Include="LeagueSharp.SDKEx">
       <HintPath>C:\Users\utente\Desktop\PlaySharp\System\LeagueSharp.SDKEx.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX">
-      <HintPath>C:\Users\utente\Desktop\PlaySharp\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,24 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="NabbActivator.cs" />
-    <Compile Include="Activator\Utilities\Helpers\Managers.cs" />
-    <Compile Include="Activator\Utilities\Helpers\Spellslots.cs" />
-    <Compile Include="Activator\Utilities\Helpers\Healthbars.cs" />
-    <Compile Include="Activator\Utilities\Helpers\Drawings.cs" />
-    <Compile Include="Activator\Utilities\Properties\Menus.cs" />
     <Compile Include="Activator\Utilities\Properties\Methods.cs" />
-    <Compile Include="Activator\Utilities\Properties\Resetters.cs" />
-    <Compile Include="Activator\Utilities\Properties\Spells.cs" />
-    <Compile Include="Activator\Utilities\Properties\Targets.cs" />
-    <Compile Include="Activator\Utilities\Bools.cs" />
-    <Compile Include="Activator\Utilities\Vars.cs" />
-    <Compile Include="Activator\Cleansers.cs" />
-    <Compile Include="Activator\Consumables.cs" />
-    <Compile Include="Activator\Defensives.cs" />
-    <Compile Include="Activator\Offensives.cs" />
-    <Compile Include="Activator\Resetters.cs" />
-    <Compile Include="Activator\Specials.cs" />
-    <Compile Include="Activator\Spells.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
