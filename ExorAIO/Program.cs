@@ -20,9 +20,9 @@ namespace ExorAIO
             Events.OnLoad += (sender, eventArgs) =>
             {
                 /// <summary>
-                ///     Loads the Update checker.
+                ///     Loads the AIO.
                 /// </summary>
-                Updater.Check();
+                AIO.OnLoad();
             };
         }
     }

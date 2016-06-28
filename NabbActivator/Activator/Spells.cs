@@ -13,6 +13,68 @@ namespace NabbActivator
     internal partial class Activator
     {
         /// <summary>
+        ///     Loads the smite.
+        /// </summary>
+        public static void SmiteInit()
+        {
+            Drawing.OnDraw += delegate
+            {
+                /// <summary>
+                ///     The Smite Logics.
+                /// </summary>
+                if (Vars.Smite.IsReady() &&
+                    Vars.Smite.Slot != SpellSlot.Unknown)
+                {
+                    if (!Vars.Menu["keys"]["smite"].GetValue<MenuKeyBind>().Active)
+                    {
+                        return;
+                    }
+
+                    /// <summary>
+                    ///     The Jungle Smite Logic.
+                    /// </summary>
+                    foreach (var minion in Targets.JungleMinions.Where(
+                        m =>
+                            m.IsValidTarget(Vars.Smite.Range)))
+                    {
+                        if (minion.Health >
+                                GameObjects.Player.GetBuffCount(GameObjects.Player.Buffs.FirstOrDefault(
+                                    b =>
+                                        b.Name.ToLower().Contains("smitedamagetracker")).Name))
+                        {
+                            return;
+                        }
+
+                        if (Vars.Menu["smite"]["misc"]["limit"].GetValue<MenuBool>().Value)
+                        {
+                            if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
+                                !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
+                                !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
+                            {
+                                return;
+                            }
+                        }
+
+                        if (Vars.Menu["smite"]["misc"]["stacks"].GetValue<MenuBool>().Value)
+                        {
+                            if (GameObjects.Player.Spellbook.GetSpell(Vars.Smite.Slot).Ammo == 1)
+                            {
+                                if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
+                                    !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
+                                    !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
+                                {
+                                    return;
+                                }
+                            }
+                        }
+
+                        Vars.Smite.CastOnUnit(minion);
+                    }
+                }
+            };
+        }
+
+        /// <summary>
         ///     Called when the game updates itself.
         /// </summary>
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
@@ -114,7 +176,6 @@ namespace NabbActivator
                 }
             }
 
-
             /// <summary>
             ///     The Smite Logics.
             /// </summary>
@@ -124,46 +185,6 @@ namespace NabbActivator
                 if (!Vars.Menu["keys"]["smite"].GetValue<MenuKeyBind>().Active)
                 {
                     return;
-                }
-
-                /// <summary>
-                ///     The Jungle Smite Logic.
-                /// </summary>
-                foreach (var minion in Targets.JungleMinions.Where(
-                    m =>
-                        m.IsValidTarget(Vars.Smite.Range)))
-                {
-                    if (minion.Health > GameObjects.Player.GetBuffCount(GameObjects.Player.Buffs.FirstOrDefault(
-                        b =>
-                            b.Name.ToLower().Contains("smitedamagetracker")).Name))
-                    {
-                        return;
-                    }
-
-                    if (Vars.Menu["smite"]["misc"]["limit"].GetValue<MenuBool>().Value)
-                    {
-                        if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
-                            !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
-                            !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
-                        {
-                            return;
-                        }
-                    }
-
-                    if (Vars.Menu["smite"]["misc"]["stacks"].GetValue<MenuBool>().Value)
-                    {
-                        if (GameObjects.Player.Spellbook.GetSpell(Vars.Smite.Slot).Ammo == 1)
-                        {
-                            if (!minion.CharData.BaseSkinName.Equals("SRU_Baron") &&
-                                !minion.CharData.BaseSkinName.Equals("SRU_RiftHerald") &&
-                                !minion.CharData.BaseSkinName.Contains("SRU_Dragon"))
-                            {
-                                return;
-                            }
-                        }
-                    }
-
-                    Vars.Smite.CastOnUnit(minion);
                 }
 
                 /// <summary>

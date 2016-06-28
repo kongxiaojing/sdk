@@ -210,7 +210,6 @@ namespace ExorAIO.Champions.Vayne
                         {
                             args.Process = false;
                         }
-
                         /// <summary>
                         ///     The Automatic Stealth Logic.
                         /// </summary>
@@ -220,6 +219,7 @@ namespace ExorAIO.Champions.Vayne
                             args.Process = false;
                         }
                     }
+
 
                     /// <summary>
                     ///     The Target Forcing Logic (W Stacks).
@@ -235,7 +235,6 @@ namespace ExorAIO.Champions.Vayne
                             return;
                         }
 
-                        args.Process = false;
                         Variables.Orbwalker.ForceTarget = GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
                                 t.IsValidTarget(Vars.AARange) &&

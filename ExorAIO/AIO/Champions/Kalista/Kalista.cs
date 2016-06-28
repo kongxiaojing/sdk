@@ -119,7 +119,6 @@ namespace ExorAIO.Champions.Kalista
                             return;
                         }
 
-                        args.Process = false;
                         Variables.Orbwalker.ForceTarget = GameObjects.EnemyHeroes.FirstOrDefault(
                             t =>
                                 t.IsValidTarget(Vars.AARange) &&

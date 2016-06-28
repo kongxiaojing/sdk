@@ -135,10 +135,7 @@ namespace NabbActivator
         /// <param name="args">The args.</param>
         public static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!AutoAttack.IsAutoAttack(args.SData.Name))
-            {
-                Console.WriteLine($"Name:{args.SData.Name}, Sender:{sender.CharData.BaseSkinName}, Target{args.Target}");
-            }
+            Console.WriteLine($"Name:{args.SData.Name}, Sender:{sender.CharData.BaseSkinName}");
         }
     }
 }
