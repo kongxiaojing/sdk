@@ -30,10 +30,17 @@ namespace NabbActivator
         {
             foreach (var buff in GameObjects.Player.Buffs.Where(b => b.Caster.IsMe))
             {
+                if (buff.Name.Equals("caitlynheadshotcount") ||
+                    buff.Name.Equals("caitlynheadshotpassive") ||
+                    buff.Name.Equals("MasteryOnHitDamageStacker"))
+                {
+                    return;
+                }
+
                 Console.WriteLine($"My Champion: {GameObjects.Player.ChampionName}, Buff: {buff.Name}");
             }
 
-            foreach (var target in GameObjects.AllyHeroes)
+            foreach (var target in GameObjects.AllyHeroes.Where(a => !a.IsMe))
             {
                 foreach (var buff in target.Buffs.Where(b => b.Caster.IsMe))
                 {
@@ -46,6 +53,14 @@ namespace NabbActivator
                 foreach (var buff in target.Buffs.Where(b => b.Caster.IsMe))
                 {
                     Console.WriteLine($"Enemy Champion: {target.ChampionName}, Buff: {buff.Name}");
+                }
+            }
+
+            foreach (var minion in ObjectManager.Get<Obj_AI_Minion>())
+            {
+                foreach (var buff in minion.Buffs.Where(b => b.Caster.IsMe))
+                {
+                    Console.WriteLine($"Minion: {minion.CharData.BaseSkinName}, Buff: {buff.Name}");
                 }
             }
         }
