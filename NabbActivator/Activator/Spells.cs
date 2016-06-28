@@ -93,7 +93,8 @@ namespace NabbActivator
                 if (Vars.W.IsReady() &&
                     Bools.ShouldCleanse(GameObjects.Player))
                 {
-                    DelayAction.Add(Vars.Delay, () =>
+                    DelayAction.Add(
+                        Vars.Menu["cleansers"].GetValue<MenuSliderButton>().SValue, () =>
                     {
                         Vars.W.Cast();
                     });
@@ -107,7 +108,8 @@ namespace NabbActivator
             {
                 if (Bools.ShouldCleanse(GameObjects.Player))
                 {
-                    DelayAction.Add(Vars.Delay, () =>
+                    DelayAction.Add(
+                        Vars.Menu["cleansers"].GetValue<MenuSliderButton>().SValue, () =>
                     {
                         GameObjects.Player.Spellbook.CastSpell(SpellSlots.Cleanse);
                     });

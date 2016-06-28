@@ -39,28 +39,6 @@ namespace NabbActivator
                     }
                     Vars.SmiteMenu.Add(Vars.SmiteMiscMenu);
 
-                    /*
-                    /// <summary>
-                    ///     Sets the smite whitelist menu.
-                    /// </summary>
-                    Vars.SmiteWhiteListMenu = new Menu("whitelist", "Whitelist");
-                    {
-                        foreach (var minion in GameObjects.Jungle.Where(
-                            m =>
-                                !GameObjects.JungleSmall.Contains(m) &&
-                                !m.CharData.BaseSkinName.Equals("sru_camprespawnmarker")))
-                        {
-                            Vars.SmiteWhiteListMenu.Add(
-                                new MenuBool(
-                                    minion.CharData.BaseSkinName.ToLower(),
-                                    $"Use against: {minion.CharData.BaseSkinName}",
-                                true)
-                            );
-                        }
-                    }
-                    Vars.SmiteMenu.Add(Vars.SmiteWhiteListMenu);
-                    */
-
                     /// <summary>
                     ///     Sets the drawings menu.
                     /// </summary>
@@ -98,10 +76,9 @@ namespace NabbActivator
                 Vars.Menu.Add(new MenuBool("offensives", "Offensives",           true));
                 Vars.Menu.Add(new MenuBool("defensives", "Defensives",           true));
                 Vars.Menu.Add(new MenuBool("spells",     "Spells",               true));
-                Vars.Menu.Add(new MenuBool("cleansers",  "Cleansers",            true));
                 Vars.Menu.Add(new MenuBool("potions",    "Potions",              true));
                 Vars.Menu.Add(new MenuBool("resetters",  "Tiamat/Hydra/Titanic", true));
-                Vars.Menu.Add(new MenuBool("randomizer", "Humanizer"));
+                Vars.Menu.Add(new MenuSliderButton("cleansers",  "Cleansers / Delay", 0, 0, 300, true));
             }
             Vars.Menu.Attach();
         }

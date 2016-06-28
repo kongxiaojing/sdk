@@ -18,7 +18,7 @@ namespace NabbActivator
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Cleansers(EventArgs args)
         {
-            if (!Vars.Menu["cleansers"].GetValue<MenuBool>().Value)
+            if (!Vars.Menu["cleansers"].GetValue<MenuSliderButton>().BValue)
             {
                 return;
             }
@@ -33,7 +33,8 @@ namespace NabbActivator
                         Bools.ShouldCleanse(a) &&
                         a.IsValidTarget(750f, false)))
                 {
-                    DelayAction.Add(Vars.Delay, () =>
+                    DelayAction.Add(
+                        Vars.Menu["cleansers"].GetValue<MenuSliderButton>().SValue, () =>
                     {
                         Items.UseItem(3222, ally);
                     });
@@ -49,7 +50,8 @@ namespace NabbActivator
                 /// </summary>
                 if (Items.CanUseItem(3140))
                 {
-                    DelayAction.Add(Vars.Delay, () =>
+                    DelayAction.Add(
+                        Vars.Menu["cleansers"].GetValue<MenuSliderButton>().SValue, () =>
                     {
                         Items.UseItem(3140);
                         return;
@@ -61,7 +63,8 @@ namespace NabbActivator
                 /// </summary>
                 if (Items.CanUseItem(3137))
                 {
-                    DelayAction.Add(Vars.Delay, () =>
+                    DelayAction.Add(
+                        Vars.Menu["cleansers"].GetValue<MenuSliderButton>().SValue, () =>
                     {
                         Items.UseItem(3137);
                         return;
@@ -73,7 +76,8 @@ namespace NabbActivator
                 /// </summary>
                 if (Items.CanUseItem(3139))
                 {
-                    DelayAction.Add(Vars.Delay, () =>
+                    DelayAction.Add(
+                        Vars.Menu["cleansers"].GetValue<MenuSliderButton>().SValue, () =>
                     {
                         Items.UseItem(3139);
                     });
@@ -87,7 +91,8 @@ namespace NabbActivator
                 /// </summary>
                 if (Items.CanUseItem(3137))
                 {
-                    DelayAction.Add(Vars.Delay, () =>
+                    DelayAction.Add(
+                        Vars.Menu["cleansers"].GetValue<MenuSliderButton>().SValue, () =>
                     {
                         Items.UseItem(3137);
                         return;
@@ -99,7 +104,8 @@ namespace NabbActivator
                 /// </summary>
                 if (Items.CanUseItem(3139))
                 {
-                    DelayAction.Add(Vars.Delay, () =>
+                    DelayAction.Add(
+                        Vars.Menu["cleansers"].GetValue<MenuSliderButton>().SValue, () =>
                     {
                         Items.UseItem(3139);
                     });

@@ -28,6 +28,14 @@ namespace NabbActivator
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void OnUpdate(EventArgs args)
         {
+            foreach (var target in GameObjects.EnemyHeroes)
+            {
+                foreach (var buff in target.Buffs.Where(b => b.Caster != null && b.Caster.IsMe))
+                {
+                    Console.WriteLine($"Enemy Champion: {target.ChampionName}, Buff: {buff.Name}");
+                }
+            }
+
             foreach (var buff in GameObjects.Player.Buffs.Where(b => b.Caster.IsMe))
             {
                 if (buff.Name.Equals("caitlynheadshotcount") ||
@@ -53,14 +61,6 @@ namespace NabbActivator
                 foreach (var buff in target.Buffs.Where(b => b.Caster.IsMe))
                 {
                     Console.WriteLine($"Enemy Champion: {target.ChampionName}, Buff: {buff.Name}");
-                }
-            }
-
-            foreach (var minion in ObjectManager.Get<Obj_AI_Minion>())
-            {
-                foreach (var buff in minion.Buffs.Where(b => b.Caster.IsMe))
-                {
-                    Console.WriteLine($"Minion: {minion.CharData.BaseSkinName}, Buff: {buff.Name}");
                 }
             }
         }

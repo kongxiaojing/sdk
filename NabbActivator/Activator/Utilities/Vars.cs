@@ -79,13 +79,6 @@ namespace NabbActivator
         public static int GetChallengingSmiteDamage => 54 + 6 * GameObjects.Player.Level;
 
         /// <summary>
-        ///     Gets the Delay.
-        /// </summary>
-        public static int Delay => Menu["randomizer"].GetValue<MenuBool>().Value 
-            ? WeightedRandom.Next(200, 300) 
-            : 0;
-
-        /// <summary>
         ///     Gets or sets the W Spell.
         /// </summary>
         public static Spell W { internal get; set; }
