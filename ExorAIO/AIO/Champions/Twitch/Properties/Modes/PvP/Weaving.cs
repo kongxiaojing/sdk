@@ -28,8 +28,6 @@ namespace ExorAIO.Champions.Twitch
             ///     The Q Combo Logic.
             /// </summary>
             if (Vars.Q.IsReady() &&
-                Vars.GetRealHealth(args.Target as Obj_AI_Hero) <
-                    GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.Cast();
