@@ -251,7 +251,7 @@ namespace ExorAIO.Utilities
             }
 
             return target.Health +
-                //target.PhysicalShield +
+                target.PhysicalShield +
                 target.HPRegenRate +
                 debuffer;
         }
