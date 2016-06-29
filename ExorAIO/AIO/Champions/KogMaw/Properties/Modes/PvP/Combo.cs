@@ -19,8 +19,22 @@ namespace ExorAIO.Champions.KogMaw
         /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
         public static void Combo(EventArgs args)
         {
-            if (Bools.HasSheenBuff() ||
-                !Targets.Target.IsValidTarget() ||
+            if (Bools.HasSheenBuff())
+            {
+                return;
+            }
+
+            /// <summary>
+            ///     The W Combo Logic.
+            /// </summary>
+            if (Vars.W.IsReady() &&
+                GameObjects.EnemyHeroes.Any(t => t.IsValidTarget(Vars.W.Range)) &&
+                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
+            {
+                Vars.W.Cast();
+            }
+
+            if (!Targets.Target.IsValidTarget() ||
                 Invulnerable.Check(Targets.Target))
             {
                 return;
@@ -33,27 +47,16 @@ namespace ExorAIO.Champions.KogMaw
                 Targets.Target.IsValidTarget(Vars.Q.Range) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
-                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any(c => Targets.Minions.Contains(c)))
+                if (!Vars.Q.GetPrediction(Targets.Target).CollisionObjects.Any())
                 {
                     Vars.Q.Cast(Vars.Q.GetPrediction(Targets.Target).UnitPosition);
                 }
             }
 
             /// <summary>
-            ///     The W Combo Logic.
-            /// </summary>
-            if (Vars.W.IsReady() &&
-                Targets.Target.IsValidTarget(Vars.W.Range) &&
-                Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
-            {
-                Vars.W.Cast();
-            }
-
-            /// <summary>
             ///     The E Combo Logic.
             /// </summary>
             if (Vars.E.IsReady() &&
-                !Vars.W.IsReady() &&
                 Targets.Target.IsValidTarget(Vars.E.Range - 100f) &&
                 Vars.Menu["spells"]["e"]["combo"].GetValue<MenuBool>().Value)
             {
@@ -70,12 +73,7 @@ namespace ExorAIO.Champions.KogMaw
                 Vars.Menu["spells"]["r"]["combo"].GetValue<MenuSliderButton>().SValue >
                     GameObjects.Player.GetBuffCount("kogmawlivingartillerycost"))
             {
-                if (!Vars.W.IsReady() ||
-                    (!Targets.Target.IsValidTarget(Vars.W.Range) &&
-                    !GameObjects.Player.HasBuff("KogMawBioArcaneBarrage")))
-                {
-                    Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).CastPosition);
-                }
+                Vars.R.Cast(Vars.R.GetPrediction(Targets.Target).CastPosition);
             }
         }
     }
