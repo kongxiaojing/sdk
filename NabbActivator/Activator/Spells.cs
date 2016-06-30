@@ -22,7 +22,8 @@ namespace NabbActivator
                 /// <summary>
                 ///     The Smite Logics.
                 /// </summary>
-                if (Vars.Smite.IsReady() &&
+                if (Vars.Smite != null &&
+                    Vars.Smite.IsReady() &&
                     Vars.Smite.Slot != SpellSlot.Unknown)
                 {
                     if (!Vars.Menu["keys"]["smite"].GetValue<MenuKeyBind>().Active)
