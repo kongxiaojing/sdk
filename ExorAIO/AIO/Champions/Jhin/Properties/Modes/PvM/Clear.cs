@@ -40,9 +40,6 @@ namespace ExorAIO.Champions.Jhin
                     return;
                 }
 
-                /// <summary>
-                ///     The LaneClear W Logic.
-                /// </summary>
                 if (Vars.W.GetLineFarmLocation(Targets.Minions, Vars.W.Width).MinionsHit >= 4)
                 {
                     Vars.W.Cast(Vars.W.GetLineFarmLocation(Targets.Minions, Vars.W.Width).Position);
@@ -66,8 +63,9 @@ namespace ExorAIO.Champions.Jhin
                     if (Targets.Minions.Where(
                         m =>
                             m.IsValidTarget(Vars.Q.Range)).Sum(
-                                h =>
-                                    (int)(h.Health / (float)GameObjects.Player.GetSpellDamage(h, SpellSlot.Q))) >= 3)
+                                s =>
+                                    (int)(Vars.GetRealHealth(s) /
+                                        (float)GameObjects.Player.GetSpellDamage(s, SpellSlot.Q))) >= 3)
                     {
                         Vars.Q.CastOnUnit(Targets.Minions.OrderBy(m => Vars.GetRealHealth(m)).First());
                     }

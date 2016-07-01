@@ -59,34 +59,17 @@ namespace ExorAIO.Champions.Jhin
                         t.HasBuff("jhinespotteddebuff") &&
                         t.IsValidTarget(Vars.W.Range-150f) &&
                         !t.IsValidTarget(Vars.AARange+50f) &&
-                        !Vars.W.GetPrediction(t).CollisionObjects.Any(
-                            c =>
-                                !c.HasBuff("jhinespotteddebuff") &&
-                                GameObjects.EnemyHeroes.Contains(c)) &&
                         Vars.Menu["spells"]["w"]["whitelist"][t.ChampionName.ToLower()].GetValue<MenuBool>().Value))
                 {
-                    if (Bools.IsImmobile(target))
+                    if (!Vars.W.GetPrediction(target).CollisionObjects.Any(c => !c.HasBuff("jhinespotteddebuff")))
                     {
-                        Vars.W.Cast(target.ServerPosition);
-                        return;
-                    }
-                    else
-                    {
-                        if (!target.IsFacing(GameObjects.Player) &&
-                            GameObjects.Player.IsFacing(target))
+                        if (Bools.IsImmobile(target))
                         {
-                            Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
+                            Vars.W.Cast(target.ServerPosition);
                             return;
                         }
 
-                        if (target.IsFacing(GameObjects.Player) &&
-                            !GameObjects.Player.IsFacing(target) &&
-                            !GameObjects.EnemyHeroes.Any(
-                                t =>
-                                    t.IsValidTarget(Vars.Q.Range+50f)))
-                        {
-                            Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
-                        }
+                        Vars.W.Cast(Vars.W.GetPrediction(target).UnitPosition);
                     }
                 }
             }

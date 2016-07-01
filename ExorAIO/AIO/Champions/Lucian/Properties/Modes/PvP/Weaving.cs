@@ -34,17 +34,27 @@ namespace ExorAIO.Champions.Lucian
                     (args.Target as Obj_AI_Hero).Health <
                         GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero)*2)
                 {
-                    if ((GameObjects.Player.Distance(Game.CursorPos) < Vars.AARange ||
-                        (args.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2) &&
-                        Vars.Menu["spells"]["e"]["mode"].GetValue<MenuList>().Index == 0)
+                    switch (Vars.Menu["spells"]["e"]["mode"].GetValue<MenuList>().Index)
                     {
-                        Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, 50f));
-                        return;
+                        case 0:
+                            if (GameObjects.Player.Distance(Game.CursorPos) < Vars.AARange ||
+                                (args.Target as Obj_AI_Hero).CountEnemyHeroesInRange(700f) >= 2)
+                            {
+                                Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, GameObjects.Player.BoundingRadius));
+                                return;
+                            }
+
+                            Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange));
+                            break;
+
+                        case 1:
+                            Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange));
+                            break;
+
+                        default:
+                            break;
                     }
-                    else
-                    {
-                        Vars.E.Cast(GameObjects.Player.ServerPosition.Extend(Game.CursorPos, Vars.E.Range - Vars.AARange));
-                    }
+                    return;
                 }
             }
 
@@ -53,8 +63,6 @@ namespace ExorAIO.Champions.Lucian
             /// </summary>
             if (Vars.Q.IsReady() &&
                 (args.Target as Obj_AI_Hero).IsValidTarget(Vars.Q.Range) &&
-                (args.Target as Obj_AI_Hero).Health >
-                    GameObjects.Player.GetAutoAttackDamage(args.Target as Obj_AI_Hero) &&
                 Vars.Menu["spells"]["q"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.Q.CastOnUnit(args.Target as Obj_AI_Hero);
@@ -65,6 +73,7 @@ namespace ExorAIO.Champions.Lucian
             ///     The W Combo Logic.
             /// </summary>
             if (Vars.W.IsReady() &&
+                (args.Target as Obj_AI_Hero).IsValidTarget(Vars.W.Range) &&
                 Vars.Menu["spells"]["w"]["combo"].GetValue<MenuBool>().Value)
             {
                 Vars.W.Cast(Vars.W.GetPrediction(args.Target as Obj_AI_Hero).UnitPosition);
